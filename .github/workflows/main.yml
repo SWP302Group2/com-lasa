@@ -24,4 +24,4 @@ jobs:
           java-version: '8'
           distribution: 'adopt'
       - name: Build with Maven
-        run: mvn -B com-lasa --file pom.xml
+        run: mvn clean install --file pom.xml
