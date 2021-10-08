@@ -11,6 +11,9 @@ import com.lasa.data.entity.LecturerSearchCriteria;
 import java.util.List;
 import org.springframework.data.domain.Page;
 
+import com.lasa.data.page.LecturerPage;
+import com.lasa.data.searchcriteria.LecturerSearchCriteria;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,6 +32,10 @@ public interface LecturerOperations {
             @RequestParam(value = "page", required = false, defaultValue = "0") Integer page,
             @RequestParam(value = "size", required = false, defaultValue = "10") Integer size
     );
+
+    @GetMapping("/get")
+    public ResponseEntity<Page<Lecturer>> getLecturer(LecturerPage lecturerPage,
+                                                      LecturerSearchCriteria lecturerSearchCriteria);
     
     @GetMapping("/{id}")
     public Lecturer findByLecturerId(@PathVariable("id") Integer id);
