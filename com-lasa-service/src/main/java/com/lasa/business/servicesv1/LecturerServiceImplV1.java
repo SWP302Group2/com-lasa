@@ -5,11 +5,14 @@
  */
 package com.lasa.business.servicesv1;
 
+import com.lasa.data.criteriarepository.LecturerCriteriaRepository;
 import com.lasa.data.entity.Lecturer;
+import com.lasa.data.page.LecturerPage;
 import com.lasa.data.repository.LecturerRepository;
 import java.util.List;
 
 import com.lasa.business.services.LecturerService;
+import com.lasa.data.searchcriteria.LecturerSearchCriteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
@@ -26,10 +29,13 @@ import org.springframework.stereotype.Component;
 public class LecturerServiceImplV1 implements LecturerService {
 
     private final LecturerRepository lecturerRepository;
+    private final LecturerCriteriaRepository lecturerCriteriaRepository;
 
     @Autowired
-    public LecturerServiceImplV1(LecturerRepository lecturerRepository) {
+    public LecturerServiceImplV1(LecturerRepository lecturerRepository,
+                                 LecturerCriteriaRepository lecturerCriteriaRepository) {
         this.lecturerRepository = lecturerRepository;
+        this.lecturerCriteriaRepository = lecturerCriteriaRepository;
     }
 
     @Override
@@ -76,6 +82,11 @@ public class LecturerServiceImplV1 implements LecturerService {
     @Override
     public Page<Lecturer> findBasicInformationLecturers(Integer page, Integer size) {
         return lecturerRepository.findBasicInformationLecturers(PageRequest.of(page, size));
+    }
+
+    @Override
+    public Page<Lecturer> getLecturers(LecturerPage lecturerPage, LecturerSearchCriteria lecturerSearchCriteria) {
+        return lecturerCriteriaRepository.fillAllWithFilter(lecturerPage, lecturerSearchCriteria);
     }
 
 }
