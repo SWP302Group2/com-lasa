@@ -6,7 +6,10 @@
 package com.lasa.business.controllers;
 
 import com.lasa.data.entity.Lecturer;
+import com.lasa.data.entity.LecturerPage;
+import com.lasa.data.entity.LecturerSearchCriteria;
 import java.util.List;
+import org.springframework.data.domain.Page;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -39,4 +42,7 @@ public interface LecturerOperations {
     @DeleteMapping
     public void deleteLecturers(List<Integer> ids);
     
+    @GetMapping("/get")
+    public ResponseEntity<Page<Lecturer>> getLecturer(LecturerPage lecturerPage,
+                                                      LecturerSearchCriteria lecturerSearchCriteria);
 }

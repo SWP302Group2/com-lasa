@@ -5,7 +5,6 @@
  */
 package com.lasa.business.services;
 
-import com.lasa.data.entity.Admin;
 import com.lasa.data.entity.Lecturer;
 import com.lasa.data.entity.Student;
 import java.util.List;
@@ -18,8 +17,6 @@ import org.springframework.stereotype.Service;
 
 @Service
 public interface AdminService {
-
-    Admin findByAdminId(Integer id);
 
     public List<Student> listAllStudent();
 

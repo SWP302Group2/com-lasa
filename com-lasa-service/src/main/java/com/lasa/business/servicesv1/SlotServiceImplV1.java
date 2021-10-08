@@ -12,6 +12,8 @@ import java.util.List;
 import com.lasa.business.services.SlotService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
 
 /**
@@ -22,7 +24,7 @@ import org.springframework.stereotype.Component;
 @Qualifier("SlotServiceImplV1")
 public class SlotServiceImplV1 implements SlotService {
 
-    private final SlotRepository slotRepository ;
+    private final SlotRepository slotRepository;
 
     @Autowired
     public SlotServiceImplV1(SlotRepository slotRepository) {
@@ -53,5 +55,15 @@ public class SlotServiceImplV1 implements SlotService {
     public void deleteSlots(List<Integer> ids) {
         slotRepository.deleteAllById(ids);
     }
-    
+
+//    @Override
+//    public Page<Slot> findSlotsByLecturerId(Integer page, Integer size, Integer lecturerId) {
+//        return slotRepository.findSlotsByLecturerId(lecturerId, PageRequest.of(page, size));
+//    }
+//
+//    @Override
+//    public Page<Slot> findSlotsByStatus(Integer page, Integer size, Integer status) {
+//        return slotRepository.findSlotsByStatus(status, PageRequest.of(page, size));
+//    }
+
 }

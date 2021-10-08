@@ -23,7 +23,7 @@ import static org.springframework.http.HttpMethod.POST;
 
 @Configuration
 @EnableWebSecurity
-public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapter {
+public class ApplicationConfiguration extends WebSecurityConfigurerAdapter {
 
     private final UserDetailsService userDetailsService;
     private final JwtUtil jwtUtil;
@@ -31,7 +31,7 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
     private final JwtRequestFilter jwtRequestFilter;
 
     @Autowired
-    public ApplicationSecurityConfiguration(UserDetailsService userDetailsService, JwtUtil jwtUtil, JwtConfig jwtConfig, JwtRequestFilter jwtRequestFilter) {
+    public ApplicationConfiguration(UserDetailsService userDetailsService, JwtUtil jwtUtil, JwtConfig jwtConfig, JwtRequestFilter jwtRequestFilter) {
         this.userDetailsService = userDetailsService;
         this.jwtUtil = jwtUtil;
         this.jwtConfig = jwtConfig;
@@ -65,7 +65,6 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
                 .antMatchers("/templateSignGoogle.html").permitAll()
                 .antMatchers("/newGoogleLogin.html").permitAll()
                 .antMatchers(HttpMethod.OPTIONS, "/api/v1/**").permitAll()
-                .antMatchers("/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .sessionManagement()

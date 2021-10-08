@@ -5,7 +5,6 @@
  */
 package com.lasa.business.servicesv1;
 
-import com.lasa.data.entity.Admin;
 import com.lasa.data.repository.AdminRepository;
 import com.lasa.data.entity.Lecturer;
 import com.lasa.data.repository.LecturerRepository;
@@ -36,11 +35,6 @@ public class AdminServiceImplV1 implements AdminService {
         this.adminRepository = adminRepository;
         this.studentRepository = studentRepository;
         this.lecturerRepository = lecturerRepository;
-    }
-
-    @Override
-    public Admin findByAdminId(Integer id) {
-        return adminRepository.findById(id).orElse(null);
     }
 
     @Override

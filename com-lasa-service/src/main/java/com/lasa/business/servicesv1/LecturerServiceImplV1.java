@@ -10,6 +10,9 @@ import com.lasa.data.repository.LecturerRepository;
 import java.util.List;
 
 import com.lasa.business.services.LecturerService;
+import com.lasa.data.entity.LecturerCriteriaRepository;
+import com.lasa.data.entity.LecturerPage;
+import com.lasa.data.entity.LecturerSearchCriteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
@@ -20,16 +23,22 @@ import org.springframework.stereotype.Component;
  *
  * @author hai
  */
-
 @Component
 @Qualifier("LecturerServiceImplV1")
 public class LecturerServiceImplV1 implements LecturerService {
 
     private final LecturerRepository lecturerRepository;
 
+//    @Autowired
+//    public LecturerServiceImplV1(LecturerRepository lecturerRepository) {
+//        this.lecturerRepository = lecturerRepository;
+//    }
+    private final LecturerCriteriaRepository lecturerCriteriaRepository;
+
     @Autowired
-    public LecturerServiceImplV1(LecturerRepository lecturerRepository) {
+    public LecturerServiceImplV1(LecturerRepository lecturerRepository, LecturerCriteriaRepository lecturerCriteriaRepository) {
         this.lecturerRepository = lecturerRepository;
+        this.lecturerCriteriaRepository = lecturerCriteriaRepository;
     }
 
     @Override
@@ -49,27 +58,33 @@ public class LecturerServiceImplV1 implements LecturerService {
 
     @Override
     public Lecturer updateLecturer(Lecturer updateLecturer) {
-        
+
         Lecturer lecturer = lecturerRepository.findById(updateLecturer.getId()).get();
-        
-        if(updateLecturer.getName() != null)
+
+        if (updateLecturer.getName() != null) {
             lecturer.setName(updateLecturer.getName());
-        
-        if(updateLecturer.getPhone() != null)
+        }
+
+        if (updateLecturer.getPhone() != null) {
             lecturer.setPhone(updateLecturer.getPhone());
-        
-        if(updateLecturer.getBirthday() != null)
+        }
+
+        if (updateLecturer.getBirthday() != null) {
             lecturer.setBirthday(updateLecturer.getBirthday());
-        
-        if(updateLecturer.getGender() != null)
+        }
+
+        if (updateLecturer.getGender() != null) {
             lecturer.setGender(updateLecturer.getGender());
-        
-        if(updateLecturer.getAddress() != null)
+        }
+
+        if (updateLecturer.getAddress() != null) {
             lecturer.setAddress(updateLecturer.getAddress());
-        
-        if(updateLecturer.getMeetingUrl() != null)
+        }
+
+        if (updateLecturer.getMeetingUrl() != null) {
             lecturer.setMeetingUrl(updateLecturer.getMeetingUrl());
-        
+        }
+
         return lecturerRepository.save(lecturer);
     }
 
@@ -78,4 +93,8 @@ public class LecturerServiceImplV1 implements LecturerService {
         return lecturerRepository.findBasicInformationLecturers(PageRequest.of(page, size));
     }
 
+    @Override
+    public Page<Lecturer> getLecturers(LecturerPage lecturerPage, LecturerSearchCriteria lecturerSearchCriteria) {
+        return lecturerCriteriaRepository.findAllWithFilters(lecturerPage, lecturerSearchCriteria);
+    }
 }

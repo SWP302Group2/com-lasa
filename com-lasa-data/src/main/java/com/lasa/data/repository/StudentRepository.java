@@ -9,7 +9,10 @@ import java.util.List;
 import java.util.Optional;
 
 import com.lasa.data.entity.Student;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -18,13 +21,16 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface StudentRepository extends JpaRepository<Student, Integer> {
-    
+
+    @Query("SELECT stu.id, stu.email, stu.mssv, stu.name, stu.avatarUrl, stu.gender FROM Student stu")
+    Page<Student> findBasicInformationStudent(Pageable pageable);
+
     public Optional<Student> findByName(String name);
-    
+
     public void deleteByIdIn(List<Integer> ids);
 
     public Optional<Student> findStudentByEmail(String email);
-    
+
 //    @Query("FROM Student s JOIN FETCH s.major WHERE s.id = :id")
 //    public Optional<Student> findByIdAndGetMajor(@Param("id") Integer id);
 //    
@@ -35,7 +41,6 @@ public interface StudentRepository extends JpaRepository<Student, Integer> {
 //    @EntityGraph(value = "graph.Student.bookingRequests")
 //    @Override
 //    public Optional<Student> findById(Integer id);
-    
 //    @Query("FROM Student s WHERE s.id = :id")
 //    @EntityGraph(value = "graph.Student.bookingRequests")
 //    public Optional<Student> findAllInfo(@Param("id") Integer id);

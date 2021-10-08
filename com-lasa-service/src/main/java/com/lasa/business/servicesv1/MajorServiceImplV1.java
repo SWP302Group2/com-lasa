@@ -14,6 +14,8 @@ import java.util.stream.Collectors;
 import com.lasa.business.services.MajorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -50,11 +52,11 @@ public class MajorServiceImplV1 implements MajorService {
     @Override
     @Transactional
     public List<Major> updateMajors(List<Major> majors) {
-        
+
         Set updateId = majors
                 .stream()
                 .filter(t -> t.getDescription() != null
-                            || t.getName() != null)
+                || t.getName() != null)
                 .map(Major::getId)
                 .collect(Collectors.toSet());
 
@@ -66,16 +68,18 @@ public class MajorServiceImplV1 implements MajorService {
         majorList.forEach((major -> {
             Major updateMajor = majors
                     .stream()
-                    .filter(t-> t.getId().equals(major.getId()))
+                    .filter(t -> t.getId().equals(major.getId()))
                     .findAny()
                     .get();
-            
-            if(updateMajor.getDescription() != null) 
+
+            if (updateMajor.getDescription() != null) {
                 major.setDescription(updateMajor.getDescription());
-            
-            if(updateMajor.getName() != null)
+            }
+
+            if (updateMajor.getName() != null) {
                 major.setName(updateMajor.getName());
-            
+            }
+
         }));
 
         return majorRepository.saveAll(majorList);
@@ -85,5 +89,10 @@ public class MajorServiceImplV1 implements MajorService {
     public void deleteMajors(List<String> ids) {
         majorRepository.deleteAllById(ids);
     }
-    
+
+    @Override
+    public Page<Major> findPageMajor(Integer pageNum, Integer pageSize) {
+        return majorRepository.findAll(PageRequest.of(pageNum, pageSize));
+    }
+
 }

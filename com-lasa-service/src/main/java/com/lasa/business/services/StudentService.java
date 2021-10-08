@@ -7,6 +7,7 @@ package com.lasa.business.services;
 
 import com.lasa.data.entity.Student;
 import java.util.List;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 /**
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 @Service
 public interface StudentService {
     
+    Page<Student> findBasicInformationLecturer(Integer page, Integer lecturerId);
     public List<Student> findAll();
     
     public Student findByStudentId(Integer id);

@@ -39,7 +39,7 @@ public class Slot implements Serializable {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private int id;
     
     @Column(name = "lecturerid")
     private Integer lecturerId;
@@ -61,7 +61,7 @@ public class Slot implements Serializable {
     private LocalDateTime timeEnd;
 
     @Builder
-    public Slot(Integer id, Integer lecturerId, Collection<BookingRequest> bookingRequests, Collection<SlotTopicDetail> topics, LocalDateTime timeStart, LocalDateTime timeEnd) {
+    public Slot(int id, Integer lecturerId, Collection<BookingRequest> bookingRequests, Collection<SlotTopicDetail> topics, LocalDateTime timeStart, LocalDateTime timeEnd) {
         this.id = id;
         this.lecturerId = lecturerId;
         this.bookingRequests = bookingRequests;

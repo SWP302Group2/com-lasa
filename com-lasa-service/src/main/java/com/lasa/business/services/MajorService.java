@@ -7,6 +7,7 @@ package com.lasa.business.services;
 
 import com.lasa.data.entity.Major;
 import java.util.List;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 /**
@@ -15,14 +16,16 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public interface MajorService {
-    
+
+    Page<Major> findPageMajor(Integer pageNum, Integer pageSize);
+
     public List<Major> findAll();
-    
+
     public Major findById(String id);
-    
+
     public List<Major> createMajors(List<Major> majors);
-    
+
     public List<Major> updateMajors(List<Major> majors);
-    
+
     public void deleteMajors(List<String> ids);
 }

@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import static org.springframework.http.HttpHeaders.*;
+import org.springframework.http.ResponseEntity;
 
 /**
  *
@@ -26,7 +27,22 @@ import static org.springframework.http.HttpHeaders.*;
  */
 @RestController
 @RequestMapping("/api/v1/slots")
-@Api(value = "slots", description = "About slots", tags = { "Slots Controller" })
+@CrossOrigin(
+        allowCredentials = "true",
+        origins = {"http://localhost:3000", "http://localhost:5500", "https://lasa-fpt.web.app"},
+        allowedHeaders = {
+            CONTENT_TYPE,
+            CONTENT_LENGTH,
+            HOST,
+            USER_AGENT,
+            ACCEPT,
+            ACCEPT_ENCODING,
+            CONNECTION,
+            AUTHORIZATION
+        },
+        methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.DELETE, RequestMethod.PUT, RequestMethod.OPTIONS}
+)
+@Api(value = "slots", description = "About slots", tags = {"Slots Controller"})
 public class SlotRestControllerV1 implements SlotOperations {
 
     private final SlotService service;
@@ -60,5 +76,12 @@ public class SlotRestControllerV1 implements SlotOperations {
     public void deleteSlots(List<Integer> ids) {
         service.deleteSlots(ids);
     }
+//
+//    @Override
+//    public ResponseEntity<?> getSlotsByStatus(Integer pageNumber, Integer pageSize, Integer status) {
+//        return ResponseEntity.ok(service.findSlotsByStatus(pageSize, pageSize, status));
+//    }
+
+
 
 }

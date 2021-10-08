@@ -6,6 +6,8 @@
 package com.lasa.data.repository;
 
 import com.lasa.data.entity.Slot;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -16,4 +18,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface SlotRepository extends JpaRepository<Slot, Integer>{
     
+//    Page<Slot> findSlotsByLecturerId(Integer id, Pageable pageable);
+//    Page<Slot> findSlotsByStatus(Integer id, Pageable pageable);
 }

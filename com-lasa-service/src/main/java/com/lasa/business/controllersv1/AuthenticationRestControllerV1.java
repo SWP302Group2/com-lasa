@@ -3,7 +3,10 @@ package com.lasa.business.controllersv1;
 import com.lasa.business.controllers.AuthenticationOperations;
 import com.lasa.business.services.AuthenticationService;
 import com.lasa.business.servicesv1.AuthenticationServiceImplV1;
-import com.lasa.security.model.*;
+import com.lasa.security.model.AuthenticationRequest;
+import com.lasa.security.model.AuthenticationResponse;
+import com.lasa.security.model.GoogleAuthenticationRequest;
+import com.lasa.security.model.SuccessAuthenticationResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +26,21 @@ import static org.springframework.http.HttpStatus.*;
 
 @RestController
 @RequestMapping("/api/v1/authentication")
+@CrossOrigin(
+        allowCredentials = "true",
+        origins = {"http://localhost:3000", "http://localhost:5500", "https://lasa-fpt.web.app"},
+        allowedHeaders = {
+                CONTENT_TYPE,
+                CONTENT_LENGTH,
+                HOST,
+                USER_AGENT,
+                ACCEPT,
+                ACCEPT_ENCODING,
+                CONNECTION,
+                AUTHORIZATION
+        },
+        methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.DELETE, RequestMethod.PUT, RequestMethod.OPTIONS}
+)
 public class AuthenticationRestControllerV1 implements AuthenticationOperations {
 
     private final AuthenticationService authenticationService;
@@ -37,15 +55,14 @@ public class AuthenticationRestControllerV1 implements AuthenticationOperations 
                                                  HttpServletResponse response,
                                                  HttpServletRequest request) {
         try {
-            String accessToken = authenticationService.authenticateUsernameAndPassword(authenticationRequest);
+            String jwt = authenticationService.authenticateUsernameAndPassword(authenticationRequest);
 
             return ResponseEntity.status(OK)
-                    .body(InformationResponse.builder()
-                            .accessToken(accessToken)
-                            .cookieInfo(CookieInfo.builder()
-                                    .maxAge(7 * 24 * 60 * 60)
-                                    .build())
-                            .build());
+                        .body(SuccessAuthenticationResponse.builder()
+                        .maxAge(7 * 24 * 60 * 60)
+                        .token(jwt)
+                        .build()
+                    );
         }catch (BadCredentialsException ex) {
 
             return ResponseEntity.status(UNAUTHORIZED)
@@ -67,19 +84,18 @@ public class AuthenticationRestControllerV1 implements AuthenticationOperations 
                                                   HttpServletRequest request) {
 
         try {
-            String accessToken = authenticationService.authenticateGoogleAccount(authenticationRequest, role);
-            if(accessToken == null) {
+            String jwt = authenticationService.authenticateGoogleAccount(authenticationRequest, role);
+            if(jwt == null) {
                 return ResponseEntity.status(UNAUTHORIZED)
                         .body("Account not found");
             }else {
 
                 return ResponseEntity.status(OK)
-                        .body(InformationResponse.builder()
-                                .accessToken(accessToken)
-                                .cookieInfo(CookieInfo.builder()
-                                        .maxAge(7 * 24 * 60 * 60)
-                                        .build())
-                                .build());
+                        .body(SuccessAuthenticationResponse.builder()
+                                .maxAge(7 * 24 * 60 * 60)
+                                .token(jwt)
+                                .build()
+                        );
             }
         } catch (GeneralSecurityException | IOException ex) {
 

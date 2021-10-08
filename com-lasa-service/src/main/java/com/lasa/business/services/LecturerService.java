@@ -6,6 +6,8 @@
 package com.lasa.business.services;
 
 import com.lasa.data.entity.Lecturer;
+import com.lasa.data.entity.LecturerPage;
+import com.lasa.data.entity.LecturerSearchCriteria;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
@@ -28,4 +30,6 @@ public interface LecturerService {
 
     Page<Lecturer> findBasicInformationLecturers(Integer page, Integer size);
     
+    Page<Lecturer> getLecturers(LecturerPage lecturerPage,
+                                LecturerSearchCriteria lecturerSearchCriteria);
 }

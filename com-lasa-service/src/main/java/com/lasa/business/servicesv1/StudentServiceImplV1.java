@@ -12,6 +12,8 @@ import java.util.List;
 import com.lasa.business.services.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -78,6 +80,11 @@ public class StudentServiceImplV1 implements StudentService {
     @Override
     public void deleteStudents(List<Integer> ids) {
         studentRepository.deleteAllById(ids);
+    }
+
+    @Override
+    public Page<Student> findBasicInformationLecturer(Integer page, Integer size) {
+        return studentRepository.findBasicInformationStudent(PageRequest.of(page, size));
     }
     
 }

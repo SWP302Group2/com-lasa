@@ -16,7 +16,6 @@ import org.springframework.stereotype.Repository;
  * @author hai
  */
 @Repository
-public interface MajorRepository extends JpaRepository<Major, String>{
-    
+public interface MajorRepository extends JpaRepository<Major, String> {
     public void deleteByIdIn(List<String> ids);
 }

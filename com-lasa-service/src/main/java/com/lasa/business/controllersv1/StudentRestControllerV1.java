@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import static org.springframework.http.HttpHeaders.*;
+import org.springframework.http.ResponseEntity;
 
 /**
  *
@@ -26,7 +27,22 @@ import static org.springframework.http.HttpHeaders.*;
  */
 @RestController
 @RequestMapping("/api/v1/students")
-@Api(value = "students", description = "About students", tags = { "Students Controller" })
+@CrossOrigin(
+        allowCredentials = "true",
+        origins = {"http://localhost:3000", "http://localhost:5500", "https://lasa-fpt.web.app"},
+        allowedHeaders = {
+            CONTENT_TYPE,
+            CONTENT_LENGTH,
+            HOST,
+            USER_AGENT,
+            ACCEPT,
+            ACCEPT_ENCODING,
+            CONNECTION,
+            AUTHORIZATION
+        },
+        methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.DELETE, RequestMethod.PUT, RequestMethod.OPTIONS}
+)
+@Api(value = "students", description = "About students", tags = {"Students Controller"})
 public class StudentRestControllerV1 implements StudentOperations {
 
     private final StudentService service;
@@ -59,6 +75,11 @@ public class StudentRestControllerV1 implements StudentOperations {
     @Override
     public void deleteStudents(List<Integer> ids) {
         service.deleteStudents(ids);
+    }
+
+    @Override
+    public ResponseEntity<?> findBasicInformationStudents(Integer page, Integer size) {
+        return ResponseEntity.ok(service.findBasicInformationLecturer(page, size));
     }
 
 }
