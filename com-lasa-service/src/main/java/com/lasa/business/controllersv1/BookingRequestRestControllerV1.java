@@ -27,21 +27,6 @@ import static org.springframework.http.HttpHeaders.*;
  */
 @RestController
 @RequestMapping("/api/v1/booking-requests")
-@CrossOrigin(
-        allowCredentials = "true",
-        origins = {"http://localhost:3000", "http://localhost:5500", "https://lasa-fpt.web.app"},
-        allowedHeaders = {
-                CONTENT_TYPE,
-                CONTENT_LENGTH,
-                HOST,
-                USER_AGENT,
-                ACCEPT,
-                ACCEPT_ENCODING,
-                CONNECTION,
-                AUTHORIZATION
-        },
-        methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.DELETE, RequestMethod.PUT, RequestMethod.OPTIONS}
-)
 @Api(value = "booking-requests", description = "For Booking requests", tags = { "Booking requests" })
 public class BookingRequestRestControllerV1 implements BookingRequestOperations {
 

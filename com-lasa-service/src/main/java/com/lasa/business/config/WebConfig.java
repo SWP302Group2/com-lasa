@@ -35,16 +35,4 @@ public class WebConfig {
         return converter;
     }
 
-    //Force tomcat to use legacy cookies processor
-    @Bean
-    public WebServerFactoryCustomizer<TomcatServletWebServerFactory> webServerFactoryCustomizer() {
-        return new WebServerFactoryCustomizer<TomcatServletWebServerFactory>() {
-            @Override
-            public void customize(TomcatServletWebServerFactory factory) {
-                TomcatServletWebServerFactory tomcat = (TomcatServletWebServerFactory) factory;
-                tomcat.addContextCustomizers(context -> context.setCookieProcessor(new LegacyCookieProcessor()));
-            }
-        };
-    }
-
 }

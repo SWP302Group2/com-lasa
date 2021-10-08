@@ -23,21 +23,6 @@ import static org.springframework.http.HttpStatus.*;
 
 @RestController
 @RequestMapping("/api/v1/authentication")
-@CrossOrigin(
-        allowCredentials = "true",
-        origins = {"http://localhost:3000", "http://localhost:5500", "https://lasa-fpt.web.app", "http://localhost:8080"},
-        allowedHeaders = {
-                CONTENT_TYPE,
-                CONTENT_LENGTH,
-                HOST,
-                USER_AGENT,
-                ACCEPT,
-                ACCEPT_ENCODING,
-                CONNECTION,
-                AUTHORIZATION
-        },
-        methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.DELETE, RequestMethod.PUT, RequestMethod.OPTIONS}
-)
 public class AuthenticationRestControllerV1 implements AuthenticationOperations {
 
     private final AuthenticationService authenticationService;
