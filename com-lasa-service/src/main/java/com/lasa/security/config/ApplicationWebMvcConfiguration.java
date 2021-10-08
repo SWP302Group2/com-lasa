@@ -29,7 +29,7 @@ public class ApplicationWebMvcConfiguration implements WebMvcConfigurer {
                 .allowedOrigins(
                         "http://localhost:3000",
                         "http://localhost:5000",
-                        "https://lasa-fpt.web.app",
+                        "https://lasa-fpt.web.app"
                 )
                 .allowedMethods(
                         POST.name(),
