@@ -14,6 +14,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.Tuple;
+
 /**
  *
  * @author hai
@@ -22,7 +24,12 @@ import org.springframework.web.bind.annotation.*;
 public interface LecturerOperations {
     
     @GetMapping
-    public List<Lecturer> findAll();
+    public Page<Lecturer> findAll(
+            @RequestParam(value = "page", required = false, defaultValue = "0") Integer page,
+            @RequestParam(value = "size", required = false, defaultValue = "10") Integer size,
+            @RequestParam(value = "search", required = false) String search
+    );
+
 
     @GetMapping("/basic-information")
     ResponseEntity<?> findBasicInformationLecturers(
@@ -32,7 +39,7 @@ public interface LecturerOperations {
 
     @GetMapping("/get")
     public ResponseEntity<Page<Lecturer>> getLecturer(LecturerPage lecturerPage,
-                                                      LecturerSearchCriteria lecturerSearchCriteria);
+                                                   LecturerSearchCriteria lecturerSearchCriteria);
     
     @GetMapping("/{id}")
     public Lecturer findByLecturerId(@PathVariable("id") Integer id);

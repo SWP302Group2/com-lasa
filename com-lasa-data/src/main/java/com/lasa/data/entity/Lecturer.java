@@ -11,18 +11,19 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Collection;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import java.util.Set;
+import javax.persistence.*;
+
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import net.bytebuddy.implementation.bind.annotation.Default;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 /**
  *
@@ -39,7 +40,7 @@ public class Lecturer implements Serializable {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
     
     @Column(name = "email")
     private String email;
@@ -56,17 +57,17 @@ public class Lecturer implements Serializable {
     @OneToMany(targetEntity = FavoriteLecturer.class,mappedBy = "lecturer")
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    private Collection<FavoriteLecturer> students;
+    private Set<FavoriteLecturer> students;
     
     @OneToMany(targetEntity = LecturerTopicDetail.class,mappedBy = "lecturer")
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    private Collection<LecturerTopicDetail> topics;
+    private Set<LecturerTopicDetail> topics;
     
     @OneToMany(targetEntity = Slot.class, mappedBy = "lecturerId")
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
-    private Collection<Slot> slots;
+    private Set<Slot> slots;
 
     @Column(name = "status")
     private Integer status;
@@ -84,7 +85,7 @@ public class Lecturer implements Serializable {
     private String avatarUrl;
 
     @Builder
-    public Lecturer(int id, String email, String name, String phone, String meetingUrl, Collection<FavoriteLecturer> students, Collection<LecturerTopicDetail> topics, Collection<Slot> slots, Integer status, Boolean gender, LocalDate birthday, String address, String avatarUrl) {
+    public Lecturer(Integer id, String email, String name, String phone, String meetingUrl, Set<FavoriteLecturer> students, Set<LecturerTopicDetail> topics, Set<Slot> slots, Integer status, Boolean gender, LocalDate birthday, String address, String avatarUrl) {
         this.id = id;
         this.email = email;
         this.name = name;
@@ -100,6 +101,17 @@ public class Lecturer implements Serializable {
         this.avatarUrl = avatarUrl;
     }
 
-    
+    public Lecturer(Integer id, String email, String name) {
+        this.id = id;
+        this.email = email;
+        this.name = name;
+    }
+    public Lecturer(Integer id, String email, String name, Slot slots) {
+        System.out.println(id);
+        this.id = id;
+        this.email = email;
+        this.name = name;
+        System.out.println(slots);
+    }
 
 }

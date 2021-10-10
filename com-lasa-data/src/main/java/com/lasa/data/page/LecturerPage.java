@@ -14,5 +14,4 @@ public class LecturerPage {
     private Sort.Direction sortDirection = Sort.Direction.ASC;
     private String sortBy = "name";
 
-
 }

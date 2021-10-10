@@ -1,6 +1,9 @@
 package com.lasa.data.criteriarepository;
 
 import com.lasa.data.entity.Lecturer;
+import com.lasa.data.entity.Lecturer_;
+import com.lasa.data.entity.Slot;
+import com.lasa.data.entity.Slot_;
 import com.lasa.data.page.LecturerPage;
 import com.lasa.data.searchcriteria.LecturerSearchCriteria;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,14 +11,14 @@ import org.springframework.data.domain.*;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Tuple;
 import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Repository
 public class LecturerCriteriaRepository {
@@ -31,19 +34,36 @@ public class LecturerCriteriaRepository {
 
     public Page<Lecturer> fillAllWithFilter(LecturerPage lecturerPage,
                                             LecturerSearchCriteria lecturerSearchCriteria) {
+        /*CriteriaQuery<Tuple> criteriaQuery = criteriaBuilder.createTupleQuery();*/
         CriteriaQuery<Lecturer> criteriaQuery = criteriaBuilder.createQuery(Lecturer.class);
         Root<Lecturer> lecturerRoot = criteriaQuery.from(Lecturer.class);
         Predicate predicate = getPredicate(lecturerSearchCriteria, lecturerRoot);
         criteriaQuery.where(predicate);
         setOrder(lecturerPage, criteriaQuery, lecturerRoot);
+//        CollectionJoin<Lecturer, Slot> slots = lecturerRoot.join(Lecturer_.slots, JoinType.LEFT);
+        /*criteriaQuery.multiselect(
+                lecturerRoot.get(Lecturer_.id),
+                lecturerRoot.get(Lecturer_.email),
+                lecturerRoot.get(Lecturer_.name),
+                lecturerRoot.get(Lecturer_.slots)
+        );*/
 
+        System.out.println("start");
         TypedQuery<Lecturer> typedQuery = entityManager.createQuery(criteriaQuery);
         typedQuery.setFirstResult(lecturerPage.getPageNumber() * lecturerPage.getPageSize());
         typedQuery.setMaxResults(lecturerPage.getPageSize());
-
         Pageable pageable = getPageable(lecturerPage);
         long lecturerCount = getLecturerCount(predicate);
-        return new PageImpl<>(typedQuery.getResultList(), pageable, lecturerCount);
+        return new PageImpl<>(typedQuery.getResultList()/*.getResultList().stream().map(
+                tuple -> {
+                    return new Lecturer(
+                            (Integer) tuple.get(0),
+                            (String) tuple.get(1),
+                            (String) tuple.get(2),
+                            (Slot) tuple.get(3)
+                    );
+                }
+        ).collect(Collectors.toList())*/, pageable, lecturerCount);
     }
 
     private long getLecturerCount(Predicate predicate) {

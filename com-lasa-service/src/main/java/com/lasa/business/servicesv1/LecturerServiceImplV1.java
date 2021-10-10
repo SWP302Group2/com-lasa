@@ -7,8 +7,11 @@ package com.lasa.business.servicesv1;
 
 import com.lasa.data.criteriarepository.LecturerCriteriaRepository;
 import com.lasa.data.entity.Lecturer;
+import com.lasa.data.entity.Lecturer_;
+import com.lasa.data.entity.predicate.LecturerSpecifications;
 import com.lasa.data.page.LecturerPage;
 import com.lasa.data.repository.LecturerRepository;
+
 import java.util.List;
 
 import com.lasa.business.services.LecturerService;
@@ -17,7 +20,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
+
+import javax.persistence.EntityManager;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.transaction.Transactional;
 
 /**
  *
@@ -30,12 +39,17 @@ public class LecturerServiceImplV1 implements LecturerService {
 
     private final LecturerRepository lecturerRepository;
     private final LecturerCriteriaRepository lecturerCriteriaRepository;
+    private final EntityManager entityManager;
+    private final CriteriaBuilder criteriaBuilder;
 
     @Autowired
     public LecturerServiceImplV1(LecturerRepository lecturerRepository,
-                                 LecturerCriteriaRepository lecturerCriteriaRepository) {
+                                 LecturerCriteriaRepository lecturerCriteriaRepository,
+                                 EntityManager entityManager) {
         this.lecturerRepository = lecturerRepository;
         this.lecturerCriteriaRepository = lecturerCriteriaRepository;
+        this.entityManager = entityManager;
+        this.criteriaBuilder = entityManager.getCriteriaBuilder();
     }
 
     @Override
@@ -81,7 +95,10 @@ public class LecturerServiceImplV1 implements LecturerService {
 
     @Override
     public Page<Lecturer> findBasicInformationLecturers(Integer page, Integer size) {
-        return lecturerRepository.findBasicInformationLecturers(PageRequest.of(page, size));
+        LecturerSpecifications specifications = new LecturerSpecifications();
+        return lecturerRepository.findAll(Specification.where(specifications), PageRequest.of(page, size));
+        /*return lecturerRepository.findBasicInformation(PageRequest.of(page, size));*/
+
     }
 
     @Override

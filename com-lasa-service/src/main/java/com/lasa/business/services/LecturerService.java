@@ -13,6 +13,8 @@ import com.lasa.data.searchcriteria.LecturerSearchCriteria;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.Tuple;
+
 /**
  *
  * @author hai
@@ -31,6 +33,6 @@ public interface LecturerService {
     Page<Lecturer> findBasicInformationLecturers(Integer page, Integer size);
 
     Page<Lecturer> getLecturers(LecturerPage lecturerPage,
-                                LecturerSearchCriteria lecturerSearchCriteria);
+                             LecturerSearchCriteria lecturerSearchCriteria);
     
 }
