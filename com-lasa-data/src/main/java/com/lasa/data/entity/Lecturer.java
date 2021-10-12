@@ -65,7 +65,7 @@ public class Lecturer implements Serializable {
     @EqualsAndHashCode.Exclude
     private Set<LecturerTopicDetail> topics;
     
-    @OneToMany(targetEntity = Slot.class, mappedBy = "lecturerId")
+    @OneToMany(targetEntity = Slot.class, mappedBy = "lecturer")
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private Set<Slot> slots;
@@ -100,19 +100,6 @@ public class Lecturer implements Serializable {
         this.birthday = birthday;
         this.address = address;
         this.avatarUrl = avatarUrl;
-    }
-
-    public Lecturer(Integer id, String email, String name) {
-        this.id = id;
-        this.email = email;
-        this.name = name;
-    }
-    public Lecturer(Integer id, String email, String name, Slot slots) {
-        System.out.println(id);
-        this.id = id;
-        this.email = email;
-        this.name = name;
-        System.out.println(slots);
     }
 
 }

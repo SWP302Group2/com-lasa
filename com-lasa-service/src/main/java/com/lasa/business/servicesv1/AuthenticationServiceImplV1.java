@@ -29,6 +29,7 @@ import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Objects;
 import java.util.Optional;
 
 import static com.lasa.business.config.utils.ValidationHelper.emailValidation;
@@ -96,9 +97,17 @@ public class AuthenticationServiceImplV1 implements AuthenticationService {
                     if(role.equalsIgnoreCase(STUDENT.name())) {
                         String name = (String) payload.get("name");
                         String pictureUrl = (String) payload.get("picture");
+
+                        if(Objects.nonNull(googleAuthenticationRequest.getName()))
+                            name = googleAuthenticationRequest.getName();
+
+                        if(Objects.nonNull(googleAuthenticationRequest.getAvatarUrl()))
+                            pictureUrl = googleAuthenticationRequest.getAvatarUrl();
+
                         Student student = Student.builder()
                                 .email(email)
                                 .name(name)
+                                .mssv(googleAuthenticationRequest.getMssv())
                                 .status(1) //set student to active
                                 .avatarUrl(pictureUrl)
                                 .build();
@@ -111,9 +120,17 @@ public class AuthenticationServiceImplV1 implements AuthenticationService {
                     if(role.equalsIgnoreCase(LECTURER.name())) {
                         String name = (String) payload.get("name");
                         String pictureUrl = (String) payload.get("picture");
+
+                        if(Objects.nonNull(googleAuthenticationRequest.getName()))
+                            name = googleAuthenticationRequest.getName();
+
+                        if(Objects.nonNull(googleAuthenticationRequest.getAvatarUrl()))
+                            pictureUrl = googleAuthenticationRequest.getAvatarUrl();
+
                         Lecturer lecturer = Lecturer.builder()
                                 .email(email)
                                 .name(name)
+                                .meetingUrl(googleAuthenticationRequest.getMeetUrl())
                                 .status(0) //set lecturer status to inactive
                                 .avatarUrl(pictureUrl)
                                 .build();

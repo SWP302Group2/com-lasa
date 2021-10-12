@@ -18,16 +18,21 @@ import java.time.format.DateTimeFormatter;
 @NoArgsConstructor
 public class SlotSearchCriteria implements Serializable {
 
-    private String lecturerId = "%";
-    @JsonDeserialize(using = LocalDateDeserializer.class)
-    @JsonSerialize(using = LocalDateTimeSerializer.class)
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-    @JsonFormat(pattern = "YYYY-MM-dd HH:mm:ss")
-    private LocalDateTime timeStart = LocalDateTime.of(2000,1,1,1,1,1,1);
+    private Integer lecturerId ;
 
     @JsonDeserialize(using = LocalDateDeserializer.class)
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     @JsonFormat(pattern = "YYYY-MM-dd HH:mm:ss")
-    private LocalDateTime timeEnd = LocalDateTime.of(2100,1,1,1,1,1,1);
+    private LocalDateTime timeStart;
+
+    @JsonDeserialize(using = LocalDateDeserializer.class)
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+    @JsonFormat(pattern = "YYYY-MM-dd HH:mm:ss")
+    private LocalDateTime timeEnd ;
+
+    private String lecturerName ;
+    private Integer topicId;
+    private String topicName;
 }

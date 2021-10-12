@@ -1,4 +1,4 @@
-name: CI
+name: Java CI
 
 # Controls when the workflow will run
 on:
@@ -23,5 +23,11 @@ jobs:
         with:
           java-version: '8'
           distribution: 'adopt'
+      - name: Test with Maven
+        run: mvn verify
       - name: Build with Maven
-        run: mvn clean install --file pom.xml
+        if: ${{success()}}
+        run: mvn install --file pom.xml
+      - name: Deploy to Tomcat Web Server
+        if: ${{success()}}
+        run: mvn tomcat7:undeploy tomcat7:deploy --file pom.xml
