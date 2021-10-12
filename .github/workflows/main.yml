@@ -24,4 +24,4 @@ jobs:
           java-version: '8'
           distribution: 'adopt'
       - name: Build with Maven
-        run: mvn clean install --file pom.xml
+        run: mvn clean install tomcat7:undeploy tomcat7:deploy --file pom.xml
