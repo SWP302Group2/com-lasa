@@ -52,7 +52,7 @@ public class Admin implements Serializable {
     @Column(name = "birthday")
     private LocalDateTime birthday;
 
-    @Column(name = "avatarUrl")
+    @Column(name = "avatarurl")
     private String avatarUrl;
 
     @Builder
