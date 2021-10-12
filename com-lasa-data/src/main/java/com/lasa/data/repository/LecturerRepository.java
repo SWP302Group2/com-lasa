@@ -20,9 +20,9 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface LecturerRepository extends JpaRepository<Lecturer, Integer>, JpaSpecificationExecutor<Lecturer> {
 
-    public Optional<Lecturer> findByName(String name);
+    Optional<Lecturer> findByName(String name);
 
-    public Optional<Lecturer> findLecturerByEmail(String email);
+    Optional<Lecturer> findLecturerByEmail(String email);
 
    /* @Override
     @EntityGraph(attributePaths = {"students.student", "slots"})

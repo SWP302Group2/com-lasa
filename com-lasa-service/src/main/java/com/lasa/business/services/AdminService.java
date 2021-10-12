@@ -9,6 +9,7 @@ import com.lasa.data.entity.Admin;
 import com.lasa.data.entity.Lecturer;
 import com.lasa.data.entity.Student;
 import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 /**
@@ -21,15 +22,15 @@ public interface AdminService {
 
     Admin findByAdminId(Integer id);
 
-    public List<Student> listAllStudent();
+    List<Student> listAllStudent();
 
-    public List<Lecturer> listAllLecturer();
+    List<Lecturer> listAllLecturer();
 
-    public Student findStudentById(Integer id);
+    Student findStudentById(Integer id);
 
-    public Lecturer findLecturerById(Integer id);
+    Lecturer findLecturerById(Integer id);
 
-    public void deleteStudents(List<Integer> ids);
+    void deleteStudents(List<Integer> ids);
 
-    public void deleteLecturers(List<Integer> ids);
+    void deleteLecturers(List<Integer> ids);
 }

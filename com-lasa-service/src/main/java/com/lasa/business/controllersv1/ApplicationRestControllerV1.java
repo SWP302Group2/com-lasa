@@ -60,10 +60,11 @@ public class ApplicationRestControllerV1 implements ApplicationOperations {
                     .role("ROLE_" + LECTURER.name())
                     .build());
         }else {
-            return ResponseEntity.ok(InformationResponse.builder()
+            /*return ResponseEntity.ok(InformationResponse.builder()
                     .information(adminService.findByAdminId(id))
                     .role("ROLE_" + ADMIN.name())
-                    .build());
+                    .build());*/
+            return ResponseEntity.ok(adminService.findByAdminId(id));
         }
     }
 }
