@@ -28,6 +28,4 @@ jobs:
       - name: Build with Maven
         if: ${{success()}}
         run: mvn install --file pom.xml
-      - name: Deploy to Tomcat Web Server
-        if: ${{success()}}
-        run: mvn tomcat7:undeploy tomcat7:deploy --file pom.xml
+
