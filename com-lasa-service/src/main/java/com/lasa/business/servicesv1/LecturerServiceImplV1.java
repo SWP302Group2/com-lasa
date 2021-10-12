@@ -88,6 +88,7 @@ public class LecturerServiceImplV1 implements LecturerService {
             lecturer.setMeetingUrl(updateLecturer.getMeetingUrl());
         
         return lecturerRepository.save(lecturer);
+
     }
 
     @Override
