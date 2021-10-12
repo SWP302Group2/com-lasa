@@ -7,12 +7,11 @@ package com.lasa.business.servicesv1;
 
 import com.lasa.data.criteriarepository.LecturerCriteriaRepository;
 import com.lasa.data.entity.Lecturer;
-import com.lasa.data.entity.Lecturer_;
-import com.lasa.data.entity.predicate.LecturerSpecifications;
 import com.lasa.data.page.LecturerPage;
 import com.lasa.data.repository.LecturerRepository;
 
-import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import com.lasa.business.services.LecturerService;
 import com.lasa.data.searchcriteria.LecturerSearchCriteria;
@@ -20,13 +19,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
-import javax.transaction.Transactional;
 
 /**
  *
@@ -53,8 +50,8 @@ public class LecturerServiceImplV1 implements LecturerService {
     }
 
     @Override
-    public List<Lecturer> findAllLecturer() {
-        return lecturerRepository.findAll();
+    public Page<Lecturer> findAll(Integer page, Integer size, String search) {
+        return null;
     }
 
     @Override
@@ -95,10 +92,7 @@ public class LecturerServiceImplV1 implements LecturerService {
 
     @Override
     public Page<Lecturer> findBasicInformationLecturers(Integer page, Integer size) {
-        LecturerSpecifications specifications = new LecturerSpecifications();
-        return lecturerRepository.findAll(Specification.where(specifications), PageRequest.of(page, size));
-        /*return lecturerRepository.findBasicInformation(PageRequest.of(page, size));*/
-
+        return null;
     }
 
     @Override

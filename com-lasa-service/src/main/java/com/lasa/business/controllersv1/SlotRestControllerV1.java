@@ -10,15 +10,15 @@ import com.lasa.data.entity.Slot;
 import com.lasa.business.services.SlotService;
 import java.util.List;
 
+import com.lasa.data.entity.utils.SlotPage;
+import com.lasa.data.entity.utils.SlotSearchCriteria;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.data.domain.Page;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
-import static org.springframework.http.HttpHeaders.*;
 
 /**
  *
@@ -36,9 +36,12 @@ public class SlotRestControllerV1 implements SlotOperations {
         this.service = service;
     }
 
+
     @Override
-    public List<Slot> findAll() {
-        return service.findAll();
+    public ResponseEntity<Page<Slot>> findAll(SlotSearchCriteria searchCriteria, SlotPage slotPage) {
+        System.out.println(searchCriteria.getTimeEnd());
+        System.out.println(searchCriteria.getTimeStart());
+        return ResponseEntity.ok(service.findAll(searchCriteria, slotPage));
     }
 
     @Override

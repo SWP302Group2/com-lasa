@@ -7,13 +7,13 @@ package com.lasa.business.controllers;
 
 import com.lasa.data.entity.Slot;
 import java.util.List;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.lasa.data.entity.utils.SlotPage;
+import com.lasa.data.entity.utils.SlotSearchCriteria;
+import org.springframework.data.domain.Page;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 /**
  *
@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public interface SlotOperations {
 
     @GetMapping
-    public List<Slot> findAll();
+    ResponseEntity<Page<Slot>> findAll(SlotSearchCriteria searchCriteria, SlotPage slotPage);
 
     @GetMapping(value = "/{id}")
     public Slot findById(@PathVariable Integer id);

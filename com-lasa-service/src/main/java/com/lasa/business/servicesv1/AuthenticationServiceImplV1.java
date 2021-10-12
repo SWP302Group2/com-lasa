@@ -5,6 +5,7 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.gson.GsonFactory;
+import com.lasa.business.config.utils.ValidationHelper;
 import com.lasa.business.services.AuthenticationService;
 import com.lasa.data.entity.Lecturer;
 import com.lasa.data.entity.Student;
@@ -13,6 +14,7 @@ import com.lasa.data.repository.StudentRepository;
 import com.lasa.security.jwt.JwtUtil;
 import com.lasa.security.model.AuthenticationRequest;
 import com.lasa.security.model.GoogleAuthenticationRequest;
+import com.lasa.security.model.InformationResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -27,7 +29,9 @@ import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Optional;
 
+import static com.lasa.business.config.utils.ValidationHelper.emailValidation;
 import static com.lasa.security.permission.ApplicationUserRole.LECTURER;
 import static com.lasa.security.permission.ApplicationUserRole.STUDENT;
 
@@ -64,7 +68,7 @@ public class AuthenticationServiceImplV1 implements AuthenticationService {
                     new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(), authenticationRequest.getPassword())
             );
         } catch (BadCredentialsException ex) {
-            throw new BadCredentialsException("Incorrect username or password");
+            throw new BadCredentialsException("INCORRECT_USERNAME_OR_PASSWORD");
         }
 
         final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
@@ -75,24 +79,14 @@ public class AuthenticationServiceImplV1 implements AuthenticationService {
     @Override
     public String authenticateGoogleAccount(GoogleAuthenticationRequest googleAuthenticationRequest,String role)
             throws GeneralSecurityException, IOException, EmailDomainException {
-        NetHttpTransport transport = new NetHttpTransport();
-        JsonFactory jsonFactory = new GsonFactory();
-        GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(transport, jsonFactory)
-                // Specify the CLIENT_ID of the app that accesses the backend:
-                //.setAudience(Collections.singletonList("431681257434-1makcgok3vs3tnivthtvcbnt2fcc1aul.apps.googleusercontent.com"))
-                // Or, if multiple clients access the backend:
-                //.setAudience(Arrays.asList(CLIENT_ID_1, CLIENT_ID_2, CLIENT_ID_3))
-                .setAudience(Arrays.asList(CLIENT_ID1, CLIENT_ID2))
-                .build();
-        GoogleIdToken idToken = verifier.verify(googleAuthenticationRequest.getToken());
+        GoogleIdToken idToken = getIdToken(googleAuthenticationRequest);
 
         if(idToken != null) {
             GoogleIdToken.Payload payload = idToken.getPayload();
             String email = payload.getEmail();
 
-            if (!email.endsWith("@fpt.edu.vn") && !email.endsWith("fe.edu.vn"))
-                throw new EmailDomainException("Invalid email domain");
-
+            if (!emailValidation(email))
+                throw new EmailDomainException("INVALID_EMAIL_DOMAIN");
             try{
                 UserDetails userDetails = userDetailsService.loadUserByUsername(email);
                 return jwtUtil.generateToken(userDetails);
@@ -135,9 +129,53 @@ public class AuthenticationServiceImplV1 implements AuthenticationService {
         return null;
     }
 
+    @Override
+    public InformationResponse emailVerify(GoogleAuthenticationRequest googleAuthenticationRequest) throws GeneralSecurityException, IOException, EmailDomainException, UserAlreadyExistException {
+        GoogleIdToken idToken = getIdToken(googleAuthenticationRequest);
+        if(idToken != null) {
+            GoogleIdToken.Payload payload = idToken.getPayload();
+            String email = payload.getEmail();
+            if(!emailValidation(email)) {
+                throw new EmailDomainException("INVALID_EMAIL_DOMAIN");
+            } else {
+                Optional<Student> student = studentRepository.findStudentByEmail(email);
+                Optional<Lecturer> lecturer = lecturerRepository.findLecturerByEmail(email);
+                if(student.isPresent() || lecturer.isPresent()) throw new UserAlreadyExistException("EMAIL_ALREADY_EXIST");
+                String name = (String) payload.get("name");
+                String pictureUrl = (String) payload.get("picture");
+                return InformationResponse.builder()
+                        .name(name)
+                        .avatarUrl(pictureUrl)
+                        .googleToken(googleAuthenticationRequest.getToken())
+                        .email(email)
+                        .build();
+            }
+        }
+        return null;
+    }
+
     public class EmailDomainException extends Exception{
         public EmailDomainException(String message) {
             super(message);
         }
+    }
+
+    public class UserAlreadyExistException extends Exception{
+        public UserAlreadyExistException(String message) {
+            super(message);
+        }
+    }
+
+    private GoogleIdToken getIdToken(GoogleAuthenticationRequest googleAuthenticationRequest) throws GeneralSecurityException, IOException {
+        NetHttpTransport transport = new NetHttpTransport();
+        JsonFactory jsonFactory = new GsonFactory();
+        GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(transport, jsonFactory)
+                // Specify the CLIENT_ID of the app that accesses the backend:
+                // Or, if multiple clients access the backend:
+                //.setAudience(Arrays.asList(CLIENT_ID_1, CLIENT_ID_2, CLIENT_ID_3))
+                .setAudience(Arrays.asList(CLIENT_ID1, CLIENT_ID2))
+                .build();
+        GoogleIdToken idToken = verifier.verify(googleAuthenticationRequest.getToken());
+        return idToken;
     }
 }

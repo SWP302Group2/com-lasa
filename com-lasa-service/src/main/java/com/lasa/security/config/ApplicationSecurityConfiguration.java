@@ -61,7 +61,7 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
                 .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/api/v1/authentication").permitAll()
-                .antMatchers("/api/v1/authentication/google/**").permitAll()
+                .antMatchers("/api/v1/authentication/**").permitAll()
                 .antMatchers("/templateSignGoogle.html").permitAll()
                 .antMatchers("/newGoogleLogin.html").permitAll()
                 .antMatchers(HttpMethod.OPTIONS, "/api/v1/**").permitAll()

@@ -15,15 +15,20 @@ import javax.servlet.http.HttpServletResponse;
 public interface AuthenticationOperations {
 
     @PostMapping
-    public ResponseEntity<?> loginAuthentication(@RequestBody AuthenticationRequest authenticationRequest,
+    ResponseEntity<?> loginAuthentication(@RequestBody AuthenticationRequest authenticationRequest,
                                                  HttpServletResponse response,
                                                  HttpServletRequest request);
 
     @PostMapping(value = {"/google", "/google/{role}"})
-    public ResponseEntity<?> googleAuthentication(@RequestBody GoogleAuthenticationRequest authenticationRequest,
+    ResponseEntity<?> googleAuthentication(@RequestBody GoogleAuthenticationRequest authenticationRequest,
                                                   @PathVariable(value = "role", required = false) String role,
                                                   HttpServletResponse response,
                                                   HttpServletRequest request);
+
+    @PostMapping(value = "/email")
+    ResponseEntity<?> emailRecognition(@RequestBody GoogleAuthenticationRequest authenticationRequest,
+                                       HttpServletResponse response,
+                                       HttpServletRequest request);
 }
 
 

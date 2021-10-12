@@ -14,4 +14,9 @@ public class InformationResponse {
     private String role;
     private CookieInfo cookieInfo;
     private String accessToken;
+    private String refreshToken;
+    private String email;
+    private String name;
+    private String googleToken;
+    private String avatarUrl;
 }

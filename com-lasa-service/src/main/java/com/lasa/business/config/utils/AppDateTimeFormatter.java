@@ -1,4 +1,4 @@
-package com.lasa.business.config.formatter;
+package com.lasa.business.config.utils;
 
 import java.time.format.DateTimeFormatter;
 

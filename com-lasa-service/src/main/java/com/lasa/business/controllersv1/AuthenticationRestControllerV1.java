@@ -3,6 +3,8 @@ package com.lasa.business.controllersv1;
 import com.lasa.business.controllers.AuthenticationOperations;
 import com.lasa.business.services.AuthenticationService;
 import com.lasa.business.servicesv1.AuthenticationServiceImplV1;
+import com.lasa.business.servicesv1.AuthenticationServiceImplV1.EmailDomainException;
+import com.lasa.business.servicesv1.AuthenticationServiceImplV1.UserAlreadyExistException;
 import com.lasa.security.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -38,7 +40,6 @@ public class AuthenticationRestControllerV1 implements AuthenticationOperations 
                                                  HttpServletRequest request) {
         try {
             String accessToken = authenticationService.authenticateUsernameAndPassword(authenticationRequest);
-
             return ResponseEntity.status(OK)
                     .body(InformationResponse.builder()
                             .accessToken(accessToken)
@@ -47,7 +48,6 @@ public class AuthenticationRestControllerV1 implements AuthenticationOperations 
                                     .build())
                             .build());
         }catch (BadCredentialsException ex) {
-
             return ResponseEntity.status(UNAUTHORIZED)
                     .body(AuthenticationResponse.builder()
                             .status(UNAUTHORIZED.value())
@@ -57,7 +57,6 @@ public class AuthenticationRestControllerV1 implements AuthenticationOperations 
                             .build()
                     );
         }
-
     }
 
     @Override
@@ -70,7 +69,11 @@ public class AuthenticationRestControllerV1 implements AuthenticationOperations 
             String accessToken = authenticationService.authenticateGoogleAccount(authenticationRequest, role);
             if(accessToken == null) {
                 return ResponseEntity.status(UNAUTHORIZED)
-                        .body("Account not found");
+                        .body(AuthenticationResponse.builder()
+                        .status(UNAUTHORIZED.value())
+                        .message("ACCOUNT_NOT_FOUND")
+                        .path(request.getRequestURI())
+                        .build());
             }else {
 
                 return ResponseEntity.status(OK)
@@ -91,11 +94,28 @@ public class AuthenticationRestControllerV1 implements AuthenticationOperations 
                             .path(request.getRequestURI())
                             .build()
                             );
-        } catch (AuthenticationServiceImplV1.EmailDomainException ex) {
+        } catch (EmailDomainException ex) {
 
             return ResponseEntity.status(UNAUTHORIZED)
                     .body(AuthenticationResponse.builder()
                             .status(UNAUTHORIZED.value())
+                            .error(ex.getClass().getSimpleName())
+                            .message(ex.getMessage())
+                            .path(request.getRequestURI())
+                            .build()
+                    );
+        }
+    }
+
+    @Override
+    public ResponseEntity<?> emailRecognition(GoogleAuthenticationRequest authenticationRequest, HttpServletResponse response, HttpServletRequest request) {
+        try {
+            InformationResponse informationResponse = authenticationService.emailVerify(authenticationRequest);
+            return ResponseEntity.ok(informationResponse);
+        } catch (GeneralSecurityException | IOException | EmailDomainException | UserAlreadyExistException ex)  {
+            return ResponseEntity.status(NOT_ACCEPTABLE)
+                    .body(AuthenticationResponse.builder()
+                            .status(NOT_ACCEPTABLE.value())
                             .error(ex.getClass().getSimpleName())
                             .message(ex.getMessage())
                             .path(request.getRequestURI())

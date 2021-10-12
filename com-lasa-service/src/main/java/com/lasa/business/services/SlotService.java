@@ -7,6 +7,10 @@ package com.lasa.business.services;
 
 import com.lasa.data.entity.Slot;
 import java.util.List;
+
+import com.lasa.data.entity.utils.SlotPage;
+import com.lasa.data.entity.utils.SlotSearchCriteria;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 /**
@@ -16,13 +20,13 @@ import org.springframework.stereotype.Service;
 @Service
 public interface SlotService {
     
-    public List<Slot> findAll();
+    Page<Slot> findAll(SlotSearchCriteria searchCriteria, SlotPage slotPage);
     
-    public Slot findById(Integer id);
+    Slot findById(Integer id);
     
-    public List<Slot> createSlots(List<Slot> slots);
+    List<Slot> createSlots(List<Slot> slots);
     
-    public List<Slot> updateSlots(List<Slot> slots);
+    List<Slot> updateSlots(List<Slot> slots);
     
-    public void deleteSlots(List<Integer> ids);
+    void deleteSlots(List<Integer> ids);
 }

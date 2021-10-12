@@ -5,14 +5,23 @@
  */
 package com.lasa.business.servicesv1;
 
-import com.lasa.data.entity.Slot;
+import com.lasa.data.entity.*;
+import com.lasa.data.entity.utils.SlotPage;
+import com.lasa.data.entity.utils.SlotSearchCriteria;
+import com.lasa.data.entity.utils.SlotSpecification;
 import com.lasa.data.repository.SlotRepository;
+
 import java.util.List;
 
 import com.lasa.business.services.SlotService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
+
 
 /**
  *
@@ -29,9 +38,11 @@ public class SlotServiceImplV1 implements SlotService {
         this.slotRepository = slotRepository;
     }
 
+
     @Override
-    public List<Slot> findAll() {
-        return slotRepository.findAll();
+    public Page<Slot> findAll(SlotSearchCriteria searchCriteria, SlotPage slotPage) {
+        Pageable pageable = PageRequest.of(slotPage.getPage(), slotPage.getSize(), Sort.by(slotPage.getOrderBy(), slotPage.getSortBy()));
+        return slotRepository.findAll(SlotSpecification.searchSpecification(searchCriteria), pageable);
     }
 
     @Override

@@ -24,7 +24,7 @@ import javax.persistence.Tuple;
 public interface LecturerOperations {
     
     @GetMapping
-    public Page<Lecturer> findAll(
+    ResponseEntity<Page<Lecturer>> findAll(
             @RequestParam(value = "page", required = false, defaultValue = "0") Integer page,
             @RequestParam(value = "size", required = false, defaultValue = "10") Integer size,
             @RequestParam(value = "search", required = false) String search

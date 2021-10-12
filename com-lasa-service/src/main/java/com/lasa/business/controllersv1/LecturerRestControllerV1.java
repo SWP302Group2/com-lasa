@@ -9,29 +9,17 @@ import com.lasa.business.controllers.LecturerOperations;
 import com.lasa.data.entity.Lecturer;
 import com.lasa.business.services.LecturerService;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
-import com.lasa.data.entity.predicate.LecturerSpecificationBuilder;
 import com.lasa.data.page.LecturerPage;
-import com.lasa.data.repository.LecturerRepository;
 import com.lasa.data.searchcriteria.LecturerSearchCriteria;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
-import javax.persistence.Tuple;
-
-import static org.springframework.http.HttpHeaders.*;
 
 /**
  *
@@ -43,8 +31,6 @@ import static org.springframework.http.HttpHeaders.*;
 public class LecturerRestControllerV1 implements LecturerOperations {
     
     private final LecturerService lecturerService;
-    @Autowired
-    private LecturerRepository lecturerRepository;
 
     @Autowired
     public LecturerRestControllerV1(@Qualifier("LecturerServiceImplV1") LecturerService lecturerService) {
@@ -52,16 +38,8 @@ public class LecturerRestControllerV1 implements LecturerOperations {
     }
 
     @Override
-    public Page<Lecturer> findAll(Integer page, Integer size, String search) {
-        LecturerSpecificationBuilder builder = new LecturerSpecificationBuilder();
-        Matcher matcher = Pattern
-                .compile("(\\w+?)(:|<|>|>:|<:)(\\w+?),", Pattern.UNICODE_CHARACTER_CLASS)
-                .matcher(search + ",");
-        while(matcher.find()) {
-            builder.with(matcher.group(1), matcher.group(2), matcher.group(3));
-        }
-        Specification<Lecturer> spec = builder.build();
-        return lecturerRepository.findAll(spec, PageRequest.of(page, size));
+    public ResponseEntity<Page<Lecturer>> findAll(Integer page, Integer size, String search) {
+        return ResponseEntity.ok(lecturerService.findAll(page, size, search));
     }
 
 

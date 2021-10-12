@@ -6,14 +6,11 @@
 package com.lasa.business.services;
 
 import com.lasa.data.entity.Lecturer;
-import java.util.List;
 
 import com.lasa.data.page.LecturerPage;
 import com.lasa.data.searchcriteria.LecturerSearchCriteria;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
-
-import javax.persistence.Tuple;
 
 /**
  *
@@ -22,7 +19,7 @@ import javax.persistence.Tuple;
 @Service
 public interface LecturerService {
 
-    List<Lecturer> findAllLecturer();
+    Page<Lecturer> findAll(Integer page, Integer size, String search);
 
     Lecturer createLecturer(Lecturer lecturer);
 
