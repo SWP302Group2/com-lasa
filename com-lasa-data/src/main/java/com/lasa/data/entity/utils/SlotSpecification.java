@@ -49,9 +49,8 @@ public class SlotSpecification {
 
                 }
 
-                if(predicates.isEmpty()) {
+                if(predicates.isEmpty())
                     return null;
-                }
                 return criteriaBuilder.and(predicates.toArray(new Predicate[predicates.size() - 1]));
             }
         };

@@ -7,6 +7,11 @@ package com.lasa.business.controllers;
 
 import com.lasa.data.entity.Student;
 import java.util.List;
+
+import com.lasa.data.entity.utils.StudentPage;
+import com.lasa.data.entity.utils.StudentSearchCriteria;
+import org.springframework.data.domain.Page;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,17 +28,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public interface StudentOperations {
 
     @GetMapping
-    public List<Student> findAll();
+    ResponseEntity<Page<Student>> findAll(StudentSearchCriteria searchCriteria, StudentPage studentPage);
 
     @GetMapping(value = "/{id}")
-    public Student findByStudentId(@PathVariable Integer id);
+    Student findByStudentId(@PathVariable Integer id);
 
     @PostMapping
-    public Student createStudent(@RequestBody Student student);
+    Student createStudent(@RequestBody Student student);
 
     @PutMapping
-    public Student updateStudent(@RequestBody Student student);
+    Student updateStudent(@RequestBody Student student);
 
     @DeleteMapping
-    public void deleteStudents(@RequestBody List<Integer> ids);
+    void deleteStudents(@RequestBody List<Integer> ids);
 }

@@ -6,12 +6,20 @@
 package com.lasa.business.servicesv1;
 
 import com.lasa.data.entity.Student;
+import com.lasa.data.entity.utils.SlotSpecification;
+import com.lasa.data.entity.utils.StudentPage;
+import com.lasa.data.entity.utils.StudentSearchCriteria;
+import com.lasa.data.entity.utils.StudentSpecification;
 import com.lasa.data.repository.StudentRepository;
 import java.util.List;
 
 import com.lasa.business.services.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,8 +39,9 @@ public class StudentServiceImplV1 implements StudentService {
     }
 
     @Override
-    public List<Student> findAll() {
-        return studentRepository.findAll();
+    public Page<Student> findAll(StudentSearchCriteria searchCriteria, StudentPage studentPage) {
+        Pageable pageable = PageRequest.of(studentPage.getPage(), studentPage.getSize(), Sort.by(studentPage.getOrderBy(), studentPage.getSortBy()));
+        return studentRepository.findAll(StudentSpecification.searchSpecification(searchCriteria), pageable);
     }
 
     @Override

@@ -7,6 +7,10 @@ package com.lasa.business.services;
 
 import com.lasa.data.entity.Student;
 import java.util.List;
+
+import com.lasa.data.entity.utils.StudentPage;
+import com.lasa.data.entity.utils.StudentSearchCriteria;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 /**
@@ -16,14 +20,13 @@ import org.springframework.stereotype.Service;
 @Service
 public interface StudentService {
     
-    public List<Student> findAll();
+    Page<Student> findAll(StudentSearchCriteria searchCriteria, StudentPage studentPage);
     
-    public Student findByStudentId(Integer id);
+    Student findByStudentId(Integer id);
     
-    // Create one student, end return object
-    public Student createStudent(Student student);
+    Student createStudent(Student student);
     
-    public Student updateStudent(Student student);
+    Student updateStudent(Student student);
     
-    public void deleteStudents(List<Integer> ids);
+    void deleteStudents(List<Integer> ids);
 }

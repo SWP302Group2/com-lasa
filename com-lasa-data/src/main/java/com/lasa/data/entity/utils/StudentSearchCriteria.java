@@ -16,23 +16,12 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 public class StudentSearchCriteria {
-    private String email = "%";
-    private String mssv = "%";
-    private String majorId = "%";
-    private String name = "%";
-    private String phone = "%";
-    private String status = "%";
-    private String gender = "%";
-    @JsonDeserialize(using = LocalDateDeserializer.class)
-    @JsonSerialize(using = LocalDateTimeSerializer.class)
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-    @JsonFormat(pattern = "YYYY-MM-dd HH:mm:ss")
-    private LocalDateTime timeStart = LocalDateTime.of(2000,1,1,1,1,1,1);
-
-    @JsonDeserialize(using = LocalDateDeserializer.class)
-    @JsonSerialize(using = LocalDateTimeSerializer.class)
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-    @JsonFormat(pattern = "YYYY-MM-dd HH:mm:ss")
-    private LocalDateTime timeEnd = LocalDateTime.of(2100,1,1,1,1,1,1);
+    private String email;
+    private String mssv;
+    private String majorId;
+    private String name;
+    private String phone;
+    private Integer status;
+    private Boolean gender;
     private String address;
 }
