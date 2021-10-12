@@ -18,7 +18,7 @@ import static com.lasa.security.permission.ApplicationUserRole.*;
 @NoArgsConstructor
 public class MyUserDetails implements UserDetails {
 
-    private int id;
+    private Integer id;
     private String userName;
     private String name;
     private String password;

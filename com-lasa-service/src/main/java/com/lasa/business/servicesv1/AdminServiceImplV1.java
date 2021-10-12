@@ -40,7 +40,7 @@ public class AdminServiceImplV1 implements AdminService {
 
     @Override
     public Admin findByAdminId(Integer id) {
-        return adminRepository.findAdminByIdWithoutPassword(id).orElse(null);
+        return adminRepository.findById(id).orElse(null);
     }
 
     @Override
@@ -55,12 +55,12 @@ public class AdminServiceImplV1 implements AdminService {
 
     @Override
     public Student findStudentById(Integer id) {
-        return studentRepository.findById(id).get();
+        return studentRepository.findById(id).orElse(null);
     }
 
     @Override
     public Lecturer findLecturerById(Integer id) {
-        return lecturerRepository.findById(id).get();
+        return lecturerRepository.findById(id).orElse(null);
     }
 
     @Override
