@@ -7,6 +7,7 @@ package com.lasa.business.controllers;
 
 import com.lasa.data.entity.SlotTopicDetail;
 import com.lasa.data.entity.key.SlotTopicDetailKey;
+import io.swagger.annotations.ApiParam;
 import java.util.List;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,14 +28,22 @@ public interface SlotTopicDetailOperations {
     public List<SlotTopicDetail> findAll();
 
     @GetMapping(value = "/{id}")
-    public SlotTopicDetail findById(@PathVariable SlotTopicDetailKey id);
+    public SlotTopicDetail findById(
+            @ApiParam(name = "id", type = "string", value = "By id, you may find a slot topic.", required = true)
+            @PathVariable SlotTopicDetailKey id);
 
     @PostMapping
-    public List<SlotTopicDetail> createSlotTopicDetails(@RequestBody List<SlotTopicDetail> details);
+    public List<SlotTopicDetail> createSlotTopicDetails(
+            @ApiParam(name = "details", type = "body", value = "Add topic of slot", required = true)
+            @RequestBody List<SlotTopicDetail> details);
 
     @PutMapping
-    public List<SlotTopicDetail> updateSlotTopicDetails(@RequestBody List<SlotTopicDetail> details);
+    public List<SlotTopicDetail> updateSlotTopicDetails(
+            @ApiParam(name = "details", type = "body", value = "Update a slot topic by id", required = true)
+            @RequestBody List<SlotTopicDetail> details);
 
     @DeleteMapping
-    public void deleteSlotTopicDetails(@RequestBody List<SlotTopicDetailKey> ids);
+    public void deleteSlotTopicDetails(
+            @ApiParam(name = "ids", type = "body", value = "Remove the slot's topic by id", required = true)
+            @RequestBody List<SlotTopicDetailKey> ids);
 }

@@ -7,6 +7,7 @@ package com.lasa.business.controllers;
 
 import com.lasa.data.entity.FavoriteLecturer;
 import com.lasa.data.entity.key.FavoriteLecturerKey;
+import io.swagger.annotations.ApiParam;
 import java.util.List;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,8 +26,12 @@ public interface FavoriteLecturerOperations {
     List<FavoriteLecturer> findAll();
 
     @PostMapping
-    List<FavoriteLecturer> createFavoriteLecturer(@RequestBody List<FavoriteLecturer> favoriteLecturers);
+    List<FavoriteLecturer> createFavoriteLecturer(
+            @ApiParam(name = "favoriteLecturers", type = "body", value = "Create a favorite lecturer", required = true)
+            @RequestBody List<FavoriteLecturer> favoriteLecturers);
     
     @DeleteMapping
-    void deleteFavoriteLecturers(@RequestBody List<FavoriteLecturerKey> ids);
+    void deleteFavoriteLecturers(
+             @ApiParam(name = "favoriteLecturers", type = "body", value = "Delete a favorite lecturer", required = false)
+            @RequestBody List<FavoriteLecturerKey> ids);
 }

@@ -12,7 +12,6 @@ import java.io.Serializable;
 public class InformationResponse {
     private Object information;
     private String role;
-    private CookieInfo cookieInfo;
     private String accessToken;
     private String refreshToken;
     private String email;

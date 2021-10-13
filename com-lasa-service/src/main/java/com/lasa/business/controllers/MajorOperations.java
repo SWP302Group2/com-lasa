@@ -6,6 +6,7 @@
 package com.lasa.business.controllers;
 
 import com.lasa.data.entity.Major;
+import io.swagger.annotations.ApiParam;
 import java.util.List;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,14 +27,22 @@ public interface MajorOperations {
     public List<Major> getAllMajor();
 
     @GetMapping(value = "/{id}")
-    public Major getMajorById(@PathVariable String id);
+    public Major getMajorById(
+            @ApiParam(name = "id", type = "string", value = "Get Major by id", required = true)
+            @PathVariable String id);
 
     @PostMapping
-    public void createMajors(@RequestBody List<Major> majors);
+    public void createMajors(
+            @ApiParam(name = "majors", type = "body", value = "Add a major")
+            @RequestBody List<Major> majors);
 
     @PutMapping
-    public List<Major> updateMajors(@RequestBody List<Major> majors);
+    public List<Major> updateMajors(
+            @ApiParam(name = "majors", type = "body", value = "Update a major")
+            @RequestBody List<Major> majors);
 
     @DeleteMapping
-    public void deleteMajors(@RequestBody List<String> ids);
+    public void deleteMajors(
+            @ApiParam(name = "ids", type = "body", value = "Delete a major by id")
+            @RequestBody List<String> ids);
 }
