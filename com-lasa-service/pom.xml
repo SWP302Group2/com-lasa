@@ -91,11 +91,6 @@
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.modelmapper</groupId>
-            <artifactId>modelmapper</artifactId>
-            <version>2.4.4</version>
-        </dependency>
     </dependencies>
 
     <build>
@@ -134,7 +129,7 @@
                 <artifactId>tomcat7-maven-plugin</artifactId>
                 <version>2.2</version>
                 <configuration>
-                    <url>http://34.101.253.120:80/manager/text</url>
+                    <url>http://34.87.119.36:8080/manager/text</url>
                     <server>tomcat</server>
                     <username>admin</username>
                     <password>123456</password>

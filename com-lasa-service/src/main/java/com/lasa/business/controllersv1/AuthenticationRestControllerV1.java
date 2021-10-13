@@ -43,9 +43,6 @@ public class AuthenticationRestControllerV1 implements AuthenticationOperations 
             return ResponseEntity.status(OK)
                     .body(InformationResponse.builder()
                             .accessToken(accessToken)
-                            .cookieInfo(CookieInfo.builder()
-                                    .maxAge(7 * 24 * 60 * 60)
-                                    .build())
                             .build());
         }catch (BadCredentialsException ex) {
             return ResponseEntity.status(UNAUTHORIZED)
@@ -79,9 +76,6 @@ public class AuthenticationRestControllerV1 implements AuthenticationOperations 
                 return ResponseEntity.status(OK)
                         .body(InformationResponse.builder()
                                 .accessToken(accessToken)
-                                .cookieInfo(CookieInfo.builder()
-                                        .maxAge(7 * 24 * 60 * 60)
-                                        .build())
                                 .build());
             }
         } catch (GeneralSecurityException | IOException ex) {
