@@ -6,6 +6,7 @@
 package com.lasa.business.controllers;
 
 import com.lasa.data.entity.Slot;
+import io.swagger.annotations.ApiParam;
 import java.util.List;
 
 import com.lasa.data.entity.utils.SlotPage;
@@ -26,14 +27,22 @@ public interface SlotOperations {
     ResponseEntity<Page<Slot>> findAll(SlotSearchCriteria searchCriteria, SlotPage slotPage);
 
     @GetMapping(value = "/{id}")
-    public Slot findById(@PathVariable Integer id);
+    public Slot findById(
+            @ApiParam(name = "id", type = "integer", value = "Find a slot by id", required = true)
+            @PathVariable Integer id);
 
     @PostMapping
-    public List<Slot> createSlots(@RequestBody List<Slot> slots);
+    public List<Slot> createSlots(
+            @ApiParam(name = "slots", type = "body", value = "Add a new slot")
+            @RequestBody List<Slot> slots);
 
     @PutMapping
-    public List<Slot> updateSlots(@RequestBody List<Slot> slots);
+    public List<Slot> updateSlots(
+            @ApiParam(name = "slots", type = "body", value = "Update a slot by id", required = true)
+            @RequestBody List<Slot> slots);
 
     @DeleteMapping
-    public void deleteSlots(@RequestBody List<Integer> ids);
+    public void deleteSlots(
+            @ApiParam(name = "ids", type = "body", value = "Delete a slot by id", required = true)
+            @RequestBody List<Integer> ids);
 }

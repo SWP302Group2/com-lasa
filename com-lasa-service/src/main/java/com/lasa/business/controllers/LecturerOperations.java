@@ -6,6 +6,7 @@
 package com.lasa.business.controllers;
 
 import com.lasa.data.entity.Lecturer;
+import io.swagger.annotations.ApiParam;
 import java.util.List;
 
 import com.lasa.data.page.LecturerPage;
@@ -33,24 +34,32 @@ public interface LecturerOperations {
 
     @GetMapping("/basic-information")
     ResponseEntity<?> findBasicInformationLecturers(
-            @RequestParam(value = "page", required = false, defaultValue = "0") Integer page,
-            @RequestParam(value = "size", required = false, defaultValue = "10") Integer size
+              @ApiParam(name ="page",type ="integer",value = "Paging",required = false, defaultValue = "0") @RequestParam Integer page,
+            @ApiParam(name ="size",type ="integer",value = "Size",required = false, defaultValue = "10") @RequestParam Integer size
     );
-
+    
     @GetMapping("/get")
     public ResponseEntity<Page<Lecturer>> getLecturer(LecturerPage lecturerPage,
                                                    LecturerSearchCriteria lecturerSearchCriteria);
     
     @GetMapping("/{id}")
-    public Lecturer findByLecturerId(@PathVariable("id") Integer id);
+    public Lecturer findByLecturerId(
+            @ApiParam(name = "id", type = "integer", value = "Find lecturer by id")
+            @PathVariable("id") Integer id);
     
     @PostMapping
-    public Lecturer createLecturer(@RequestBody Lecturer lecturer);
+    public Lecturer createLecturer(
+            @ApiParam(name = "lecturer", type = "body", value = "Create a new lecturer", required = true)
+            @RequestBody Lecturer lecturer);
     
     @PutMapping
-    public Lecturer updateLecturer(@RequestBody Lecturer lecturer);
+    public Lecturer updateLecturer(
+            @ApiParam(name = "lecturer", type = "body", value = "Update a lecturer", required = true)
+            @RequestBody Lecturer lecturer);
     
     @DeleteMapping
-    public void deleteLecturers(List<Integer> ids);
+    public void deleteLecturers(
+            @ApiParam(name = "ids", type = "array", value = "Delete lecturer by id", required = true)
+            List<Integer> ids);
     
 }

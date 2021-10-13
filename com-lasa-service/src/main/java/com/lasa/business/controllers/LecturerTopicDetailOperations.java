@@ -7,6 +7,7 @@ package com.lasa.business.controllers;
 
 import com.lasa.data.entity.LecturerTopicDetail;
 import com.lasa.data.entity.key.LecturerTopicDetailKey;
+import io.swagger.annotations.ApiParam;
 import java.util.List;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,8 +26,12 @@ public interface LecturerTopicDetailOperations {
     public List<LecturerTopicDetail> findAll();
     
     @PostMapping
-    public List<LecturerTopicDetail> createLecturerTopicDetails(@RequestBody List<LecturerTopicDetail> lecturerTopicDetails);
+    public List<LecturerTopicDetail> createLecturerTopicDetails(
+            @ApiParam(name = "lecturerTopicDetails", type = "body", value = "Add topic of lecturer", required = true)
+            @RequestBody List<LecturerTopicDetail> lecturerTopicDetails);
     
     @DeleteMapping
-    public void deleteLecturerTopicDetails(@RequestBody List<LecturerTopicDetailKey> ids);
+    public void deleteLecturerTopicDetails(
+            @ApiParam(name = "ids", type = "body", value = "Remove the lecturer's topic by id", required = true)
+            @RequestBody List<LecturerTopicDetailKey> ids);
 }
