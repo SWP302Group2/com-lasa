@@ -3,6 +3,7 @@ package com.lasa.security.jwt;
 import com.lasa.data.entity.Admin;
 import com.lasa.data.entity.Lecturer;
 import com.lasa.data.entity.Student;
+import com.lasa.security.utils.ExceptionUtils;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,9 +82,10 @@ public class JwtUtil {
                 .compact();
     }
 
-    public Boolean validateToken(String token, UserDetails userDetails) {
+    public Boolean validateToken(String token, UserDetails userDetails) throws ExceptionUtils.TokenInvalidException {
         String username = extractUsername(token);
-        return  (username.equals(userDetails.getUsername())) && !isTokenExpired(token);
+        if(isTokenExpired(token)) throw new ExceptionUtils.TokenInvalidException("TOKEN_IS_EXPIRED");
+        return  (username.equals(userDetails.getUsername()));
     }
 
 }

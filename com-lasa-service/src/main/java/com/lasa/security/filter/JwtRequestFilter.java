@@ -2,6 +2,9 @@ package com.lasa.security.filter;
 
 import com.lasa.security.jwt.JwtConfig;
 import com.lasa.security.jwt.JwtUtil;
+import com.lasa.security.utils.ExceptionUtils;
+import com.lasa.security.utils.ExceptionUtils.UserAccountException;
+import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -54,11 +57,13 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         }
 
         if(username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-
             UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-                if(userDetails.isAccountNonLocked()
-                        && userDetails.isEnabled()
-                        && jwtUtil.validateToken(jwt, userDetails)) {
+
+            if(!userDetails.isEnabled()) throw new UserAccountException("ACCOUNT_NOT_ENABLED");
+
+            else if(!userDetails.isAccountNonLocked()) throw new UserAccountException("ACCOUNT_IS_LOCKED");
+
+            else if(jwtUtil.validateToken(jwt, userDetails)) {
 
                     UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
                             userDetails, null, userDetails.getAuthorities()

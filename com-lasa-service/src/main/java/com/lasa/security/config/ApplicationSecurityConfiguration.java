@@ -1,5 +1,6 @@
 package com.lasa.security.config;
 
+import com.lasa.security.filter.ExceptionHandlerFilter;
 import com.lasa.security.filter.JwtRequestFilter;
 import com.lasa.security.jwt.JwtConfig;
 import com.lasa.security.jwt.JwtUtil;
@@ -18,6 +19,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.logout.LogoutFilter;
+import org.springframework.security.web.session.ConcurrentSessionFilter;
 
 import static org.springframework.http.HttpMethod.POST;
 
@@ -29,13 +32,15 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
     private final JwtUtil jwtUtil;
     private final JwtConfig jwtConfig;
     private final JwtRequestFilter jwtRequestFilter;
+    private final ExceptionHandlerFilter exceptionHandlerFilter;
 
     @Autowired
-    public ApplicationSecurityConfiguration(UserDetailsService userDetailsService, JwtUtil jwtUtil, JwtConfig jwtConfig, JwtRequestFilter jwtRequestFilter) {
+    public ApplicationSecurityConfiguration(UserDetailsService userDetailsService, JwtUtil jwtUtil, JwtConfig jwtConfig, JwtRequestFilter jwtRequestFilter, ExceptionHandlerFilter exceptionHandlerFilter) {
         this.userDetailsService = userDetailsService;
         this.jwtUtil = jwtUtil;
         this.jwtConfig = jwtConfig;
         this.jwtRequestFilter = jwtRequestFilter;
+        this.exceptionHandlerFilter = exceptionHandlerFilter;
     }
 
     @Override
@@ -65,13 +70,13 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
                 .antMatchers("/templateSignGoogle.html").permitAll()
                 .antMatchers("/newGoogleLogin.html").permitAll()
                 .antMatchers(HttpMethod.OPTIONS, "/api/v1/**").permitAll()
-                .antMatchers("/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         http
+                .addFilterBefore(exceptionHandlerFilter, LogoutFilter.class)
                 .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
     }
 

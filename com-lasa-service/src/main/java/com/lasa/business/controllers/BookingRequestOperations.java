@@ -23,9 +23,9 @@ public interface BookingRequestOperations {
 
     @GetMapping
     ResponseEntity<?> getBookingRequests(
-            @ApiParam(name ="page",type ="integer",value = "Paging",defaultValue = "0") @RequestParam Integer pageNumber,
-            @ApiParam(name ="size",type ="integer",value ="The size you want view", defaultValue = "10") @RequestParam Integer pageSize,
-            @ApiParam(name ="studentId",type ="integer",value ="Get student by id") @RequestParam Integer studentId,
+            @ApiParam(name ="page",type ="Integer",value = "Page Number",defaultValue = "0") @RequestParam Integer pageNumber,
+            @ApiParam(name ="size",type ="Integer",value ="The size you want view", defaultValue = "10") @RequestParam Integer pageSize,
+            @ApiParam(name ="studentId",type ="Integer",value ="Get student by id", example = "1") @RequestParam Integer studentId,
             @ApiParam(name ="slotId",type ="integer",value ="Get slot by id", required = false) @RequestParam Integer slotId
             );
     @RequestMapping(value = "/status")
@@ -58,6 +58,6 @@ public interface BookingRequestOperations {
     
     @DeleteMapping
     public void deleteBookingRequests(
-             @ApiParam(name = "ids", type = "body", value = "By id, you may remove booking request")
+            @ApiParam(name = "ids", type = "body", value = "By id, you may remove booking request")
             @RequestBody List<Integer> ids);
 }
