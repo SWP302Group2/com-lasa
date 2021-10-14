@@ -6,6 +6,7 @@ import com.lasa.data.entity.Student;
 import com.lasa.security.appuser.MyUserDetails;
 import com.lasa.security.utils.ExceptionUtils;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -54,11 +55,15 @@ public class JwtUtil {
     }
 
     public Claims extractAllClaims(String token) {
-        return Jwts.parserBuilder()
-                .setSigningKey(Keys.hmacShaKeyFor(jwtConfig.getSecretKey().getBytes()))
-                .build()
-                .parseClaimsJws(token)
-                .getBody();
+        try {
+            return Jwts.parserBuilder()
+                    .setSigningKey(Keys.hmacShaKeyFor(jwtConfig.getSecretKey().getBytes()))
+                    .build()
+                    .parseClaimsJws(token)
+                    .getBody();
+        }catch (ExpiredJwtException ex) {
+            throw new ExceptionUtils.TokenInvalidException("TOKEN_IS_EXPIRED");
+        }
     }
 
     private boolean isTokenExpired(String token) {
@@ -85,7 +90,6 @@ public class JwtUtil {
 
     public Boolean validateToken(String token, UserDetails userDetails) throws ExceptionUtils.TokenInvalidException {
         String username = extractUsername(token);
-        if(isTokenExpired(token)) throw new ExceptionUtils.TokenInvalidException("TOKEN_IS_EXPIRED");
         return  (username.equals(userDetails.getUsername()));
     }
 
