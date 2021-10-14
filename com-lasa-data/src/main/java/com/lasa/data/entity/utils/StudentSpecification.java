@@ -31,7 +31,7 @@ public class StudentSpecification {
                     predicates.add(criteriaBuilder.equal(root.get(Student_.status), searchCriteria.getStatus()));
 
                 if(Objects.nonNull(searchCriteria.getMajorId()))
-                    predicates.add(criteriaBuilder.like(root.get(Student_.majorId), "%" + searchCriteria.getMajorId() + "%"));
+                    predicates.add(criteriaBuilder.isTrue(root.get(Student_.majorId).in(searchCriteria.getMajorId())));
 
                 if(Objects.nonNull(searchCriteria.getName()))
                     predicates.add(criteriaBuilder.like(root.get(Student_.name), "%" + searchCriteria.getName() + "%"));

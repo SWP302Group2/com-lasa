@@ -12,13 +12,14 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 @Getter
 @Setter
 @NoArgsConstructor
 public class SlotSearchCriteria implements Serializable {
 
-    private Integer lecturerId ;
+    private List<Integer> lecturerId ;
 
     @JsonDeserialize(using = LocalDateDeserializer.class)
     @JsonSerialize(using = LocalDateTimeSerializer.class)
@@ -32,7 +33,4 @@ public class SlotSearchCriteria implements Serializable {
     @JsonFormat(pattern = "YYYY-MM-dd HH:mm:ss")
     private LocalDateTime timeEnd ;
 
-    private String lecturerName ;
-    private Integer topicId;
-    private String topicName;
 }

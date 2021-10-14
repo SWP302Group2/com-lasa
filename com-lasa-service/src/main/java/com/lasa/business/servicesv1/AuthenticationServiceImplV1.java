@@ -8,9 +8,13 @@ import com.google.api.client.json.gson.GsonFactory;
 import com.lasa.business.config.utils.ValidationHelper;
 import com.lasa.business.services.AuthenticationService;
 import com.lasa.data.entity.Lecturer;
+import com.lasa.data.entity.LecturerTopicDetail;
 import com.lasa.data.entity.Student;
+import com.lasa.data.entity.Topic;
+import com.lasa.data.repository.FavoriteLecturerRepository;
 import com.lasa.data.repository.LecturerRepository;
 import com.lasa.data.repository.StudentRepository;
+import com.lasa.security.appuser.MyUserDetails;
 import com.lasa.security.jwt.JwtUtil;
 import com.lasa.security.model.AuthenticationRequest;
 import com.lasa.security.model.GoogleAuthenticationRequest;
@@ -27,10 +31,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 import static com.lasa.business.config.utils.ValidationHelper.emailValidation;
 import static com.lasa.security.permission.ApplicationUserRole.LECTURER;
@@ -44,6 +45,7 @@ public class AuthenticationServiceImplV1 implements AuthenticationService {
     private final UserDetailsService userDetailsService;
     private final StudentRepository studentRepository;
     private final LecturerRepository lecturerRepository;
+    private final FavoriteLecturerRepository favoriteLecturerRepository;
     private final JwtUtil jwtUtil;
     private final String CLIENT_ID1 = "69016056321-5j2fr23vo8oggc3jsqksgu2a4g1s1mhn.apps.googleusercontent.com";
     private final String CLIENT_ID2 = "431681257434-1makcgok3vs3tnivthtvcbnt2fcc1aul.apps.googleusercontent.com";
@@ -53,13 +55,15 @@ public class AuthenticationServiceImplV1 implements AuthenticationService {
                                        @Qualifier("MyUserDetailsService") UserDetailsService userDetailsService,
                                        JwtUtil jwtUtil,
                                        StudentRepository studentRepository,
-                                       LecturerRepository lecturerRepository
+                                       LecturerRepository lecturerRepository,
+                                       FavoriteLecturerRepository favoriteLecturerRepository
                                        ) {
         this.authenticationManager = authenticationManager;
         this.userDetailsService = userDetailsService;
         this.jwtUtil = jwtUtil;
         this.studentRepository = studentRepository;
         this.lecturerRepository = lecturerRepository;
+        this.favoriteLecturerRepository = favoriteLecturerRepository;
     }
 
     @Override
@@ -72,7 +76,7 @@ public class AuthenticationServiceImplV1 implements AuthenticationService {
             throw new BadCredentialsException("INCORRECT_USERNAME_OR_PASSWORD");
         }
 
-        final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
+        final MyUserDetails userDetails = (MyUserDetails) userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
         final String jwt = jwtUtil.generateToken(userDetails);
         return jwt;
     }
@@ -89,7 +93,7 @@ public class AuthenticationServiceImplV1 implements AuthenticationService {
             if (!emailValidation(email))
                 throw new EmailDomainException("INVALID_EMAIL_DOMAIN");
             try{
-                UserDetails userDetails = userDetailsService.loadUserByUsername(email);
+                MyUserDetails userDetails = (MyUserDetails) userDetailsService.loadUserByUsername(email);
                 return jwtUtil.generateToken(userDetails);
             }catch (UsernameNotFoundException ex) {
                 //if role !=null create new user by role student or lecturer
@@ -97,24 +101,28 @@ public class AuthenticationServiceImplV1 implements AuthenticationService {
                     if(role.equalsIgnoreCase(STUDENT.name())) {
                         String name = (String) payload.get("name");
                         String pictureUrl = (String) payload.get("picture");
-
+                        String majorId = null;
                         if(Objects.nonNull(googleAuthenticationRequest.getName()))
                             name = googleAuthenticationRequest.getName();
 
                         if(Objects.nonNull(googleAuthenticationRequest.getAvatarUrl()))
                             pictureUrl = googleAuthenticationRequest.getAvatarUrl();
 
+                        if(Objects.nonNull(googleAuthenticationRequest.getMajorId()))
+                            majorId = googleAuthenticationRequest.getMajorId();
+
                         Student student = Student.builder()
                                 .email(email)
                                 .name(name)
                                 .mssv(googleAuthenticationRequest.getMssv())
                                 .status(1) //set student to active
+                                .majorId(majorId)
                                 .avatarUrl(pictureUrl)
                                 .build();
                         //save student to database
                         studentRepository.saveAndFlush(student);
                         //load user from database again to make sure user already in db and for generate user detail
-                        UserDetails userDetails = userDetailsService.loadUserByUsername(email);
+                        MyUserDetails userDetails = (MyUserDetails) userDetailsService.loadUserByUsername(email);
                         return jwtUtil.generateToken(userDetails);
                     }
                     if(role.equalsIgnoreCase(LECTURER.name())) {
@@ -127,16 +135,29 @@ public class AuthenticationServiceImplV1 implements AuthenticationService {
                         if(Objects.nonNull(googleAuthenticationRequest.getAvatarUrl()))
                             pictureUrl = googleAuthenticationRequest.getAvatarUrl();
 
+                        Collection<LecturerTopicDetail> topicDetailList = new ArrayList<>();
+
+                        if(Objects.nonNull(googleAuthenticationRequest.getTopicId())) {
+                            googleAuthenticationRequest.getTopicId()
+                                    .stream()
+                                    .forEach(t -> topicDetailList.add(LecturerTopicDetail.builder()
+                                            .topic(Topic.builder()
+                                                    .id(t)
+                                                    .build())
+                                            .build()));
+                        }
+
                         Lecturer lecturer = Lecturer.builder()
                                 .email(email)
                                 .name(name)
+                                .topics(topicDetailList)
                                 .meetingUrl(googleAuthenticationRequest.getMeetUrl())
                                 .status(0) //set lecturer status to inactive
                                 .avatarUrl(pictureUrl)
                                 .build();
                         lecturerRepository.saveAndFlush(lecturer);
                         //load user from database again to make sure user already in db and for generate user detail
-                        UserDetails userDetails = userDetailsService.loadUserByUsername(email);
+                        MyUserDetails userDetails = (MyUserDetails) userDetailsService.loadUserByUsername(email);
                         return jwtUtil.generateToken(userDetails);
                     }
                 }
