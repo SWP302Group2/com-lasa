@@ -58,17 +58,17 @@ public class Lecturer implements Serializable {
     @OneToMany(targetEntity = FavoriteLecturer.class,mappedBy = "lecturer")
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    private Set<FavoriteLecturer> students;
+    private Collection<FavoriteLecturer> students;
     
     @OneToMany(targetEntity = LecturerTopicDetail.class,mappedBy = "lecturer")
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    private Set<LecturerTopicDetail> topics;
+    private Collection<LecturerTopicDetail> topics;
     
-    @OneToMany(targetEntity = Slot.class, mappedBy = "lecturer")
+    @OneToMany(targetEntity = Slot.class, mappedBy = "lecturerId")
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
-    private Set<Slot> slots;
+    private Collection<Slot> slots;
 
     @Column(name = "status")
     private Integer status;
@@ -86,7 +86,7 @@ public class Lecturer implements Serializable {
     private String avatarUrl;
 
     @Builder
-    public Lecturer(Integer id, String email, String name, String phone, String meetingUrl, Set<FavoriteLecturer> students, Set<LecturerTopicDetail> topics, Set<Slot> slots, Integer status, Boolean gender, LocalDate birthday, String address, String avatarUrl) {
+    public Lecturer(Integer id, String email, String name, String phone, String meetingUrl, Collection<FavoriteLecturer> students, Collection<LecturerTopicDetail> topics, Collection<Slot> slots, Integer status, Boolean gender, LocalDate birthday, String address, String avatarUrl) {
         this.id = id;
         this.email = email;
         this.name = name;
@@ -101,5 +101,4 @@ public class Lecturer implements Serializable {
         this.address = address;
         this.avatarUrl = avatarUrl;
     }
-
 }

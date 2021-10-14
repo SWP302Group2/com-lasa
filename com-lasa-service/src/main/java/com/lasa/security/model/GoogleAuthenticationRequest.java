@@ -3,6 +3,8 @@ package com.lasa.security.model;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 public class GoogleAuthenticationRequest {
@@ -11,4 +13,6 @@ public class GoogleAuthenticationRequest {
     private String avatarUrl;
     private String mssv;
     private String meetUrl;
+    private String majorId;
+    private List<Integer> topicId;
 }

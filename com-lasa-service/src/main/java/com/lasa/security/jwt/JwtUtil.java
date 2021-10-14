@@ -3,6 +3,7 @@ package com.lasa.security.jwt;
 import com.lasa.data.entity.Admin;
 import com.lasa.data.entity.Lecturer;
 import com.lasa.data.entity.Student;
+import com.lasa.security.appuser.MyUserDetails;
 import com.lasa.security.utils.ExceptionUtils;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -64,7 +65,7 @@ public class JwtUtil {
         return extractExpiration(token).before(new Date());
     }
 
-    public String generateToken(UserDetails userDetails) {
+    public String generateToken(MyUserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();
         claims.put(IS_USER_NON_LOCKED, userDetails.isAccountNonLocked() );
         claims.put(IS_USER_ENABLED, userDetails.isEnabled());

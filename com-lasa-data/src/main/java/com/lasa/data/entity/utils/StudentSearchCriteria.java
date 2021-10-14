@@ -11,6 +11,8 @@ import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -18,7 +20,7 @@ import java.time.LocalDateTime;
 public class StudentSearchCriteria {
     private String email;
     private String mssv;
-    private String majorId;
+    private List<String> majorId;
     private String name;
     private String phone;
     private Integer status;

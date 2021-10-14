@@ -39,8 +39,6 @@ public class SlotRestControllerV1 implements SlotOperations {
 
     @Override
     public ResponseEntity<Page<Slot>> findAll(SlotSearchCriteria searchCriteria, SlotPage slotPage) {
-        System.out.println(searchCriteria.getTimeEnd());
-        System.out.println(searchCriteria.getTimeStart());
         return ResponseEntity.ok(service.findAll(searchCriteria, slotPage));
     }
 

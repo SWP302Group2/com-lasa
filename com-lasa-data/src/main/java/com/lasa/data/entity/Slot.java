@@ -36,12 +36,9 @@ public class Slot implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @ManyToOne(targetEntity = Lecturer.class, fetch = FetchType.LAZY)
-    @JoinColumn(name = "lecturerid")
-    @EqualsAndHashCode.Exclude
-    @ToString.Exclude
-    private Lecturer lecturer;
-    
+    @Column(name = "lecturerid")
+    private String lecturerId;
+
     @OneToMany(targetEntity = BookingRequest.class, mappedBy = "slotId")
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
@@ -59,9 +56,9 @@ public class Slot implements Serializable {
     private LocalDateTime timeEnd;
 
     @Builder
-    public Slot(Integer id, Lecturer lecturer, Collection<BookingRequest> bookingRequests, Collection<SlotTopicDetail> topics, LocalDateTime timeStart, LocalDateTime timeEnd) {
+    public Slot(Integer id, String lecturerId, Collection<BookingRequest> bookingRequests, Collection<SlotTopicDetail> topics, LocalDateTime timeStart, LocalDateTime timeEnd) {
         this.id = id;
-        this.lecturer = lecturer;
+        this.lecturerId = lecturerId;
         this.bookingRequests = bookingRequests;
         this.topics = topics;
         this.timeStart = timeStart;
