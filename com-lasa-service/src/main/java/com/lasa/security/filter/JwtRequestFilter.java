@@ -4,7 +4,6 @@ import com.lasa.security.jwt.JwtConfig;
 import com.lasa.security.jwt.JwtUtil;
 import com.lasa.security.utils.ExceptionUtils;
 import com.lasa.security.utils.ExceptionUtils.UserAccountException;
-import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -12,6 +11,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
+import org.springframework.security.web.csrf.InvalidCsrfTokenException;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -50,12 +50,11 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         String jwt = null;
         String username = null;
         final String authorization_token = request.getHeader(HttpHeaders.AUTHORIZATION);
-
+        System.out.println(authorization_token);
         if(authorization_token != null && authorization_token.startsWith(jwtConfig.getTokenPrefix() + " ")) {
             jwt = authorization_token.replace(jwtConfig.getTokenPrefix() + " ", "");
             username = jwtUtil.extractUsername(jwt);
         }
-
         if(username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 

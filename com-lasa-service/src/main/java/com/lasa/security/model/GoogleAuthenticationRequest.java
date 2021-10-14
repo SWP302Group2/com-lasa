@@ -14,5 +14,5 @@ public class GoogleAuthenticationRequest {
     private String mssv;
     private String meetUrl;
     private String majorId;
-    private List<Integer> topicId;
+    private List<Integer> topics;
 }

@@ -55,9 +55,12 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
 
     private static final String[] AUTH_WHITELIST = {
             "**/swagger-resources/**",
-            "/swagger-ui.html",
-            "/v2/api-docs",
-            "/webjars/**"
+            "/swagger-ui.html/**",
+            "/v2/api-docs/**",
+            "/webjars/**",
+            "**/swagger-resources/configuration/ui",
+            "/swagger-ui.html/swagger-resources/configuration/ui",
+            "**/api/v2/api-docs/**"
     };
 
     @Override
@@ -79,6 +82,7 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
                 .antMatchers(HttpMethod.GET, "/api/v1/topics/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/v1/majors/**").permitAll()
                 .antMatchers(HttpMethod.OPTIONS, "/api/v1/**").permitAll()
+                .antMatchers("/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .sessionManagement()

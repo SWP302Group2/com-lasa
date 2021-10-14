@@ -13,6 +13,7 @@ import com.lasa.data.entity.Student;
 import com.lasa.data.entity.Topic;
 import com.lasa.data.repository.FavoriteLecturerRepository;
 import com.lasa.data.repository.LecturerRepository;
+import com.lasa.data.repository.LecturerTopicDetailRepository;
 import com.lasa.data.repository.StudentRepository;
 import com.lasa.security.appuser.MyUserDetails;
 import com.lasa.security.jwt.JwtUtil;
@@ -45,7 +46,7 @@ public class AuthenticationServiceImplV1 implements AuthenticationService {
     private final UserDetailsService userDetailsService;
     private final StudentRepository studentRepository;
     private final LecturerRepository lecturerRepository;
-    private final FavoriteLecturerRepository favoriteLecturerRepository;
+    private final LecturerTopicDetailRepository lecturerTopicDetailRepository;
     private final JwtUtil jwtUtil;
     private final String CLIENT_ID1 = "69016056321-5j2fr23vo8oggc3jsqksgu2a4g1s1mhn.apps.googleusercontent.com";
     private final String CLIENT_ID2 = "431681257434-1makcgok3vs3tnivthtvcbnt2fcc1aul.apps.googleusercontent.com";
@@ -56,14 +57,13 @@ public class AuthenticationServiceImplV1 implements AuthenticationService {
                                        JwtUtil jwtUtil,
                                        StudentRepository studentRepository,
                                        LecturerRepository lecturerRepository,
-                                       FavoriteLecturerRepository favoriteLecturerRepository
-                                       ) {
+                                       LecturerTopicDetailRepository lecturerTopicDetailRepository) {
         this.authenticationManager = authenticationManager;
         this.userDetailsService = userDetailsService;
         this.jwtUtil = jwtUtil;
         this.studentRepository = studentRepository;
         this.lecturerRepository = lecturerRepository;
-        this.favoriteLecturerRepository = favoriteLecturerRepository;
+        this.lecturerTopicDetailRepository = lecturerTopicDetailRepository;
     }
 
     @Override
@@ -135,22 +135,11 @@ public class AuthenticationServiceImplV1 implements AuthenticationService {
                         if(Objects.nonNull(googleAuthenticationRequest.getAvatarUrl()))
                             pictureUrl = googleAuthenticationRequest.getAvatarUrl();
 
-                        Collection<LecturerTopicDetail> topicDetailList = new ArrayList<>();
-
-                        if(Objects.nonNull(googleAuthenticationRequest.getTopicId())) {
-                            googleAuthenticationRequest.getTopicId()
-                                    .stream()
-                                    .forEach(t -> topicDetailList.add(LecturerTopicDetail.builder()
-                                            .topic(Topic.builder()
-                                                    .id(t)
-                                                    .build())
-                                            .build()));
-                        }
+                        System.out.println("Topics:" + googleAuthenticationRequest.getTopics());
 
                         Lecturer lecturer = Lecturer.builder()
                                 .email(email)
                                 .name(name)
-                                .topics(topicDetailList)
                                 .meetingUrl(googleAuthenticationRequest.getMeetUrl())
                                 .status(0) //set lecturer status to inactive
                                 .avatarUrl(pictureUrl)
@@ -158,6 +147,21 @@ public class AuthenticationServiceImplV1 implements AuthenticationService {
                         lecturerRepository.saveAndFlush(lecturer);
                         //load user from database again to make sure user already in db and for generate user detail
                         MyUserDetails userDetails = (MyUserDetails) userDetailsService.loadUserByUsername(email);
+                        Integer lecturerId = userDetails.getId();
+                        if(Objects.nonNull(googleAuthenticationRequest.getTopics())) {
+                            Collection<LecturerTopicDetail> topics = new ArrayList<>();
+                            googleAuthenticationRequest.getTopics().stream()
+                                    .forEach(t -> topics.add(LecturerTopicDetail.builder()
+                                                                .topic(Topic.builder()
+                                                                    .id(t)
+                                                                    .build())
+                                                                .lecturer(Lecturer.builder()
+                                                                    .id(lecturerId)
+                                                                    .build())
+                                                                .build()));
+                            lecturerTopicDetailRepository.saveAllAndFlush(topics);
+
+                        }
                         return jwtUtil.generateToken(userDetails);
                     }
                 }
