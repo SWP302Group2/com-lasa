@@ -33,7 +33,7 @@ public interface StudentOperations {
 
     @GetMapping(value = "/{id}")
     public Student findByStudentId(
-            @ApiParam(name = "id", type = "integer", value = "By id, you may find a student", required = true)
+            @ApiParam(name = "id", type = "Integer", value = "By id, you may find a student", required = true)
             @PathVariable Integer id);
 
     @PostMapping

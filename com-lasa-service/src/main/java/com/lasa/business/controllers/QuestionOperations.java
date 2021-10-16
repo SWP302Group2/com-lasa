@@ -32,7 +32,7 @@ public interface QuestionOperations {
     
     @GetMapping(value="/{id}")
     Question findById(
-            @ApiParam(name = "ids", type = "integer", value = "Get a question based on id.", required = true)
+            @ApiParam(name = "ids", type = "Integer", value = "Get a question based on id.", required = true)
             @PathVariable Integer id);
     
     @PostMapping

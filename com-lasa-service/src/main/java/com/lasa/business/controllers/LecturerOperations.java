@@ -25,7 +25,7 @@ public interface LecturerOperations {
     
     @GetMapping(value = {"/{id}", ""})
     ResponseEntity<?> findWithArgument(
-            @ApiParam(name = "id", type = "integer", value = "Find lecturer by id")
+            @ApiParam(name = "id", type = "Integer", value = "Find lecturer by id")
             @PathVariable(value = "id", required = false) Integer id,
             LecturerPage lecturerPage,
             LecturerSearchCriteria searchCriteria

@@ -33,7 +33,7 @@ public interface SlotTopicDetailOperations {
 
     @GetMapping(value = "/{id}")
     public SlotTopicDetail findById(
-            @ApiParam(name = "id", type = "string", value = "By id, you may find a slot topic.", required = true)
+            @ApiParam(name = "id", type = "Integer", value = "By id, you may find a slot topic.", required = true)
             @PathVariable SlotTopicDetailKey id);
 
     @PostMapping

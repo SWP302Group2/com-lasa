@@ -53,19 +53,15 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
             auth.userDetailsService(userDetailsService);
     }
 
-    private static final String[] AUTH_WHITELIST = {
-            "**/swagger-resources/**",
-            "/swagger-ui.html/**",
-            "/v2/api-docs/**",
-            "/webjars/**",
-            "**/swagger-resources/configuration/ui",
-            "/swagger-ui.html/swagger-resources/configuration/ui",
-            "**/api/v2/api-docs/**"
-    };
-
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers(AUTH_WHITELIST);
+        web.ignoring().antMatchers(
+                "/v2/api-docs",
+                "/configuration/ui",
+                "/swagger-resources/**",
+                "/configuration/security",
+                "/swagger-ui.html",
+                "/webjars/**");
     }
 
     @Override

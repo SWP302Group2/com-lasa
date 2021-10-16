@@ -45,7 +45,7 @@ public class Application extends SpringBootServletInitializer {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
                 .paths(PathSelectors.any())
-                .apis(RequestHandlerSelectors.basePackage("com.lasa.business.controllersv1"))
+                .apis(RequestHandlerSelectors.basePackage("com.lasa.business.controllers"))
                 .build();
     }
 

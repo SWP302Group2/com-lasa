@@ -53,8 +53,6 @@ public class MajorRestControllerV1 implements MajorOperations {
         }
     }
 
-
-
     @Override
     public void createMajors(List<Major> majors) {
         majorService.createMajors(majors);

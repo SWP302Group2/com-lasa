@@ -32,7 +32,7 @@ public interface TopicOperations {
 
     @GetMapping(value = "/{id}")
     Topic findById(
-            @ApiParam(name = "id", type = "integer", value = "By id, you may find a topic", required = true)
+            @ApiParam(name = "id", type = "Integer", value = "By id, you may find a topic", required = true)
             @PathVariable Integer id);
 
     @PostMapping

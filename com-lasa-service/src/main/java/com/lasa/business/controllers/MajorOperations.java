@@ -8,6 +8,7 @@ package com.lasa.business.controllers;
 import com.lasa.data.entity.Major;
 import com.lasa.data.entity.utils.criteria.MajorSearchCriteria;
 import com.lasa.data.entity.utils.page.MajorPage;
+import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import java.util.List;
 
@@ -30,7 +31,7 @@ import javax.servlet.http.HttpServletRequest;
 public interface MajorOperations {
 
     @GetMapping(value = {"", "/topics", "/{id}"})
-    ResponseEntity<?> findWithArgument(@ApiParam(name = "id", type = "string", value = "Get Major by id", required = false)
+    ResponseEntity<?> findWithArgument(@ApiParam(name = "id", type = "String", value = "Get Major by id", required = false)
                                        @PathVariable(value = "id", required = false) String id,
                                        MajorPage majorPage,
                                        MajorSearchCriteria searchCriteria,
@@ -48,6 +49,6 @@ public interface MajorOperations {
 
     @DeleteMapping
     void deleteMajors(
-            @ApiParam(name = "ids", type = "body", value = "Delete a major by id")
+            @ApiParam(name = "ids", type = "body", value = "Delete a major by id", defaultValue = "false")
             @RequestBody List<String> ids);
 }

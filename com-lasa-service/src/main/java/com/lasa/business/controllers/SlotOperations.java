@@ -27,7 +27,7 @@ public interface SlotOperations {
 
     @GetMapping(value = "/{id}")
     public Slot findById(
-            @ApiParam(name = "id", type = "integer", value = "Find a slot by id", required = true)
+            @ApiParam(name = "id", type = "Integer", value = "Find a slot by id", required = true)
             @PathVariable Integer id);
 
     @PostMapping
