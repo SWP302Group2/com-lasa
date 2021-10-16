@@ -7,6 +7,10 @@ package com.lasa.business.services;
 
 import com.lasa.data.entity.Topic;
 import java.util.List;
+
+import com.lasa.data.entity.utils.criteria.TopicSearchCriteria;
+import com.lasa.data.entity.utils.page.TopicPage;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 /**
@@ -16,14 +20,14 @@ import org.springframework.stereotype.Service;
 @Service
 public interface TopicService {
     
-    public List<Topic> findAll();
+    Page<Topic> findAll(TopicPage topicPage, TopicSearchCriteria searchCriteria);
     
-    public Topic findById(Integer id);
+    Topic findById(Integer id);
     
-    public List<Topic> createTopics(List<Topic> topics);
+    List<Topic> createTopics(List<Topic> topics);
     
-    public List<Topic> updateTopics(List<Topic> topics);
+    List<Topic> updateTopics(List<Topic> topics);
     
-    public void deleteTopics(List<Integer> ids);
+    void deleteTopics(List<Integer> ids);
     
 }

@@ -9,6 +9,7 @@ import java.util.List;
 
 import com.lasa.data.entity.Topic;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,8 +18,6 @@ import org.springframework.transaction.annotation.Transactional;
  * @author hai
  */
 @Repository
-public interface TopicRepository extends JpaRepository<Topic, Integer>{
+public interface TopicRepository extends JpaRepository<Topic, Integer>, JpaSpecificationExecutor<Topic> {
     
-    @Transactional
-    public void deleteByIdIn(List<String> ids);
 }

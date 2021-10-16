@@ -7,6 +7,10 @@ package com.lasa.business.services;
 
 import com.lasa.data.entity.Major;
 import java.util.List;
+
+import com.lasa.data.entity.utils.criteria.MajorSearchCriteria;
+import com.lasa.data.entity.utils.page.MajorPage;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 /**
@@ -16,13 +20,13 @@ import org.springframework.stereotype.Service;
 @Service
 public interface MajorService {
     
-    public List<Major> findAll();
+    Page<Major> findAll(MajorPage majorPage, MajorSearchCriteria searchCriteria);
     
-    public Major findById(String id);
+    Major findById(String id);
     
-    public List<Major> createMajors(List<Major> majors);
+    List<Major> createMajors(List<Major> majors);
     
-    public List<Major> updateMajors(List<Major> majors);
+    List<Major> updateMajors(List<Major> majors);
     
-    public void deleteMajors(List<String> ids);
+    void deleteMajors(List<String> ids);
 }

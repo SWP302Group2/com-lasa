@@ -8,8 +8,8 @@ package com.lasa.business.services;
 import com.lasa.data.entity.Student;
 import java.util.List;
 
-import com.lasa.data.entity.utils.StudentPage;
-import com.lasa.data.entity.utils.StudentSearchCriteria;
+import com.lasa.data.entity.utils.page.StudentPage;
+import com.lasa.data.entity.utils.criteria.StudentSearchCriteria;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 

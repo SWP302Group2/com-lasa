@@ -6,7 +6,7 @@
 package com.lasa.business.servicesv1;
 
 import com.lasa.data.entity.Admin;
-import com.lasa.data.entity.utils.AdminSimple;
+import com.lasa.data.entity.utils.projection.SimpleAdmin;
 import com.lasa.data.repository.AdminRepository;
 import com.lasa.data.entity.Lecturer;
 import com.lasa.data.repository.LecturerRepository;
@@ -45,8 +45,8 @@ public class AdminServiceImplV1 implements AdminService {
     }
 
     @Override
-    public AdminSimple findAdminWithoutPasswordById(Integer id) {
-        return adminRepository.findById(id, AdminSimple.class).orElse(null);
+    public SimpleAdmin findAdminWithoutPasswordById(Integer id) {
+        return adminRepository.findById(id, SimpleAdmin.class).orElse(null);
     }
 
     @Override

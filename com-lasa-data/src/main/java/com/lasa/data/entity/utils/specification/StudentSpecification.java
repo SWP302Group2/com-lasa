@@ -1,7 +1,8 @@
-package com.lasa.data.entity.utils;
+package com.lasa.data.entity.utils.specification;
 
 import com.lasa.data.entity.Student;
 import com.lasa.data.entity.Student_;
+import com.lasa.data.entity.utils.criteria.StudentSearchCriteria;
 import org.springframework.data.jpa.domain.Specification;
 
 import javax.persistence.criteria.CriteriaBuilder;

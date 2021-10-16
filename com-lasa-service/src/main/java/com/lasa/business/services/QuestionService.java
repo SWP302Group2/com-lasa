@@ -7,6 +7,10 @@ package com.lasa.business.services;
 
 import com.lasa.data.entity.Question;
 import java.util.List;
+
+import com.lasa.data.entity.utils.criteria.QuestionSearchCriteria;
+import com.lasa.data.entity.utils.page.QuestionPage;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 /**
@@ -16,7 +20,7 @@ import org.springframework.stereotype.Service;
 @Service
 public interface QuestionService {
     
-    public List<Question> findAll();
+    Page<Question> findAll(QuestionPage questionPage, QuestionSearchCriteria searchCriteria);
     
     public Question findById(Integer id);
     

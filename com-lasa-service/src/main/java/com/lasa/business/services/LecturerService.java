@@ -7,8 +7,8 @@ package com.lasa.business.services;
 
 import com.lasa.data.entity.Lecturer;
 
-import com.lasa.data.page.LecturerPage;
-import com.lasa.data.searchcriteria.LecturerSearchCriteria;
+import com.lasa.data.entity.utils.criteria.LecturerSearchCriteria;
+import com.lasa.data.entity.utils.page.LecturerPage;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +19,7 @@ import org.springframework.stereotype.Service;
 @Service
 public interface LecturerService {
 
-    Page<Lecturer> findAll(Integer page, Integer size, String search);
+    Page<Lecturer> findAll(LecturerPage lecturerPage, LecturerSearchCriteria searchCriteria);
 
     Lecturer createLecturer(Lecturer lecturer);
 
@@ -27,9 +27,4 @@ public interface LecturerService {
 
     Lecturer updateLecturer(Lecturer lecturer);
 
-    Page<Lecturer> findBasicInformationLecturers(Integer page, Integer size);
-
-    Page<Lecturer> getLecturers(LecturerPage lecturerPage,
-                             LecturerSearchCriteria lecturerSearchCriteria);
-    
 }

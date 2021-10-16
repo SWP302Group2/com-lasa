@@ -9,17 +9,14 @@ import com.lasa.business.controllers.BookingRequestOperations;
 import com.lasa.data.entity.BookingRequest;
 import com.lasa.business.services.BookingRequestService;
 import java.util.List;
-import java.util.Optional;
 
+import com.lasa.data.entity.utils.criteria.BookingRequestSearchCriteria;
+import com.lasa.data.entity.utils.page.BookingRequestPage;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.data.domain.Page;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import static org.springframework.http.HttpHeaders.*;
 
 /**
  *
@@ -30,59 +27,36 @@ import static org.springframework.http.HttpHeaders.*;
 @Api(value = "booking-requests", description = "For Booking requests", tags = { "Booking requests" })
 public class BookingRequestRestControllerV1 implements BookingRequestOperations {
 
-    private final BookingRequestService service;
+    private final BookingRequestService bookingRequestService;
 
     @Autowired
     public BookingRequestRestControllerV1(@Qualifier("BookingRequestServiceImplV1") BookingRequestService service) {
-        this.service = service;
+        this.bookingRequestService = service;
     }
 
     @Override
-    public ResponseEntity<?> getBookingRequests(Integer page,
-                                                Integer size,
-                                                Integer studentId,
-                                                Integer slotId) {
-        if(studentId != null && slotId != null) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-
-        }else if(studentId != null) {
-            return ResponseEntity.ok(service.findPageBookingRequestByStudentId(page, size, studentId));
-
-        }else if(slotId != null) {
-            return ResponseEntity.ok(service.findPageBookingRequestBySlotId(page, size, slotId));
-        }
-        return ResponseEntity.ok(service.findPageBookingRequest(page, size));
-
+    public ResponseEntity<?> findAll(BookingRequestPage bookingRequestPage, BookingRequestSearchCriteria searchCriteria) {
+        return ResponseEntity.ok(bookingRequestService.findAll(bookingRequestPage, searchCriteria));
     }
 
     @Override
-    public ResponseEntity<?> getBookingRequestsByStatus(Integer page, Integer size, Integer status) {
-        return ResponseEntity.ok(service.findPageBookingRequestByStatus(page, size, status));
+    public BookingRequest findById(@PathVariable Integer id) {
+        return bookingRequestService.findByBookingRequestId(id);
     }
 
-    @Override
-    public BookingRequest getBookingRequestById(@PathVariable Integer id) {
-        return service.findByBookingRequestId(id);
-    }
-
-    @Override
-    public BookingRequest getBookingRequestWithQuestionsById(@PathVariable Integer id) {
-        return service.findBookingRequestAndGetQuestion(id);
-    }
-    
     @Override
     public BookingRequest createBookingRequest(@RequestBody BookingRequest bookingRequest) {
-        return service.createBookingRequest(bookingRequest);
+        return bookingRequestService.createBookingRequest(bookingRequest);
     }
 
     @Override
     public BookingRequest updateBookingRequest(@RequestBody BookingRequest BookingRequest) {
-        return service.updateBookingRequest(BookingRequest);
+        return bookingRequestService.updateBookingRequest(BookingRequest);
     }
 
     @Override
     public void deleteBookingRequests(@RequestBody List<Integer> ids) {
-        service.deleteBookingRequests(ids);
+        bookingRequestService.deleteBookingRequests(ids);
     }
 
 

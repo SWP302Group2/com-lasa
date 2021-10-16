@@ -1,4 +1,4 @@
-package com.lasa.data.entity.utils;
+package com.lasa.data.entity.utils.projection;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
@@ -6,7 +6,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-public interface AdminSimple {
+public interface SimpleAdmin {
     Integer getId();
     String getUsername();
     String getName();

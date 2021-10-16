@@ -6,9 +6,9 @@
 package com.lasa.business.servicesv1;
 
 import com.lasa.data.entity.*;
-import com.lasa.data.entity.utils.SlotPage;
-import com.lasa.data.entity.utils.SlotSearchCriteria;
-import com.lasa.data.entity.utils.SlotSpecification;
+import com.lasa.data.entity.utils.page.SlotPage;
+import com.lasa.data.entity.utils.criteria.SlotSearchCriteria;
+import com.lasa.data.entity.utils.specification.SlotSpecification;
 import com.lasa.data.repository.SlotRepository;
 
 import java.util.List;

@@ -104,5 +104,4 @@ public class Student implements Serializable {
         this.address = address;
         this.avatarUrl = avatarUrl;
     }
-
 }

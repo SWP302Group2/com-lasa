@@ -10,8 +10,8 @@ import com.lasa.data.entity.Slot;
 import com.lasa.business.services.SlotService;
 import java.util.List;
 
-import com.lasa.data.entity.utils.SlotPage;
-import com.lasa.data.entity.utils.SlotSearchCriteria;
+import com.lasa.data.entity.utils.page.SlotPage;
+import com.lasa.data.entity.utils.criteria.SlotSearchCriteria;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

@@ -71,7 +71,7 @@ public class Topic implements Serializable {
     private String description;
 
     @Builder
-    public Topic(int id, String name, Collection<LecturerTopicDetail> lecturers, String majorId, Collection<BookingRequest> bookingRequests, Collection<SlotTopicDetail> slots, String courseId, int status, String description) {
+    public Topic(Integer id, String name, Collection<LecturerTopicDetail> lecturers, String majorId, Collection<BookingRequest> bookingRequests, Collection<SlotTopicDetail> slots, String courseId, Integer status, String description) {
         this.id = id;
         this.name = name;
         this.lecturers = lecturers;
@@ -82,5 +82,4 @@ public class Topic implements Serializable {
         this.status = status;
         this.description = description;
     }
-
 }

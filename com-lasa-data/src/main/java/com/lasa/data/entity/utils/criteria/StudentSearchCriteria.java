@@ -1,4 +1,4 @@
-package com.lasa.data.entity.utils;
+package com.lasa.data.entity.utils.criteria;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;

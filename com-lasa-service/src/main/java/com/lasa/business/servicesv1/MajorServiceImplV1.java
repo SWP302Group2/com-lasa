@@ -6,6 +6,9 @@
 package com.lasa.business.servicesv1;
 
 import com.lasa.data.entity.Major;
+import com.lasa.data.entity.utils.criteria.MajorSearchCriteria;
+import com.lasa.data.entity.utils.page.MajorPage;
+import com.lasa.data.entity.utils.specification.MajorSpecification;
 import com.lasa.data.repository.MajorRepository;
 import java.util.List;
 import java.util.Set;
@@ -14,6 +17,10 @@ import java.util.stream.Collectors;
 import com.lasa.business.services.MajorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,9 +39,11 @@ public class MajorServiceImplV1 implements MajorService {
         this.majorRepository = majorRepository;
     }
 
+
     @Override
-    public List<Major> findAll() {
-        return majorRepository.findAll();
+    public Page<Major> findAll(MajorPage majorPage, MajorSearchCriteria searchCriteria) {
+        Pageable pageable = PageRequest.of(majorPage.getPage(), majorPage.getSize(), Sort.by(majorPage.getOrderBy(), majorPage.getSortBy()));
+        return majorRepository.findAll(MajorSpecification.searchSpecification(searchCriteria), pageable);
     }
 
     @Override

@@ -6,8 +6,12 @@
 package com.lasa.business.controllers;
 
 import com.lasa.data.entity.Major;
+import com.lasa.data.entity.utils.criteria.MajorSearchCriteria;
+import com.lasa.data.entity.utils.page.MajorPage;
 import io.swagger.annotations.ApiParam;
 import java.util.List;
+
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,25 +28,25 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public interface MajorOperations {
 
     @GetMapping
-    public List<Major> getAllMajor();
+    ResponseEntity<?> findAll(MajorPage majorPage, MajorSearchCriteria searchCriteria);
 
     @GetMapping(value = "/{id}")
-    public Major getMajorById(
+    Major findById(
             @ApiParam(name = "id", type = "string", value = "Get Major by id", required = true)
             @PathVariable String id);
 
     @PostMapping
-    public void createMajors(
+    void createMajors(
             @ApiParam(name = "majors", type = "body", value = "Add a major")
             @RequestBody List<Major> majors);
 
     @PutMapping
-    public List<Major> updateMajors(
+    List<Major> updateMajors(
             @ApiParam(name = "majors", type = "body", value = "Update a major")
             @RequestBody List<Major> majors);
 
     @DeleteMapping
-    public void deleteMajors(
+    void deleteMajors(
             @ApiParam(name = "ids", type = "body", value = "Delete a major by id")
             @RequestBody List<String> ids);
 }

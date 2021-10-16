@@ -9,8 +9,8 @@ import com.lasa.data.entity.Student;
 import io.swagger.annotations.ApiParam;
 import java.util.List;
 
-import com.lasa.data.entity.utils.StudentPage;
-import com.lasa.data.entity.utils.StudentSearchCriteria;
+import com.lasa.data.entity.utils.page.StudentPage;
+import com.lasa.data.entity.utils.criteria.StudentSearchCriteria;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;

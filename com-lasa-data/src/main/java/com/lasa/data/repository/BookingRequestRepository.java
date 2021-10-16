@@ -12,6 +12,7 @@ import com.lasa.data.entity.BookingRequest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -22,7 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @author hai
  */
 @Repository
-public interface BookingRequestRepository extends JpaRepository<BookingRequest, Integer> {
+public interface BookingRequestRepository extends JpaRepository<BookingRequest, Integer>, JpaSpecificationExecutor<BookingRequest> {
 
     @Query("FROM BookingRequest b JOIN FETCH b.questions WHERE b.id = :id")
     Optional<BookingRequest> findByIdAndGetQuestions(Integer id);

@@ -49,13 +49,13 @@ public class BookingRequest implements Serializable {
     private List<Question> questions;
 
     @Column(name = "topicid")
-    private String topicId;
+    private Integer topicId;
     
     @Column(name = "slotid")
     private Integer slotId;
 
     @Builder
-    public BookingRequest(Integer id, Integer studentId, Integer status, List<Question> questions, String topicId, Integer slotId) {
+    public BookingRequest(Integer id, Integer studentId, Integer status, List<Question> questions, Integer topicId, Integer slotId) {
         this.id = id;
         this.studentId = studentId;
         this.status = status;
@@ -63,5 +63,4 @@ public class BookingRequest implements Serializable {
         this.topicId = topicId;
         this.slotId = slotId;
     }
-
 }

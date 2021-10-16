@@ -2,6 +2,9 @@
 package com.lasa.business.servicesv1;
 
 import com.lasa.data.entity.Question;
+import com.lasa.data.entity.utils.criteria.QuestionSearchCriteria;
+import com.lasa.data.entity.utils.page.QuestionPage;
+import com.lasa.data.entity.utils.specification.QuestionSpecification;
 import com.lasa.data.repository.QuestionRepository;
 import java.util.List;
 import java.util.Set;
@@ -10,6 +13,10 @@ import com.lasa.business.services.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,8 +37,9 @@ public class QuestionServiceImplV1 implements QuestionService {
     }
 
     @Override
-    public List<Question> findAll() {
-        return questionRepository.findAll();
+    public Page<Question> findAll(QuestionPage questionPage, QuestionSearchCriteria searchCriteria) {
+        Pageable pageable = PageRequest.of(questionPage.getPage(), questionPage.getSize(), Sort.by(questionPage.getOrderBy(), questionPage.getSortBy()));
+        return questionRepository.findAll(QuestionSpecification.searchSpecification(searchCriteria), pageable);
     }
 
     @Override

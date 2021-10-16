@@ -1,6 +1,7 @@
 package com.lasa.security.utils;
 
 public class ExceptionUtils {
+
     public static class TokenInvalidException extends RuntimeException{
         public TokenInvalidException(String message) {
             super(message);
@@ -8,8 +9,10 @@ public class ExceptionUtils {
     }
 
     public static class UserAccountException extends RuntimeException{
-        public UserAccountException(String message) {
+        public  UserAccountException(String message) {
             super(message);
         }
     }
+
+
 }

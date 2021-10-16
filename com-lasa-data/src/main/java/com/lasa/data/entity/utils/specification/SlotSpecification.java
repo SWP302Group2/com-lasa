@@ -1,7 +1,7 @@
-package com.lasa.data.entity.utils;
+package com.lasa.data.entity.utils.specification;
 
 import com.lasa.data.entity.*;
-import com.lasa.data.entity.utils.SlotSearchCriteria;
+import com.lasa.data.entity.utils.criteria.SlotSearchCriteria;
 import org.springframework.data.jpa.domain.Specification;
 
 import javax.persistence.criteria.*;
