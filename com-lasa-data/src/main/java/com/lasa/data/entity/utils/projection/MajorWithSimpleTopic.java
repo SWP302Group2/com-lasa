@@ -4,13 +4,14 @@ import com.lasa.data.entity.Topic;
 
 import java.util.Collection;
 
-public interface MajorWithListTopicIdAndName {
+public interface MajorWithSimpleTopic {
     String getId();
     String getName();
-    Collection<TopicWithNameAndId> getTopics();
+    Collection<SimpleTopic> getTopics();
 
-    interface TopicWithNameAndId{
+    interface SimpleTopic{
         Integer getId();
         String getName();
+        String getCourseId();
     }
 }

@@ -82,4 +82,5 @@ public class Topic implements Serializable {
         this.status = status;
         this.description = description;
     }
+
 }
