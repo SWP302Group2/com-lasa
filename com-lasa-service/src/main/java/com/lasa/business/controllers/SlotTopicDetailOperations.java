@@ -7,8 +7,12 @@ package com.lasa.business.controllers;
 
 import com.lasa.data.entity.SlotTopicDetail;
 import com.lasa.data.entity.key.SlotTopicDetailKey;
+import com.lasa.data.entity.utils.criteria.SlotTopicDetailSearchCriteria;
+import com.lasa.data.entity.utils.page.SlotTopicDetailPage;
 import io.swagger.annotations.ApiParam;
 import java.util.List;
+
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,7 +29,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public interface SlotTopicDetailOperations {
 
     @GetMapping
-    public List<SlotTopicDetail> findAll();
+    ResponseEntity<?> findAll(SlotTopicDetailPage slotTopicDetailPage, SlotTopicDetailSearchCriteria searchCriteria);
 
     @GetMapping(value = "/{id}")
     public SlotTopicDetail findById(

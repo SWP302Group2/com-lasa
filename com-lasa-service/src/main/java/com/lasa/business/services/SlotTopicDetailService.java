@@ -8,6 +8,11 @@ package com.lasa.business.services;
 import com.lasa.data.entity.SlotTopicDetail;
 import com.lasa.data.entity.key.SlotTopicDetailKey;
 import java.util.List;
+
+import com.lasa.data.entity.utils.criteria.SlotTopicDetailSearchCriteria;
+import com.lasa.data.entity.utils.dto.SlotTopicDetailDTO;
+import com.lasa.data.entity.utils.page.SlotTopicDetailPage;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 /**
@@ -17,14 +22,14 @@ import org.springframework.stereotype.Service;
 @Service
 public interface SlotTopicDetailService {
     
-    public List<SlotTopicDetail> findAll();
+    Page<SlotTopicDetailDTO> findAllSimple(SlotTopicDetailPage slotTopicDetailPage, SlotTopicDetailSearchCriteria searchCriteria);
     
-    public SlotTopicDetail findById(SlotTopicDetailKey id);
+    SlotTopicDetail findById(SlotTopicDetailKey id);
     
-    public List<SlotTopicDetail> createSlotTopicDetails(List<SlotTopicDetail> details);
+    List<SlotTopicDetail> createSlotTopicDetails(List<SlotTopicDetail> details);
     
-    public List<SlotTopicDetail> updateSlotTopicDetails(List<SlotTopicDetail> details);
+    List<SlotTopicDetail> updateSlotTopicDetails(List<SlotTopicDetail> details);
     
-    public void deleteSlotTopicDetails(List<SlotTopicDetailKey> ids);
+    void deleteSlotTopicDetails(List<SlotTopicDetailKey> ids);
     
 }

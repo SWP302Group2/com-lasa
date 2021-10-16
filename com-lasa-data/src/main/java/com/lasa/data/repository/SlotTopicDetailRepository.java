@@ -8,6 +8,7 @@ package com.lasa.data.repository;
 import com.lasa.data.entity.SlotTopicDetail;
 import com.lasa.data.entity.key.SlotTopicDetailKey;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
@@ -18,7 +19,7 @@ import java.util.List;
  * @author hai
  */
 @Repository
-public interface SlotTopicDetailRepository extends JpaRepository<SlotTopicDetail, SlotTopicDetailKey>{
+public interface SlotTopicDetailRepository extends JpaRepository<SlotTopicDetail, SlotTopicDetailKey>, JpaSpecificationExecutor<SlotTopicDetail> {
 
     @Query("FROM SlotTopicDetail as s JOIN FETCH s.topic where s.slot.id in :id")
     List<SlotTopicDetail> findAllWithTopicBySlotId(List<Integer> id);

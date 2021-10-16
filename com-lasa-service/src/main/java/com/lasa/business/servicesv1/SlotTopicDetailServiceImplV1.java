@@ -7,13 +7,23 @@ package com.lasa.business.servicesv1;
 
 import com.lasa.data.entity.SlotTopicDetail;
 import com.lasa.data.entity.key.SlotTopicDetailKey;
+import com.lasa.data.entity.utils.criteria.SlotTopicDetailSearchCriteria;
+import com.lasa.data.entity.utils.dto.SlotTopicDetailDTO;
+import com.lasa.data.entity.utils.page.SlotTopicDetailPage;
+import com.lasa.data.entity.utils.specification.SlotTopicDetailSpecification;
 import com.lasa.data.repository.SlotTopicDetailRepository;
 import java.util.List;
+import java.util.function.Function;
 
 import com.lasa.business.services.SlotTopicDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
+
+import javax.persistence.Converter;
 
 /**
  *
@@ -31,8 +41,20 @@ public class SlotTopicDetailServiceImplV1 implements SlotTopicDetailService {
     }
 
     @Override
-    public List<SlotTopicDetail> findAll() {
-        return detailRepository.findAll();
+    public Page<SlotTopicDetailDTO> findAllSimple(SlotTopicDetailPage slotTopicDetailPage, SlotTopicDetailSearchCriteria searchCriteria) {
+        Pageable pageable = PageRequest.of(slotTopicDetailPage.getPage(), slotTopicDetailPage.getSize());
+        Page<SlotTopicDetail> page = detailRepository.findAll(SlotTopicDetailSpecification.searchSpecification(searchCriteria), pageable);
+
+        Page<SlotTopicDetailDTO> dtoPage = page.map(
+                slotTopicDetail -> {
+                    SlotTopicDetailDTO dto = SlotTopicDetailDTO.builder()
+                            .slotId(slotTopicDetail.getSlot().getId())
+                            .topicId(slotTopicDetail.getTopic().getId())
+                            .build();
+                    return dto;
+                }
+        );
+        return dtoPage;
     }
 
     @Override

@@ -11,15 +11,14 @@ import com.lasa.data.entity.key.SlotTopicDetailKey;
 import com.lasa.business.services.SlotTopicDetailService;
 import java.util.List;
 
+import com.lasa.data.entity.utils.criteria.SlotTopicDetailSearchCriteria;
+import com.lasa.data.entity.utils.page.SlotTopicDetailPage;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
-import static org.springframework.http.HttpHeaders.*;
 
 /**
  *
@@ -30,36 +29,36 @@ import static org.springframework.http.HttpHeaders.*;
 @Api(value = "slot-topic-details", description = "About topic details for slot", tags = { "Slot topic details" })
 public class SlotTopicDetailRestControllerV1 implements SlotTopicDetailOperations {
 
-    private final SlotTopicDetailService service;
+    private final SlotTopicDetailService slotTopicDetailService;
 
     @Autowired
     public SlotTopicDetailRestControllerV1(@Qualifier("SlotTopicDetailServiceImplV1") SlotTopicDetailService service) {
-        this.service = service;
+        this.slotTopicDetailService = service;
     }
 
     @Override
-    public List<SlotTopicDetail> findAll() {
-        return service.findAll();
+    public ResponseEntity<?> findAll(SlotTopicDetailPage slotTopicDetailPage, SlotTopicDetailSearchCriteria searchCriteria) {
+        return ResponseEntity.ok(slotTopicDetailService.findAllSimple(slotTopicDetailPage, searchCriteria ));
     }
 
     @Override
     public SlotTopicDetail findById(SlotTopicDetailKey id) {
-        return service.findById(id);
+        return slotTopicDetailService.findById(id);
     }
 
     @Override
     public List<SlotTopicDetail> createSlotTopicDetails(List<SlotTopicDetail> details) {
-        return service.createSlotTopicDetails(details);
+        return slotTopicDetailService.createSlotTopicDetails(details);
     }
 
     @Override
     public List<SlotTopicDetail> updateSlotTopicDetails(List<SlotTopicDetail> details) {
-        return service.updateSlotTopicDetails(details);
+        return slotTopicDetailService.updateSlotTopicDetails(details);
     }
 
     @Override
     public void deleteSlotTopicDetails(List<SlotTopicDetailKey> ids) {
-        service.deleteSlotTopicDetails(ids);
+        slotTopicDetailService.deleteSlotTopicDetails(ids);
     }
 
 }
