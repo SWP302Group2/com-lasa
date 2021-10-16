@@ -8,7 +8,7 @@ package com.lasa.business.servicesv1;
 import com.lasa.data.entity.Major;
 import com.lasa.data.entity.utils.criteria.MajorSearchCriteria;
 import com.lasa.data.entity.utils.page.MajorPage;
-import com.lasa.data.entity.utils.projection.MajorSimpleTopic;
+import com.lasa.data.entity.utils.projection.MajorWithSimpleTopic;
 import com.lasa.data.entity.utils.specification.MajorSpecification;
 import com.lasa.data.repository.MajorRepository;
 import java.util.List;
@@ -53,8 +53,8 @@ public class MajorServiceImplV1 implements MajorService {
     }
 
     @Override
-    public List<MajorSimpleTopic> findAllWithTopicIds() {
-        return majorRepository.findBy(MajorSimpleTopic.class);
+    public List<MajorWithSimpleTopic> findAllWithTopicIds() {
+        return majorRepository.findBy(MajorWithSimpleTopic.class);
     }
 
     @Override
