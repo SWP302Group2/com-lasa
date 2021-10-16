@@ -10,10 +10,8 @@ import com.lasa.data.entity.Lecturer;
 import com.lasa.data.entity.Student;
 import java.util.List;
 
-import com.lasa.data.entity.utils.AdminSimple;
+import com.lasa.data.entity.utils.projection.SimpleAdmin;
 import org.springframework.stereotype.Service;
-
-import javax.persistence.criteria.CriteriaBuilder;
 
 /**
  *
@@ -25,7 +23,7 @@ public interface AdminService {
 
     Admin findByAdminId(Integer id);
 
-    AdminSimple findAdminWithoutPasswordById(Integer id);
+    SimpleAdmin findAdminWithoutPasswordById(Integer id);
 
     List<Student> listAllStudent();
 

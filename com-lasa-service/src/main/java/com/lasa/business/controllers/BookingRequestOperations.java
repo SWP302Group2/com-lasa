@@ -6,6 +6,8 @@
 package com.lasa.business.controllers;
 
 import com.lasa.data.entity.BookingRequest;
+import com.lasa.data.entity.utils.criteria.BookingRequestSearchCriteria;
+import com.lasa.data.entity.utils.page.BookingRequestPage;
 import io.swagger.annotations.ApiParam;
 import java.util.List;
 import java.util.Optional;
@@ -22,42 +24,25 @@ import org.springframework.web.bind.annotation.*;
 public interface BookingRequestOperations {
 
     @GetMapping
-    ResponseEntity<?> getBookingRequests(
-            @ApiParam(name ="page",type ="Integer",value = "Page Number",defaultValue = "0") @RequestParam Integer pageNumber,
-            @ApiParam(name ="size",type ="Integer",value ="The size you want view", defaultValue = "10") @RequestParam Integer pageSize,
-            @ApiParam(name ="studentId",type ="Integer",value ="Get student by id", example = "1") @RequestParam Integer studentId,
-            @ApiParam(name ="slotId",type ="integer",value ="Get slot by id", required = false) @RequestParam Integer slotId
-            );
-    @RequestMapping(value = "/status")
-    ResponseEntity<?> getBookingRequestsByStatus(
-            @ApiParam(name ="page",type ="integer",value = "Paging",required = false, defaultValue = "0") @RequestParam Integer pageNumber,
-            @ApiParam(name ="size",type ="integer",value = "Size",required = false, defaultValue = "10") @RequestParam Integer pageSize,
-            @ApiParam(name ="status",type ="integer",value = "Status of booking request") @RequestParam  Integer status
-    );
-
+    ResponseEntity<?> findAll(BookingRequestPage bookingRequestPage, BookingRequestSearchCriteria searchCriteria);
 
     @GetMapping(value = "/{id}")
-    public BookingRequest getBookingRequestById(
+    BookingRequest findById(
             @ApiParam(name = "id", type = "integer", value = "Get booking request by id")
             @PathVariable("id") Integer id);
 
-    @GetMapping(value = "/{id}/questions")
-    public BookingRequest getBookingRequestWithQuestionsById(
-            @ApiParam(name = "id", type = "integer", value = "Get question by id")
-            @PathVariable("id") Integer id);
-    
     @PostMapping
-    public BookingRequest createBookingRequest(
+    BookingRequest createBookingRequest(
             @ApiParam(name = "bookingRequest", type = "body", value = "Add a new booking request")
             @RequestBody BookingRequest bookingRequest);
     
     @PutMapping
-    public BookingRequest updateBookingRequest(
+    BookingRequest updateBookingRequest(
             @ApiParam(name = "bookingRequest", type = "body", value = "Update a booking request by id")
             @RequestBody BookingRequest BookingRequest);
     
     @DeleteMapping
-    public void deleteBookingRequests(
+    void deleteBookingRequests(
             @ApiParam(name = "ids", type = "body", value = "By id, you may remove booking request")
             @RequestBody List<Integer> ids);
 }

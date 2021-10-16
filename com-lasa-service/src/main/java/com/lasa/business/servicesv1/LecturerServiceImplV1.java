@@ -5,20 +5,22 @@
  */
 package com.lasa.business.servicesv1;
 
-import com.lasa.data.criteriarepository.LecturerCriteriaRepository;
 import com.lasa.data.entity.Lecturer;
-import com.lasa.data.page.LecturerPage;
+import com.lasa.data.entity.utils.criteria.LecturerSearchCriteria;
+import com.lasa.data.entity.utils.page.LecturerPage;
+import com.lasa.data.entity.utils.specification.LecturerSpecification;
 import com.lasa.data.repository.LecturerRepository;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.lasa.business.services.LecturerService;
-import com.lasa.data.searchcriteria.LecturerSearchCriteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
@@ -35,23 +37,21 @@ import javax.persistence.criteria.CriteriaBuilder;
 public class LecturerServiceImplV1 implements LecturerService {
 
     private final LecturerRepository lecturerRepository;
-    private final LecturerCriteriaRepository lecturerCriteriaRepository;
     private final EntityManager entityManager;
     private final CriteriaBuilder criteriaBuilder;
 
     @Autowired
     public LecturerServiceImplV1(LecturerRepository lecturerRepository,
-                                 LecturerCriteriaRepository lecturerCriteriaRepository,
                                  EntityManager entityManager) {
         this.lecturerRepository = lecturerRepository;
-        this.lecturerCriteriaRepository = lecturerCriteriaRepository;
         this.entityManager = entityManager;
         this.criteriaBuilder = entityManager.getCriteriaBuilder();
     }
 
     @Override
-    public Page<Lecturer> findAll(Integer page, Integer size, String search) {
-        return null;
+    public Page<Lecturer> findAll(LecturerPage lecturerPage, LecturerSearchCriteria searchCriteria) {
+        Pageable pageable = PageRequest.of(lecturerPage.getPage(), lecturerPage.getSize(), Sort.by(lecturerPage.getOrderBy(), lecturerPage.getSortBy()));
+        return lecturerRepository.findAll(LecturerSpecification.searchSpecification(searchCriteria), pageable);
     }
 
     @Override
@@ -89,16 +89,6 @@ public class LecturerServiceImplV1 implements LecturerService {
         
         return lecturerRepository.save(lecturer);
 
-    }
-
-    @Override
-    public Page<Lecturer> findBasicInformationLecturers(Integer page, Integer size) {
-        return null;
-    }
-
-    @Override
-    public Page<Lecturer> getLecturers(LecturerPage lecturerPage, LecturerSearchCriteria lecturerSearchCriteria) {
-        return lecturerCriteriaRepository.fillAllWithFilter(lecturerPage, lecturerSearchCriteria);
     }
 
 }

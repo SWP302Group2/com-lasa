@@ -20,6 +20,7 @@ import com.lasa.security.jwt.JwtUtil;
 import com.lasa.security.model.AuthenticationRequest;
 import com.lasa.security.model.GoogleAuthenticationRequest;
 import com.lasa.security.model.InformationResponse;
+import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.AuthenticationManager;

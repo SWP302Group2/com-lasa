@@ -10,15 +10,14 @@ import com.lasa.data.entity.Topic;
 import com.lasa.business.services.TopicService;
 import java.util.List;
 
+import com.lasa.data.entity.utils.criteria.TopicSearchCriteria;
+import com.lasa.data.entity.utils.page.TopicPage;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
-import static org.springframework.http.HttpHeaders.*;
 
 /**
  *
@@ -29,37 +28,36 @@ import static org.springframework.http.HttpHeaders.*;
 @Api(value = "topics", description = "About topics", tags = { "Topics Controller" })
 public class TopicRestControllerV1 implements TopicOperations {
     
-    private final TopicService service;
+    private final TopicService topicService;
     
     @Autowired
-    
-    public TopicRestControllerV1(@Qualifier("TopicServiceImplV1") TopicService service) {
-        this.service = service;
+    public TopicRestControllerV1(@Qualifier("TopicServiceImplV1") TopicService topicService) {
+        this.topicService = topicService;
     }
-    
+
     @Override
-    public List<Topic> findAll() {
-        return service.findAll();
+    public ResponseEntity<?> findAll(TopicPage topicPage, TopicSearchCriteria searchCriteria) {
+        return ResponseEntity.ok(topicService.findAll(topicPage, searchCriteria));
     }
      
     @Override
     public List<Topic> createTopics(List<Topic> topics) {
-        return service.createTopics(topics);
+        return topicService.createTopics(topics);
     }
     
     @Override
     public List<Topic> updateTopics(List<Topic> topics) {
-        return service.updateTopics(topics);
+        return topicService.updateTopics(topics);
     }
 
     @Override
     public Topic findById(Integer id) {
-        return service.findById(id);
+        return topicService.findById(id);
     }
 
     @Override
     public void deleteTopics(List<Integer> ids) {
-        service.deleteTopics(ids);
+        topicService.deleteTopics(ids);
     }
 
     

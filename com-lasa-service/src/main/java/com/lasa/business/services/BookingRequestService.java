@@ -11,6 +11,8 @@ import java.util.List;
 import java.util.Optional;
 
 
+import com.lasa.data.entity.utils.criteria.BookingRequestSearchCriteria;
+import com.lasa.data.entity.utils.page.BookingRequestPage;
 import io.swagger.models.auth.In;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
@@ -23,25 +25,13 @@ import org.springframework.stereotype.Service;
 @Service
 public interface BookingRequestService {
 
-    public List<BookingRequest> findAllBookingRequests();
+    Page<BookingRequest> findAll(BookingRequestPage bookingRequestPage, BookingRequestSearchCriteria searchCriteria);
 
-    Page<BookingRequest> findPageBookingRequest(Integer pageNumber, Integer pageSize);
+    BookingRequest findByBookingRequestId(Integer id);
 
-    Page<BookingRequest> findPageBookingRequestByStudentId(Integer page, Integer size, Integer studentId);
+    BookingRequest createBookingRequest(BookingRequest bookingRequest);
 
-    Page<BookingRequest> findPageBookingRequestBySlotId(Integer page, Integer size, Integer slotId);
+    BookingRequest updateBookingRequest(BookingRequest bookingRequest);
 
-    Page<BookingRequest> findPageBookingRequestByStatus(Integer page, Integer size, Integer status);
-
-    public BookingRequest findBookingRequestAndGetQuestion(Integer id);
-
-    public BookingRequest findByBookingRequestId(Integer id);
-
-    public long countBookingRequest();
-
-    public BookingRequest createBookingRequest(BookingRequest bookingRequest);
-
-    public BookingRequest updateBookingRequest(BookingRequest bookingRequest);
-
-    public void deleteBookingRequests(List<Integer> ids);
+    void deleteBookingRequests(List<Integer> ids);
 }

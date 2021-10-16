@@ -6,10 +6,9 @@
 package com.lasa.business.servicesv1;
 
 import com.lasa.data.entity.Student;
-import com.lasa.data.entity.utils.SlotSpecification;
-import com.lasa.data.entity.utils.StudentPage;
-import com.lasa.data.entity.utils.StudentSearchCriteria;
-import com.lasa.data.entity.utils.StudentSpecification;
+import com.lasa.data.entity.utils.page.StudentPage;
+import com.lasa.data.entity.utils.criteria.StudentSearchCriteria;
+import com.lasa.data.entity.utils.specification.StudentSpecification;
 import com.lasa.data.repository.StudentRepository;
 import java.util.List;
 

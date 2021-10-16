@@ -37,7 +37,7 @@ public class Slot implements Serializable {
     private Integer id;
 
     @Column(name = "lecturerid")
-    private String lecturerId;
+    private Integer lecturerId;
 
     @OneToMany(targetEntity = BookingRequest.class, mappedBy = "slotId")
     @EqualsAndHashCode.Exclude
@@ -56,7 +56,7 @@ public class Slot implements Serializable {
     private LocalDateTime timeEnd;
 
     @Builder
-    public Slot(Integer id, String lecturerId, Collection<BookingRequest> bookingRequests, Collection<SlotTopicDetail> topics, LocalDateTime timeStart, LocalDateTime timeEnd) {
+    public Slot(Integer id, Integer lecturerId, Collection<BookingRequest> bookingRequests, Collection<SlotTopicDetail> topics, LocalDateTime timeStart, LocalDateTime timeEnd) {
         this.id = id;
         this.lecturerId = lecturerId;
         this.bookingRequests = bookingRequests;

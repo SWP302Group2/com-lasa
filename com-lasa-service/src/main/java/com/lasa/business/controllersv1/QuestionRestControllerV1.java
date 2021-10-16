@@ -10,12 +10,13 @@ import com.lasa.data.entity.Question;
 import com.lasa.business.services.QuestionService;
 import java.util.List;
 
+import com.lasa.data.entity.utils.criteria.QuestionSearchCriteria;
+import com.lasa.data.entity.utils.page.QuestionPage;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import static org.springframework.http.HttpHeaders.*;
 
 /**
  *
@@ -26,36 +27,36 @@ import static org.springframework.http.HttpHeaders.*;
 @Api(value = "questions", description = "About questions", tags = { "Questions Controller" })
 public class QuestionRestControllerV1 implements QuestionOperations {
     
-    private final QuestionService service;
+    private final QuestionService questionService;
     
     @Autowired
     public QuestionRestControllerV1(@Qualifier("QuestionServiceImplV1") QuestionService service) {
-        this.service = service;
+        this.questionService = service;
     }
     
     @Override
-    public List<Question> getAllQuestions() {
-        return service.findAll();
+    public ResponseEntity<?> findAll(QuestionPage questionPage, QuestionSearchCriteria searchCriteria) {
+        return ResponseEntity.ok(questionService.findAll(questionPage, searchCriteria));
     }
     
     @Override
-    public Question getQuestionById(@PathVariable Integer id) {
-        return service.findById(id);
+    public Question findById(@PathVariable Integer id) {
+        return questionService.findById(id);
     }
     
     @Override
     public List<Question> createQuestions(@RequestBody List<Question> questions) {
-        return service.createQuestions(questions);
+        return questionService.createQuestions(questions);
     }
     
     @Override
     public List<Question> updateQuestions(@RequestBody List<Question> questions) {
-        return service.updateQuestions(questions);
+        return questionService.updateQuestions(questions);
     }
     
     @Override
     public void deleteQuestions(@RequestBody List<Integer> ids) {
-        service.deleteQuestion(ids);
+        questionService.deleteQuestion(ids);
     }
     
 }

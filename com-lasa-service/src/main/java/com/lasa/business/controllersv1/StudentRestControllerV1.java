@@ -10,19 +10,15 @@ import com.lasa.data.entity.Student;
 import com.lasa.business.services.StudentService;
 import java.util.List;
 
-import com.lasa.data.entity.utils.StudentPage;
-import com.lasa.data.entity.utils.StudentSearchCriteria;
+import com.lasa.data.entity.utils.page.StudentPage;
+import com.lasa.data.entity.utils.criteria.StudentSearchCriteria;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
-import static org.springframework.http.HttpHeaders.*;
 
 /**
  *

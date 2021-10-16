@@ -10,8 +10,8 @@ import com.lasa.data.entity.Lecturer;
 import com.lasa.business.services.LecturerService;
 import java.util.List;
 
-import com.lasa.data.page.LecturerPage;
-import com.lasa.data.searchcriteria.LecturerSearchCriteria;
+import com.lasa.data.entity.utils.criteria.LecturerSearchCriteria;
+import com.lasa.data.entity.utils.page.LecturerPage;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -37,20 +37,10 @@ public class LecturerRestControllerV1 implements LecturerOperations {
         this.lecturerService = lecturerService;
     }
 
-    @Override
-    public ResponseEntity<Page<Lecturer>> findAll(Integer page, Integer size, String search) {
-        return ResponseEntity.ok(lecturerService.findAll(page, size, search));
-    }
-
 
     @Override
-    public ResponseEntity<?> findBasicInformationLecturers(Integer page, Integer size) {
-        return ResponseEntity.ok(lecturerService.findBasicInformationLecturers(page, size));
-    }
-
-    @Override
-    public ResponseEntity<Page<Lecturer>> getLecturer(LecturerPage lecturerPage, LecturerSearchCriteria lecturerSearchCriteria) {
-        return new ResponseEntity<>(lecturerService.getLecturers(lecturerPage, lecturerSearchCriteria), HttpStatus.OK);
+    public ResponseEntity<?> findAll(LecturerPage lecturerPage, LecturerSearchCriteria searchCriteria) {
+        return ResponseEntity.ok(lecturerService.findAll(lecturerPage, searchCriteria));
     }
 
     @Override

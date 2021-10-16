@@ -10,15 +10,14 @@ import com.lasa.data.entity.Major;
 import com.lasa.business.services.MajorService;
 import java.util.List;
 
+import com.lasa.data.entity.utils.criteria.MajorSearchCriteria;
+import com.lasa.data.entity.utils.page.MajorPage;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
-import static org.springframework.http.HttpHeaders.*;
 
 /**
  *
@@ -29,36 +28,37 @@ import static org.springframework.http.HttpHeaders.*;
 @Api(value = "majors", description = "For majors", tags = { "Major Controller" })
 public class MajorRestControllerV1 implements MajorOperations {
 
-    private final MajorService service;
+    private final MajorService majorService;
 
     @Autowired
-    public MajorRestControllerV1(@Qualifier("MajorServiceImplV1") MajorService service) {
-        this.service = service;
+    public MajorRestControllerV1(@Qualifier("MajorServiceImplV1") MajorService majorService) {
+        this.majorService = majorService;
+    }
+
+
+    @Override
+    public ResponseEntity<?> findAll(MajorPage majorPage, MajorSearchCriteria searchCriteria) {
+        return ResponseEntity.ok(majorService.findAll(majorPage, searchCriteria));
     }
 
     @Override
-    public List<Major> getAllMajor() {
-        return service.findAll();
-    }
-
-    @Override
-    public Major getMajorById(String id) {
-        return service.findById(id);
+    public Major findById(String id) {
+        return majorService.findById(id);
     }
 
     @Override
     public void createMajors(List<Major> majors) {
-        service.createMajors(majors);
+        majorService.createMajors(majors);
     }
 
     @Override
     public List<Major> updateMajors(List<Major> majors) {
-        return service.updateMajors(majors);
+        return majorService.updateMajors(majors);
     }
 
     @Override
     public void deleteMajors(List<String> ids) {
-        service.deleteMajors(ids);
+        majorService.deleteMajors(ids);
     }
 
 }

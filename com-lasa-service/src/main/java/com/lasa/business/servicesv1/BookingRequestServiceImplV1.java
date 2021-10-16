@@ -1,6 +1,9 @@
 package com.lasa.business.servicesv1;
 
 import com.lasa.data.entity.BookingRequest;
+import com.lasa.data.entity.utils.criteria.BookingRequestSearchCriteria;
+import com.lasa.data.entity.utils.page.BookingRequestPage;
+import com.lasa.data.entity.utils.specification.BookingRequestSpecification;
 import com.lasa.data.repository.BookingRequestRepository;
 import java.util.List;
 import java.util.Optional;
@@ -32,46 +35,14 @@ public class BookingRequestServiceImplV1 implements BookingRequestService {
     }
 
     @Override
-    public List<BookingRequest> findAllBookingRequests() {
-        return bookingRepository.findAll();
-    }
-
-    //@searchValue : student id
-    //@sortBy option
-    @Override
-    public Page<BookingRequest> findPageBookingRequest(Integer page, Integer size) {
-            return bookingRepository.findAll(PageRequest.of(page, size));
-    }
-
-    @Override
-    public Page<BookingRequest> findPageBookingRequestByStudentId(Integer page, Integer size, Integer studentId) {
-        return bookingRepository.findBookingRequestsByStudentId(studentId , PageRequest.of(page, size));
-    }
-
-    @Override
-    public Page<BookingRequest> findPageBookingRequestBySlotId(Integer page, Integer size, Integer slotId) {
-        return bookingRepository.findBookingRequestsBySlotId(slotId, PageRequest.of(page, size));
-    }
-
-    @Override
-    public Page<BookingRequest> findPageBookingRequestByStatus(Integer page, Integer size, Integer status) {
-        return bookingRepository.findBookingRequestsByStatus(status, PageRequest.of(page,size));
-    }
-
-
-    @Override
-    public BookingRequest findBookingRequestAndGetQuestion(Integer id) {
-        return bookingRepository.findByIdAndGetQuestions(id).get();
+    public Page<BookingRequest> findAll(BookingRequestPage bookingRequestPage, BookingRequestSearchCriteria searchCriteria) {
+        Pageable pageable = PageRequest.of(bookingRequestPage.getPage(), bookingRequestPage.getSize(), Sort.by(bookingRequestPage.getOrderBy(), bookingRequestPage.getSortBy()));
+        return bookingRepository.findAll(BookingRequestSpecification.searchSpecification(searchCriteria), pageable);
     }
 
     @Override
     public BookingRequest findByBookingRequestId(Integer id) {
         return bookingRepository.findById(id).get();
-    }
-
-    @Override
-    public long countBookingRequest() {
-        return bookingRepository.count();
     }
 
     @Override

@@ -9,10 +9,9 @@ import com.lasa.data.entity.Slot;
 import io.swagger.annotations.ApiParam;
 import java.util.List;
 
-import com.lasa.data.entity.utils.SlotPage;
-import com.lasa.data.entity.utils.SlotSearchCriteria;
+import com.lasa.data.entity.utils.page.SlotPage;
+import com.lasa.data.entity.utils.criteria.SlotSearchCriteria;
 import org.springframework.data.domain.Page;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
