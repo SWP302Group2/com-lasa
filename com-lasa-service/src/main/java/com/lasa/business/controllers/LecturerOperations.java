@@ -23,17 +23,14 @@ import javax.persistence.Tuple;
 @RequestMapping("/default")
 public interface LecturerOperations {
     
-    @GetMapping
-    ResponseEntity<?> findAll(
+    @GetMapping(value = {"/{id}", ""})
+    ResponseEntity<?> findWithArgument(
+            @ApiParam(name = "id", type = "integer", value = "Find lecturer by id")
+            @PathVariable(value = "id", required = false) Integer id,
             LecturerPage lecturerPage,
             LecturerSearchCriteria searchCriteria
     );
 
-    @GetMapping("/{id}")
-    Lecturer findByLecturerId(
-            @ApiParam(name = "id", type = "integer", value = "Find lecturer by id")
-            @PathVariable("id") Integer id);
-    
     @PostMapping
     Lecturer createLecturer(
             @ApiParam(name = "lecturer", type = "body", value = "Create a new lecturer", required = true)

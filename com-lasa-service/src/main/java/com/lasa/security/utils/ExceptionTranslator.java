@@ -1,5 +1,7 @@
 package com.lasa.security.utils;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.exc.MismatchedInputException;
 import com.lasa.security.model.ResponseObject;
 import com.lasa.security.utils.ExceptionUtils.TokenException;
 import com.lasa.security.utils.ExceptionUtils.UserAccountException;
@@ -7,7 +9,9 @@ import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.UnsupportedJwtException;
 import io.jsonwebtoken.security.SignatureException;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -22,10 +26,23 @@ import java.sql.SQLException;
 @RestControllerAdvice
 public class ExceptionTranslator {
 
+    @ExceptionHandler(value = {Exception.class})
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ResponseObject processUnknownException(Exception e, HttpServletRequest request) {
+        System.out.println(e.getClass());
+        System.out.println(e.getMessage());
+        return ResponseObject.builder()
+                .status(HttpStatus.NOT_FOUND.value())
+                .error(HttpServerErrorException.InternalServerError.class.getSimpleName())
+                .message("UNKNOWN_ERROR")
+                .path(request.getRequestURI())
+                .build();
+    }
 
     @ExceptionHandler(value = {UserAccountException.class, BadCredentialsException.class})
     @ResponseStatus(HttpStatus.FORBIDDEN)
     public ResponseObject processForbiddenResponse(RuntimeException e, HttpServletRequest request) {
+        System.out.println(e.getClass());
         System.out.println(e.getMessage());
         return ResponseObject.builder()
                 .status(HttpStatus.FORBIDDEN.value())
@@ -38,6 +55,7 @@ public class ExceptionTranslator {
     @ExceptionHandler(value = {TokenException.class})
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     public ResponseObject processTokenException(RuntimeException e, HttpServletRequest request) {
+        System.out.println(e.getClass());
         System.out.println(e.getMessage());
         return ResponseObject.builder()
                 .status(HttpStatus.UNAUTHORIZED.value())
@@ -49,19 +67,21 @@ public class ExceptionTranslator {
 
     @ExceptionHandler(value = {UnsupportedJwtException.class, MalformedJwtException.class, SignatureException.class, IllegalArgumentException.class})
     @ResponseStatus(HttpStatus.FORBIDDEN)
-    public ResponseObject proccessInvalidTokenException(Exception e,HttpServletRequest request) {
+    public ResponseObject processInvalidTokenException(Exception e,HttpServletRequest request) {
+        System.out.println(e.getClass());
         System.out.println(e.getMessage());
         return ResponseObject.builder()
                 .status(HttpStatus.UNAUTHORIZED.value())
-                .error("TokenException")
+                .error(TokenException.class.getSimpleName())
                 .message("INVALID_TOKEN")
                 .path(request.getRequestURI())
                 .build();
     }
 
-    @ExceptionHandler(value = {MethodArgumentTypeMismatchException.class})
+    @ExceptionHandler(value = {MethodArgumentTypeMismatchException.class, MismatchedInputException.class, JsonParseException.class, HttpMessageNotReadableException.class})
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ResponseObject processQueryException(Exception e, HttpServletRequest request) {
+        System.out.println(e.getClass());
         System.out.println(e.getMessage());
         return ResponseObject.builder()
                 .status(HttpStatus.NOT_FOUND.value())
@@ -71,14 +91,15 @@ public class ExceptionTranslator {
                 .build();
     }
 
-    @ExceptionHandler(value = {Exception.class})
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ResponseObject processUnknownException(Exception e, HttpServletRequest request) {
+    @ExceptionHandler(value = {HttpRequestMethodNotSupportedException.class})
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ResponseObject processNotFoundResponse(Exception e, HttpServletRequest request) {
+        System.out.println(e.getClass());
         System.out.println(e.getMessage());
         return ResponseObject.builder()
                 .status(HttpStatus.NOT_FOUND.value())
-                .error(HttpServerErrorException.InternalServerError.class.getSimpleName())
-                .message("UNKNOWN_ERROR")
+                .error(e.getClass().getSimpleName())
+                .message(e.getMessage())
                 .path(request.getRequestURI())
                 .build();
     }
@@ -86,6 +107,7 @@ public class ExceptionTranslator {
     @ExceptionHandler(value = {GeneralSecurityException.class, IOException.class})
     @ResponseStatus(HttpStatus.NOT_ACCEPTABLE)
     public ResponseObject processGoogleException(Exception e, HttpServletRequest request) {
+        System.out.println(e.getClass());
         System.out.println(e.getMessage());
         return ResponseObject.builder()
                 .status(HttpStatus.NOT_ACCEPTABLE.value())
@@ -98,6 +120,7 @@ public class ExceptionTranslator {
     @ExceptionHandler(value = {ExceptionUtils.EmailDomainException.class, ExceptionUtils.UserAlreadyExistException.class})
     @ResponseStatus(HttpStatus.NOT_ACCEPTABLE)
     public ResponseObject processEmailDomainException(Exception e, HttpServletRequest request) {
+        System.out.println(e.getClass());
         System.out.println(e.getMessage());
         return ResponseObject.builder()
                 .status(HttpStatus.NOT_ACCEPTABLE.value())

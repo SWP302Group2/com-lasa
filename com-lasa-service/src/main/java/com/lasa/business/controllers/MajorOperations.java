@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  *
  * @author Admin
@@ -27,13 +29,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/default")
 public interface MajorOperations {
 
-    @GetMapping
-    ResponseEntity<?> findAll(MajorPage majorPage, MajorSearchCriteria searchCriteria);
-
-    @GetMapping(value = "/{id}")
-    Major findById(
-            @ApiParam(name = "id", type = "string", value = "Get Major by id", required = true)
-            @PathVariable String id);
+    @GetMapping(value = {"", "/topics", "/{id}"})
+    ResponseEntity<?> findWithArgument(@ApiParam(name = "id", type = "string", value = "Get Major by id", required = false)
+                                       @PathVariable(value = "id", required = false) String id,
+                                       MajorPage majorPage,
+                                       MajorSearchCriteria searchCriteria,
+                                       HttpServletRequest request);
 
     @PostMapping
     void createMajors(

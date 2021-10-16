@@ -9,6 +9,7 @@ import com.lasa.business.controllers.MajorOperations;
 import com.lasa.data.entity.Major;
 import com.lasa.business.services.MajorService;
 import java.util.List;
+import java.util.Objects;
 
 import com.lasa.data.entity.utils.criteria.MajorSearchCriteria;
 import com.lasa.data.entity.utils.page.MajorPage;
@@ -18,6 +19,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  *
@@ -37,17 +40,20 @@ public class MajorRestControllerV1 implements MajorOperations {
 
 
     @Override
-    public ResponseEntity<?> findAll(MajorPage majorPage, MajorSearchCriteria searchCriteria) {
-        if(majorPage.isPaging())
-            return ResponseEntity.ok(majorService.findAll(majorPage, searchCriteria));
-        else
-            return ResponseEntity.ok(majorService.findAll(searchCriteria));
+    public ResponseEntity<?> findWithArgument(String id, MajorPage majorPage, MajorSearchCriteria searchCriteria, HttpServletRequest request) {
+        if(request.getRequestURI().endsWith("/topics")){
+            return ResponseEntity.ok(majorService.findAllWithTopicIds());
+        } else if(Objects.nonNull(id)) {
+            return ResponseEntity.ok(majorService.findById(id));
+        } else {
+            if(majorPage.isPaging())
+                return ResponseEntity.ok(majorService.findAll(majorPage, searchCriteria));
+            else
+                return ResponseEntity.ok(majorService.findAll(searchCriteria));
+        }
     }
 
-    @Override
-    public Major findById(String id) {
-        return majorService.findById(id);
-    }
+
 
     @Override
     public void createMajors(List<Major> majors) {
