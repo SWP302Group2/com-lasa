@@ -20,6 +20,7 @@ import com.lasa.security.jwt.JwtUtil;
 import com.lasa.security.model.AuthenticationRequest;
 import com.lasa.security.model.GoogleAuthenticationRequest;
 import com.lasa.security.model.InformationResponse;
+import com.lasa.security.utils.ExceptionUtils;
 import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -84,7 +85,7 @@ public class AuthenticationServiceImplV1 implements AuthenticationService {
 
     @Override
     public String authenticateGoogleAccount(GoogleAuthenticationRequest googleAuthenticationRequest,String role)
-            throws GeneralSecurityException, IOException, EmailDomainException {
+            throws GeneralSecurityException, IOException, ExceptionUtils.EmailDomainException {
         GoogleIdToken idToken = getIdToken(googleAuthenticationRequest);
 
         if(idToken != null) {
@@ -92,7 +93,7 @@ public class AuthenticationServiceImplV1 implements AuthenticationService {
             String email = payload.getEmail();
 
             if (!emailValidation(email))
-                throw new EmailDomainException("INVALID_EMAIL_DOMAIN");
+                throw new ExceptionUtils.EmailDomainException("INVALID_EMAIL_DOMAIN");
             try{
                 MyUserDetails userDetails = (MyUserDetails) userDetailsService.loadUserByUsername(email);
                 return jwtUtil.generateToken(userDetails);
@@ -173,17 +174,17 @@ public class AuthenticationServiceImplV1 implements AuthenticationService {
     }
 
     @Override
-    public InformationResponse emailVerify(GoogleAuthenticationRequest googleAuthenticationRequest) throws GeneralSecurityException, IOException, EmailDomainException, UserAlreadyExistException {
+    public InformationResponse emailVerify(GoogleAuthenticationRequest googleAuthenticationRequest) throws GeneralSecurityException, IOException, ExceptionUtils.EmailDomainException, ExceptionUtils.UserAlreadyExistException {
         GoogleIdToken idToken = getIdToken(googleAuthenticationRequest);
         if(idToken != null) {
             GoogleIdToken.Payload payload = idToken.getPayload();
             String email = payload.getEmail();
             if(!emailValidation(email)) {
-                throw new EmailDomainException("INVALID_EMAIL_DOMAIN");
+                throw new ExceptionUtils.EmailDomainException("INVALID_EMAIL_DOMAIN");
             } else {
                 Optional<Student> student = studentRepository.findStudentByEmail(email);
                 Optional<Lecturer> lecturer = lecturerRepository.findLecturerByEmail(email);
-                if(student.isPresent() || lecturer.isPresent()) throw new UserAlreadyExistException("EMAIL_ALREADY_EXIST");
+                if(student.isPresent() || lecturer.isPresent()) throw new ExceptionUtils.UserAlreadyExistException("EMAIL_ALREADY_EXIST");
                 String name = (String) payload.get("name");
                 String pictureUrl = (String) payload.get("picture");
                 return InformationResponse.builder()
@@ -197,17 +198,9 @@ public class AuthenticationServiceImplV1 implements AuthenticationService {
         return null;
     }
 
-    public class EmailDomainException extends Exception{
-        public EmailDomainException(String message) {
-            super(message);
-        }
-    }
 
-    public class UserAlreadyExistException extends Exception{
-        public UserAlreadyExistException(String message) {
-            super(message);
-        }
-    }
+
+
 
     private GoogleIdToken getIdToken(GoogleAuthenticationRequest googleAuthenticationRequest) throws GeneralSecurityException, IOException {
         NetHttpTransport transport = new NetHttpTransport();

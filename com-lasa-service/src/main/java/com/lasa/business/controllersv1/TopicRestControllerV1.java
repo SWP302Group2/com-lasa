@@ -37,7 +37,10 @@ public class TopicRestControllerV1 implements TopicOperations {
 
     @Override
     public ResponseEntity<?> findAll(TopicPage topicPage, TopicSearchCriteria searchCriteria) {
-        return ResponseEntity.ok(topicService.findAll(topicPage, searchCriteria));
+        if(topicPage.isPaging())
+            return ResponseEntity.ok(topicService.findAll(topicPage, searchCriteria));
+        else
+            return ResponseEntity.ok(topicService.findAll(searchCriteria));
     }
      
     @Override

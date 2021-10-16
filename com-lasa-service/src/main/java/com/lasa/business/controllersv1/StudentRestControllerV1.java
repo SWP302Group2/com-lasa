@@ -37,8 +37,11 @@ public class StudentRestControllerV1 implements StudentOperations {
     }
 
     @Override
-    public ResponseEntity<Page<Student>> findAll(StudentSearchCriteria searchCriteria, StudentPage studentPage) {
-        return ResponseEntity.ok(service.findAll(searchCriteria, studentPage));
+    public ResponseEntity<?> findAll(StudentSearchCriteria searchCriteria, StudentPage studentPage) {
+        if(studentPage.isPaging())
+            return ResponseEntity.ok(service.findAll(searchCriteria, studentPage));
+        else
+            return ResponseEntity.ok(service.findAll(searchCriteria));
     }
 
     @Override

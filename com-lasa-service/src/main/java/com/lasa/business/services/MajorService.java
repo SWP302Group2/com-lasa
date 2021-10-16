@@ -10,6 +10,7 @@ import java.util.List;
 
 import com.lasa.data.entity.utils.criteria.MajorSearchCriteria;
 import com.lasa.data.entity.utils.page.MajorPage;
+import com.lasa.data.entity.utils.projection.MajorWithListTopicIdAndName;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +22,10 @@ import org.springframework.stereotype.Service;
 public interface MajorService {
     
     Page<Major> findAll(MajorPage majorPage, MajorSearchCriteria searchCriteria);
+
+    List<Major> findAll(MajorSearchCriteria searchCriteria);
+
+    List<MajorWithListTopicIdAndName> findAllWithTopicIds();
     
     Major findById(String id);
     

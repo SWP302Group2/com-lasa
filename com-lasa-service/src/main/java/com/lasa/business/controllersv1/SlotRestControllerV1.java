@@ -38,8 +38,11 @@ public class SlotRestControllerV1 implements SlotOperations {
 
 
     @Override
-    public ResponseEntity<Page<Slot>> findAll(SlotSearchCriteria searchCriteria, SlotPage slotPage) {
-        return ResponseEntity.ok(service.findAll(searchCriteria, slotPage));
+    public ResponseEntity<?> findAll(SlotSearchCriteria searchCriteria, SlotPage slotPage) {
+        if(slotPage.isPaging())
+            return ResponseEntity.ok(service.findAll(searchCriteria, slotPage));
+        else
+            return ResponseEntity.ok(service.findAll(searchCriteria));
     }
 
     @Override

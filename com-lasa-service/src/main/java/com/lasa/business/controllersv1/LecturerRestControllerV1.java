@@ -37,10 +37,12 @@ public class LecturerRestControllerV1 implements LecturerOperations {
         this.lecturerService = lecturerService;
     }
 
-
     @Override
     public ResponseEntity<?> findAll(LecturerPage lecturerPage, LecturerSearchCriteria searchCriteria) {
-        return ResponseEntity.ok(lecturerService.findAll(lecturerPage, searchCriteria));
+        if(lecturerPage.isPaging())
+            return ResponseEntity.ok(lecturerService.findAll(lecturerPage, searchCriteria));
+        else
+            return ResponseEntity.ok(lecturerService.findAll(searchCriteria));
     }
 
     @Override

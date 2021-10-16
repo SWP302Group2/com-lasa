@@ -44,6 +44,11 @@ public class StudentServiceImplV1 implements StudentService {
     }
 
     @Override
+    public List<Student> findAll(StudentSearchCriteria searchCriteria) {
+        return studentRepository.findAll(StudentSpecification.searchSpecification(searchCriteria));
+    }
+
+    @Override
     public Student findByStudentId(Integer id) {
         return studentRepository.findById(id).orElse(null);
     }

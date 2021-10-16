@@ -43,6 +43,11 @@ public class QuestionServiceImplV1 implements QuestionService {
     }
 
     @Override
+    public List<Question> findAll(QuestionSearchCriteria searchCriteria) {
+        return questionRepository.findAll(QuestionSpecification.searchSpecification(searchCriteria));
+    }
+
+    @Override
     public Question findById(Integer id) {
         return questionRepository.findById(id).orElse(null);
     }

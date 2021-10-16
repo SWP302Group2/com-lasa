@@ -27,6 +27,8 @@ public interface BookingRequestService {
 
     Page<BookingRequest> findAll(BookingRequestPage bookingRequestPage, BookingRequestSearchCriteria searchCriteria);
 
+    List<BookingRequest> findAll(BookingRequestSearchCriteria searchCriteria);
+
     BookingRequest findByBookingRequestId(Integer id);
 
     BookingRequest createBookingRequest(BookingRequest bookingRequest);

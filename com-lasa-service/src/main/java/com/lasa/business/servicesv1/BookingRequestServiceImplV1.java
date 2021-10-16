@@ -41,6 +41,11 @@ public class BookingRequestServiceImplV1 implements BookingRequestService {
     }
 
     @Override
+    public List<BookingRequest> findAll(BookingRequestSearchCriteria searchCriteria) {
+        return bookingRepository.findAll(BookingRequestSpecification.searchSpecification(searchCriteria));
+    }
+
+    @Override
     public BookingRequest findByBookingRequestId(Integer id) {
         return bookingRepository.findById(id).get();
     }

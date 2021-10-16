@@ -38,7 +38,10 @@ public class MajorRestControllerV1 implements MajorOperations {
 
     @Override
     public ResponseEntity<?> findAll(MajorPage majorPage, MajorSearchCriteria searchCriteria) {
-        return ResponseEntity.ok(majorService.findAll(majorPage, searchCriteria));
+        if(majorPage.isPaging())
+            return ResponseEntity.ok(majorService.findAll(majorPage, searchCriteria));
+        else
+            return ResponseEntity.ok(majorService.findAll(searchCriteria));
     }
 
     @Override

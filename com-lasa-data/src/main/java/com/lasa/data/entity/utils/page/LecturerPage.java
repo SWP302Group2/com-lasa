@@ -14,4 +14,5 @@ public class LecturerPage {
     private Integer size = 10;
     private String sortBy = Lecturer_.ID;
     private Sort.Direction orderBy = Sort.Direction.ASC;
+    private boolean paging = true;
 }

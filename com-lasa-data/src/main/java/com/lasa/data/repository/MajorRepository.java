@@ -20,4 +20,6 @@ import org.springframework.stereotype.Repository;
 public interface MajorRepository extends JpaRepository<Major, String>, JpaSpecificationExecutor<Major> {
     
     public void deleteByIdIn(List<String> ids);
+
+    <T> List<T> findBy(Class<T> classType);
 }

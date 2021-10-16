@@ -21,6 +21,8 @@ import org.springframework.stereotype.Service;
 public interface StudentService {
     
     Page<Student> findAll(StudentSearchCriteria searchCriteria, StudentPage studentPage);
+
+    List<Student> findAll(StudentSearchCriteria searchCriteria);
     
     Student findByStudentId(Integer id);
     

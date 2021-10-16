@@ -14,4 +14,5 @@ public class MajorPage {
     private Integer size = 10;
     private String sortBy = Major_.ID;
     private Sort.Direction orderBy = Sort.Direction.ASC;
+    private boolean paging = true;
 }

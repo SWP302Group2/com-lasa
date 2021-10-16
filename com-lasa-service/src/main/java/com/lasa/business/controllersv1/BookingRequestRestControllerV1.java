@@ -36,7 +36,11 @@ public class BookingRequestRestControllerV1 implements BookingRequestOperations 
 
     @Override
     public ResponseEntity<?> findAll(BookingRequestPage bookingRequestPage, BookingRequestSearchCriteria searchCriteria) {
-        return ResponseEntity.ok(bookingRequestService.findAll(bookingRequestPage, searchCriteria));
+        if(bookingRequestPage.isPaging())
+            return ResponseEntity.ok(bookingRequestService.findAll(bookingRequestPage, searchCriteria));
+        else
+            return ResponseEntity.ok(bookingRequestService.findAll(searchCriteria));
+
     }
 
     @Override

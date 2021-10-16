@@ -21,7 +21,9 @@ import org.springframework.stereotype.Service;
 public interface SlotService {
     
     Page<Slot> findAll(SlotSearchCriteria searchCriteria, SlotPage slotPage);
-    
+
+    List<Slot> findAll(SlotSearchCriteria searchCriteria);
+
     Slot findById(Integer id);
     
     List<Slot> createSlots(List<Slot> slots);

@@ -15,4 +15,5 @@ public class StudentPage {
     private Integer size = 10;
     private String sortBy = Student_.ID;
     private Sort.Direction orderBy = Sort.Direction.ASC;
+    private boolean paging = true;
 }

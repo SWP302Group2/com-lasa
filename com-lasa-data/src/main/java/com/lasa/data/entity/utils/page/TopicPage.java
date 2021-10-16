@@ -14,4 +14,5 @@ public class TopicPage {
     private Integer size = 10;
     private String sortBy = Topic_.ID;
     private Sort.Direction orderBy = Sort.Direction.ASC;
+    private boolean paging = true;
 }

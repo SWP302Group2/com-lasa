@@ -21,6 +21,8 @@ import org.springframework.stereotype.Service;
 public interface QuestionService {
     
     Page<Question> findAll(QuestionPage questionPage, QuestionSearchCriteria searchCriteria);
+
+    List<Question> findAll(QuestionSearchCriteria searchCriteria);
     
     public Question findById(Integer id);
     

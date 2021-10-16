@@ -17,10 +17,10 @@ import org.springframework.stereotype.Service;
 @Service
 public interface FavoriteLecturerService {
     
-    public List<FavoriteLecturer> findAllLecturerAndStudentInFavoriteLecturer();
+    List<FavoriteLecturer> findAllLecturerAndStudentInFavoriteLecturer();
     
-    public List<FavoriteLecturer> addFavoriteLecturers(List<FavoriteLecturer> favoriteLecturers);
+    List<FavoriteLecturer> addFavoriteLecturers(List<FavoriteLecturer> favoriteLecturers);
 
-    public void deleteFavoriteLecturers(List<FavoriteLecturerKey> ids);
+    void deleteFavoriteLecturers(List<FavoriteLecturerKey> ids);
     
 }

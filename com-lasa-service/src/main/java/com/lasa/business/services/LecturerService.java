@@ -12,6 +12,8 @@ import com.lasa.data.entity.utils.page.LecturerPage;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  *
  * @author hai
@@ -20,6 +22,8 @@ import org.springframework.stereotype.Service;
 public interface LecturerService {
 
     Page<Lecturer> findAll(LecturerPage lecturerPage, LecturerSearchCriteria searchCriteria);
+
+    List<Lecturer> findAll(LecturerSearchCriteria searchCriteria);
 
     Lecturer createLecturer(Lecturer lecturer);
 

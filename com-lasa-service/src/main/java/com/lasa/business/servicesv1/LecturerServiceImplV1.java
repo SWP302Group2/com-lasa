@@ -11,6 +11,7 @@ import com.lasa.data.entity.utils.page.LecturerPage;
 import com.lasa.data.entity.utils.specification.LecturerSpecification;
 import com.lasa.data.repository.LecturerRepository;
 
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -52,6 +53,11 @@ public class LecturerServiceImplV1 implements LecturerService {
     public Page<Lecturer> findAll(LecturerPage lecturerPage, LecturerSearchCriteria searchCriteria) {
         Pageable pageable = PageRequest.of(lecturerPage.getPage(), lecturerPage.getSize(), Sort.by(lecturerPage.getOrderBy(), lecturerPage.getSortBy()));
         return lecturerRepository.findAll(LecturerSpecification.searchSpecification(searchCriteria), pageable);
+    }
+
+    @Override
+    public List<Lecturer> findAll(LecturerSearchCriteria searchCriteria) {
+        return lecturerRepository.findAll(LecturerSpecification.searchSpecification(searchCriteria));
     }
 
     @Override

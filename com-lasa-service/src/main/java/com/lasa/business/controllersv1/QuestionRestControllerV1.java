@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.*;
 public class QuestionRestControllerV1 implements QuestionOperations {
     
     private final QuestionService questionService;
-    
+
     @Autowired
     public QuestionRestControllerV1(@Qualifier("QuestionServiceImplV1") QuestionService service) {
         this.questionService = service;
@@ -36,7 +36,10 @@ public class QuestionRestControllerV1 implements QuestionOperations {
     
     @Override
     public ResponseEntity<?> findAll(QuestionPage questionPage, QuestionSearchCriteria searchCriteria) {
-        return ResponseEntity.ok(questionService.findAll(questionPage, searchCriteria));
+        if(questionPage.isPaging())
+            return ResponseEntity.ok(questionService.findAll(questionPage, searchCriteria));
+        else
+            return ResponseEntity.ok(questionService.findAll(searchCriteria));
     }
     
     @Override

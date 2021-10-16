@@ -23,6 +23,8 @@ import org.springframework.stereotype.Service;
 public interface SlotTopicDetailService {
     
     Page<SlotTopicDetailDTO> findAllSimple(SlotTopicDetailPage slotTopicDetailPage, SlotTopicDetailSearchCriteria searchCriteria);
+
+    List<SlotTopicDetailDTO> findAllSimple(SlotTopicDetailSearchCriteria searchCriteria);
     
     SlotTopicDetail findById(SlotTopicDetailKey id);
     

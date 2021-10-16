@@ -38,7 +38,10 @@ public class SlotTopicDetailRestControllerV1 implements SlotTopicDetailOperation
 
     @Override
     public ResponseEntity<?> findAll(SlotTopicDetailPage slotTopicDetailPage, SlotTopicDetailSearchCriteria searchCriteria) {
-        return ResponseEntity.ok(slotTopicDetailService.findAllSimple(slotTopicDetailPage, searchCriteria ));
+        if(slotTopicDetailPage.isPaging())
+            return ResponseEntity.ok(slotTopicDetailService.findAllSimple(slotTopicDetailPage, searchCriteria ));
+        else
+            return ResponseEntity.ok(slotTopicDetailService.findAllSimple(searchCriteria));
     }
 
     @Override

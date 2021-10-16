@@ -1,8 +1,5 @@
 package com.lasa.security.jwt;
 
-import com.lasa.data.entity.Admin;
-import com.lasa.data.entity.Lecturer;
-import com.lasa.data.entity.Student;
 import com.lasa.security.appuser.MyUserDetails;
 import com.lasa.security.utils.ExceptionUtils;
 import io.jsonwebtoken.Claims;
@@ -17,9 +14,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Function;
 
-import static com.lasa.security.permission.ApplicationUserRole.*;
 import io.jsonwebtoken.security.Keys;
 
 @Service
@@ -62,7 +57,7 @@ public class JwtUtil {
                     .parseClaimsJws(token)
                     .getBody();
         }catch (ExpiredJwtException ex) {
-            throw new ExceptionUtils.TokenInvalidException("TOKEN_IS_EXPIRED");
+            throw new ExceptionUtils.TokenException("TOKEN_IS_EXPIRED");
         }
     }
 
@@ -88,7 +83,7 @@ public class JwtUtil {
                 .compact();
     }
 
-    public Boolean validateToken(String token, UserDetails userDetails) throws ExceptionUtils.TokenInvalidException {
+    public Boolean validateToken(String token, UserDetails userDetails) throws ExceptionUtils.TokenException {
         String username = extractUsername(token);
         return  (username.equals(userDetails.getUsername()));
     }

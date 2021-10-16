@@ -46,6 +46,11 @@ public class SlotServiceImplV1 implements SlotService {
     }
 
     @Override
+    public List<Slot> findAll(SlotSearchCriteria searchCriteria) {
+        return slotRepository.findAll(SlotSpecification.searchSpecification(searchCriteria));
+    }
+
+    @Override
     public Slot findById(Integer id) {
         return slotRepository.findById(id).orElse(null);
     }

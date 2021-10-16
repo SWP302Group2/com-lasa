@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 @Getter
-public class AuthenticationResponse {
+public class ResponseObject {
     private String timestamp;
     private int status;
     private String error;
@@ -17,7 +17,7 @@ public class AuthenticationResponse {
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     @Builder
-    public AuthenticationResponse(int status, String error, String message, String path) {
+    public ResponseObject(int status, String error, String message, String path) {
         this.timestamp = LocalDateTime.now().format(formatter);
         this.status = status;
         this.error = error;

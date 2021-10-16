@@ -29,7 +29,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public interface StudentOperations {
 
     @GetMapping
-    ResponseEntity<Page<Student>> findAll(StudentSearchCriteria searchCriteria, StudentPage studentPage);
+    ResponseEntity<?> findAll(StudentSearchCriteria searchCriteria, StudentPage studentPage);
 
     @GetMapping(value = "/{id}")
     public Student findByStudentId(

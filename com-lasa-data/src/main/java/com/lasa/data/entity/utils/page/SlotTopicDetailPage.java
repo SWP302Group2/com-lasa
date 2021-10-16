@@ -10,4 +10,5 @@ import lombok.Setter;
 public class SlotTopicDetailPage {
     private Integer page = 0;
     private Integer size = 10;
+    private boolean paging = true;
 }

@@ -8,6 +8,7 @@ package com.lasa.business.servicesv1;
 import com.lasa.data.entity.Major;
 import com.lasa.data.entity.utils.criteria.MajorSearchCriteria;
 import com.lasa.data.entity.utils.page.MajorPage;
+import com.lasa.data.entity.utils.projection.MajorWithListTopicIdAndName;
 import com.lasa.data.entity.utils.specification.MajorSpecification;
 import com.lasa.data.repository.MajorRepository;
 import java.util.List;
@@ -44,6 +45,16 @@ public class MajorServiceImplV1 implements MajorService {
     public Page<Major> findAll(MajorPage majorPage, MajorSearchCriteria searchCriteria) {
         Pageable pageable = PageRequest.of(majorPage.getPage(), majorPage.getSize(), Sort.by(majorPage.getOrderBy(), majorPage.getSortBy()));
         return majorRepository.findAll(MajorSpecification.searchSpecification(searchCriteria), pageable);
+    }
+
+    @Override
+    public List<Major> findAll(MajorSearchCriteria searchCriteria) {
+        return majorRepository.findAll(MajorSpecification.searchSpecification(searchCriteria));
+    }
+
+    @Override
+    public List<MajorWithListTopicIdAndName> findAllWithTopicIds() {
+        return majorRepository.findBy(MajorWithListTopicIdAndName.class);
     }
 
     @Override

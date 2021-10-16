@@ -44,7 +44,12 @@ public class TopicServiceImplV1 implements TopicService {
         Pageable pageable = PageRequest.of(topicPage.getPage(), topicPage.getSize(), Sort.by(topicPage.getOrderBy(), topicPage.getSortBy()));
         return topicRepository.findAll(TopicSpecification.searchSpecification(searchCriteria), pageable);
     }
-    
+
+    @Override
+    public List<Topic> findAll(TopicSearchCriteria searchCriteria) {
+        return topicRepository.findAll(TopicSpecification.searchSpecification(searchCriteria));
+    }
+
     @Override
     public List<Topic> createTopics(List<Topic> topics) {
         return topicRepository.saveAll(topics);

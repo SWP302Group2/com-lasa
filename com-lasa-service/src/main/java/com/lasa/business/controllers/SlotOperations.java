@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.*;
 public interface SlotOperations {
 
     @GetMapping
-    ResponseEntity<Page<Slot>> findAll(SlotSearchCriteria searchCriteria, SlotPage slotPage);
+    ResponseEntity<?> findAll(SlotSearchCriteria searchCriteria, SlotPage slotPage);
 
     @GetMapping(value = "/{id}")
     public Slot findById(

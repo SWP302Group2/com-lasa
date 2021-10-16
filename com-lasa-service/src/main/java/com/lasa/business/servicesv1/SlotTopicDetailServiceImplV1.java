@@ -14,6 +14,7 @@ import com.lasa.data.entity.utils.specification.SlotTopicDetailSpecification;
 import com.lasa.data.repository.SlotTopicDetailRepository;
 import java.util.List;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import com.lasa.business.services.SlotTopicDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,6 +56,22 @@ public class SlotTopicDetailServiceImplV1 implements SlotTopicDetailService {
                 }
         );
         return dtoPage;
+    }
+
+    @Override
+    public List<SlotTopicDetailDTO> findAllSimple(SlotTopicDetailSearchCriteria searchCriteria) {
+        List<SlotTopicDetail> list = detailRepository.findAll(SlotTopicDetailSpecification.searchSpecification(searchCriteria));
+
+        List<SlotTopicDetailDTO> dtoList = list.stream()
+                .map( slotTopicDetail -> {
+                    SlotTopicDetailDTO dto = SlotTopicDetailDTO.builder()
+                            .slotId(slotTopicDetail.getSlot().getId())
+                            .topicId(slotTopicDetail.getTopic().getId())
+                            .build();
+                    return dto;
+                })
+                .collect(Collectors.toList());
+        return dtoList;
     }
 
     @Override

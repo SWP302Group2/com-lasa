@@ -14,4 +14,5 @@ public class QuestionPage {
     private Integer size = 10;
     private String sortBy = Question_.ID;
     private Sort.Direction orderBy = Sort.Direction.ASC;
+    private boolean paging = true;
 }
