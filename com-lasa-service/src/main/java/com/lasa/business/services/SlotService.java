@@ -6,12 +6,12 @@
 package com.lasa.business.services;
 
 import com.lasa.data.entity.Slot;
-import java.util.List;
-
-import com.lasa.data.entity.utils.page.SlotPage;
 import com.lasa.data.entity.utils.criteria.SlotSearchCriteria;
+import com.lasa.data.entity.utils.page.SlotPage;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  *

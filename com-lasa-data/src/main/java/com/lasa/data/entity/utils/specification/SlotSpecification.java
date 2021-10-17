@@ -1,10 +1,11 @@
 package com.lasa.data.entity.utils.specification;
 
-import com.lasa.data.entity.*;
+import com.lasa.data.entity.Slot;
+import com.lasa.data.entity.Slot_;
 import com.lasa.data.entity.utils.criteria.SlotSearchCriteria;
 import org.springframework.data.jpa.domain.Specification;
 
-import javax.persistence.criteria.*;
+import javax.persistence.criteria.Predicate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -16,8 +17,8 @@ public class SlotSpecification {
 
             List<Predicate> predicates = new ArrayList<>();
 
-            if(Objects.nonNull(searchCriteria.getLecturerId()))
-                predicates.add(criteriaBuilder.isTrue(root.get(Slot_.lecturerId).in(searchCriteria.getLecturerId())));
+            if(Objects.nonNull(searchCriteria.getLecId()))
+                predicates.add(criteriaBuilder.isTrue(root.get(Slot_.lecturerId).in(searchCriteria.getLecId())));
 
             if(Objects.nonNull(searchCriteria.getTimeStart())) {
                 predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get(Slot_.timeStart), searchCriteria.getTimeStart()));

@@ -33,4 +33,6 @@ public class TopicSpecification {
             return criteriaBuilder.and(predicates.toArray(new Predicate[predicates.size() - 1]));
         };
     }
+
+
 }

@@ -1,17 +1,13 @@
 
 package com.lasa.business.servicesv1;
 
+import com.lasa.business.services.QuestionService;
 import com.lasa.data.entity.Question;
 import com.lasa.data.entity.utils.criteria.QuestionSearchCriteria;
 import com.lasa.data.entity.utils.page.QuestionPage;
 import com.lasa.data.entity.utils.specification.QuestionSpecification;
 import com.lasa.data.repository.QuestionRepository;
-import java.util.List;
-import java.util.Set;
-
-import com.lasa.business.services.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
-import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -19,6 +15,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  *

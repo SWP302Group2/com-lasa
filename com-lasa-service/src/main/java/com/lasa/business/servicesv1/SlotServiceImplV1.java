@@ -5,15 +5,12 @@
  */
 package com.lasa.business.servicesv1;
 
-import com.lasa.data.entity.*;
-import com.lasa.data.entity.utils.page.SlotPage;
+import com.lasa.business.services.SlotService;
+import com.lasa.data.entity.Slot;
 import com.lasa.data.entity.utils.criteria.SlotSearchCriteria;
+import com.lasa.data.entity.utils.page.SlotPage;
 import com.lasa.data.entity.utils.specification.SlotSpecification;
 import com.lasa.data.repository.SlotRepository;
-
-import java.util.List;
-
-import com.lasa.business.services.SlotService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
@@ -21,6 +18,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 
 /**

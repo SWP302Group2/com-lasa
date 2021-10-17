@@ -12,15 +12,15 @@ import java.util.List;
 @Setter
 public class TopicSearchCriteria {
     
-    @ApiModelProperty(name = "name", dataType = "String", value = "Get topic name")
+    @ApiModelProperty(name = "name", dataType = "String", value = "Search topic by name")
     private String name;
     
-    @ApiModelProperty(name = "courseId", dataType = "String", value = "Get course id")
+    @ApiModelProperty(name = "courseId", dataType = "String", value = "Search topic by course id")
     private String courseId;
     
-    @ApiModelProperty(name = "majorId", dataType = "String", value = "Get major by id")
+    @ApiModelProperty(name = "majorId", dataType = "String", value = "Search topic by majorIds")
     private List<String> majorId;
      
-    @ApiModelProperty(name = "status", dataType = "Integer", value = "Get status") 
+    @ApiModelProperty(name = "status", dataType = "Integer", value = "Search topic by status")
     private Integer status;
 }

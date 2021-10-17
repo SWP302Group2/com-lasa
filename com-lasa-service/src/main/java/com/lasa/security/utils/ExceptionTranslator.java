@@ -21,7 +21,6 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
-import java.sql.SQLException;
 
 @RestControllerAdvice
 public class ExceptionTranslator {

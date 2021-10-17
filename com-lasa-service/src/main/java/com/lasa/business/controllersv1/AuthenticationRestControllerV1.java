@@ -2,12 +2,14 @@ package com.lasa.business.controllersv1;
 
 import com.lasa.business.controllers.AuthenticationOperations;
 import com.lasa.business.services.AuthenticationService;
-import com.lasa.security.model.*;
+import com.lasa.security.model.AuthenticationRequest;
+import com.lasa.security.model.GoogleAuthenticationRequest;
+import com.lasa.security.model.InformationResponse;
+import com.lasa.security.model.ResponseObject;
 import com.lasa.security.utils.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,7 +18,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 
-import static org.springframework.http.HttpStatus.*;
+import static org.springframework.http.HttpStatus.OK;
+import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 
 @RestController
 @RequestMapping("/api/v1/authentication")

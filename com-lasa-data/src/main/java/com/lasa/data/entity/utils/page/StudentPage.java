@@ -1,6 +1,5 @@
 package com.lasa.data.entity.utils.page;
 
-import com.lasa.data.entity.Slot_;
 import com.lasa.data.entity.Student_;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

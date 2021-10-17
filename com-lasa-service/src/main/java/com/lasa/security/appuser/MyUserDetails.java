@@ -1,6 +1,5 @@
 package com.lasa.security.appuser;
 
-import com.lasa.security.permission.ApplicationUserRole;
 import com.lasa.data.entity.Admin;
 import com.lasa.data.entity.Lecturer;
 import com.lasa.data.entity.Student;

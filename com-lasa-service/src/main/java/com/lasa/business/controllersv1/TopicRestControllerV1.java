@@ -6,10 +6,8 @@
 package com.lasa.business.controllersv1;
 
 import com.lasa.business.controllers.TopicOperations;
-import com.lasa.data.entity.Topic;
 import com.lasa.business.services.TopicService;
-import java.util.List;
-
+import com.lasa.data.entity.Topic;
 import com.lasa.data.entity.utils.criteria.TopicSearchCriteria;
 import com.lasa.data.entity.utils.page.TopicPage;
 import io.swagger.annotations.Api;
@@ -18,6 +16,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  *

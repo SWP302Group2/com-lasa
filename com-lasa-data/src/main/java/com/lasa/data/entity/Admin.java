@@ -5,15 +5,14 @@
  */
 package com.lasa.data.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import java.io.Serializable;
-import java.time.LocalDateTime;
-import javax.persistence.*;
-
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
+import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  *

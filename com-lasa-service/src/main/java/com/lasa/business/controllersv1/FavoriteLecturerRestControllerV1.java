@@ -6,20 +6,16 @@
 package com.lasa.business.controllersv1;
 
 import com.lasa.business.controllers.FavoriteLecturerOperations;
+import com.lasa.business.services.FavoriteLecturerService;
 import com.lasa.data.entity.FavoriteLecturer;
 import com.lasa.data.entity.key.FavoriteLecturerKey;
-import com.lasa.business.services.FavoriteLecturerService;
-import java.util.List;
-
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import static org.springframework.http.HttpHeaders.*;
+import java.util.List;
 
 /**
  *

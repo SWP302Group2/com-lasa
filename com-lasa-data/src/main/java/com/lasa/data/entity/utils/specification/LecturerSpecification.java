@@ -1,14 +1,15 @@
 package com.lasa.data.entity.utils.specification;
 
+import com.lasa.data.entity.FavoriteLecturer;
 import com.lasa.data.entity.Lecturer;
 import com.lasa.data.entity.Lecturer_;
 import com.lasa.data.entity.utils.criteria.LecturerSearchCriteria;
+import com.lasa.data.repository.FavoriteLecturerRepository;
+import com.lasa.data.repository.LecturerRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -36,6 +37,11 @@ public class LecturerSpecification {
 
             if(Objects.nonNull(searchCriteria.getStatus()))
                 predicates.add(criteriaBuilder.equal(root.get(Lecturer_.status), searchCriteria.getStatus()));
+
+            //search lecturer in top favorite
+            if(Objects.nonNull(searchCriteria.getLecturerIds())) {
+                predicates.add(criteriaBuilder.isTrue(root.get(Lecturer_.id).in(searchCriteria.getLecturerIds())));
+            }
 
             if(predicates.isEmpty())
                 return null;

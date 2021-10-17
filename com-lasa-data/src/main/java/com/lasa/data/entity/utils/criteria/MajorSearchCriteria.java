@@ -9,6 +9,6 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class MajorSearchCriteria {
-    @ApiModelProperty(name = "name", dataType = "String", value = "Input your major")
+    @ApiModelProperty(name = "name", dataType = "String", value = "Search major by name")
     private String name;
 }

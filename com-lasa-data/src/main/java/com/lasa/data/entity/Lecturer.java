@@ -8,22 +8,12 @@ package com.lasa.data.entity;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import lombok.*;
+
+import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Collection;
-import java.util.Set;
-import javax.persistence.*;
-
-import lombok.Builder;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
-import net.bytebuddy.implementation.bind.annotation.Default;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
 
 /**
  *

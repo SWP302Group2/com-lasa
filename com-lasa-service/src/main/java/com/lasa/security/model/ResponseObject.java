@@ -1,13 +1,14 @@
 package com.lasa.security.model;
 
-import lombok.*;
-import org.springframework.boot.autoconfigure.web.format.DateTimeFormatters;
+import lombok.Builder;
+import lombok.Getter;
+import springfox.documentation.annotations.ApiIgnore;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 @Getter
+@ApiIgnore
 public class ResponseObject {
     private String timestamp;
     private int status;

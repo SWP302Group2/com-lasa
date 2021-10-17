@@ -7,13 +7,13 @@ package com.lasa.business.services;
 
 import com.lasa.data.entity.SlotTopicDetail;
 import com.lasa.data.entity.key.SlotTopicDetailKey;
-import java.util.List;
-
 import com.lasa.data.entity.utils.criteria.SlotTopicDetailSearchCriteria;
 import com.lasa.data.entity.utils.dto.SlotTopicDetailDTO;
 import com.lasa.data.entity.utils.page.SlotTopicDetailPage;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  *

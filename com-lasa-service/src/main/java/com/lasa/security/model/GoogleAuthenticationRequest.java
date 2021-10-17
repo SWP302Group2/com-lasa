@@ -2,11 +2,13 @@ package com.lasa.security.model;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.List;
 
 @Data
 @NoArgsConstructor
+@ApiIgnore
 public class GoogleAuthenticationRequest {
     private String token;
     private String name;

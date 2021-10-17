@@ -5,13 +5,13 @@
  */
 package com.lasa.data.repository;
 
-import java.util.List;
-
 import com.lasa.data.entity.LecturerTopicDetail;
 import com.lasa.data.entity.key.LecturerTopicDetailKey;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  *

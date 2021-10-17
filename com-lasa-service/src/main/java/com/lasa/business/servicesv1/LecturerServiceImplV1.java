@@ -5,28 +5,26 @@
  */
 package com.lasa.business.servicesv1;
 
+import com.lasa.business.services.LecturerService;
 import com.lasa.data.entity.Lecturer;
 import com.lasa.data.entity.utils.criteria.LecturerSearchCriteria;
 import com.lasa.data.entity.utils.page.LecturerPage;
 import com.lasa.data.entity.utils.specification.LecturerSpecification;
+import com.lasa.data.customrepository.FavoriteLecturerCustomRepositoryImpl;
+import com.lasa.data.repository.FavoriteLecturerRepository;
 import com.lasa.data.repository.LecturerRepository;
-
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import com.lasa.business.services.LecturerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
+import java.util.List;
+import java.util.Objects;
 
 /**
  *
@@ -38,20 +36,22 @@ import javax.persistence.criteria.CriteriaBuilder;
 public class LecturerServiceImplV1 implements LecturerService {
 
     private final LecturerRepository lecturerRepository;
-    private final EntityManager entityManager;
-    private final CriteriaBuilder criteriaBuilder;
+    private final FavoriteLecturerRepository favoriteLecturerRepository;
 
     @Autowired
     public LecturerServiceImplV1(LecturerRepository lecturerRepository,
-                                 EntityManager entityManager) {
+                                 FavoriteLecturerRepository favoriteLecturerRepository) {
         this.lecturerRepository = lecturerRepository;
-        this.entityManager = entityManager;
-        this.criteriaBuilder = entityManager.getCriteriaBuilder();
+        this.favoriteLecturerRepository = favoriteLecturerRepository;
     }
 
     @Override
     public Page<Lecturer> findAll(LecturerPage lecturerPage, LecturerSearchCriteria searchCriteria) {
         Pageable pageable = PageRequest.of(lecturerPage.getPage(), lecturerPage.getSize(), Sort.by(lecturerPage.getOrderBy(), lecturerPage.getSortBy()));
+        if(Objects.nonNull(searchCriteria.getTop())) {
+            List<Integer> lecturerIds = favoriteLecturerRepository.findTopFavoriteLecturerId(searchCriteria.getTop());
+            searchCriteria.setLecturerIds(lecturerIds);
+        }
         return lecturerRepository.findAll(LecturerSpecification.searchSpecification(searchCriteria), pageable);
     }
 

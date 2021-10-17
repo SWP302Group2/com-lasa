@@ -13,15 +13,15 @@ import java.util.List;
 @NoArgsConstructor
 public class BookingRequestSearchCriteria {
     
-    @ApiModelProperty(name = "slotId", dataType = "Integer", value = "Get slot by id")
+    @ApiModelProperty(name = "slotId", dataType = "Integer", value = "Search booking request by  slotIds")
     private List<Integer> slotId;
     
-    @ApiModelProperty(name = "studentId", dataType = "Integer", value = "Get student by id")
+    @ApiModelProperty(name = "studentId", dataType = "Integer", value = "Search booking request by studentIds")
     private List<Integer> studentId;
      
-    @ApiModelProperty(name = "topicId", dataType = "Integer", value = "Get topic by id")
+    @ApiModelProperty(name = "topicId", dataType = "Integer", value = "Search booking request by topicIds")
     private List<Integer> topicId;
     
-    @ApiModelProperty(name = "status", dataType = "Integer", value = "Get status")
+    @ApiModelProperty(name = "status", dataType = "Integer", value = "Search booking request by status")
     private Integer status;
 }

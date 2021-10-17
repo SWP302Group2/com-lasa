@@ -9,12 +9,10 @@ import com.lasa.data.entity.Lecturer;
 import com.lasa.data.entity.utils.criteria.LecturerSearchCriteria;
 import com.lasa.data.entity.utils.page.LecturerPage;
 import io.swagger.annotations.ApiParam;
-import java.util.List;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.Tuple;
+import java.util.List;
 
 /**
  *

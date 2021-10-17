@@ -3,12 +3,12 @@ package com.lasa.security.model;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Builder;
 import lombok.Data;
-
-import java.io.Serializable;
+import springfox.documentation.annotations.ApiIgnore;
 
 @Data
 @Builder
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
+@ApiIgnore
 public class InformationResponse {
     private Object information;
     private String role;

@@ -11,6 +11,6 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 public class QuestionSearchCriteria {
-    @ApiModelProperty(name = "bookingId", dataType = "Integer", value = "By id, get booking request")
+    @ApiModelProperty(name = "bookingId", dataType = "Integer", value = "Search question by bookingIds")
     private List<Integer> bookingId;
 }

@@ -12,9 +12,9 @@ import java.util.List;
 @NoArgsConstructor
 public class SlotTopicDetailSearchCriteria {
     
-    @ApiModelProperty(name = "slotId", dataType = "Integer", value = "Get slot by id")
-    private List<Integer> slotId;
+    @ApiModelProperty(name = "sId", dataType = "Integer", value = "Search slot topic detail by slotIds")
+    private List<Integer> sId;
     
-    @ApiModelProperty(name = "topicId", dataType = "Integer", value = "Get topic by id")
+    @ApiModelProperty(name = "topicId", dataType = "Integer", value = "Search slot topic detail by topicIds")
     private List<Integer> topicId;
 }

@@ -4,20 +4,14 @@ import com.lasa.business.controllers.ApplicationOperations;
 import com.lasa.business.services.AdminService;
 import com.lasa.business.services.LecturerService;
 import com.lasa.business.services.StudentService;
-import com.lasa.data.entity.Student;
 import com.lasa.security.appuser.MyUserDetails;
 import com.lasa.security.model.InformationResponse;
-import com.lasa.security.permission.ApplicationUserRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import static com.lasa.security.permission.ApplicationUserRole.*;
-import static org.springframework.http.HttpHeaders.*;
-import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
 @RestController
 @RequestMapping("/api/v1/home")

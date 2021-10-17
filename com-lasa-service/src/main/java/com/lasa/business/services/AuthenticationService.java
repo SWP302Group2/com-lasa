@@ -1,6 +1,5 @@
 package com.lasa.business.services;
 
-import com.lasa.business.servicesv1.AuthenticationServiceImplV1;
 import com.lasa.security.model.AuthenticationRequest;
 import com.lasa.security.model.GoogleAuthenticationRequest;
 import com.lasa.security.model.InformationResponse;

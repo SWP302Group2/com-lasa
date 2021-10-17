@@ -5,19 +5,19 @@
  */
 package com.lasa.business.servicesv1;
 
+import com.lasa.business.services.AdminService;
 import com.lasa.data.entity.Admin;
+import com.lasa.data.entity.Lecturer;
+import com.lasa.data.entity.Student;
 import com.lasa.data.entity.utils.projection.SimpleAdmin;
 import com.lasa.data.repository.AdminRepository;
-import com.lasa.data.entity.Lecturer;
 import com.lasa.data.repository.LecturerRepository;
-import com.lasa.data.entity.Student;
 import com.lasa.data.repository.StudentRepository;
-import java.util.List;
-
-import com.lasa.business.services.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 /**
  *

@@ -6,11 +6,8 @@
 package com.lasa.business.controllersv1;
 
 import com.lasa.business.controllers.MajorOperations;
-import com.lasa.data.entity.Major;
 import com.lasa.business.services.MajorService;
-import java.util.List;
-import java.util.Objects;
-
+import com.lasa.data.entity.Major;
 import com.lasa.data.entity.utils.criteria.MajorSearchCriteria;
 import com.lasa.data.entity.utils.page.MajorPage;
 import io.swagger.annotations.Api;
@@ -21,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
+import java.util.Objects;
 
 /**
  *

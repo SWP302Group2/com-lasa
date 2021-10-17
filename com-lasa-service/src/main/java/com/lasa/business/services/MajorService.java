@@ -6,13 +6,13 @@
 package com.lasa.business.services;
 
 import com.lasa.data.entity.Major;
-import java.util.List;
-
 import com.lasa.data.entity.utils.criteria.MajorSearchCriteria;
 import com.lasa.data.entity.utils.page.MajorPage;
 import com.lasa.data.entity.utils.projection.MajorWithSimpleTopic;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  *

@@ -5,15 +5,15 @@
  */
 package com.lasa.business.servicesv1;
 
+import com.lasa.business.services.FavoriteLecturerService;
 import com.lasa.data.entity.FavoriteLecturer;
 import com.lasa.data.entity.key.FavoriteLecturerKey;
 import com.lasa.data.repository.FavoriteLecturerRepository;
-import java.util.List;
-
-import com.lasa.business.services.FavoriteLecturerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 /**
  *

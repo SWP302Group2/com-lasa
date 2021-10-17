@@ -5,23 +5,23 @@
  */
 package com.lasa.data.repository;
 
-import java.util.List;
-
+import com.lasa.data.customrepository.FavoriteLecturerCustomRepository;
 import com.lasa.data.entity.FavoriteLecturer;
 import com.lasa.data.entity.key.FavoriteLecturerKey;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  *
  * @author hai
  */
 @Repository
-public interface FavoriteLecturerRepository extends JpaRepository<FavoriteLecturer, FavoriteLecturerKey> {
-    
+public interface FavoriteLecturerRepository extends JpaRepository<FavoriteLecturer, FavoriteLecturerKey>, JpaSpecificationExecutor<FavoriteLecturer>, FavoriteLecturerCustomRepository {
+
     @Query("FROM FavoriteLecturer f JOIN FETCH f.lecturer JOIN FETCH f.student")
     List<FavoriteLecturer> findAllLecturerAndStudentInFavoriteLecturer();
 

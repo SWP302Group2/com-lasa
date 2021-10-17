@@ -6,11 +6,9 @@
 package com.lasa.business.controllersv1;
 
 import com.lasa.business.controllers.SlotTopicDetailOperations;
+import com.lasa.business.services.SlotTopicDetailService;
 import com.lasa.data.entity.SlotTopicDetail;
 import com.lasa.data.entity.key.SlotTopicDetailKey;
-import com.lasa.business.services.SlotTopicDetailService;
-import java.util.List;
-
 import com.lasa.data.entity.utils.criteria.SlotTopicDetailSearchCriteria;
 import com.lasa.data.entity.utils.page.SlotTopicDetailPage;
 import io.swagger.annotations.Api;
@@ -19,6 +17,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  *
