@@ -33,4 +33,5 @@ public interface BookingRequestService {
     BookingRequest updateBookingRequest(BookingRequest bookingRequest);
 
     void deleteBookingRequests(List<Integer> ids);
+
 }
