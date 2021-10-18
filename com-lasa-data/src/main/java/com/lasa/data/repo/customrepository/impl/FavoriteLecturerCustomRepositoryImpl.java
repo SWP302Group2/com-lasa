@@ -14,7 +14,7 @@ public class FavoriteLecturerCustomRepositoryImpl implements FavoriteLecturerCus
 
     @Override
     public List<Integer> findTopFavoriteLecturerId(Integer topNumber) {
-        return entityManager.createQuery("SELECT f.lecturer.id as id, count(f.lecturer.id) as countNumer FROM FavoriteLecturer f GROUP BY f.lecturer.id order by count(f.lecturer.id) desc ", Integer.class)
+        return entityManager.createQuery("SELECT f.lecturer.id FROM FavoriteLecturer f GROUP BY f.lecturer.id order by count(f.lecturer.id) desc ", Integer.class)
                 .setMaxResults(topNumber)
                 .getResultList();
     }

@@ -37,7 +37,6 @@ public class LecturerSpecification {
             //search lecturer in top favorite
             if(Objects.nonNull(searchCriteria.getLecturerIds())) {
                 predicates.add(root.get(Lecturer_.id).in(searchCriteria.getLecturerIds()));
-
             }
 
             if(predicates.isEmpty())
