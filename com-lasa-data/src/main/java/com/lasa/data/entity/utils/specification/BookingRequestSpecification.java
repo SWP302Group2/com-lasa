@@ -20,13 +20,13 @@ public class BookingRequestSpecification {
                 predicates.add(criteriaBuilder.equal(root.get(BookingRequest_.status), searchCriteria.getStatus()));
 
             if(Objects.nonNull(searchCriteria.getSlotId()))
-                predicates.add(criteriaBuilder.isTrue(root.get(BookingRequest_.slotId).in(searchCriteria.getSlotId())));
+                predicates.add(root.get(BookingRequest_.slotId).in(searchCriteria.getSlotId()));
 
             if(Objects.nonNull(searchCriteria.getStudentId()))
-                predicates.add(criteriaBuilder.isTrue(root.get(BookingRequest_.studentId).in(searchCriteria.getStudentId())));
+                predicates.add(root.get(BookingRequest_.studentId).in(searchCriteria.getStudentId()));
 
             if(Objects.nonNull(searchCriteria.getTopicId()))
-                predicates.add(criteriaBuilder.isTrue(root.get(BookingRequest_.topicId).in(searchCriteria.getStudentId())));
+                predicates.add(root.get(BookingRequest_.topicId).in(searchCriteria.getStudentId()));
 
             if(predicates.isEmpty())
                 return null;

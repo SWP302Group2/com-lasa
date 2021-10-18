@@ -2,8 +2,8 @@ package com.lasa.security.config;
 
 import com.lasa.security.filter.ExceptionHandlerFilter;
 import com.lasa.security.filter.JwtRequestFilter;
-import com.lasa.security.jwt.JwtConfig;
-import com.lasa.security.jwt.JwtUtil;
+import com.lasa.security.utils.jwt.JwtConfig;
+import com.lasa.security.utils.jwt.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

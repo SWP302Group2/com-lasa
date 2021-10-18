@@ -20,7 +20,7 @@ public class SlotTopicDetailSpecification {
             List<Predicate> predicates = new ArrayList<>();
 
             if(Objects.nonNull(searchCriteria.getSId()))
-                predicates.add(criteriaBuilder.isTrue(root.get(SlotTopicDetail_.slot).get(Slot_.id).in(searchCriteria.getSId())));
+                predicates.add(root.get(SlotTopicDetail_.slot).get(Slot_.id).in(searchCriteria.getSId()));
 
             if(Objects.nonNull(searchCriteria.getTopicId()))
                 predicates.add(criteriaBuilder.isTrue(root.get(SlotTopicDetail_.topic).get(Topic_.id).in(searchCriteria.getTopicId())));

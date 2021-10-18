@@ -1,9 +1,9 @@
 package com.lasa.business.services;
 
-import com.lasa.security.model.AuthenticationRequest;
-import com.lasa.security.model.GoogleAuthenticationRequest;
-import com.lasa.security.model.InformationResponse;
-import com.lasa.security.utils.ExceptionUtils;
+import com.lasa.security.utils.model.AuthenticationRequest;
+import com.lasa.security.utils.model.GoogleAuthenticationRequest;
+import com.lasa.security.utils.model.InformationResponse;
+import com.lasa.security.utils.exception.ExceptionUtils;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.stereotype.Service;
 

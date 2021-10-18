@@ -26,7 +26,7 @@ public class TopicSpecification {
                 predicates.add(criteriaBuilder.equal(root.get(Topic_.status), searchCriteria.getStatus()));
 
             if(Objects.nonNull(searchCriteria.getMajorId()))
-                predicates.add(criteriaBuilder.isTrue(root.get(Topic_.majorId).in(searchCriteria.getMajorId())));
+                predicates.add(root.get(Topic_.majorId).in(searchCriteria.getMajorId()));
 
             if(predicates.isEmpty())
                 return null;

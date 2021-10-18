@@ -18,7 +18,7 @@ public class SlotSpecification {
             List<Predicate> predicates = new ArrayList<>();
 
             if(Objects.nonNull(searchCriteria.getLecId()))
-                predicates.add(criteriaBuilder.isTrue(root.get(Slot_.lecturerId).in(searchCriteria.getLecId())));
+                predicates.add(root.get(Slot_.lecturerId).in(searchCriteria.getLecId()));
 
             if(Objects.nonNull(searchCriteria.getTimeStart())) {
                 predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get(Slot_.timeStart), searchCriteria.getTimeStart()));

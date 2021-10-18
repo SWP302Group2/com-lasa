@@ -11,7 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.Set;
 
-import static com.lasa.security.permission.ApplicationUserRole.*;
+import static com.lasa.security.utils.permission.ApplicationUserRole.*;
 
 @Data
 @NoArgsConstructor

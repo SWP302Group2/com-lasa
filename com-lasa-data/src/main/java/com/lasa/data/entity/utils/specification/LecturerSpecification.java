@@ -1,12 +1,8 @@
 package com.lasa.data.entity.utils.specification;
 
-import com.lasa.data.entity.FavoriteLecturer;
 import com.lasa.data.entity.Lecturer;
 import com.lasa.data.entity.Lecturer_;
 import com.lasa.data.entity.utils.criteria.LecturerSearchCriteria;
-import com.lasa.data.repository.FavoriteLecturerRepository;
-import com.lasa.data.repository.LecturerRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 
 import javax.persistence.criteria.Predicate;
@@ -40,7 +36,8 @@ public class LecturerSpecification {
 
             //search lecturer in top favorite
             if(Objects.nonNull(searchCriteria.getLecturerIds())) {
-                predicates.add(criteriaBuilder.isTrue(root.get(Lecturer_.id).in(searchCriteria.getLecturerIds())));
+                predicates.add(root.get(Lecturer_.id).in(searchCriteria.getLecturerIds()));
+
             }
 
             if(predicates.isEmpty())

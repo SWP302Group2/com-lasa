@@ -18,7 +18,7 @@ public class QuestionSpecification {
             List<Predicate> predicates = new ArrayList<>();
 
             if(Objects.nonNull(searchCriteria.getBookingId()))
-                predicates.add(criteriaBuilder.isTrue(root.get(Question_.bookingId).in(searchCriteria.getBookingId())));
+                predicates.add(root.get(Question_.bookingId).in(searchCriteria.getBookingId()));
 
             if(predicates.isEmpty())
                 return null;
