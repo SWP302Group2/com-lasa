@@ -7,7 +7,9 @@ package com.lasa.business.controllers;
 
 import com.lasa.data.entity.FavoriteLecturer;
 import com.lasa.data.entity.key.FavoriteLecturerKey;
+import com.lasa.data.entity.utils.criteria.FavoriteLecturerSearchCriteria;
 import io.swagger.annotations.ApiParam;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,7 +22,7 @@ import java.util.List;
 public interface FavoriteLecturerOperations {
     
     @GetMapping
-    List<FavoriteLecturer> findAll();
+    ResponseEntity<?> findWithArguments(FavoriteLecturerSearchCriteria searchCriteria);
 
     @PostMapping
     List<FavoriteLecturer> createFavoriteLecturer(

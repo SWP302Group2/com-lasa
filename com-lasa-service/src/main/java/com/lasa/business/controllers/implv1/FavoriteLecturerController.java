@@ -9,13 +9,16 @@ import com.lasa.business.controllers.FavoriteLecturerOperations;
 import com.lasa.business.services.FavoriteLecturerService;
 import com.lasa.data.entity.FavoriteLecturer;
 import com.lasa.data.entity.key.FavoriteLecturerKey;
+import com.lasa.data.entity.utils.criteria.FavoriteLecturerSearchCriteria;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  *
@@ -44,8 +47,11 @@ public class FavoriteLecturerController implements FavoriteLecturerOperations {
     }
 
     @Override
-    public List<FavoriteLecturer> findAll() {
-        return favoriteLecturerService.findAllLecturerAndStudentInFavoriteLecturer();
+    public ResponseEntity<?> findWithArguments(FavoriteLecturerSearchCriteria searchCriteria) {
+        if(Objects.nonNull(searchCriteria.getTopLecturer()))
+            return ResponseEntity.ok(favoriteLecturerService.findTopFavoriteLecturer(searchCriteria.getTopLecturer()));
+
+        return ResponseEntity.ok(favoriteLecturerService.findAllLecturerAndStudentInFavoriteLecturer());
     }
     
 }

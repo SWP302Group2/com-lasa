@@ -32,9 +32,4 @@ public class LecturerSearchCriteria {
     @ApiModelProperty(name = "address", dataType = "String", value = "Search lecturer by address")
     private String address;
 
-    @ApiModelProperty(name = "top", dataType = "Integer", value = "Search lecturer in top favorite")
-    private Integer top;
-
-    @JsonIgnore
-    private List<Integer> lecturerIds;
 }

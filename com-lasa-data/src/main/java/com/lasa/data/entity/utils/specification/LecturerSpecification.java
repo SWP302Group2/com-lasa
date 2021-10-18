@@ -1,5 +1,6 @@
 package com.lasa.data.entity.utils.specification;
 
+import com.lasa.data.entity.FavoriteLecturer;
 import com.lasa.data.entity.Lecturer;
 import com.lasa.data.entity.Lecturer_;
 import com.lasa.data.entity.utils.criteria.LecturerSearchCriteria;
@@ -33,11 +34,6 @@ public class LecturerSpecification {
 
             if(Objects.nonNull(searchCriteria.getStatus()))
                 predicates.add(criteriaBuilder.equal(root.get(Lecturer_.status), searchCriteria.getStatus()));
-
-            //search lecturer in top favorite
-            if(Objects.nonNull(searchCriteria.getLecturerIds())) {
-                predicates.add(root.get(Lecturer_.id).in(searchCriteria.getLecturerIds()));
-            }
 
             if(predicates.isEmpty())
                 return null;

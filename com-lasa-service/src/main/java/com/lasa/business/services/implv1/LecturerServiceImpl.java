@@ -46,10 +46,6 @@ public class LecturerServiceImpl implements LecturerService {
     public Page<Lecturer> findAll(LecturerPage lecturerPage, LecturerSearchCriteria searchCriteria) {
         Pageable pageable = PageRequest.of(lecturerPage.getPage(), lecturerPage.getSize(), Sort.by(lecturerPage.getOrderBy(), lecturerPage.getSortBy()));
 
-        if(Objects.nonNull(searchCriteria.getTop())) {
-            List<Integer> lecturerIds = favoriteLecturerRepository.findTopFavoriteLecturerId(searchCriteria.getTop());
-            searchCriteria.setLecturerIds(lecturerIds);
-        }
         return lecturerRepository.findAll(LecturerSpecification.searchSpecification(searchCriteria), pageable);
     }
 

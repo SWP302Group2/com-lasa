@@ -7,6 +7,7 @@ package com.lasa.business.services.implv1;
 
 import com.lasa.business.services.FavoriteLecturerService;
 import com.lasa.data.entity.FavoriteLecturer;
+import com.lasa.data.entity.Lecturer;
 import com.lasa.data.entity.key.FavoriteLecturerKey;
 import com.lasa.data.repo.repository.FavoriteLecturerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,11 @@ public class FavoriteLecturerServiceImpl implements FavoriteLecturerService {
     @Override
     public List<FavoriteLecturer> findAllLecturerAndStudentInFavoriteLecturer() {
         return favoriteLecturerRepo.findAllLecturerAndStudentInFavoriteLecturer();
+    }
+
+    @Override
+    public List<Lecturer> findTopFavoriteLecturer(Integer topNumber) {
+        return favoriteLecturerRepo.findTopFavoriteLecturer(topNumber);
     }
 
     @Override
