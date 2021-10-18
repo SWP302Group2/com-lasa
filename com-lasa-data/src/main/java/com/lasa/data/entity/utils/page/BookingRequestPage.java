@@ -12,13 +12,6 @@ import org.springframework.data.domain.Sort;
 @NoArgsConstructor
 public class BookingRequestPage {
 
-    private static final String SORT_BY_ALLOW_VALUES =
-            BookingRequest_.ID + ","
-            + BookingRequest_.STUDENT_ID + ","
-            + BookingRequest_.TOPIC_ID + ","
-            + BookingRequest_.SLOT_ID + ","
-            + BookingRequest_.STATUS;
-
     @ApiModelProperty(name = "page", value = "number of page", dataType = "Integer")
     private Integer page = 0;
 
@@ -29,12 +22,17 @@ public class BookingRequestPage {
             name = "sortBy",
             value = "select a field to sort",
             dataType = "String",
-            allowableValues = SORT_BY_ALLOW_VALUES)
+            allowableValues =
+                            BookingRequest_.ID + "," +
+                            BookingRequest_.STATUS + "," +
+                            BookingRequest_.SLOT_ID + "," +
+                            BookingRequest_.TOPIC_ID + "," +
+                            BookingRequest_.STUDENT_ID + ","
+    )
     private String sortBy = BookingRequest_.ID;
 
     @ApiModelProperty(name = "orderBy", value = "select sort direction", dataType = "Direction")
     private Sort.Direction orderBy = Sort.Direction.ASC;
     @ApiModelProperty(name = "paging", value = "select return a page or not", dataType = "boolean")
     private boolean paging = true;
-
 }
