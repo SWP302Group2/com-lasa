@@ -75,6 +75,7 @@ public class BookingRequestController implements BookingRequestOperations {
         bookingRequest.setStudentId(userDetails.getId());
         bookingRequest.getQuestions().stream()
                 .forEach(t -> t.setBookingRequest(bookingRequest));
+        bookingRequest.setStatus(1);
 
         return ResponseEntity
                 .status(HttpStatus.CREATED)
