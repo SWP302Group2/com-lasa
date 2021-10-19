@@ -1,5 +1,6 @@
 package com.lasa.security.filter;
 
+import com.lasa.security.appuser.MyUserDetails;
 import com.lasa.security.utils.jwt.JwtConfig;
 import com.lasa.security.utils.jwt.JwtUtil;
 import com.lasa.security.utils.exception.ExceptionUtils.UserAccountException;

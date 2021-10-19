@@ -34,7 +34,7 @@ public class BookingRequest implements Serializable {
     @Column(name = "status")
     private Integer status;
     
-    @OneToMany(targetEntity = Question.class, mappedBy = "bookingId")
+    @OneToMany(targetEntity = Question.class, mappedBy = "bookingId", cascade = {CascadeType.ALL})
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private List<Question> questions;

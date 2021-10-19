@@ -10,6 +10,7 @@ import io.jsonwebtoken.UnsupportedJwtException;
 import io.jsonwebtoken.security.SignatureException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -38,7 +39,7 @@ public class ExceptionTranslator {
                 .build();
     }
 
-    @ExceptionHandler(value = {UserAccountException.class, BadCredentialsException.class})
+    @ExceptionHandler(value = {UserAccountException.class, BadCredentialsException.class, AccessDeniedException.class})
     @ResponseStatus(HttpStatus.FORBIDDEN)
     public ResponseObject processForbiddenResponse(RuntimeException e, HttpServletRequest request) {
         System.out.println(e.getClass());
@@ -123,6 +124,19 @@ public class ExceptionTranslator {
         System.out.println(e.getMessage());
         return ResponseObject.builder()
                 .status(HttpStatus.NOT_ACCEPTABLE.value())
+                .error(e.getClass().getSimpleName())
+                .message(e.getMessage())
+                .path(request.getRequestURI())
+                .build();
+    }
+
+    @ExceptionHandler(value = {ExceptionUtils.ArgumentException.class})
+    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
+    public ResponseObject processOverflowException(Exception e, HttpServletRequest request) {
+        System.out.println(e.getClass());
+        System.out.println(e.getMessage());
+        return ResponseObject.builder()
+                .status(HttpStatus.UNPROCESSABLE_ENTITY.value())
                 .error(e.getClass().getSimpleName())
                 .message(e.getMessage())
                 .path(request.getRequestURI())

@@ -45,17 +45,17 @@ public class Lecturer implements Serializable {
     @Column(name = "meetingurl")
     private String meetingUrl;
     
-    @OneToMany(targetEntity = FavoriteLecturer.class,mappedBy = "lecturer")
+    @OneToMany(targetEntity = FavoriteLecturer.class,mappedBy = "lecturer", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private Collection<FavoriteLecturer> students;
     
-    @OneToMany(targetEntity = LecturerTopicDetail.class,mappedBy = "lecturer")
+    @OneToMany(targetEntity = LecturerTopicDetail.class,mappedBy = "lecturer", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private Collection<LecturerTopicDetail> topics;
     
-    @OneToMany(targetEntity = Slot.class, mappedBy = "lecturerId")
+    @OneToMany(targetEntity = Slot.class, mappedBy = "lecturerId", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private Collection<Slot> slots;

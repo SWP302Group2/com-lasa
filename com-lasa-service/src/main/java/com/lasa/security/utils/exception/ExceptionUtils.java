@@ -26,5 +26,9 @@ public class ExceptionUtils {
         }
     }
 
-
+    public static class ArgumentException extends Exception{
+        public ArgumentException(String message) {
+            super(message);
+        }
+    }
 }

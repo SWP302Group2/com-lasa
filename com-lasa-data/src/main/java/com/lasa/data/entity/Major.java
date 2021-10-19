@@ -38,7 +38,7 @@ public class Major implements Serializable {
     @ToString.Exclude
     private Collection<Student> students;
     
-    @OneToMany(targetEntity = Topic.class, mappedBy = "majorId")
+    @OneToMany(targetEntity = Topic.class, mappedBy = "majorId", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private Collection<Topic> topics;
