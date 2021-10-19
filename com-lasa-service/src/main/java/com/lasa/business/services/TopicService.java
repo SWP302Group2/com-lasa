@@ -6,12 +6,12 @@
 package com.lasa.business.services;
 
 import com.lasa.data.entity.Topic;
-import java.util.List;
-
 import com.lasa.data.entity.utils.criteria.TopicSearchCriteria;
 import com.lasa.data.entity.utils.page.TopicPage;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  *

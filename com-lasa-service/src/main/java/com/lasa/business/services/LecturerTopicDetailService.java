@@ -7,8 +7,9 @@ package com.lasa.business.services;
 
 import com.lasa.data.entity.LecturerTopicDetail;
 import com.lasa.data.entity.key.LecturerTopicDetailKey;
-import java.util.List;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  *

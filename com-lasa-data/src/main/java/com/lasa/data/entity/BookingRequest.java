@@ -5,21 +5,14 @@
  */
 package com.lasa.data.entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import lombok.*;
+
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
-import javax.persistence.Column;
-import javax.persistence.Id;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
 
 /**
  *
@@ -30,6 +23,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonIdentityInfo(generator= ObjectIdGenerators.IntSequenceGenerator.class, property="@id")
 public class BookingRequest implements Serializable {
     
     @Id
@@ -43,7 +37,7 @@ public class BookingRequest implements Serializable {
     @Column(name = "status")
     private Integer status;
     
-    @OneToMany(targetEntity = Question.class, mappedBy = "bookingId")
+    @OneToMany(targetEntity = Question.class, mappedBy = "bookingRequest", cascade = {CascadeType.ALL})
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private List<Question> questions;
@@ -54,13 +48,17 @@ public class BookingRequest implements Serializable {
     @Column(name = "slotid")
     private Integer slotId;
 
+    @Column(name = "title")
+    private String title;
+
     @Builder
-    public BookingRequest(Integer id, Integer studentId, Integer status, List<Question> questions, Integer topicId, Integer slotId) {
+    public BookingRequest(Integer id, Integer studentId, Integer status, List<Question> questions, Integer topicId, Integer slotId, String title) {
         this.id = id;
         this.studentId = studentId;
         this.status = status;
         this.questions = questions;
         this.topicId = topicId;
         this.slotId = slotId;
+        this.title = title;
     }
 }

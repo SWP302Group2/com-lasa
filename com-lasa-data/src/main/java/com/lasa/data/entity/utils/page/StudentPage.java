@@ -1,6 +1,5 @@
 package com.lasa.data.entity.utils.page;
 
-import com.lasa.data.entity.Slot_;
 import com.lasa.data.entity.Student_;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;

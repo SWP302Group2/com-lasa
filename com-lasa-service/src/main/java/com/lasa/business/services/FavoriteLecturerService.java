@@ -6,9 +6,11 @@
 package com.lasa.business.services;
 
 import com.lasa.data.entity.FavoriteLecturer;
+import com.lasa.data.entity.Lecturer;
 import com.lasa.data.entity.key.FavoriteLecturerKey;
-import java.util.List;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  *
@@ -18,6 +20,8 @@ import org.springframework.stereotype.Service;
 public interface FavoriteLecturerService {
     
     List<FavoriteLecturer> findAllLecturerAndStudentInFavoriteLecturer();
+
+    List<Lecturer> findTopFavoriteLecturer(Integer topNumber);
     
     List<FavoriteLecturer> addFavoriteLecturers(List<FavoriteLecturer> favoriteLecturers);
 

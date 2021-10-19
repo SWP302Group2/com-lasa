@@ -1,6 +1,5 @@
 package com.lasa.security.appuser;
 
-import com.lasa.security.permission.ApplicationUserRole;
 import com.lasa.data.entity.Admin;
 import com.lasa.data.entity.Lecturer;
 import com.lasa.data.entity.Student;
@@ -12,7 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.Set;
 
-import static com.lasa.security.permission.ApplicationUserRole.*;
+import static com.lasa.security.utils.permission.ApplicationUserRole.*;
 
 @Data
 @NoArgsConstructor

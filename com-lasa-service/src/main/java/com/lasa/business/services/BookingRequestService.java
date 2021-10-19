@@ -7,15 +7,14 @@
 package com.lasa.business.services;
 
 import com.lasa.data.entity.BookingRequest;
-import java.util.List;
-import java.util.Optional;
-
-
 import com.lasa.data.entity.utils.criteria.BookingRequestSearchCriteria;
 import com.lasa.data.entity.utils.page.BookingRequestPage;
-import io.swagger.models.auth.In;
+import com.lasa.security.appuser.MyUserDetails;
 import org.springframework.data.domain.Page;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  *
@@ -31,9 +30,12 @@ public interface BookingRequestService {
 
     BookingRequest findByBookingRequestId(Integer id);
 
+    Boolean verifyBookingRequest(Integer studentId, Integer slotId);
+
     BookingRequest createBookingRequest(BookingRequest bookingRequest);
 
     BookingRequest updateBookingRequest(BookingRequest bookingRequest);
 
     void deleteBookingRequests(List<Integer> ids);
+
 }

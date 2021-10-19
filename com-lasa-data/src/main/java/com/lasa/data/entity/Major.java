@@ -6,18 +6,11 @@
 package com.lasa.data.entity;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.*;
+
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Collection;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import lombok.Builder;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 /**
  *
@@ -45,7 +38,7 @@ public class Major implements Serializable {
     @ToString.Exclude
     private Collection<Student> students;
     
-    @OneToMany(targetEntity = Topic.class, mappedBy = "majorId")
+    @OneToMany(targetEntity = Topic.class, mappedBy = "majorId", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private Collection<Topic> topics;
