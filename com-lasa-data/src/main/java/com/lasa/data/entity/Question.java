@@ -8,6 +8,7 @@ package com.lasa.data.entity;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -28,6 +29,7 @@ public class Question implements Serializable {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @ApiModelProperty(name = "id", hidden = true, required = false)
     private Integer id;
 
 
@@ -36,6 +38,7 @@ public class Question implements Serializable {
     private BookingRequest bookingRequest;
 
     @Column(name = "content")
+    @ApiModelProperty(name = "content", example = "question1?", dataType = "String") 
     private String content;
 
     @Builder
