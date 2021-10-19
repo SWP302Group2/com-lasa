@@ -8,6 +8,7 @@ import com.lasa.security.utils.exception.ExceptionUtils.UserAccountException;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.UnsupportedJwtException;
 import io.jsonwebtoken.security.SignatureException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.access.AccessDeniedException;
@@ -78,7 +79,7 @@ public class ExceptionTranslator {
                 .build();
     }
 
-    @ExceptionHandler(value = {MethodArgumentTypeMismatchException.class, MismatchedInputException.class, JsonParseException.class, HttpMessageNotReadableException.class})
+    @ExceptionHandler(value = {MethodArgumentTypeMismatchException.class, MismatchedInputException.class, JsonParseException.class, HttpMessageNotReadableException.class, DataIntegrityViolationException.class})
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ResponseObject processQueryException(Exception e, HttpServletRequest request) {
         System.out.println(e.getClass());
@@ -137,6 +138,19 @@ public class ExceptionTranslator {
         System.out.println(e.getMessage());
         return ResponseObject.builder()
                 .status(HttpStatus.UNPROCESSABLE_ENTITY.value())
+                .error(e.getClass().getSimpleName())
+                .message(e.getMessage())
+                .path(request.getRequestURI())
+                .build();
+    }
+
+    @ExceptionHandler(value = {ExceptionUtils.DuplicatedException.class})
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public ResponseObject processConflictException(Exception e, HttpServletRequest request) {
+        System.out.println(e.getClass());
+        System.out.println(e.getMessage());
+        return ResponseObject.builder()
+                .status(HttpStatus.CONFLICT.value())
                 .error(e.getClass().getSimpleName())
                 .message(e.getMessage())
                 .path(request.getRequestURI())

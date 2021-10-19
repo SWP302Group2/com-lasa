@@ -30,6 +30,8 @@ public interface BookingRequestService {
 
     BookingRequest findByBookingRequestId(Integer id);
 
+    Boolean verifyBookingRequest(Integer studentId, Integer slotId);
+
     BookingRequest createBookingRequest(BookingRequest bookingRequest);
 
     BookingRequest updateBookingRequest(BookingRequest bookingRequest);

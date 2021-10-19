@@ -25,9 +25,7 @@ public interface BookingRequestRepository extends JpaRepository<BookingRequest, 
     @Query("FROM BookingRequest b JOIN FETCH b.questions WHERE b.id = :id")
     Optional<BookingRequest> findByIdAndGetQuestions(Integer id);
 
-    Page<BookingRequest> findBookingRequestsByStudentId(Integer id, Pageable pageable);
+    Optional<BookingRequest> findBookingRequestByStudentIdAndSlotId(Integer studentId, Integer slotId);
 
-    Page<BookingRequest> findBookingRequestsBySlotId(Integer id, Pageable pageable);
 
-    Page<BookingRequest> findBookingRequestsByStatus(Integer id, Pageable pageable);
 }

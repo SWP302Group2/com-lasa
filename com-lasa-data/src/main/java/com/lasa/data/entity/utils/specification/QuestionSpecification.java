@@ -1,5 +1,6 @@
 package com.lasa.data.entity.utils.specification;
 
+import com.lasa.data.entity.BookingRequest_;
 import com.lasa.data.entity.Question;
 import com.lasa.data.entity.Question_;
 import com.lasa.data.entity.utils.criteria.QuestionSearchCriteria;
@@ -18,7 +19,7 @@ public class QuestionSpecification {
             List<Predicate> predicates = new ArrayList<>();
 
             if(Objects.nonNull(searchCriteria.getBookingId()))
-                predicates.add(root.get(Question_.bookingId).in(searchCriteria.getBookingId()));
+                predicates.add(root.get(Question_.bookingRequest).get(BookingRequest_.id).in(searchCriteria.getBookingId()));
 
             if(predicates.isEmpty())
                 return null;

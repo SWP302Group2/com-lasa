@@ -17,6 +17,7 @@ import com.lasa.security.utils.exception.ExceptionUtils;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -61,16 +62,24 @@ public class BookingRequestController implements BookingRequestOperations {
 
     @Override
     @IsStudent
-    public ResponseEntity<?> createBookingRequest(@RequestBody BookingRequest bookingRequest, MyUserDetails userDetails) throws ExceptionUtils.ArgumentException {
+    public ResponseEntity<?> createBookingRequest(@RequestBody BookingRequest bookingRequest, MyUserDetails userDetails) throws ExceptionUtils.ArgumentException, ExceptionUtils.DuplicatedException {
 
-        //check question array list size must <= 5 and not empty
-        if(Objects.nonNull(bookingRequest.getQuestions()))
+        //check questions size must <= 5, questions not empty, and student not already have a booking before
+        if(Objects.isNull(bookingRequest.getQuestions()))
             throw new ExceptionUtils.ArgumentException(BookingRequest_.QUESTIONS.toUpperCase(Locale.ROOT) + "_IS_EMPTY");
         else if(bookingRequest.getQuestions().size() >= QUESTIONS_SIZE)
             throw new ExceptionUtils.ArgumentException(BookingRequest_.QUESTIONS.toUpperCase(Locale.ROOT) + "_IS_OVERFLOW_" + QUESTIONS_SIZE_STRING);
+        else if(bookingRequestService.verifyBookingRequest(userDetails.getId(), bookingRequest.getSlotId()).equals(false))
+            throw new ExceptionUtils.DuplicatedException("BOOKING_REQUEST_DUPLICATED");
 
         bookingRequest.setStudentId(userDetails.getId());
-        return ResponseEntity.ok(bookingRequestService.createBookingRequest(bookingRequest));
+        bookingRequest.getQuestions().stream()
+                .forEach(t -> t.setBookingRequest(bookingRequest));
+
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(bookingRequestService.createBookingRequest(bookingRequest));
+
     }
 
     @Override

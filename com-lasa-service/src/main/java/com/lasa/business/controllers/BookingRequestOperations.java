@@ -14,6 +14,7 @@ import io.swagger.annotations.ApiParam;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.List;
 
@@ -36,8 +37,9 @@ public interface BookingRequestOperations {
     ResponseEntity<?> createBookingRequest(
             @ApiParam(name = "bookingRequest", type = "body", value = "Add a new booking request")
             @RequestBody BookingRequest bookingRequest,
+            @ApiIgnore
             @AuthenticationPrincipal MyUserDetails userDetails
-    ) throws ExceptionUtils.ArgumentException;
+    ) throws ExceptionUtils.ArgumentException, ExceptionUtils.DuplicatedException;
     
     @PutMapping
     BookingRequest updateBookingRequest(
