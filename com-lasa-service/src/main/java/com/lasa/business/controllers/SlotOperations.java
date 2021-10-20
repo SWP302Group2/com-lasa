@@ -23,7 +23,7 @@ import java.util.List;
 public interface SlotOperations {
 
     @GetMapping
-    ResponseEntity<?> findWithArgument(SlotSearchCriteria searchCriteria, SlotPage slotPage);
+    ResponseEntity<?> findWithArgument(SlotSearchCriteria searchCriteria, SlotPage slotPage) throws ExceptionUtils.ArgumentException;
 
     @GetMapping(value = "/{id}")
     Slot findById(

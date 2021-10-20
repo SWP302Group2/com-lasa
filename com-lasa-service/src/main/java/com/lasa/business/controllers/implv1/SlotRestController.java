@@ -57,7 +57,11 @@ public class SlotRestController implements SlotOperations {
 
 
     @Override
-    public ResponseEntity<?> findWithArgument(SlotSearchCriteria searchCriteria, SlotPage slotPage) {
+    public ResponseEntity<?> findWithArgument(SlotSearchCriteria searchCriteria, SlotPage slotPage) throws ExceptionUtils.ArgumentException {
+
+        if(slotPage.isPaging() && searchCriteria.getGetTopic().equals(true) && searchCriteria.getSlotId().isEmpty())
+            throw new ExceptionUtils.ArgumentException("INVALID_ARGUMENT");
+
         if(slotPage.isPaging())
             return ResponseEntity.ok(slotService.findAll(searchCriteria, slotPage));
         else
