@@ -5,7 +5,9 @@
  */
 package com.lasa.data.entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,6 +25,7 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id", scope = Admin.class)
 public class Admin implements Serializable {
     
     @Id

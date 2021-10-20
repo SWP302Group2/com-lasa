@@ -9,7 +9,7 @@ import com.lasa.business.services.SlotTopicDetailService;
 import com.lasa.data.entity.SlotTopicDetail;
 import com.lasa.data.entity.key.SlotTopicDetailKey;
 import com.lasa.data.entity.utils.criteria.SlotTopicDetailSearchCriteria;
-import com.lasa.data.entity.utils.dto.SlotTopicDetailDTO;
+import com.lasa.data.entity.utils.dto.SlotTopicDetailSimple;
 import com.lasa.data.entity.utils.page.SlotTopicDetailPage;
 import com.lasa.data.entity.utils.specification.SlotTopicDetailSpecification;
 import com.lasa.data.repo.repository.SlotTopicDetailRepository;
@@ -47,9 +47,9 @@ public class SlotTopicDetailServiceImpl implements SlotTopicDetailService {
         if(searchCriteria.getGetTopicAndSlot().equals(true))
             return page;
 
-        Page<SlotTopicDetailDTO> dtoPage = page.map(
+        Page<SlotTopicDetailSimple> dtoPage = page.map(
                 slotTopicDetail -> {
-                    SlotTopicDetailDTO dto = SlotTopicDetailDTO.builder()
+                    SlotTopicDetailSimple dto = SlotTopicDetailSimple.builder()
                             .slotId(slotTopicDetail.getSlot().getId())
                             .topicId(slotTopicDetail.getTopic().getId())
                             .build();
@@ -65,9 +65,9 @@ public class SlotTopicDetailServiceImpl implements SlotTopicDetailService {
 
         if(searchCriteria.getGetTopicAndSlot().equals(true))
             return list;
-        List<SlotTopicDetailDTO> dtoList = list.stream()
+        List<SlotTopicDetailSimple> dtoList = list.stream()
                 .map( slotTopicDetail -> {
-                    SlotTopicDetailDTO dto = SlotTopicDetailDTO.builder()
+                    SlotTopicDetailSimple dto = SlotTopicDetailSimple.builder()
                             .slotId(slotTopicDetail.getSlot().getId())
                             .topicId(slotTopicDetail.getTopic().getId())
                             .build();

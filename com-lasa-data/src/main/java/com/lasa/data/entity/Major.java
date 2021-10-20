@@ -5,7 +5,9 @@
  */
 package com.lasa.data.entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 
 import javax.persistence.*;
@@ -21,6 +23,7 @@ import java.util.Collection;
 @Data
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonIdentityInfo(generator= ObjectIdGenerators.IntSequenceGenerator.class, property="@id", scope = Major.class)
 public class Major implements Serializable {
     
     @Id

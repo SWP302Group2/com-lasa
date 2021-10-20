@@ -26,7 +26,7 @@ import java.io.Serializable;
 @Data
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class, property="@id")
+@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class, property="@id", scope = Lecturer.class)
 public class LecturerTopicDetail implements Serializable {
     
     @JsonIgnore

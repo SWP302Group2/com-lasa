@@ -7,7 +7,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class SlotTopicDetailDTO {
+public class SlotTopicDetailSimple {
     private Integer slotId;
     private Integer topicId;
 }
