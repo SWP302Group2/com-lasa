@@ -1,4 +1,4 @@
-package com.lasa.business.controllers.utils;
+package com.lasa.business.controllers.utils.authorization;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 

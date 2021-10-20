@@ -39,9 +39,12 @@ public class SlotTopicDetailServiceImpl implements SlotTopicDetailService {
     }
 
     @Override
-    public Page<SlotTopicDetailDTO> findAllSimple(SlotTopicDetailPage slotTopicDetailPage, SlotTopicDetailSearchCriteria searchCriteria) {
+    public Page<?> findAllWithArgument(SlotTopicDetailPage slotTopicDetailPage, SlotTopicDetailSearchCriteria searchCriteria) {
         Pageable pageable = PageRequest.of(slotTopicDetailPage.getPage(), slotTopicDetailPage.getSize());
         Page<SlotTopicDetail> page = detailRepository.findAll(SlotTopicDetailSpecification.searchSpecification(searchCriteria), pageable);
+
+        if(searchCriteria.getGetTopicAndSlot().equals(true))
+            return page;
 
         Page<SlotTopicDetailDTO> dtoPage = page.map(
                 slotTopicDetail -> {
@@ -56,9 +59,11 @@ public class SlotTopicDetailServiceImpl implements SlotTopicDetailService {
     }
 
     @Override
-    public List<SlotTopicDetailDTO> findAllSimple(SlotTopicDetailSearchCriteria searchCriteria) {
+    public List<?> findAllWithArgument(SlotTopicDetailSearchCriteria searchCriteria) {
         List<SlotTopicDetail> list = detailRepository.findAll(SlotTopicDetailSpecification.searchSpecification(searchCriteria));
 
+        if(searchCriteria.getGetTopicAndSlot().equals(true))
+            return list;
         List<SlotTopicDetailDTO> dtoList = list.stream()
                 .map( slotTopicDetail -> {
                     SlotTopicDetailDTO dto = SlotTopicDetailDTO.builder()

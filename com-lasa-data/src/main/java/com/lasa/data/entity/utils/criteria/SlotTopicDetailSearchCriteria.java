@@ -17,4 +17,7 @@ public class SlotTopicDetailSearchCriteria {
     
     @ApiModelProperty(name = "topicId", dataType = "Integer", value = "Search slot topic detail by topicIds")
     private List<Integer> topicId;
+
+    @ApiModelProperty(name = "getTopicAndSlot", dataType = "Boolean", value = "Get all information of topic and slot")
+    private Boolean getTopicAndSlot = false;
 }

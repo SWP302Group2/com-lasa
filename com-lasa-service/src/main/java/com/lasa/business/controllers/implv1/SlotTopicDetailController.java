@@ -37,11 +37,11 @@ public class SlotTopicDetailController implements SlotTopicDetailOperations {
     }
 
     @Override
-    public ResponseEntity<?> findAll(SlotTopicDetailPage slotTopicDetailPage, SlotTopicDetailSearchCriteria searchCriteria) {
+    public ResponseEntity<?> findWithArgument(SlotTopicDetailPage slotTopicDetailPage, SlotTopicDetailSearchCriteria searchCriteria) {
         if(slotTopicDetailPage.isPaging())
-            return ResponseEntity.ok(slotTopicDetailService.findAllSimple(slotTopicDetailPage, searchCriteria ));
+            return ResponseEntity.ok(slotTopicDetailService.findAllWithArgument(slotTopicDetailPage, searchCriteria ));
         else
-            return ResponseEntity.ok(slotTopicDetailService.findAllSimple(searchCriteria));
+            return ResponseEntity.ok(slotTopicDetailService.findAllWithArgument(searchCriteria));
     }
 
     @Override

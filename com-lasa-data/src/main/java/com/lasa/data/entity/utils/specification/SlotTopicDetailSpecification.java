@@ -1,12 +1,10 @@
 package com.lasa.data.entity.utils.specification;
 
-import com.lasa.data.entity.SlotTopicDetail;
-import com.lasa.data.entity.SlotTopicDetail_;
-import com.lasa.data.entity.Slot_;
-import com.lasa.data.entity.Topic_;
+import com.lasa.data.entity.*;
 import com.lasa.data.entity.utils.criteria.SlotTopicDetailSearchCriteria;
 import org.springframework.data.jpa.domain.Specification;
 
+import javax.persistence.criteria.Fetch;
 import javax.persistence.criteria.Predicate;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +21,13 @@ public class SlotTopicDetailSpecification {
                 predicates.add(root.get(SlotTopicDetail_.slot).get(Slot_.id).in(searchCriteria.getSId()));
 
             if(Objects.nonNull(searchCriteria.getTopicId()))
-                predicates.add(criteriaBuilder.isTrue(root.get(SlotTopicDetail_.topic).get(Topic_.id).in(searchCriteria.getTopicId())));
+                predicates.add(root.get(SlotTopicDetail_.topic).get(Topic_.id).in(searchCriteria.getTopicId()));
+
+            if(searchCriteria.getGetTopicAndSlot().equals(true)) {
+                Fetch<SlotTopicDetail, Topic> detailTopicFetch = root.fetch(SlotTopicDetail_.topic);
+                Fetch<SlotTopicDetail, Slot> detailSlotFetch = root.fetch(SlotTopicDetail_.slot);
+            }
+
 
             if(predicates.isEmpty())
                 return null;

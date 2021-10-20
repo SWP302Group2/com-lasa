@@ -23,7 +23,7 @@ import java.util.List;
 public interface SlotTopicDetailOperations {
 
     @GetMapping
-    ResponseEntity<?> findAll(SlotTopicDetailPage slotTopicDetailPage, SlotTopicDetailSearchCriteria searchCriteria);
+    ResponseEntity<?> findWithArgument(SlotTopicDetailPage slotTopicDetailPage, SlotTopicDetailSearchCriteria searchCriteria);
 
     @GetMapping(value = "/{id}")
     public SlotTopicDetail findById(

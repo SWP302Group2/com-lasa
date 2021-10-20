@@ -1,4 +1,4 @@
-package com.lasa.business.controllers.utils;
+package com.lasa.business.controllers.utils.authorization;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 
@@ -9,6 +9,6 @@ import java.lang.annotation.Target;
 
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
-@PreAuthorize("hasRole('ROLE_' + T(com.lasa.security.utils.permission.ApplicationUserRole).ADMIN.name())")
-public @interface IsAdmin {
+@PreAuthorize("hasRole('ROLE_' + T(com.lasa.security.utils.permission.ApplicationUserRole).LECTURER.name())")
+public @interface IsLecturer {
 }

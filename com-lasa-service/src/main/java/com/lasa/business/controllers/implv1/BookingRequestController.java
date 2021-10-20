@@ -6,7 +6,7 @@
 package com.lasa.business.controllers.implv1;
 
 import com.lasa.business.controllers.BookingRequestOperations;
-import com.lasa.business.controllers.utils.IsStudent;
+import com.lasa.business.controllers.utils.authorization.IsStudent;
 import com.lasa.business.services.BookingRequestService;
 import com.lasa.data.entity.BookingRequest;
 import com.lasa.data.entity.BookingRequest_;
@@ -67,10 +67,17 @@ public class BookingRequestController implements BookingRequestOperations {
         //check questions size must <= 5, questions not empty, and student not already have a booking before
         if(Objects.isNull(bookingRequest.getQuestions()))
             throw new ExceptionUtils.ArgumentException(BookingRequest_.QUESTIONS.toUpperCase(Locale.ROOT) + "_IS_EMPTY");
+
         else if(bookingRequest.getQuestions().size() >= QUESTIONS_SIZE)
             throw new ExceptionUtils.ArgumentException(BookingRequest_.QUESTIONS.toUpperCase(Locale.ROOT) + "_IS_OVERFLOW_" + QUESTIONS_SIZE_STRING);
+
         else if(bookingRequestService.verifyBookingRequest(userDetails.getId(), bookingRequest.getSlotId()).equals(false))
             throw new ExceptionUtils.DuplicatedException("BOOKING_REQUEST_DUPLICATED");
+
+        else if(bookingRequest.getQuestions()
+                .stream()
+                .anyMatch(t -> Objects.isNull(t.getContent())))
+            throw new ExceptionUtils.ArgumentException("CONTENT_IS_EMPTY");
 
         bookingRequest.setStudentId(userDetails.getId());
         bookingRequest.getQuestions().stream()

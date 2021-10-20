@@ -21,10 +21,10 @@ import java.util.List;
  */
 @Service
 public interface SlotTopicDetailService {
-    
-    Page<SlotTopicDetailDTO> findAllSimple(SlotTopicDetailPage slotTopicDetailPage, SlotTopicDetailSearchCriteria searchCriteria);
 
-    List<SlotTopicDetailDTO> findAllSimple(SlotTopicDetailSearchCriteria searchCriteria);
+    Page<?> findAllWithArgument(SlotTopicDetailPage slotTopicDetailPage, SlotTopicDetailSearchCriteria searchCriteria);
+
+    List<?> findAllWithArgument(SlotTopicDetailSearchCriteria searchCriteria);
     
     SlotTopicDetail findById(SlotTopicDetailKey id);
     
