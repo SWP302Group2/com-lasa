@@ -37,8 +37,6 @@ public interface BookingRequestOperations {
     ResponseEntity<?> createBookingRequest(
             @ApiParam(name = "bookingRequest", type = "body", value = "Add a new booking request")
             @RequestBody BookingRequest bookingRequest,
-            @ApiIgnore
-            @AuthenticationPrincipal MyUserDetails userDetails
     ) throws ExceptionUtils.ArgumentException, ExceptionUtils.DuplicatedException;
     
     @PutMapping

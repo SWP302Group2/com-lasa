@@ -19,6 +19,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -62,8 +65,9 @@ public class BookingRequestController implements BookingRequestOperations {
 
     @Override
     @IsStudent
-    public ResponseEntity<?> createBookingRequest(@RequestBody BookingRequest bookingRequest, MyUserDetails userDetails) throws ExceptionUtils.ArgumentException, ExceptionUtils.DuplicatedException {
-
+    @Transactional(isolation = Isolation.SERIALIZABLE)
+    public ResponseEntity<?> createBookingRequest(@RequestBody BookingRequest bookingRequest) throws ExceptionUtils.ArgumentException, ExceptionUtils.DuplicatedException {
+        MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         //check questions size must <= 5, questions not empty, and student not already have a booking before
         if(Objects.isNull(bookingRequest.getQuestions()))
             throw new ExceptionUtils.ArgumentException(BookingRequest_.QUESTIONS.toUpperCase(Locale.ROOT) + "_IS_EMPTY");
