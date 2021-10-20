@@ -36,4 +36,10 @@ public class SlotSearchCriteria {
     @ApiModelProperty(name = "timeEnd", dataType = "String", value = "Slot ends at the time")
     private LocalDateTime timeEnd ;
 
+    @ApiModelProperty(name = "getTopic", dataType = "Boolean", value = "Get all information of topic and slot")
+    private Boolean getTopic = false;
+
+    @ApiModelProperty(name = "slotId", dataType = "Integer", value = "Get slot by a list slotId")
+    private List<Integer> slotId;
+
 }

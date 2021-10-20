@@ -79,6 +79,7 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
                 .antMatchers(HttpMethod.GET, "/api/v1/topics/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/v1/majors/**").permitAll()
                 .antMatchers(HttpMethod.OPTIONS, "/api/v1/**").permitAll()
+                .antMatchers("/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .sessionManagement()
