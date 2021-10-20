@@ -1,5 +1,6 @@
 package com.lasa.security.utils.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import springfox.documentation.annotations.ApiIgnore;

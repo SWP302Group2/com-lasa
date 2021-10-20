@@ -18,13 +18,15 @@ import java.util.List;
 @Service
 public interface LecturerTopicDetailService {
 
-    public List<LecturerTopicDetail> findAllLecturerAndTopicInLecturerTopicDetail();
+    List<LecturerTopicDetail> findAllLecturerAndTopicInLecturerTopicDetail();
 
-    public LecturerTopicDetail findById(LecturerTopicDetailKey id);
+    List<Integer> findListTopicIdByLecturerId(Integer lecturerId);
 
-    public List<LecturerTopicDetail> createLecturerTopicDetails(List<LecturerTopicDetail> details);
+    LecturerTopicDetail findById(LecturerTopicDetailKey id);
 
-    public List<LecturerTopicDetail> updateLecturerTopicDetails(List<LecturerTopicDetail> details);
+    List<LecturerTopicDetail> createLecturerTopicDetails(List<LecturerTopicDetail> details);
 
-    public void deleteLecturerTopicDetails(List<LecturerTopicDetailKey> key);
+    List<LecturerTopicDetail> updateLecturerTopicDetails(List<LecturerTopicDetail> details);
+
+    void deleteLecturerTopicDetails(List<LecturerTopicDetailKey> key);
 }

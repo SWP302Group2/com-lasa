@@ -19,6 +19,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -82,6 +83,7 @@ public class SlotTopicDetailServiceImpl implements SlotTopicDetailService {
     }
 
     @Override
+    @Transactional
     public List<SlotTopicDetail> createSlotTopicDetails(List<SlotTopicDetail> details) {
         return detailRepository.saveAll(details);
     }

@@ -29,7 +29,7 @@ public class LecturerTopicDetailController implements LecturerTopicDetailOperati
     private final LecturerTopicDetailService lecturerTopicDetailService;
 
     @Autowired
-    public LecturerTopicDetailController(@Qualifier("LecturerTopicDetailImplV1") LecturerTopicDetailService lecturerTopicDetailService) {
+    public LecturerTopicDetailController(@Qualifier("LecturerTopicDetailServiceImplV1") LecturerTopicDetailService lecturerTopicDetailService) {
         this.lecturerTopicDetailService = lecturerTopicDetailService;
     }
 

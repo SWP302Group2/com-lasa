@@ -40,7 +40,7 @@ public class Slot implements Serializable {
     @ToString.Exclude
     private Collection<BookingRequest> bookingRequests;
 
-    @OneToMany(targetEntity = SlotTopicDetail.class,mappedBy = "slot")
+    @OneToMany(targetEntity = SlotTopicDetail.class,mappedBy = "slot", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private Collection<SlotTopicDetail> topics;

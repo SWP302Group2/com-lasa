@@ -25,7 +25,11 @@ public interface SlotService {
     List<Slot> findAll(SlotSearchCriteria searchCriteria);
 
     Slot findById(Integer id);
-    
+
+    Boolean verifySlot(Slot slot);
+
+    Slot createSlot(Slot slot);
+
     List<Slot> createSlots(List<Slot> slots);
     
     List<Slot> updateSlots(List<Slot> slots);

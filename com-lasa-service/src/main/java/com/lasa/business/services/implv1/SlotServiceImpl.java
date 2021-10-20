@@ -55,6 +55,18 @@ public class SlotServiceImpl implements SlotService {
     }
 
     @Override
+    public Boolean verifySlot(Slot slot) {
+        if(slotRepository.countSlotByTimeStartAndTimeEndAndLecturerIdIn(slot.getTimeStart(), slot.getTimeEnd(), slot.getLecturerId()) > 0)
+            return false;
+        return true;
+    }
+
+    @Override
+    public Slot createSlot(Slot slot) {
+        return slotRepository.save(slot);
+    }
+
+    @Override
     public List<Slot> createSlots(List<Slot> slots) {
         return slotRepository.saveAll(slots);
     }

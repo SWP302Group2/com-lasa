@@ -75,8 +75,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         }
 
         final MyUserDetails userDetails = (MyUserDetails) userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
-        final String jwt = jwtUtil.generateToken(userDetails);
-        return jwt;
+        return jwtUtil.generateToken(userDetails);
     }
 
     @Override
@@ -96,7 +95,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             }catch (UsernameNotFoundException ex) {
                 //if role !=null create new user by role student or lecturer
                 if(role != null) {
+
                     if(role.equalsIgnoreCase(STUDENT.name())) {
+                        studentSignup(payload, googleAuthenticationRequest);
                         String name = (String) payload.get("name");
                         String pictureUrl = (String) payload.get("picture");
                         String majorId = null;
@@ -110,7 +111,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                             majorId = googleAuthenticationRequest.getMajorId();
 
                         Student student = Student.builder()
-                                .email(email)
+                                .email(payload.getEmail())
                                 .name(name)
                                 .mssv(googleAuthenticationRequest.getMssv())
                                 .status(1) //set student to active
@@ -119,47 +120,20 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                                 .build();
                         //save student to database
                         studentRepository.saveAndFlush(student);
+
                         //load user from database again to make sure user already in db and for generate user detail
                         MyUserDetails userDetails = (MyUserDetails) userDetailsService.loadUserByUsername(email);
                         return jwtUtil.generateToken(userDetails);
                     }
+
                     if(role.equalsIgnoreCase(LECTURER.name())) {
-                        String name = (String) payload.get("name");
-                        String pictureUrl = (String) payload.get("picture");
-
-                        if(Objects.nonNull(googleAuthenticationRequest.getName()))
-                            name = googleAuthenticationRequest.getName();
-
-                        if(Objects.nonNull(googleAuthenticationRequest.getAvatarUrl()))
-                            pictureUrl = googleAuthenticationRequest.getAvatarUrl();
-
-                        System.out.println("Topics:" + googleAuthenticationRequest.getTopics());
-
-                        Lecturer lecturer = Lecturer.builder()
-                                .email(email)
-                                .name(name)
-                                .meetingUrl(googleAuthenticationRequest.getMeetUrl())
-                                .status(0) //set lecturer status to inactive
-                                .avatarUrl(pictureUrl)
-                                .build();
-                        lecturerRepository.saveAndFlush(lecturer);
-                        //load user from database again to make sure user already in db and for generate user detail
+                        lecturerSignup(payload, googleAuthenticationRequest);
                         MyUserDetails userDetails = (MyUserDetails) userDetailsService.loadUserByUsername(email);
                         Integer lecturerId = userDetails.getId();
-                        if(Objects.nonNull(googleAuthenticationRequest.getTopics())) {
-                            Collection<LecturerTopicDetail> topics = new ArrayList<>();
-                            googleAuthenticationRequest.getTopics().stream()
-                                    .forEach(t -> topics.add(LecturerTopicDetail.builder()
-                                                                .topic(Topic.builder()
-                                                                    .id(t)
-                                                                    .build())
-                                                                .lecturer(Lecturer.builder()
-                                                                    .id(lecturerId)
-                                                                    .build())
-                                                                .build()));
-                            lecturerTopicDetailRepository.saveAllAndFlush(topics);
 
-                        }
+                        if(Objects.nonNull(googleAuthenticationRequest.getTopics()))
+                            addLecturerTopic(googleAuthenticationRequest, lecturerId);
+
                         return jwtUtil.generateToken(userDetails);
                     }
                 }
@@ -167,6 +141,46 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         }
 
         return null;
+    }
+
+    private void addLecturerTopic(GoogleAuthenticationRequest googleAuthenticationRequest, Integer lecturerId) {
+        Collection<LecturerTopicDetail> topics = new ArrayList<>();
+        googleAuthenticationRequest.getTopics().stream()
+                .forEach(t -> topics.add(LecturerTopicDetail.builder()
+                        .topic(Topic.builder()
+                                .id(t)
+                                .build())
+                        .lecturer(Lecturer.builder()
+                                .id(lecturerId)
+                                .build())
+                        .build()));
+        lecturerTopicDetailRepository.saveAllAndFlush(topics);
+    }
+
+    private void studentSignup(GoogleIdToken.Payload payload, GoogleAuthenticationRequest googleAuthenticationRequest) {
+
+    }
+
+    private void lecturerSignup(GoogleIdToken.Payload payload, GoogleAuthenticationRequest googleAuthenticationRequest) {
+        String name = (String) payload.get("name");
+        String pictureUrl = (String) payload.get("picture");
+
+        if(Objects.nonNull(googleAuthenticationRequest.getName()))
+            name = googleAuthenticationRequest.getName();
+
+        if(Objects.nonNull(googleAuthenticationRequest.getAvatarUrl()))
+            pictureUrl = googleAuthenticationRequest.getAvatarUrl();
+
+        System.out.println("Topics:" + googleAuthenticationRequest.getTopics());
+
+        Lecturer lecturer = Lecturer.builder()
+                .email(payload.getEmail())
+                .name(name)
+                .meetingUrl(googleAuthenticationRequest.getMeetUrl())
+                .status(0) //set lecturer status to inactive
+                .avatarUrl(pictureUrl)
+                .build();
+        lecturerRepository.saveAndFlush(lecturer);
     }
 
     @Override
@@ -207,7 +221,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 //.setAudience(Arrays.asList(CLIENT_ID_1, CLIENT_ID_2, CLIENT_ID_3))
                 .setAudience(Arrays.asList(CLIENT_ID1, CLIENT_ID2))
                 .build();
-        GoogleIdToken idToken = verifier.verify(googleAuthenticationRequest.getToken());
-        return idToken;
+        return verifier.verify(googleAuthenticationRequest.getToken());
     }
 }

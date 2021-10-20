@@ -20,19 +20,24 @@ import java.util.List;
  * @author Admin
  */
 @Component
-@Qualifier("LecturerTopicDetailImplV1")
-public class LecturerTopicDetailImpl implements LecturerTopicDetailService {
+@Qualifier("LecturerTopicDetailServiceImplV1")
+public class LecturerTopicDetailServiceImpl implements LecturerTopicDetailService {
 
     private final LecturerTopicDetailRepository lecturerTopicDetailRepository;
 
     @Autowired
-    public LecturerTopicDetailImpl(LecturerTopicDetailRepository lecturerTopicDetailRepository) {
+    public LecturerTopicDetailServiceImpl(LecturerTopicDetailRepository lecturerTopicDetailRepository) {
         this.lecturerTopicDetailRepository = lecturerTopicDetailRepository;
     }
 
     @Override
     public List<LecturerTopicDetail> findAllLecturerAndTopicInLecturerTopicDetail() {
         return lecturerTopicDetailRepository.findAllLecturerAndTopicInLecturerTopicDetail();
+    }
+
+    @Override
+    public List<Integer> findListTopicIdByLecturerId(Integer lecturerId) {
+        return lecturerTopicDetailRepository.findTopicIdsByLecturerId(lecturerId);
     }
 
     @Override

@@ -21,5 +21,8 @@ import java.util.List;
 public interface LecturerTopicDetailRepository extends JpaRepository<LecturerTopicDetail, LecturerTopicDetailKey>{
     
     @Query("FROM LecturerTopicDetail l JOIN FETCH l.lecturer JOIN FETCH l.topic")
-    public List<LecturerTopicDetail> findAllLecturerAndTopicInLecturerTopicDetail();
+    List<LecturerTopicDetail> findAllLecturerAndTopicInLecturerTopicDetail();
+
+    @Query("SELECT l.topic.id FROM LecturerTopicDetail l WHERE l.lecturer.id = ?1" )
+    List<Integer> findTopicIdsByLecturerId(Integer lecturerId);
 }

@@ -8,6 +8,7 @@ package com.lasa.business.controllers;
 import com.lasa.data.entity.Slot;
 import com.lasa.data.entity.utils.criteria.SlotSearchCriteria;
 import com.lasa.data.entity.utils.page.SlotPage;
+import com.lasa.security.utils.exception.ExceptionUtils;
 import io.swagger.annotations.ApiParam;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,25 +23,25 @@ import java.util.List;
 public interface SlotOperations {
 
     @GetMapping
-    ResponseEntity<?> findAll(SlotSearchCriteria searchCriteria, SlotPage slotPage);
+    ResponseEntity<?> findWithArgument(SlotSearchCriteria searchCriteria, SlotPage slotPage);
 
     @GetMapping(value = "/{id}")
-    public Slot findById(
+    Slot findById(
             @ApiParam(name = "id", type = "Integer", value = "Find a slot by id", required = true)
             @PathVariable Integer id);
 
     @PostMapping
-    public List<Slot> createSlots(
+    ResponseEntity<Slot> createSlots(
             @ApiParam(name = "slots", type = "body", value = "Add a new slot")
-            @RequestBody List<Slot> slots);
+            @RequestBody Slot slot) throws ExceptionUtils.ArgumentException;
 
     @PutMapping
-    public List<Slot> updateSlots(
+    List<Slot> updateSlots(
             @ApiParam(name = "slots", type = "body", value = "Update a slot by id", required = true)
             @RequestBody List<Slot> slots);
 
     @DeleteMapping
-    public void deleteSlots(
+    void deleteSlots(
             @ApiParam(name = "ids", type = "body", value = "Delete a slot by id", required = true)
             @RequestBody List<Integer> ids);
 }
