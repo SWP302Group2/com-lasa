@@ -36,7 +36,7 @@ public interface BookingRequestOperations {
     @PostMapping
     ResponseEntity<?> createBookingRequest(
             @ApiParam(name = "bookingRequest", type = "body", value = "Add a new booking request")
-            @RequestBody BookingRequest bookingRequest,
+            @RequestBody BookingRequest bookingRequest
     ) throws ExceptionUtils.ArgumentException, ExceptionUtils.DuplicatedException;
     
     @PutMapping
