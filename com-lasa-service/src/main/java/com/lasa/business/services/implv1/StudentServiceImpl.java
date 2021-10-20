@@ -6,6 +6,7 @@
 package com.lasa.business.services.implv1;
 
 import com.lasa.business.services.StudentService;
+import com.lasa.data.dto.StudentDTO;
 import com.lasa.data.entity.Student;
 import com.lasa.data.entity.utils.criteria.StudentSearchCriteria;
 import com.lasa.data.entity.utils.page.StudentPage;
@@ -21,6 +22,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -38,14 +40,20 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public Page<Student> findAll(StudentSearchCriteria searchCriteria, StudentPage studentPage) {
+    public Page<StudentDTO> findWithArgument(StudentSearchCriteria searchCriteria, StudentPage studentPage) {
         Pageable pageable = PageRequest.of(studentPage.getPage(), studentPage.getSize(), Sort.by(studentPage.getOrderBy(), studentPage.getSortBy()));
-        return studentRepository.findAll(StudentSpecification.searchSpecification(searchCriteria), pageable);
+        return studentRepository
+                .findAll(StudentSpecification.searchSpecification(searchCriteria), pageable)
+                .map(t -> new StudentDTO(t));
     }
 
     @Override
-    public List<Student> findAll(StudentSearchCriteria searchCriteria) {
-        return studentRepository.findAll(StudentSpecification.searchSpecification(searchCriteria));
+    public List<StudentDTO> findWithArgument(StudentSearchCriteria searchCriteria) {
+        return studentRepository
+                .findAll(StudentSpecification.searchSpecification(searchCriteria))
+                .stream()
+                .map(t -> new StudentDTO(t))
+                .collect(Collectors.toList());
     }
 
     @Override

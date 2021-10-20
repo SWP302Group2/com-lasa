@@ -2,6 +2,7 @@
 package com.lasa.business.services.implv1;
 
 import com.lasa.business.services.QuestionService;
+import com.lasa.data.dto.QuestionDTO;
 import com.lasa.data.entity.Question;
 import com.lasa.data.entity.utils.criteria.QuestionSearchCriteria;
 import com.lasa.data.entity.utils.page.QuestionPage;
@@ -37,14 +38,20 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public Page<Question> findAll(QuestionPage questionPage, QuestionSearchCriteria searchCriteria) {
+    public Page<QuestionDTO> findAll(QuestionPage questionPage, QuestionSearchCriteria searchCriteria) {
         Pageable pageable = PageRequest.of(questionPage.getPage(), questionPage.getSize(), Sort.by(questionPage.getOrderBy(), questionPage.getSortBy()));
-        return questionRepository.findAll(QuestionSpecification.searchSpecification(searchCriteria), pageable);
+        return questionRepository
+                .findAll(QuestionSpecification.searchSpecification(searchCriteria), pageable)
+                .map(t -> new QuestionDTO(t));
     }
 
     @Override
-    public List<Question> findAll(QuestionSearchCriteria searchCriteria) {
-        return questionRepository.findAll(QuestionSpecification.searchSpecification(searchCriteria));
+    public List<QuestionDTO> findAll(QuestionSearchCriteria searchCriteria) {
+        return questionRepository
+                .findAll(QuestionSpecification.searchSpecification(searchCriteria))
+                .stream()
+                .map(t -> new QuestionDTO(t))
+                .collect(Collectors.toList());
     }
 
     @Override

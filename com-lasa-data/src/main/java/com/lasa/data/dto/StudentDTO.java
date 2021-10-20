@@ -3,22 +3,25 @@ package com.lasa.data.dto;
 import com.lasa.data.entity.BookingRequest;
 import com.lasa.data.entity.FavoriteLecturer;
 import com.lasa.data.entity.Student;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import lombok.*;
 
-import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.stream.Collectors;
 
-public class StudentDTO {
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+public class StudentDTO implements Serializable {
     private Integer id;
     private String email;
     private String mssv;
     private String majorId;
     private String name;
     private String phone;
-    private Collection<BookingRequest> bookingRequests;
-    private Collection<FavoriteLecturer> favoriteLecturer;
     private Integer status;
     private Boolean gender;
     private LocalDate birthday;
@@ -32,8 +35,6 @@ public class StudentDTO {
         this.majorId = student.getMajorId();
         this.name = student.getName();
         this.phone = student.getPhone();
-        this.bookingRequests = student.getBookingRequests();
-        this.favoriteLecturer = student.getFavoriteLecturer();
         this.status = student.getStatus();
         this.gender = student.getGender();
         this.birthday = student.getBirthday();

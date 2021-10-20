@@ -26,22 +26,22 @@ public interface SlotTopicDetailOperations {
     ResponseEntity<?> findWithArgument(SlotTopicDetailPage slotTopicDetailPage, SlotTopicDetailSearchCriteria searchCriteria);
 
     @GetMapping(value = "/{id}")
-    public SlotTopicDetail findById(
+    SlotTopicDetail findById(
             @ApiParam(name = "id", type = "Integer", value = "By id, you may find a slot topic.", required = true)
             @PathVariable SlotTopicDetailKey id);
 
     @PostMapping
-    public List<SlotTopicDetail> createSlotTopicDetails(
+    List<SlotTopicDetail> createSlotTopicDetails(
             @ApiParam(name = "details", type = "body", value = "Add topic of slot", required = true)
             @RequestBody List<SlotTopicDetail> details);
 
     @PutMapping
-    public List<SlotTopicDetail> updateSlotTopicDetails(
+    List<SlotTopicDetail> updateSlotTopicDetails(
             @ApiParam(name = "details", type = "body", value = "Update a slot topic by id", required = true)
             @RequestBody List<SlotTopicDetail> details);
 
     @DeleteMapping
-    public void deleteSlotTopicDetails(
+    void deleteSlotTopicDetails(
             @ApiParam(name = "ids", type = "body", value = "Remove the slot's topic by id", required = true)
             @RequestBody List<SlotTopicDetailKey> ids);
 }

@@ -6,6 +6,7 @@
 package com.lasa.business.services.implv1;
 
 import com.lasa.business.services.TopicService;
+import com.lasa.data.dto.TopicDTO;
 import com.lasa.data.entity.Topic;
 import com.lasa.data.entity.utils.criteria.TopicSearchCriteria;
 import com.lasa.data.entity.utils.page.TopicPage;
@@ -40,14 +41,19 @@ public class TopicServiceImpl implements TopicService {
     }
 
     @Override
-    public Page<Topic> findAll(TopicPage topicPage, TopicSearchCriteria searchCriteria) {
+    public Page<TopicDTO> findWithArgument(TopicPage topicPage, TopicSearchCriteria searchCriteria) {
         Pageable pageable = PageRequest.of(topicPage.getPage(), topicPage.getSize(), Sort.by(topicPage.getOrderBy(), topicPage.getSortBy()));
-        return topicRepository.findAll(TopicSpecification.searchSpecification(searchCriteria), pageable);
+        return topicRepository
+                .findAll(TopicSpecification.searchSpecification(searchCriteria), pageable)
+                .map(t -> new TopicDTO(t));
     }
 
     @Override
-    public List<Topic> findAll(TopicSearchCriteria searchCriteria) {
-        return topicRepository.findAll(TopicSpecification.searchSpecification(searchCriteria));
+    public List<TopicDTO> findWithArgument(TopicSearchCriteria searchCriteria) {
+        return topicRepository.findAll(TopicSpecification.searchSpecification(searchCriteria))
+                .stream()
+                .map(t -> new TopicDTO(t))
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -114,8 +120,8 @@ public class TopicServiceImpl implements TopicService {
     }
     
     @Override
-    public Topic findById(Integer id) {
-        return topicRepository.findById(id).orElse(null);
+    public TopicDTO findById(Integer id) {
+        return new TopicDTO(topicRepository.findById(id).orElse(null));
     }
     
 }

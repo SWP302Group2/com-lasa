@@ -1,6 +1,7 @@
 package com.lasa.business.services.implv1;
 
 import com.lasa.business.services.BookingRequestService;
+import com.lasa.data.dto.BookingRequestDTO;
 import com.lasa.data.entity.BookingRequest;
 import com.lasa.data.entity.utils.criteria.BookingRequestSearchCriteria;
 import com.lasa.data.entity.utils.page.BookingRequestPage;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -34,14 +36,20 @@ public class BookingRequestServiceImpl implements BookingRequestService {
     }
 
     @Override
-    public Page<BookingRequest> findAll(BookingRequestPage bookingRequestPage, BookingRequestSearchCriteria searchCriteria) {
+    public Page<BookingRequestDTO> findAll(BookingRequestPage bookingRequestPage, BookingRequestSearchCriteria searchCriteria) {
         Pageable pageable = PageRequest.of(bookingRequestPage.getPage(), bookingRequestPage.getSize(), Sort.by(bookingRequestPage.getOrderBy(), bookingRequestPage.getSortBy()));
-        return bookingRepository.findAll(BookingRequestSpecification.searchSpecification(searchCriteria), pageable);
+        return bookingRepository
+                .findAll(BookingRequestSpecification.searchSpecification(searchCriteria), pageable)
+                .map(t -> new BookingRequestDTO(t));
     }
 
     @Override
-    public List<BookingRequest> findAll(BookingRequestSearchCriteria searchCriteria) {
-        return bookingRepository.findAll(BookingRequestSpecification.searchSpecification(searchCriteria));
+    public List<BookingRequestDTO> findAll(BookingRequestSearchCriteria searchCriteria) {
+        return bookingRepository
+                .findAll(BookingRequestSpecification.searchSpecification(searchCriteria))
+                .stream()
+                .map(t -> new BookingRequestDTO(t))
+                .collect(Collectors.toList());
     }
 
     @Override

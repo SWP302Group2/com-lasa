@@ -38,9 +38,9 @@ public class TopicController implements TopicOperations {
     @Override
     public ResponseEntity<?> findAll(TopicPage topicPage, TopicSearchCriteria searchCriteria) {
         if(topicPage.isPaging())
-            return ResponseEntity.ok(topicService.findAll(topicPage, searchCriteria));
+            return ResponseEntity.ok(topicService.findWithArgument(topicPage, searchCriteria));
         else
-            return ResponseEntity.ok(topicService.findAll(searchCriteria));
+            return ResponseEntity.ok(topicService.findWithArgument(searchCriteria));
     }
      
     @Override
@@ -54,8 +54,8 @@ public class TopicController implements TopicOperations {
     }
 
     @Override
-    public Topic findById(Integer id) {
-        return topicService.findById(id);
+    public ResponseEntity<?> findById(Integer id) {
+        return ResponseEntity.ok(topicService.findById(id));
     }
 
     @Override

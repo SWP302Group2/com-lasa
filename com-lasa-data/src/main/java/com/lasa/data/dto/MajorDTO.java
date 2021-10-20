@@ -9,24 +9,21 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import java.io.Serializable;
 import java.util.Collection;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class MajorDTO {
+public class MajorDTO implements Serializable {
     private String id;
     private String name;
     private String description;
-    private Collection<Student> students;
-    private Collection<Topic> topics;
 
     public MajorDTO(Major major) {
         this.id = major.getId();
         this.name = major.getName();
         this.description = major.getDescription();
-        this.students = major.getStudents();
-        this.topics = major.getTopics();
     }
 }

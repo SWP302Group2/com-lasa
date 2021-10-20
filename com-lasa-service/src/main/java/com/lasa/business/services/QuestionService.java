@@ -5,6 +5,7 @@
  */
 package com.lasa.business.services;
 
+import com.lasa.data.dto.QuestionDTO;
 import com.lasa.data.entity.Question;
 import com.lasa.data.entity.utils.criteria.QuestionSearchCriteria;
 import com.lasa.data.entity.utils.page.QuestionPage;
@@ -20,9 +21,9 @@ import java.util.List;
 @Service
 public interface QuestionService {
     
-    Page<Question> findAll(QuestionPage questionPage, QuestionSearchCriteria searchCriteria);
+    Page<QuestionDTO> findAll(QuestionPage questionPage, QuestionSearchCriteria searchCriteria);
 
-    List<Question> findAll(QuestionSearchCriteria searchCriteria);
+    List<QuestionDTO> findAll(QuestionSearchCriteria searchCriteria);
     
     public Question findById(Integer id);
     

@@ -6,6 +6,7 @@
 package com.lasa.business.services.implv1;
 
 import com.lasa.business.services.SlotTopicDetailService;
+import com.lasa.data.dto.SlotTopicDetailDTO;
 import com.lasa.data.entity.SlotTopicDetail;
 import com.lasa.data.entity.key.SlotTopicDetailKey;
 import com.lasa.data.entity.utils.criteria.SlotTopicDetailSearchCriteria;
@@ -45,9 +46,9 @@ public class SlotTopicDetailServiceImpl implements SlotTopicDetailService {
         Page<SlotTopicDetail> page = detailRepository.findAll(SlotTopicDetailSpecification.searchSpecification(searchCriteria), pageable);
 
         if(searchCriteria.getGetTopicAndSlot().equals(true))
-            return page;
+            return page.map(t -> new SlotTopicDetailDTO(t));
 
-        Page<SlotTopicDetailSimple> dtoPage = page.map(
+        return page.map(
                 slotTopicDetail -> {
                     SlotTopicDetailSimple dto = SlotTopicDetailSimple.builder()
                             .slotId(slotTopicDetail.getSlot().getId())
@@ -56,7 +57,6 @@ public class SlotTopicDetailServiceImpl implements SlotTopicDetailService {
                     return dto;
                 }
         );
-        return dtoPage;
     }
 
     @Override
@@ -64,8 +64,11 @@ public class SlotTopicDetailServiceImpl implements SlotTopicDetailService {
         List<SlotTopicDetail> list = detailRepository.findAll(SlotTopicDetailSpecification.searchSpecification(searchCriteria));
 
         if(searchCriteria.getGetTopicAndSlot().equals(true))
-            return list;
-        List<SlotTopicDetailSimple> dtoList = list.stream()
+            return list.stream()
+                    .map(t -> new SlotTopicDetailDTO(t))
+                    .collect(Collectors.toList());
+
+        return list.stream()
                 .map( slotTopicDetail -> {
                     SlotTopicDetailSimple dto = SlotTopicDetailSimple.builder()
                             .slotId(slotTopicDetail.getSlot().getId())
@@ -74,7 +77,6 @@ public class SlotTopicDetailServiceImpl implements SlotTopicDetailService {
                     return dto;
                 })
                 .collect(Collectors.toList());
-        return dtoList;
     }
 
     @Override

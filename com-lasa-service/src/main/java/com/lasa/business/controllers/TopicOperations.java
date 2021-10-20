@@ -25,7 +25,7 @@ public interface TopicOperations {
     ResponseEntity<?> findAll(TopicPage topicPage, TopicSearchCriteria searchCriteria);
 
     @GetMapping(value = "/{id}")
-    Topic findById(
+    ResponseEntity<?> findById(
             @ApiParam(name = "id", type = "Integer", value = "By id, you may find a topic", required = true)
             @PathVariable Integer id);
 

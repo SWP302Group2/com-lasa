@@ -5,6 +5,7 @@
  */
 package com.lasa.business.services;
 
+import com.lasa.data.dto.LecturerTopicDetailDTO;
 import com.lasa.data.entity.LecturerTopicDetail;
 import com.lasa.data.entity.key.LecturerTopicDetailKey;
 import org.springframework.stereotype.Service;
@@ -18,7 +19,7 @@ import java.util.List;
 @Service
 public interface LecturerTopicDetailService {
 
-    List<LecturerTopicDetail> findAllLecturerAndTopicInLecturerTopicDetail();
+    List<LecturerTopicDetailDTO> findAllLecturerAndTopicInLecturerTopicDetail();
 
     List<Integer> findListTopicIdByLecturerId(Integer lecturerId);
 

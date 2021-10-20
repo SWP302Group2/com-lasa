@@ -8,16 +8,18 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serializable;
+
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class LecturerTopicDetailDTO {
-    private Lecturer lecturer;
-    private Topic topic;
+public class LecturerTopicDetailDTO implements Serializable {
+    private LecturerDTO lecturer;
+    private TopicDTO topic;
 
     public LecturerTopicDetailDTO(LecturerTopicDetail lecturerTopicDetail) {
-        this.lecturer = lecturerTopicDetail.getLecturer();
-        this.topic = lecturerTopicDetail.getTopic();
+        this.lecturer = new LecturerDTO(lecturerTopicDetail.getLecturer());
+        this.topic = new TopicDTO(lecturerTopicDetail.getTopic());
     }
 }

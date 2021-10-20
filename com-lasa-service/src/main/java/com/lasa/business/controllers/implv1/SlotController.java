@@ -10,6 +10,7 @@ import com.lasa.business.controllers.utils.authorization.IsLecturer;
 import com.lasa.business.services.LecturerTopicDetailService;
 import com.lasa.business.services.SlotService;
 import com.lasa.business.services.SlotTopicDetailService;
+import com.lasa.data.dto.SlotDTO;
 import com.lasa.data.entity.*;
 import com.lasa.data.entity.utils.criteria.SlotSearchCriteria;
 import com.lasa.data.entity.utils.page.SlotPage;
@@ -38,14 +39,14 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/v1/slots")
 @Api(value = "slots", description = "About slots", tags = { "Slots Controller" })
-public class SlotRestController implements SlotOperations {
+public class SlotController implements SlotOperations {
 
     private final SlotService slotService;
     private final LecturerTopicDetailService lecturerTopicDetailService;
     private final SlotTopicDetailService slotTopicDetailService;
 
     @Autowired
-    public SlotRestController(
+    public SlotController(
             @Qualifier("SlotServiceImplV1") SlotService service,
             @Qualifier("LecturerTopicDetailServiceImplV1") LecturerTopicDetailService lecturerTopicDetailService,
             @Qualifier("SlotTopicDetailServiceImplV1") SlotTopicDetailService slotTopicDetailService
@@ -64,8 +65,10 @@ public class SlotRestController implements SlotOperations {
 
         if(slotPage.isPaging())
             return ResponseEntity.ok(slotService.findAll(searchCriteria, slotPage));
-        else
-            return ResponseEntity.ok(slotService.findAll(searchCriteria));
+        else {
+            List<SlotDTO> list = slotService.findAll(searchCriteria);
+            return ResponseEntity.ok(list);
+        }
     }
 
     @Override

@@ -6,6 +6,7 @@
 package com.lasa.business.services.implv1;
 
 import com.lasa.business.services.SlotService;
+import com.lasa.data.dto.SlotDTO;
 import com.lasa.data.entity.Slot;
 import com.lasa.data.entity.utils.criteria.SlotSearchCriteria;
 import com.lasa.data.entity.utils.page.SlotPage;
@@ -20,6 +21,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 /**
@@ -39,14 +41,20 @@ public class SlotServiceImpl implements SlotService {
 
 
     @Override
-    public Page<Slot> findAll(SlotSearchCriteria searchCriteria, SlotPage slotPage) {
+    public Page<SlotDTO> findAll(SlotSearchCriteria searchCriteria, SlotPage slotPage) {
         Pageable pageable = PageRequest.of(slotPage.getPage(), slotPage.getSize(), Sort.by(slotPage.getOrderBy(), slotPage.getSortBy()));
-        return slotRepository.findAll(SlotSpecification.searchSpecification(searchCriteria), pageable);
+        return slotRepository
+                .findAll(SlotSpecification.searchSpecification(searchCriteria), pageable)
+                .map(t -> new SlotDTO(t));
     }
 
     @Override
-    public List<Slot> findAll(SlotSearchCriteria searchCriteria) {
-        return slotRepository.findAll(SlotSpecification.searchSpecification(searchCriteria));
+    public List<SlotDTO> findAll(SlotSearchCriteria searchCriteria) {
+        return slotRepository
+                .findAll(SlotSpecification.searchSpecification(searchCriteria))
+                .stream()
+                .map(t -> new SlotDTO(t))
+                .collect(Collectors.toList());
     }
 
     @Override

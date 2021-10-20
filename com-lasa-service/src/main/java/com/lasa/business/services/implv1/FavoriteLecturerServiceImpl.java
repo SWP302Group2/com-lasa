@@ -6,6 +6,8 @@
 package com.lasa.business.services.implv1;
 
 import com.lasa.business.services.FavoriteLecturerService;
+import com.lasa.data.dto.FavoriteLecturerDTO;
+import com.lasa.data.dto.LecturerDTO;
 import com.lasa.data.entity.FavoriteLecturer;
 import com.lasa.data.entity.Lecturer;
 import com.lasa.data.entity.key.FavoriteLecturerKey;
@@ -15,6 +17,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -32,13 +35,21 @@ public class FavoriteLecturerServiceImpl implements FavoriteLecturerService {
     }
 
     @Override
-    public List<FavoriteLecturer> findAllLecturerAndStudentInFavoriteLecturer() {
-        return favoriteLecturerRepo.findAllLecturerAndStudentInFavoriteLecturer();
+    public List<FavoriteLecturerDTO> findAllLecturerAndStudentInFavoriteLecturer() {
+        return favoriteLecturerRepo
+                .findAllLecturerAndStudentInFavoriteLecturer()
+                .stream()
+                .map(t -> new FavoriteLecturerDTO(t))
+                .collect(Collectors.toList());
     }
 
     @Override
-    public List<Lecturer> findTopFavoriteLecturer(Integer topNumber) {
-        return favoriteLecturerRepo.findTopFavoriteLecturer(topNumber);
+    public List<LecturerDTO> findTopFavoriteLecturer(Integer topNumber) {
+        return favoriteLecturerRepo
+                .findTopFavoriteLecturer(topNumber)
+                .stream()
+                .map(t -> new LecturerDTO(t))
+                .collect(Collectors.toList());
     }
 
     @Override

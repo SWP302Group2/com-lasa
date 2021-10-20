@@ -5,6 +5,7 @@
  */
 package com.lasa.business.services;
 
+import com.lasa.data.dto.SlotDTO;
 import com.lasa.data.entity.Slot;
 import com.lasa.data.entity.utils.criteria.SlotSearchCriteria;
 import com.lasa.data.entity.utils.page.SlotPage;
@@ -20,9 +21,9 @@ import java.util.List;
 @Service
 public interface SlotService {
     
-    Page<Slot> findAll(SlotSearchCriteria searchCriteria, SlotPage slotPage);
+    Page<SlotDTO> findAll(SlotSearchCriteria searchCriteria, SlotPage slotPage);
 
-    List<Slot> findAll(SlotSearchCriteria searchCriteria);
+    List<SlotDTO> findAll(SlotSearchCriteria searchCriteria);
 
     Slot findById(Integer id);
 

@@ -5,6 +5,7 @@
  */
 package com.lasa.business.services;
 
+import com.lasa.data.dto.StudentDTO;
 import com.lasa.data.entity.Student;
 import com.lasa.data.entity.utils.criteria.StudentSearchCriteria;
 import com.lasa.data.entity.utils.page.StudentPage;
@@ -20,9 +21,9 @@ import java.util.List;
 @Service
 public interface StudentService {
     
-    Page<Student> findAll(StudentSearchCriteria searchCriteria, StudentPage studentPage);
+    Page<StudentDTO> findWithArgument(StudentSearchCriteria searchCriteria, StudentPage studentPage);
 
-    List<Student> findAll(StudentSearchCriteria searchCriteria);
+    List<StudentDTO> findWithArgument(StudentSearchCriteria searchCriteria);
     
     Student findByStudentId(Integer id);
     

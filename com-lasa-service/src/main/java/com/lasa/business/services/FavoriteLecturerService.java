@@ -5,6 +5,8 @@
  */
 package com.lasa.business.services;
 
+import com.lasa.data.dto.FavoriteLecturerDTO;
+import com.lasa.data.dto.LecturerDTO;
 import com.lasa.data.entity.FavoriteLecturer;
 import com.lasa.data.entity.Lecturer;
 import com.lasa.data.entity.key.FavoriteLecturerKey;
@@ -19,9 +21,9 @@ import java.util.List;
 @Service
 public interface FavoriteLecturerService {
     
-    List<FavoriteLecturer> findAllLecturerAndStudentInFavoriteLecturer();
+    List<FavoriteLecturerDTO> findAllLecturerAndStudentInFavoriteLecturer();
 
-    List<Lecturer> findTopFavoriteLecturer(Integer topNumber);
+    List<LecturerDTO> findTopFavoriteLecturer(Integer topNumber);
     
     List<FavoriteLecturer> addFavoriteLecturers(List<FavoriteLecturer> favoriteLecturers);
 

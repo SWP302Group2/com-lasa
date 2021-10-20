@@ -9,6 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Collection;
 
@@ -16,15 +17,12 @@ import java.util.Collection;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class LecturerDTO {
+public class LecturerDTO implements Serializable {
     private Integer id;
     private String email;
     private String name;
     private String phone;
     private String meetingUrl;
-    private Collection<FavoriteLecturer> students;
-    private Collection<LecturerTopicDetail> topics;
-    private Collection<Slot> slots;
     private Integer status;
     private Boolean gender;
     private LocalDate birthday;
@@ -37,9 +35,6 @@ public class LecturerDTO {
         this.name = lecturer.getName();
         this.phone = lecturer.getPhone();
         this.meetingUrl = lecturer.getMeetingUrl();
-        this.students = lecturer.getStudents();
-        this.topics = lecturer.getTopics();
-        this.slots = lecturer.getSlots();
         this.status = lecturer.getStatus();
         this.gender = lecturer.getGender();
         this.birthday = lecturer.getBirthday();

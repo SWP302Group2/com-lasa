@@ -8,11 +8,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serializable;
+
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class FavoriteLecturerDTO {
+public class FavoriteLecturerDTO implements Serializable {
     private Student student;
     private Lecturer lecturer;
 

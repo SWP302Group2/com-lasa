@@ -12,6 +12,8 @@ import com.lasa.data.entity.key.LecturerTopicDetailKey;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -34,13 +36,15 @@ public class LecturerTopicDetailController implements LecturerTopicDetailOperati
     }
 
     @Override
-    public List<LecturerTopicDetail> findAll() {
-        return lecturerTopicDetailService.findAllLecturerAndTopicInLecturerTopicDetail();
+    public ResponseEntity<?> findAll() {
+        return ResponseEntity.ok(lecturerTopicDetailService.findAllLecturerAndTopicInLecturerTopicDetail());
     }
 
     @Override
-    public List<LecturerTopicDetail> createLecturerTopicDetails(List<LecturerTopicDetail> lecturerTopicDetails) {
-        return lecturerTopicDetailService.createLecturerTopicDetails(lecturerTopicDetails);
+    public ResponseEntity<?> createLecturerTopicDetails(List<LecturerTopicDetail> lecturerTopicDetails) {
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(lecturerTopicDetailService.createLecturerTopicDetails(lecturerTopicDetails));
     }
 
     @Override

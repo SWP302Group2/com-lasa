@@ -5,6 +5,7 @@
  */
 package com.lasa.business.services;
 
+import com.lasa.data.dto.TopicDTO;
 import com.lasa.data.entity.Topic;
 import com.lasa.data.entity.utils.criteria.TopicSearchCriteria;
 import com.lasa.data.entity.utils.page.TopicPage;
@@ -20,11 +21,11 @@ import java.util.List;
 @Service
 public interface TopicService {
     
-    Page<Topic> findAll(TopicPage topicPage, TopicSearchCriteria searchCriteria);
+    Page<TopicDTO> findWithArgument(TopicPage topicPage, TopicSearchCriteria searchCriteria);
 
-    List<Topic> findAll(TopicSearchCriteria searchCriteria);
+    List<TopicDTO> findWithArgument(TopicSearchCriteria searchCriteria);
     
-    Topic findById(Integer id);
+    TopicDTO findById(Integer id);
     
     List<Topic> createTopics(List<Topic> topics);
     

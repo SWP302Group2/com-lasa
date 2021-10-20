@@ -6,6 +6,7 @@
 package com.lasa.business.services.implv1;
 
 import com.lasa.business.services.LecturerService;
+import com.lasa.data.dto.LecturerDTO;
 import com.lasa.data.entity.Lecturer;
 import com.lasa.data.entity.utils.criteria.LecturerSearchCriteria;
 import com.lasa.data.entity.utils.page.LecturerPage;
@@ -22,6 +23,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -43,15 +45,20 @@ public class LecturerServiceImpl implements LecturerService {
     }
 
     @Override
-    public Page<Lecturer> findAll(LecturerPage lecturerPage, LecturerSearchCriteria searchCriteria) {
+    public Page<LecturerDTO> findAll(LecturerPage lecturerPage, LecturerSearchCriteria searchCriteria) {
         Pageable pageable = PageRequest.of(lecturerPage.getPage(), lecturerPage.getSize(), Sort.by(lecturerPage.getOrderBy(), lecturerPage.getSortBy()));
-
-        return lecturerRepository.findAll(LecturerSpecification.searchSpecification(searchCriteria), pageable);
+        return lecturerRepository
+                .findAll(LecturerSpecification.searchSpecification(searchCriteria), pageable)
+                .map(t -> new LecturerDTO(t));
     }
 
     @Override
-    public List<Lecturer> findAll(LecturerSearchCriteria searchCriteria) {
-        return lecturerRepository.findAll(LecturerSpecification.searchSpecification(searchCriteria));
+    public List<LecturerDTO> findAll(LecturerSearchCriteria searchCriteria) {
+        return lecturerRepository
+                .findAll(LecturerSpecification.searchSpecification(searchCriteria))
+                .stream()
+                .map(t -> new LecturerDTO(t))
+                .collect(Collectors.toList());
     }
 
     @Override

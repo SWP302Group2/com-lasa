@@ -1,5 +1,7 @@
 package com.lasa.data.dto;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.lasa.data.entity.Slot;
 import com.lasa.data.entity.SlotTopicDetail;
 import com.lasa.data.entity.Topic;
@@ -8,21 +10,19 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.MapsId;
+import java.io.Serializable;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class SlotTopicDetailDTO {
-    private Slot slot;
-    private Topic topic;
+@JsonIdentityInfo(generator= ObjectIdGenerators.IntSequenceGenerator.class, property="@id", scope = SlotTopicDetailDTO.class)
+public class SlotTopicDetailDTO implements Serializable {
+    private SlotDTO slot;
+    private TopicDTO topic;
 
     public SlotTopicDetailDTO(SlotTopicDetail slotTopicDetail) {
-        this.slot = slotTopicDetail.getSlot();
-        this.topic = slotTopicDetail.getTopic();
+        this.slot = new SlotDTO(slotTopicDetail.getSlot());
+        this.topic = new TopicDTO(slotTopicDetail.getTopic());
     }
 }

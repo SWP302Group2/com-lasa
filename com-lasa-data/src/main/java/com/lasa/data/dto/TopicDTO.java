@@ -1,5 +1,7 @@
 package com.lasa.data.dto;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.lasa.data.entity.BookingRequest;
 import com.lasa.data.entity.LecturerTopicDetail;
 import com.lasa.data.entity.SlotTopicDetail;
@@ -7,19 +9,19 @@ import com.lasa.data.entity.Topic;
 import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Collection;
+import java.util.stream.Collectors;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class TopicDTO {
+@JsonIdentityInfo(generator= ObjectIdGenerators.IntSequenceGenerator.class, property="@id", scope = TopicDTO.class)
+public class TopicDTO implements Serializable {
     private Integer id;
     private String name;
-    private Collection<LecturerTopicDetail> lecturers;
     private String majorId;
-    private Collection<BookingRequest> bookingRequests;
-    private Collection<SlotTopicDetail> slots;
     private String courseId;
     private Integer status;
     private String description;
@@ -27,10 +29,7 @@ public class TopicDTO {
     public TopicDTO(Topic topic) {
         this.id = topic.getId();
         this.name = topic.getName();
-        this.lecturers = topic.getLecturers();
         this.majorId = topic.getMajorId();
-        this.bookingRequests = topic.getBookingRequests();
-        this.slots = topic.getSlots();
         this.courseId = topic.getCourseId();
         this.status = topic.getStatus();
         this.description = topic.getDescription();

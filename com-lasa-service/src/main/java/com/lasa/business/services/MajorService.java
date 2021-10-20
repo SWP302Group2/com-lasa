@@ -5,6 +5,7 @@
  */
 package com.lasa.business.services;
 
+import com.lasa.data.dto.MajorDTO;
 import com.lasa.data.entity.Major;
 import com.lasa.data.entity.utils.criteria.MajorSearchCriteria;
 import com.lasa.data.entity.utils.page.MajorPage;
@@ -21,9 +22,9 @@ import java.util.List;
 @Service
 public interface MajorService {
     
-    Page<Major> findAll(MajorPage majorPage, MajorSearchCriteria searchCriteria);
+    Page<MajorDTO> findAll(MajorPage majorPage, MajorSearchCriteria searchCriteria);
 
-    List<Major> findAll(MajorSearchCriteria searchCriteria);
+    List<MajorDTO> findAll(MajorSearchCriteria searchCriteria);
 
     List<MajorWithSimpleTopic> findAllWithTopicIds();
     

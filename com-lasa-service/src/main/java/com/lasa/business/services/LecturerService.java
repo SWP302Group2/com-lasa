@@ -5,6 +5,7 @@
  */
 package com.lasa.business.services;
 
+import com.lasa.data.dto.LecturerDTO;
 import com.lasa.data.entity.Lecturer;
 import com.lasa.data.entity.utils.criteria.LecturerSearchCriteria;
 import com.lasa.data.entity.utils.page.LecturerPage;
@@ -20,9 +21,9 @@ import java.util.List;
 @Service
 public interface LecturerService {
 
-    Page<Lecturer> findAll(LecturerPage lecturerPage, LecturerSearchCriteria searchCriteria);
+    Page<LecturerDTO> findAll(LecturerPage lecturerPage, LecturerSearchCriteria searchCriteria);
 
-    List<Lecturer> findAll(LecturerSearchCriteria searchCriteria);
+    List<LecturerDTO> findAll(LecturerSearchCriteria searchCriteria);
 
     Lecturer createLecturer(Lecturer lecturer);
 
