@@ -6,13 +6,13 @@
 package com.lasa.data.repo.repository;
 
 import com.lasa.data.entity.Slot;
-import net.bytebuddy.asm.Advice;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 
 /**
@@ -36,4 +36,5 @@ public interface SlotRepository extends JpaRepository<Slot, Integer>, JpaSpecifi
 
     @Query("select count(s) from Slot s where (s.timeStart >= ?1 and s.timeStart <= ?2) or (s.timeEnd >= ?1 and s.timeEnd <= ?2) and (s.lecturerId = ?3)")
     Integer countSlotByTimeStartAndTimeEndAndLecturerIdIn(LocalDateTime timeStart, LocalDateTime timeEnd, Integer lecturerId);
+
 }

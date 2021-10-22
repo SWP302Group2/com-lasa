@@ -15,7 +15,6 @@ import java.util.stream.Collectors;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
 @JsonIdentityInfo(generator= ObjectIdGenerators.IntSequenceGenerator.class, property="@id", scope = TopicDTO.class)
 public class TopicDTO implements Serializable {
@@ -33,5 +32,15 @@ public class TopicDTO implements Serializable {
         this.courseId = topic.getCourseId();
         this.status = topic.getStatus();
         this.description = topic.getDescription();
+    }
+
+    @Builder
+    public TopicDTO(Integer id, String name, String majorId, String courseId, Integer status, String description) {
+        this.id = id;
+        this.name = name;
+        this.majorId = majorId;
+        this.courseId = courseId;
+        this.status = status;
+        this.description = description;
     }
 }

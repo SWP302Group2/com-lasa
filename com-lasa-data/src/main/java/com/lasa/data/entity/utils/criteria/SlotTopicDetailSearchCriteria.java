@@ -1,9 +1,7 @@
 package com.lasa.data.entity.utils.criteria;
 
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 
@@ -20,4 +18,11 @@ public class SlotTopicDetailSearchCriteria {
 
     @ApiModelProperty(name = "getTopicAndSlot", dataType = "Boolean", value = "Get all information of topic and slot")
     private Boolean getTopicAndSlot = false;
+
+    @Builder
+    public SlotTopicDetailSearchCriteria(List<Integer> sId, List<Integer> topicId, Boolean getTopicAndSlot) {
+        this.sId = sId;
+        this.topicId = topicId;
+        this.getTopicAndSlot = getTopicAndSlot;
+    }
 }

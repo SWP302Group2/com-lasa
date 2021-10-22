@@ -1,6 +1,7 @@
 package com.lasa.data.entity.utils.criteria;
 
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

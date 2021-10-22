@@ -10,7 +10,6 @@ import com.lasa.business.controllers.utils.authorization.IsLecturer;
 import com.lasa.business.services.LecturerTopicDetailService;
 import com.lasa.business.services.SlotService;
 import com.lasa.business.services.SlotTopicDetailService;
-import com.lasa.data.dto.SlotDTO;
 import com.lasa.data.entity.*;
 import com.lasa.data.entity.utils.criteria.SlotSearchCriteria;
 import com.lasa.data.entity.utils.page.SlotPage;
@@ -27,7 +26,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -60,14 +58,10 @@ public class SlotController implements SlotOperations {
     @Override
     public ResponseEntity<?> findWithArgument(SlotSearchCriteria searchCriteria, SlotPage slotPage) throws ExceptionUtils.ArgumentException {
 
-        if(slotPage.isPaging() && searchCriteria.getGetTopic().equals(true) && searchCriteria.getSlotId().isEmpty())
-            throw new ExceptionUtils.ArgumentException("INVALID_ARGUMENT");
-
         if(slotPage.isPaging())
-            return ResponseEntity.ok(slotService.findAll(searchCriteria, slotPage));
+            return ResponseEntity.ok(slotService.findWithArguments(searchCriteria, slotPage));
         else {
-            List<SlotDTO> list = slotService.findAll(searchCriteria);
-            return ResponseEntity.ok(list);
+            return ResponseEntity.ok(slotService.findWithArguments(searchCriteria));
         }
     }
 

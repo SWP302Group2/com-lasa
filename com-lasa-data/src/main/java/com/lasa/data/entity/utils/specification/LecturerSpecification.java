@@ -35,6 +35,9 @@ public class LecturerSpecification {
             if(Objects.nonNull(searchCriteria.getStatus()))
                 predicates.add(criteriaBuilder.equal(root.get(Lecturer_.status), searchCriteria.getStatus()));
 
+            if(Objects.nonNull(searchCriteria.getLecId()))
+                predicates.add(root.get(Lecturer_.id).in(searchCriteria.getLecId()));
+
             if(predicates.isEmpty())
                 return null;
             return criteriaBuilder.and(predicates.toArray(new Predicate[predicates.size() - 1]));

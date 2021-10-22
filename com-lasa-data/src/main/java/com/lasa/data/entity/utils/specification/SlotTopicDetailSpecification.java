@@ -26,6 +26,7 @@ public class SlotTopicDetailSpecification {
             if(searchCriteria.getGetTopicAndSlot().equals(true)) {
                 Fetch<SlotTopicDetail, Topic> detailTopicFetch = root.fetch(SlotTopicDetail_.topic);
                 Fetch<SlotTopicDetail, Slot> detailSlotFetch = root.fetch(SlotTopicDetail_.slot);
+                query.distinct(true);
             }
 
 

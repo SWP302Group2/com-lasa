@@ -23,6 +23,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -43,11 +44,24 @@ public class SlotTopicDetailServiceImpl implements SlotTopicDetailService {
     @Override
     public Page<?> findAllWithArgument(SlotTopicDetailPage slotTopicDetailPage, SlotTopicDetailSearchCriteria searchCriteria) {
         Pageable pageable = PageRequest.of(slotTopicDetailPage.getPage(), slotTopicDetailPage.getSize());
+
+
+        if (searchCriteria.getGetTopicAndSlot().equals(true)) {
+            if (Objects.nonNull(searchCriteria.getTopicId()) && Objects.nonNull(searchCriteria.getTopicId()))
+                return convertToDTO(detailRepository.findAllSlotAndTopicByTopicIdAndSlotId(searchCriteria.getSId(), searchCriteria.getTopicId(), pageable));
+
+            else if (Objects.nonNull(searchCriteria.getTopicId()))
+                return convertToDTO(detailRepository.findAllSlotAndTopicByTopicId(searchCriteria.getTopicId(), pageable));
+
+            else if (Objects.nonNull(searchCriteria.getSId()))
+                return convertToDTO(detailRepository.findAllSlotAndTopicBySlotId(searchCriteria.getSId(), pageable));
+
+            else
+                return convertToDTO(detailRepository.findAllSlotAndTopic(pageable));
+
+        }
+
         Page<SlotTopicDetail> page = detailRepository.findAll(SlotTopicDetailSpecification.searchSpecification(searchCriteria), pageable);
-
-        if(searchCriteria.getGetTopicAndSlot().equals(true))
-            return page.map(t -> new SlotTopicDetailDTO(t));
-
         return page.map(
                 slotTopicDetail -> {
                     SlotTopicDetailSimple dto = SlotTopicDetailSimple.builder()
@@ -61,13 +75,24 @@ public class SlotTopicDetailServiceImpl implements SlotTopicDetailService {
 
     @Override
     public List<?> findAllWithArgument(SlotTopicDetailSearchCriteria searchCriteria) {
+
+
+        if (searchCriteria.getGetTopicAndSlot().equals(true)) {
+            if (Objects.nonNull(searchCriteria.getTopicId()) && Objects.nonNull(searchCriteria.getTopicId()))
+                return convertToDTO(detailRepository.findAllSlotAndTopicByTopicIdAndSlotId(searchCriteria.getTopicId(), searchCriteria.getSId()));
+
+            else if (Objects.nonNull(searchCriteria.getTopicId()))
+                return convertToDTO(detailRepository.findAllSlotAndTopicByTopicId(searchCriteria.getTopicId()));
+
+            else if (Objects.nonNull(searchCriteria.getSId()))
+                return convertToDTO(detailRepository.findAllSlotAndTopicBySlotId(searchCriteria.getSId()));
+
+            else
+                return convertToDTO(detailRepository.findAllSlotAndTopic());
+        }
+
+
         List<SlotTopicDetail> list = detailRepository.findAll(SlotTopicDetailSpecification.searchSpecification(searchCriteria));
-
-        if(searchCriteria.getGetTopicAndSlot().equals(true))
-            return list.stream()
-                    .map(t -> new SlotTopicDetailDTO(t))
-                    .collect(Collectors.toList());
-
         return list.stream()
                 .map( slotTopicDetail -> {
                     SlotTopicDetailSimple dto = SlotTopicDetailSimple.builder()
@@ -77,6 +102,14 @@ public class SlotTopicDetailServiceImpl implements SlotTopicDetailService {
                     return dto;
                 })
                 .collect(Collectors.toList());
+    }
+    private List<SlotTopicDetailDTO> convertToDTO(List<SlotTopicDetail> origin) {
+        return origin.stream().map(t -> new SlotTopicDetailDTO(t))
+                    .collect(Collectors.toList());
+    }
+
+    private Page<SlotTopicDetailDTO> convertToDTO(Page<SlotTopicDetail> origin) {
+        return origin.map(t -> new SlotTopicDetailDTO(t));
     }
 
     @Override

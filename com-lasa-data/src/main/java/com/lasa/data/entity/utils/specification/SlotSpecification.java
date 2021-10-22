@@ -4,9 +4,8 @@ import com.lasa.data.entity.*;
 import com.lasa.data.entity.utils.criteria.SlotSearchCriteria;
 import org.springframework.data.jpa.domain.Specification;
 
-import javax.persistence.criteria.Fetch;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import javax.persistence.JoinColumn;
+import javax.persistence.criteria.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -35,9 +34,9 @@ public class SlotSpecification {
                 predicates.add(root.get(Slot_.id).in(searchCriteria.getSlotId()));
             }
 
-            if(searchCriteria.getGetTopic().equals(true)) {
-                Fetch<Slot, SlotTopicDetail> topicDetailFetch = root.fetch(Slot_.topics);
-                Fetch<SlotTopicDetail, Topic> detailTopicFetch = topicDetailFetch.fetch(SlotTopicDetail_.topic);
+            if(Objects.nonNull(searchCriteria.getTopicId())) {
+                Join<Slot, SlotTopicDetail>  slotTopicJoin = root.join(Slot_.topics);
+                predicates.add(slotTopicJoin.get(SlotTopicDetail_.topic).get(Topic_.id).in(searchCriteria.getTopicId()));
             }
 
             if(predicates.isEmpty())

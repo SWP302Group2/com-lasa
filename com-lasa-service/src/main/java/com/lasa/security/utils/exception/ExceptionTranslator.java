@@ -27,7 +27,7 @@ import java.security.GeneralSecurityException;
 @RestControllerAdvice
 public class ExceptionTranslator {
 
-    @ExceptionHandler(value = {Exception.class})
+    /*@ExceptionHandler(value = {Exception.class})
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ResponseObject processUnknownException(Exception e, HttpServletRequest request) {
         System.out.println(e.getClass());
@@ -38,7 +38,7 @@ public class ExceptionTranslator {
                 .message("UNKNOWN_ERROR")
                 .path(request.getRequestURI())
                 .build();
-    }
+    }*/
 
     @ExceptionHandler(value = {UserAccountException.class, BadCredentialsException.class, AccessDeniedException.class})
     @ResponseStatus(HttpStatus.FORBIDDEN)

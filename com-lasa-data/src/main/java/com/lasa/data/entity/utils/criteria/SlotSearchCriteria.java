@@ -6,9 +6,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
@@ -19,7 +17,7 @@ import java.util.List;
 @NoArgsConstructor
 public class SlotSearchCriteria {
     
-    @ApiModelProperty(name = "lecturerId", dataType = "Integer", value = "Get lecturer by id")
+    @ApiModelProperty(name = "lecId", dataType = "Integer", value = "Get lecturer by id")
     private List<Integer> lecId;
 
     @JsonDeserialize(using = LocalDateDeserializer.class)
@@ -36,10 +34,26 @@ public class SlotSearchCriteria {
     @ApiModelProperty(name = "timeEnd", dataType = "String", value = "Slot ends at the time")
     private LocalDateTime timeEnd ;
 
-    @ApiModelProperty(name = "getTopic", dataType = "Boolean", value = "Get all information of topic and slot")
+    @ApiModelProperty(name = "getTopic", dataType = "Boolean", value = "Get information of topic")
     private Boolean getTopic = false;
+
+    @ApiModelProperty(name = "getLecturer", dataType = "Boolean", value = "Get information of lecturer")
+    private Boolean getLecturer = false;
 
     @ApiModelProperty(name = "slotId", dataType = "Integer", value = "Get slot by a list slotId")
     private List<Integer> slotId;
 
+    @ApiModelProperty(name = "topicId", dataType = "Integer", value = "Get slot by a list slotId")
+    private List<Integer> topicId;
+
+    @Builder
+    public SlotSearchCriteria(List<Integer> lecId, LocalDateTime timeStart, LocalDateTime timeEnd, Boolean getTopic, Boolean getLecturer, List<Integer> slotId, List<Integer> topicId) {
+        this.lecId = lecId;
+        this.timeStart = timeStart;
+        this.timeEnd = timeEnd;
+        this.getTopic = getTopic;
+        this.getLecturer = getLecturer;
+        this.slotId = slotId;
+        this.topicId = topicId;
+    }
 }

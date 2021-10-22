@@ -21,9 +21,9 @@ import java.util.List;
 @Service
 public interface SlotService {
     
-    Page<SlotDTO> findAll(SlotSearchCriteria searchCriteria, SlotPage slotPage);
+    Page<SlotDTO> findWithArguments(SlotSearchCriteria searchCriteria, SlotPage slotPage);
 
-    List<SlotDTO> findAll(SlotSearchCriteria searchCriteria);
+    List<SlotDTO> findWithArguments(SlotSearchCriteria searchCriteria);
 
     Slot findById(Integer id);
 
