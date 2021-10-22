@@ -8,6 +8,8 @@ import com.lasa.security.utils.exception.ExceptionUtils.UserAccountException;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.UnsupportedJwtException;
 import io.jsonwebtoken.security.SignatureException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.access.AccessDeniedException;
@@ -18,7 +20,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
-
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
@@ -26,11 +27,13 @@ import java.security.GeneralSecurityException;
 @RestControllerAdvice
 public class ExceptionTranslator {
 
+    private static final Logger LOGGER = LogManager.getLogger(ExceptionTranslator.class);
+
     @ExceptionHandler(value = {Exception.class})
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ResponseObject processUnknownException(Exception e, HttpServletRequest request) {
-        System.out.println(e.getClass());
-        System.out.println(e.getMessage());
+        LOGGER.error(e.getMessage());
+        System.out.println("LOI SO 1");
         return ResponseObject.builder()
                 .status(HttpStatus.NOT_FOUND.value())
                 .error(HttpServerErrorException.InternalServerError.class.getSimpleName())
@@ -42,8 +45,8 @@ public class ExceptionTranslator {
     @ExceptionHandler(value = {UserAccountException.class, BadCredentialsException.class, AccessDeniedException.class})
     @ResponseStatus(HttpStatus.FORBIDDEN)
     public ResponseObject processForbiddenResponse(RuntimeException e, HttpServletRequest request) {
-        System.out.println(e.getClass());
-        System.out.println(e.getMessage());
+        LOGGER.warn(e.getMessage());
+        System.out.println("LOI SO 2");
         return ResponseObject.builder()
                 .status(HttpStatus.FORBIDDEN.value())
                 .error(e.getClass().getSimpleName())
@@ -55,8 +58,8 @@ public class ExceptionTranslator {
     @ExceptionHandler(value = {TokenException.class})
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     public ResponseObject processTokenException(RuntimeException e, HttpServletRequest request) {
-        System.out.println(e.getClass());
-        System.out.println(e.getMessage());
+        LOGGER.error(e.getMessage());
+        System.out.println("LOI SO 3");
         return ResponseObject.builder()
                 .status(HttpStatus.UNAUTHORIZED.value())
                 .error(e.getClass().getSimpleName())
@@ -68,8 +71,8 @@ public class ExceptionTranslator {
     @ExceptionHandler(value = {UnsupportedJwtException.class, MalformedJwtException.class, SignatureException.class, IllegalArgumentException.class})
     @ResponseStatus(HttpStatus.FORBIDDEN)
     public ResponseObject processInvalidTokenException(Exception e,HttpServletRequest request) {
-        System.out.println(e.getClass());
-        System.out.println(e.getMessage());
+        LOGGER.warn(e.getMessage());
+        System.out.println("LOI SO 4");
         return ResponseObject.builder()
                 .status(HttpStatus.UNAUTHORIZED.value())
                 .error(TokenException.class.getSimpleName())
@@ -81,8 +84,8 @@ public class ExceptionTranslator {
     @ExceptionHandler(value = {MethodArgumentTypeMismatchException.class, MismatchedInputException.class, JsonParseException.class, HttpMessageNotReadableException.class})
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ResponseObject processQueryException(Exception e, HttpServletRequest request) {
-        System.out.println(e.getClass());
-        System.out.println(e.getMessage());
+        LOGGER.debug(e.getMessage());
+        System.out.println("LOI SO 5");
         return ResponseObject.builder()
                 .status(HttpStatus.NOT_FOUND.value())
                 .error("InvalidArgumentException")
@@ -94,8 +97,8 @@ public class ExceptionTranslator {
     @ExceptionHandler(value = {HttpRequestMethodNotSupportedException.class})
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ResponseObject processNotFoundResponse(Exception e, HttpServletRequest request) {
-        System.out.println(e.getClass());
-        System.out.println(e.getMessage());
+        LOGGER.debug(e.getMessage());
+        System.out.println("LOI SO 6");
         return ResponseObject.builder()
                 .status(HttpStatus.NOT_FOUND.value())
                 .error(e.getClass().getSimpleName())
@@ -107,8 +110,8 @@ public class ExceptionTranslator {
     @ExceptionHandler(value = {GeneralSecurityException.class, IOException.class})
     @ResponseStatus(HttpStatus.NOT_ACCEPTABLE)
     public ResponseObject processGoogleException(Exception e, HttpServletRequest request) {
-        System.out.println(e.getClass());
-        System.out.println(e.getMessage());
+        LOGGER.info(e.getMessage());
+        System.out.println("LOI SO 7");
         return ResponseObject.builder()
                 .status(HttpStatus.NOT_ACCEPTABLE.value())
                 .error("GoogleException")
@@ -120,8 +123,8 @@ public class ExceptionTranslator {
     @ExceptionHandler(value = {ExceptionUtils.EmailDomainException.class, ExceptionUtils.UserAlreadyExistException.class})
     @ResponseStatus(HttpStatus.NOT_ACCEPTABLE)
     public ResponseObject processEmailDomainException(Exception e, HttpServletRequest request) {
-        System.out.println(e.getClass());
-        System.out.println(e.getMessage());
+        LOGGER.error(e.getMessage());
+        System.out.println("LOI SO 8");
         return ResponseObject.builder()
                 .status(HttpStatus.NOT_ACCEPTABLE.value())
                 .error(e.getClass().getSimpleName())
@@ -133,8 +136,8 @@ public class ExceptionTranslator {
     @ExceptionHandler(value = {ExceptionUtils.ArgumentException.class})
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
     public ResponseObject processOverflowException(Exception e, HttpServletRequest request) {
-        System.out.println(e.getClass());
-        System.out.println(e.getMessage());
+        LOGGER.error(e.getMessage());
+        System.out.println("LOI SO 9");
         return ResponseObject.builder()
                 .status(HttpStatus.UNPROCESSABLE_ENTITY.value())
                 .error(e.getClass().getSimpleName())
@@ -142,5 +145,6 @@ public class ExceptionTranslator {
                 .path(request.getRequestURI())
                 .build();
     }
+
 
 }
