@@ -72,7 +72,7 @@ public class SlotController implements SlotOperations {
     }
 
     @Override
-    @Transactional(isolation = Isolation.SERIALIZABLE)
+    @Transactional
     public ResponseEntity<Slot> createSlots(Slot slot) throws ExceptionUtils.ArgumentException {
         List<Integer> lecturerIds;
         MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();

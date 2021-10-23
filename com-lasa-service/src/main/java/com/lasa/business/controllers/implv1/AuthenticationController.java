@@ -48,7 +48,7 @@ public class AuthenticationController implements AuthenticationOperations {
     }
 
     @Override
-    @Transactional(isolation = Isolation.SERIALIZABLE)
+    @Transactional
     public ResponseEntity<?> googleAuthentication(GoogleAuthenticationRequest authenticationRequest,
                                                   String role,
                                                   HttpServletResponse response,

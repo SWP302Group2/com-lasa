@@ -32,7 +32,8 @@ public class FavoriteLecturerCustomRepositoryImpl implements FavoriteLecturerCus
                         "ORDER BY count(f.lecturer.id) desc ", Tuple.class)
                 .setMaxResults(topNumber)
                 .getResultList();
-        List<Lecturer> lecturers = tuples.stream().map(
+
+        return tuples.stream().map(
                 tuple -> {
                     Lecturer lecturer = Lecturer.builder()
                             .id((Integer) tuple.get("id"))
@@ -45,7 +46,5 @@ public class FavoriteLecturerCustomRepositoryImpl implements FavoriteLecturerCus
                     return lecturer;
                 }
         ).collect(Collectors.toList());
-
-        return lecturers;
     }
 }
