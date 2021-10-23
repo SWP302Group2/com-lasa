@@ -7,6 +7,8 @@ package com.lasa.business.controllers.implv1;
 
 import com.lasa.business.controllers.MajorOperations;
 import com.lasa.business.services.MajorService;
+import com.lasa.data.dto.MajorDTO;
+import com.lasa.data.dto.TopicDTO;
 import com.lasa.data.entity.Major;
 import com.lasa.data.entity.utils.criteria.MajorSearchCriteria;
 import com.lasa.data.entity.utils.page.MajorPage;
@@ -39,17 +41,24 @@ public class MajorController implements MajorOperations {
 
 
     @Override
-    public ResponseEntity<?> findWithArgument(String id, MajorPage majorPage, MajorSearchCriteria searchCriteria, HttpServletRequest request) {
-        if(request.getRequestURI().endsWith("/topics")){
-            return ResponseEntity.ok(majorService.findAllWithTopicIds());
-        } else if(Objects.nonNull(id)) {
-            return ResponseEntity.ok(majorService.findById(id));
-        } else {
+    public ResponseEntity<?> findWithArgument(MajorPage majorPage, MajorSearchCriteria searchCriteria) {
             if(majorPage.isPaging())
                 return ResponseEntity.ok(majorService.findAll(majorPage, searchCriteria));
             else
                 return ResponseEntity.ok(majorService.findAll(searchCriteria));
-        }
+
+    }
+
+    @Override
+    public ResponseEntity<MajorDTO> findById(String id) {
+        /*return ResponseEntity.ok(new MajorDTO(majorService.findById(id)));*/
+        return null;
+    }
+
+    @Override
+    public ResponseEntity<?> findByIdIncludeTopics(String id) {
+        MajorDTO majorDTO = majorService.findById(id);
+        return null;
     }
 
     @Override

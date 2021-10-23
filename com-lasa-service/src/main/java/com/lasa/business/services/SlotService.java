@@ -13,6 +13,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  *
@@ -25,7 +26,7 @@ public interface SlotService {
 
     List<SlotDTO> findWithArguments(SlotSearchCriteria searchCriteria);
 
-    Slot findById(Integer id);
+    SlotDTO findById(Integer id);
 
     Boolean verifySlot(Slot slot);
 

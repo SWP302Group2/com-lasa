@@ -53,8 +53,8 @@ public class BookingRequestServiceImpl implements BookingRequestService {
     }
 
     @Override
-    public BookingRequest findByBookingRequestId(Integer id) {
-        return bookingRepository.findById(id).get();
+    public BookingRequestDTO findByBookingRequestId(Integer id) {
+        return new BookingRequestDTO(bookingRepository.findById(id).get());
     }
 
     @Override

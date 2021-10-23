@@ -7,6 +7,7 @@ package com.lasa.business.controllers.implv1;
 
 import com.lasa.business.controllers.LecturerOperations;
 import com.lasa.business.services.LecturerService;
+import com.lasa.data.dto.LecturerDTO;
 import com.lasa.data.entity.Lecturer;
 import com.lasa.data.entity.utils.criteria.LecturerSearchCriteria;
 import com.lasa.data.entity.utils.page.LecturerPage;
@@ -37,19 +38,17 @@ public class LecturerController implements LecturerOperations {
     }
 
     @Override
-    public ResponseEntity<?> findWithArgument(Integer id, LecturerPage lecturerPage, LecturerSearchCriteria searchCriteria) {
-        if(Objects.nonNull(id)) {
-                return ResponseEntity.ok(this.findByLecturerId(id));
-        }else {
+    public ResponseEntity<?> findWithArgument(LecturerPage lecturerPage, LecturerSearchCriteria searchCriteria) {
             if(lecturerPage.isPaging())
                 return ResponseEntity.ok(lecturerService.findAll(lecturerPage, searchCriteria));
             else
                 return ResponseEntity.ok(lecturerService.findAll(searchCriteria));
-        }
     }
 
-    private Lecturer findByLecturerId(Integer id) {
-        return lecturerService.findLecturerById(id);
+    @Override
+    public ResponseEntity<LecturerDTO> findById(Integer id) {
+        return ResponseEntity
+                .ok(new LecturerDTO(lecturerService.findLecturerById(id)));
     }
 
     @Override

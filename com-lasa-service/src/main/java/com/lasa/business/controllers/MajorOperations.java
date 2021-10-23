@@ -22,12 +22,17 @@ import java.util.List;
 @RequestMapping("/default")
 public interface MajorOperations {
 
-    @GetMapping(value = {"", "/topics", "/{id}"})
-    ResponseEntity<?> findWithArgument(@ApiParam(name = "id", type = "String", value = "Get Major by id", required = false)
-                                       @PathVariable(value = "id", required = false) String id,
-                                       MajorPage majorPage,
-                                       MajorSearchCriteria searchCriteria,
-                                       HttpServletRequest request);
+    @GetMapping
+    ResponseEntity<?> findWithArgument(MajorPage majorPage,
+                                       MajorSearchCriteria searchCriteria);
+
+    @GetMapping(value = "/{id}")
+    ResponseEntity<?> findById(@ApiParam(name = "id", type = "String", value = "Get Major by id", required = false)
+                               @PathVariable(value = "id", required = false) String id);
+
+    @GetMapping(value = "/{id}/topics")
+    ResponseEntity<?> findByIdIncludeTopics(@ApiParam(name = "id", type = "String", value = "Get Major by id", required = false)
+                                            @PathVariable(value = "id", required = false) String id);
 
     @PostMapping
     void createMajors(

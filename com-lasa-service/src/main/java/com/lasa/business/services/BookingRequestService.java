@@ -27,7 +27,7 @@ public interface BookingRequestService {
 
     List<BookingRequestDTO> findAll(BookingRequestSearchCriteria searchCriteria);
 
-    BookingRequest findByBookingRequestId(Integer id);
+    BookingRequestDTO findByBookingRequestId(Integer id);
 
     Boolean verifyBookingRequest(Integer studentId, Integer slotId);
 

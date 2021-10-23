@@ -21,13 +21,14 @@ import java.util.List;
 @RequestMapping("/default")
 public interface LecturerOperations {
     
-    @GetMapping(value = {"/{id}", ""})
+    @GetMapping
     ResponseEntity<?> findWithArgument(
-            @ApiParam(name = "id", type = "Integer", value = "Find lecturer by id")
-            @PathVariable(value = "id", required = false) Integer id,
             LecturerPage lecturerPage,
             LecturerSearchCriteria searchCriteria
     );
+
+    @GetMapping(value = "/{id}")
+    ResponseEntity<?> findById(@PathVariable(value = "id") Integer id);
 
     @PostMapping
     Lecturer createLecturer(

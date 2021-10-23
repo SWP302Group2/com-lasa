@@ -25,7 +25,7 @@ public interface QuestionService {
 
     List<QuestionDTO> findAll(QuestionSearchCriteria searchCriteria);
     
-    public Question findById(Integer id);
+    QuestionDTO findById(Integer id);
     
     public List<Question> createQuestions(List<Question> questions);
     

@@ -6,13 +6,17 @@
 package com.lasa.business.controllers;
 
 import com.lasa.data.entity.Slot;
+import com.lasa.data.entity.utils.criteria.BookingRequestSearchCriteria;
 import com.lasa.data.entity.utils.criteria.SlotSearchCriteria;
 import com.lasa.data.entity.utils.page.SlotPage;
 import com.lasa.security.utils.exception.ExceptionUtils;
+import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiParam;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.websocket.server.PathParam;
 import java.util.List;
 
 /**
@@ -23,17 +27,22 @@ import java.util.List;
 public interface SlotOperations {
 
     @GetMapping
-    ResponseEntity<?> findWithArgument(SlotSearchCriteria searchCriteria, SlotPage slotPage) throws ExceptionUtils.ArgumentException;
+    ResponseEntity<?> findWithArguments(SlotSearchCriteria searchCriteria, SlotPage slotPage) throws ExceptionUtils.ArgumentException;
 
     @GetMapping(value = "/{id}")
-    Slot findById(
-            @ApiParam(name = "id", type = "Integer", value = "Find a slot by id", required = true)
-            @PathVariable Integer id);
+    ResponseEntity<?> findById(@ApiParam(name = "id", type = "Integer", value = "Find a slot by id", required = true)
+                               @PathVariable Integer id);
+
+    @GetMapping(value = "/{id}/booking-requests")
+    ResponseEntity<?> findByIdIncludeBookingRequests(@ApiParam(name = "id", type = "Integer", value = "Find a slot by id", required = true)
+                                                     @PathVariable Integer id,
+                                                     @RequestParam(value = "stauts", required = false) Integer status);
+
+
 
     @PostMapping
-    ResponseEntity<Slot> createSlots(
-            @ApiParam(name = "slots", type = "body", value = "Add a new slot")
-            @RequestBody Slot slot) throws ExceptionUtils.ArgumentException;
+    ResponseEntity<Slot> createSlot(@ApiParam(name = "slots", type = "body", value = "Add a new slot")
+                                    @RequestBody Slot slot) throws ExceptionUtils.ArgumentException;
 
     @PutMapping
     List<Slot> updateSlots(

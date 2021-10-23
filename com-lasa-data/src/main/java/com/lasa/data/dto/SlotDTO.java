@@ -25,6 +25,7 @@ public class SlotDTO implements Serializable {
     private Integer lecturerId;
     private LocalDateTime timeStart;
     private Collection<TopicDTO> topics = new ArrayList<>();
+    private Collection<BookingRequestDTO> bookingRequests = new ArrayList<>();
     private LecturerDTO lecturer;
     private LocalDateTime timeEnd;
 
@@ -61,5 +62,9 @@ public class SlotDTO implements Serializable {
 
     public void addTopic(TopicDTO dto) {
         topics.add(dto);
+    }
+
+    public void addBookingRequest(BookingRequestDTO dto) {
+        bookingRequests.add(dto);
     }
 }

@@ -26,12 +26,17 @@ import java.util.List;
 public interface BookingRequestOperations {
 
     @GetMapping
-    ResponseEntity<?> findAll(BookingRequestPage bookingRequestPage, BookingRequestSearchCriteria searchCriteria);
+    ResponseEntity<?> findWithArguments(BookingRequestPage bookingRequestPage,
+                                        BookingRequestSearchCriteria searchCriteria);
 
     @GetMapping(value = "/{id}")
-    BookingRequest findById(
-            @ApiParam(name = "id", type = "Integer", value = "Get booking request by id")
-            @PathVariable("id") Integer id);
+    ResponseEntity<?> findById(@ApiParam(name = "id", type = "Integer", value = "Get booking request by id")
+                               @PathVariable("id") Integer id);
+
+    @GetMapping(value = "/{id}/questions")
+    ResponseEntity<?> findByIdIncludeQuestions(@ApiParam(name = "id", type = "Integer", value = "Get booking request by id")
+                                               @PathVariable("id") Integer id);
+
 
     @PostMapping
     ResponseEntity<?> createBookingRequest(

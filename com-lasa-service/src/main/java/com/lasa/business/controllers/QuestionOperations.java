@@ -22,10 +22,10 @@ import java.util.List;
 public interface QuestionOperations {
     
     @GetMapping
-    ResponseEntity<?> findAll(QuestionPage questionPage, QuestionSearchCriteria searchCriteria);
+    ResponseEntity<?> findWithArguments(QuestionPage questionPage, QuestionSearchCriteria searchCriteria);
     
     @GetMapping(value="/{id}")
-    Question findById(
+    ResponseEntity<?> findById(
             @ApiParam(name = "ids", type = "Integer", value = "Get a question based on id.", required = true)
             @PathVariable Integer id);
     

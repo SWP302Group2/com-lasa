@@ -65,8 +65,8 @@ public class MajorServiceImpl implements MajorService {
     }
 
     @Override
-    public Major findById(String id) {
-        return majorRepository.findById(id).orElse(null);
+    public MajorDTO findById(String id) {
+        return new MajorDTO(majorRepository.findById(id).get());
     }
 
     @Override

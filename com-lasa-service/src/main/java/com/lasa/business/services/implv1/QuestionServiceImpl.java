@@ -18,6 +18,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -55,8 +56,13 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public Question findById(Integer id) {
-        return questionRepository.findById(id).orElse(null);
+    public QuestionDTO findById(Integer id) {
+        Optional<Question> question = questionRepository.findById(id);
+
+        if(question.isPresent())
+            return new QuestionDTO(question.get());
+
+        return null;
     }
 
     @Override

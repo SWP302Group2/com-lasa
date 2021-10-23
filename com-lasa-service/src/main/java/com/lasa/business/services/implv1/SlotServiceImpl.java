@@ -11,16 +11,13 @@ import com.lasa.business.services.SlotTopicDetailService;
 import com.lasa.data.dto.LecturerDTO;
 import com.lasa.data.dto.SlotDTO;
 import com.lasa.data.dto.SlotTopicDetailDTO;
-import com.lasa.data.dto.TopicDTO;
 import com.lasa.data.entity.Slot;
 import com.lasa.data.entity.utils.criteria.LecturerSearchCriteria;
 import com.lasa.data.entity.utils.criteria.SlotSearchCriteria;
 import com.lasa.data.entity.utils.criteria.SlotTopicDetailSearchCriteria;
 import com.lasa.data.entity.utils.page.SlotPage;
 import com.lasa.data.entity.utils.specification.SlotSpecification;
-import com.lasa.data.repo.repository.LecturerRepository;
 import com.lasa.data.repo.repository.SlotRepository;
-import com.lasa.data.repo.repository.SlotTopicDetailRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
@@ -30,6 +27,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 
@@ -177,8 +175,12 @@ public class SlotServiceImpl implements SlotService {
     }
 
     @Override
-    public Slot findById(Integer id) {
-        return slotRepository.findById(id).orElse(null);
+    public SlotDTO findById(Integer id) {
+        Optional<Slot> slot = slotRepository.findById(id);
+        if(slot.isPresent())
+            return new SlotDTO(slot.get());
+        else
+            return null;
     }
 
     @Override

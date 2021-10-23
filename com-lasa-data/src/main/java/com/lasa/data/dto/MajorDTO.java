@@ -20,10 +20,16 @@ public class MajorDTO implements Serializable {
     private String id;
     private String name;
     private String description;
+    private Collection<TopicDTO> topics;
 
     public MajorDTO(Major major) {
         this.id = major.getId();
         this.name = major.getName();
         this.description = major.getDescription();
+    }
+
+
+    public void addTopic(TopicDTO dto) {
+        topics.add(dto);
     }
 }

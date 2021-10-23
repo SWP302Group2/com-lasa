@@ -8,9 +8,13 @@ package com.lasa.business.controllers.implv1;
 import com.lasa.business.controllers.BookingRequestOperations;
 import com.lasa.business.controllers.utils.authorization.IsStudent;
 import com.lasa.business.services.BookingRequestService;
+import com.lasa.business.services.QuestionService;
+import com.lasa.data.dto.BookingRequestDTO;
+import com.lasa.data.dto.QuestionDTO;
 import com.lasa.data.entity.BookingRequest;
 import com.lasa.data.entity.BookingRequest_;
 import com.lasa.data.entity.utils.criteria.BookingRequestSearchCriteria;
+import com.lasa.data.entity.utils.criteria.QuestionSearchCriteria;
 import com.lasa.data.entity.utils.page.BookingRequestPage;
 import com.lasa.security.appuser.MyUserDetails;
 import com.lasa.security.utils.exception.ExceptionUtils;
@@ -27,6 +31,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
@@ -41,16 +46,19 @@ import java.util.Objects;
 public class BookingRequestController implements BookingRequestOperations {
 
     private final BookingRequestService bookingRequestService;
+    private final QuestionService questionService;
     private static final int QUESTIONS_SIZE = 5;
     private static final String QUESTIONS_SIZE_STRING = "FIVE";
 
     @Autowired
-    public BookingRequestController(@Qualifier("BookingRequestServiceImplV1") BookingRequestService service) {
+    public BookingRequestController(@Qualifier("BookingRequestServiceImplV1") BookingRequestService service,
+                                    @Qualifier("QuestionServiceImplV1") QuestionService questionService) {
         this.bookingRequestService = service;
+        this.questionService = questionService;
     }
 
     @Override
-    public ResponseEntity<?> findAll(BookingRequestPage bookingRequestPage, BookingRequestSearchCriteria searchCriteria) {
+    public ResponseEntity<?> findWithArguments(BookingRequestPage bookingRequestPage, BookingRequestSearchCriteria searchCriteria) {
         if(bookingRequestPage.isPaging())
             return ResponseEntity.ok(bookingRequestService.findAll(bookingRequestPage, searchCriteria));
         else
@@ -59,8 +67,22 @@ public class BookingRequestController implements BookingRequestOperations {
     }
 
     @Override
-    public BookingRequest findById(@PathVariable Integer id) {
-        return bookingRequestService.findByBookingRequestId(id);
+    public ResponseEntity<BookingRequestDTO> findById(@PathVariable Integer id) {
+        return ResponseEntity.ok(bookingRequestService.findByBookingRequestId(id));
+    }
+
+    @Override
+    public ResponseEntity<?> findByIdIncludeQuestions(Integer id) {
+        BookingRequestDTO bookingRequestDTO = bookingRequestService.findByBookingRequestId(id);
+        List<Integer> bookingIds = new ArrayList<>();
+        bookingIds.add(bookingRequestDTO.getId());
+        QuestionSearchCriteria searchCriteria = QuestionSearchCriteria.builder()
+                .bookingId(bookingIds)
+                .build();
+        List<QuestionDTO> questionDTOS = questionService.findAll(searchCriteria);
+        questionDTOS.stream()
+                .forEach(t -> bookingRequestDTO.addQuestion(t));
+        return ResponseEntity.ok(bookingRequestDTO);
     }
 
     @Override

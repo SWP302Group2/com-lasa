@@ -28,7 +28,7 @@ public interface MajorService {
 
     List<MajorWithSimpleTopic> findAllWithTopicIds();
     
-    Major findById(String id);
+    MajorDTO findById(String id);
     
     List<Major> createMajors(List<Major> majors);
     

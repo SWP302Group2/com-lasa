@@ -36,7 +36,7 @@ public class TopicController implements TopicOperations {
     }
 
     @Override
-    public ResponseEntity<?> findAll(TopicPage topicPage, TopicSearchCriteria searchCriteria) {
+    public ResponseEntity<?> findWithArguments(TopicPage topicPage, TopicSearchCriteria searchCriteria) {
         if(topicPage.isPaging())
             return ResponseEntity.ok(topicService.findWithArgument(topicPage, searchCriteria));
         else

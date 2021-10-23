@@ -36,7 +36,7 @@ public class StudentController implements StudentOperations {
     }
 
     @Override
-    public ResponseEntity<?> findAll(StudentSearchCriteria searchCriteria, StudentPage studentPage) {
+    public ResponseEntity<?> findWithArguments(StudentSearchCriteria searchCriteria, StudentPage studentPage) {
         if(studentPage.isPaging())
             return ResponseEntity.ok(service.findWithArgument(searchCriteria, studentPage));
         else

@@ -22,7 +22,7 @@ import java.util.List;
 public interface TopicOperations {
 
     @GetMapping
-    ResponseEntity<?> findAll(TopicPage topicPage, TopicSearchCriteria searchCriteria);
+    ResponseEntity<?> findWithArguments(TopicPage topicPage, TopicSearchCriteria searchCriteria);
 
     @GetMapping(value = "/{id}")
     ResponseEntity<?> findById(

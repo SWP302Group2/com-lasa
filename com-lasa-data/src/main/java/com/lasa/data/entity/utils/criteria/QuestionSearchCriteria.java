@@ -14,4 +14,9 @@ import java.util.List;
 public class QuestionSearchCriteria {
     @ApiModelProperty(name = "bookingId", dataType = "Integer", value = "Search question by bookingIds")
     private List<Integer> bookingId;
+
+    @Builder
+    public QuestionSearchCriteria(List<Integer> bookingId) {
+        this.bookingId = bookingId;
+    }
 }

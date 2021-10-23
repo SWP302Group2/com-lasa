@@ -7,6 +7,7 @@ package com.lasa.business.controllers.implv1;
 
 import com.lasa.business.controllers.QuestionOperations;
 import com.lasa.business.services.QuestionService;
+import com.lasa.data.dto.QuestionDTO;
 import com.lasa.data.entity.Question;
 import com.lasa.data.entity.utils.criteria.QuestionSearchCriteria;
 import com.lasa.data.entity.utils.page.QuestionPage;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  *
@@ -38,7 +40,7 @@ public class QuestionController implements QuestionOperations {
     }
     
     @Override
-    public ResponseEntity<?> findAll(QuestionPage questionPage, QuestionSearchCriteria searchCriteria) {
+    public ResponseEntity<?> findWithArguments(QuestionPage questionPage, QuestionSearchCriteria searchCriteria) {
         if(questionPage.isPaging())
             return ResponseEntity.ok(questionService.findAll(questionPage, searchCriteria));
         else
@@ -46,8 +48,12 @@ public class QuestionController implements QuestionOperations {
     }
     
     @Override
-    public Question findById(@PathVariable Integer id) {
-        return questionService.findById(id);
+    public ResponseEntity<QuestionDTO> findById(@PathVariable Integer id) {
+        QuestionDTO question = questionService.findById(id);
+        if(Objects.isNull(question))
+            return ResponseEntity.ok(null);
+
+        return ResponseEntity.ok(question);
     }
     
     @Override

@@ -22,7 +22,7 @@ import java.util.List;
 public interface StudentOperations {
 
     @GetMapping
-    ResponseEntity<?> findAll(StudentSearchCriteria searchCriteria, StudentPage studentPage);
+    ResponseEntity<?> findWithArguments(StudentSearchCriteria searchCriteria, StudentPage studentPage);
 
     @GetMapping(value = "/{id}")
     public Student findByStudentId(
