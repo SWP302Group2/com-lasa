@@ -16,7 +16,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.swing.text.html.Option;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -54,7 +56,11 @@ public class BookingRequestServiceImpl implements BookingRequestService {
 
     @Override
     public BookingRequestDTO findByBookingRequestId(Integer id) {
-        return new BookingRequestDTO(bookingRepository.findById(id).get());
+        Optional<BookingRequest> bookingRequest = bookingRepository.findById(id);
+        if(bookingRequest.isPresent())
+            return new BookingRequestDTO(bookingRequest.get());
+
+        return null;
     }
 
     @Override

@@ -74,6 +74,10 @@ public class BookingRequestController implements BookingRequestOperations {
     @Override
     public ResponseEntity<?> findByIdIncludeQuestions(Integer id) {
         BookingRequestDTO bookingRequestDTO = bookingRequestService.findByBookingRequestId(id);
+
+        if(Objects.isNull(bookingRequestDTO))
+            return ResponseEntity.ok(null);
+
         List<Integer> bookingIds = new ArrayList<>();
         bookingIds.add(bookingRequestDTO.getId());
         QuestionSearchCriteria searchCriteria = QuestionSearchCriteria.builder()

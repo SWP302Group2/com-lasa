@@ -58,7 +58,11 @@ public class MajorController implements MajorOperations {
     @Override
     public ResponseEntity<?> findByIdIncludeTopics(String id) {
         MajorDTO majorDTO = majorService.findById(id);
-        return null;
+
+        if(Objects.isNull(majorDTO))
+            return ResponseEntity.ok(null);
+
+        return ResponseEntity.ok(majorDTO);
     }
 
     @Override

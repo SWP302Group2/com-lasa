@@ -29,7 +29,7 @@ public interface LecturerTopicDetailOperations {
             @RequestBody List<LecturerTopicDetail> lecturerTopicDetails);
     
     @DeleteMapping
-    public void deleteLecturerTopicDetails(
+    void deleteLecturerTopicDetails(
             @ApiParam(name = "ids", type = "body", value = "Remove the lecturer's topic by id", required = true)
             @RequestBody List<LecturerTopicDetailKey> ids);
 }
