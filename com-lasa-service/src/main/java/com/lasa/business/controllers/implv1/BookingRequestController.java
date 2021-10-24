@@ -123,8 +123,9 @@ public class BookingRequestController implements BookingRequestOperations {
     }
 
     @Override
-    public void deleteBookingRequests(@RequestBody List<Integer> ids) {
+    public ResponseEntity<?> deleteBookingRequests(@RequestBody List<Integer> ids) {
         bookingRequestService.deleteBookingRequests(ids);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
 

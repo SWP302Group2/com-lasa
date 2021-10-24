@@ -6,8 +6,10 @@
 package com.lasa.business.controllers;
 
 import com.lasa.data.model.entity.Lecturer;
+import com.lasa.data.model.request.LecturerRequestModel;
 import com.lasa.data.model.utils.criteria.LecturerSearchCriteria;
 import com.lasa.data.model.utils.page.LecturerPage;
+import com.lasa.data.model.view.LecturerViewModel;
 import io.swagger.annotations.ApiParam;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -31,14 +33,13 @@ public interface LecturerOperations {
     ResponseEntity<?> findById(@PathVariable(value = "id") Integer id);
 
     @PostMapping
-    Lecturer createLecturer(
+    ResponseEntity<?> createLecturer(
             @ApiParam(name = "lecturer", type = "body", value = "Create a new lecturer", required = true)
-            @RequestBody Lecturer lecturer);
+            @RequestBody LecturerRequestModel lecturer);
     
     @PutMapping
-    Lecturer updateLecturer(
-            @ApiParam(name = "lecturer", type = "body", value = "Update a lecturer", required = true)
-            @RequestBody Lecturer lecturer);
+    ResponseEntity<?> updateLecturer(@ApiParam(name = "lecturer", type = "body", value = "Update a lecturer", required = true)
+                                     @RequestBody LecturerRequestModel model);
     
     @DeleteMapping
     void deleteLecturers(

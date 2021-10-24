@@ -5,6 +5,7 @@
  */
 package com.lasa.business.services;
 
+import com.lasa.data.model.request.LecturerRequestModel;
 import com.lasa.data.model.view.LecturerViewModel;
 import com.lasa.data.model.entity.Lecturer;
 import com.lasa.data.model.utils.criteria.LecturerSearchCriteria;
@@ -25,10 +26,10 @@ public interface LecturerService {
 
     List<LecturerViewModel> findAll(LecturerSearchCriteria searchCriteria);
 
-    Lecturer createLecturer(Lecturer lecturer);
+    LecturerViewModel createLecturer(LecturerRequestModel model);
 
-    Lecturer findLecturerById(Integer id);
+    LecturerViewModel findLecturerById(Integer id);
 
-    Lecturer updateLecturer(Lecturer lecturer);
+    LecturerViewModel updateLecturer(LecturerRequestModel lecturer);
 
 }

@@ -62,7 +62,8 @@ public class StudentController implements StudentOperations {
 
     @Override
     public void deleteStudents(List<Integer> ids) {
-        service.deleteStudents(ids);
+        /*service.deleteStudents(ids);*/
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
 }

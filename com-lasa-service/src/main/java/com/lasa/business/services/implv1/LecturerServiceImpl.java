@@ -6,6 +6,7 @@
 package com.lasa.business.services.implv1;
 
 import com.lasa.business.services.LecturerService;
+import com.lasa.data.model.request.LecturerRequestModel;
 import com.lasa.data.model.view.LecturerViewModel;
 import com.lasa.data.model.entity.Lecturer;
 import com.lasa.data.model.utils.criteria.LecturerSearchCriteria;
@@ -22,6 +23,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -61,39 +63,44 @@ public class LecturerServiceImpl implements LecturerService {
     }
 
     @Override
-    public Lecturer createLecturer(Lecturer lecturer) {
-        return lecturerRepository.save(lecturer);
+    public LecturerViewModel createLecturer(LecturerRequestModel model) {
+        Lecturer lecturer = model.toEntity();
+        return new LecturerViewModel(lecturerRepository.save(lecturer));
     }
 
     @Override
-    public Lecturer findLecturerById(Integer id) {
-        return lecturerRepository.findById(id).orElse(null);
+    public LecturerViewModel findLecturerById(Integer id) {
+        Optional<Lecturer> lecturer = lecturerRepository.findById(id);
+        if(lecturer.isPresent())
+            return new LecturerViewModel(lecturer.get());
+        return null;
+
     }
 
     @Override
-    public Lecturer updateLecturer(Lecturer updateLecturer) {
+    public LecturerViewModel updateLecturer(LecturerRequestModel model) {
         
-        Lecturer lecturer = lecturerRepository.findById(updateLecturer.getId()).get();
+        Lecturer lecturer = lecturerRepository.findById(model.getId()).get();
         
-        if(updateLecturer.getName() != null)
-            lecturer.setName(updateLecturer.getName());
+        if(model.getName() != null)
+            lecturer.setName(model.getName());
         
-        if(updateLecturer.getPhone() != null)
-            lecturer.setPhone(updateLecturer.getPhone());
+        if(model.getPhone() != null)
+            lecturer.setPhone(model.getPhone());
         
-        if(updateLecturer.getBirthday() != null)
-            lecturer.setBirthday(updateLecturer.getBirthday());
+        if(model.getBirthday() != null)
+            lecturer.setBirthday(model.getBirthday());
         
-        if(updateLecturer.getGender() != null)
-            lecturer.setGender(updateLecturer.getGender());
+        if(model.getGender() != null)
+            lecturer.setGender(model.getGender());
         
-        if(updateLecturer.getAddress() != null)
-            lecturer.setAddress(updateLecturer.getAddress());
+        if(model.getAddress() != null)
+            lecturer.setAddress(model.getAddress());
         
-        if(updateLecturer.getMeetingUrl() != null)
-            lecturer.setMeetingUrl(updateLecturer.getMeetingUrl());
+        if(model.getMeetingUrl() != null)
+            lecturer.setMeetingUrl(model.getMeetingUrl());
         
-        return lecturerRepository.save(lecturer);
+        return new LecturerViewModel(lecturerRepository.save(lecturer));
 
     }
 

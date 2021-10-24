@@ -7,6 +7,7 @@ package com.lasa.business.controllers.implv1;
 
 import com.lasa.business.controllers.LecturerOperations;
 import com.lasa.business.services.LecturerService;
+import com.lasa.data.model.request.LecturerRequestModel;
 import com.lasa.data.model.view.LecturerViewModel;
 import com.lasa.data.model.entity.Lecturer;
 import com.lasa.data.model.utils.criteria.LecturerSearchCriteria;
@@ -14,6 +15,7 @@ import com.lasa.data.model.utils.page.LecturerPage;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -47,17 +49,18 @@ public class LecturerController implements LecturerOperations {
     @Override
     public ResponseEntity<LecturerViewModel> findById(Integer id) {
         return ResponseEntity
-                .ok(new LecturerViewModel(lecturerService.findLecturerById(id)));
+                .ok(lecturerService.findLecturerById(id));
     }
 
     @Override
-    public Lecturer createLecturer(Lecturer lecturer) {
-        return lecturerService.createLecturer(lecturer);
+    public ResponseEntity<LecturerViewModel> createLecturer(LecturerRequestModel lecturer) {
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(lecturerService.createLecturer(lecturer));
     }
 
     @Override
-    public Lecturer updateLecturer(Lecturer lecturer) {
-        return lecturerService.updateLecturer(lecturer);
+    public ResponseEntity<LecturerViewModel>  updateLecturer(LecturerRequestModel lecturer) {
+        return ResponseEntity.ok(lecturerService.updateLecturer(lecturer));
     }
 
     @Override

@@ -69,7 +69,7 @@ public class QuestionController implements QuestionOperations {
     }
     
     @Override
-    public ResponseEntity deleteQuestions(@RequestBody List<Integer> ids) {
+    public ResponseEntity<?> deleteQuestions(@RequestBody List<Integer> ids) {
         questionService.deleteQuestion(ids);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }

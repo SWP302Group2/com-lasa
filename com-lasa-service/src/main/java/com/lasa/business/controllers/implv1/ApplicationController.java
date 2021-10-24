@@ -62,7 +62,7 @@ public class ApplicationController implements ApplicationOperations {
                     .build());
         }else if(isLecturer) {
             return ResponseEntity.ok(InformationResponse.builder()
-                    .information(new LecturerViewModel(lecturerService.findLecturerById(id)))
+                    .information(lecturerService.findLecturerById(id))
                     .role("ROLE_" + LECTURER.name())
                     .build());
         }else {

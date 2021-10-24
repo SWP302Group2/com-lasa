@@ -44,6 +44,6 @@ public interface BookingRequestOperations {
                                            @RequestBody BookingRequestRequestModel BookingRequest);
     
     @DeleteMapping
-    void deleteBookingRequests(@ApiParam(name = "ids", type = "body", value = "By id, you may remove booking request")
+    ResponseEntity<?> deleteBookingRequests(@ApiParam(name = "ids", type = "body", value = "By id, you may remove booking request")
                                @RequestBody List<Integer> ids);
 }

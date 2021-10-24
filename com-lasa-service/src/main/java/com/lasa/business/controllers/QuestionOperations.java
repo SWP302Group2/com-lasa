@@ -40,7 +40,7 @@ public interface QuestionOperations {
             @RequestBody List<QuestionRequestModel> questions);
     
     @DeleteMapping
-    ResponseEntity deleteQuestions(
+    ResponseEntity<?> deleteQuestions(
             @ApiParam(name = "ids", type = "body", value = "Delete a question by id", required = true)
             @RequestBody List<Integer> ids);
 }
