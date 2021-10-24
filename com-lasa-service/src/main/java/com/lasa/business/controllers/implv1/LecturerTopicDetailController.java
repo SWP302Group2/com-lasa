@@ -7,8 +7,8 @@ package com.lasa.business.controllers.implv1;
 
 import com.lasa.business.controllers.LecturerTopicDetailOperations;
 import com.lasa.business.services.LecturerTopicDetailService;
-import com.lasa.data.entity.LecturerTopicDetail;
-import com.lasa.data.entity.key.LecturerTopicDetailKey;
+import com.lasa.data.model.entity.LecturerTopicDetail;
+import com.lasa.data.model.entity.key.LecturerTopicDetailKey;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

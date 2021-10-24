@@ -5,10 +5,12 @@
  */
 package com.lasa.business.services;
 
-import com.lasa.data.entity.SlotTopicDetail;
-import com.lasa.data.entity.key.SlotTopicDetailKey;
-import com.lasa.data.entity.utils.criteria.SlotTopicDetailSearchCriteria;
-import com.lasa.data.entity.utils.page.SlotTopicDetailPage;
+import com.lasa.data.model.entity.SlotTopicDetail;
+import com.lasa.data.model.entity.key.SlotTopicDetailKey;
+import com.lasa.data.model.request.SlotTopicDetailRequestModel;
+import com.lasa.data.model.utils.criteria.SlotTopicDetailSearchCriteria;
+import com.lasa.data.model.utils.page.SlotTopicDetailPage;
+import com.lasa.data.model.view.SlotTopicDetailViewModel;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
@@ -25,11 +27,11 @@ public interface SlotTopicDetailService {
 
     List<?> findAllWithArgument(SlotTopicDetailSearchCriteria searchCriteria);
     
-    SlotTopicDetail findById(SlotTopicDetailKey id);
+    SlotTopicDetailViewModel findById(SlotTopicDetailKey id);
     
-    List<SlotTopicDetail> createSlotTopicDetails(List<SlotTopicDetail> details);
+    List<SlotTopicDetailViewModel> createSlotTopicDetails(List<SlotTopicDetailRequestModel> details);
     
-    List<SlotTopicDetail> updateSlotTopicDetails(List<SlotTopicDetail> details);
+    List<SlotTopicDetailViewModel> updateSlotTopicDetails(List<SlotTopicDetailRequestModel> details);
     
     void deleteSlotTopicDetails(List<SlotTopicDetailKey> ids);
     

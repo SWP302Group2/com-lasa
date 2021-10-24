@@ -6,10 +6,10 @@
 package com.lasa.business.services.implv1;
 
 import com.lasa.business.services.AdminService;
-import com.lasa.data.entity.Admin;
-import com.lasa.data.entity.Lecturer;
-import com.lasa.data.entity.Student;
-import com.lasa.data.entity.utils.projection.SimpleAdmin;
+import com.lasa.data.model.entity.Admin;
+import com.lasa.data.model.entity.Lecturer;
+import com.lasa.data.model.entity.Student;
+import com.lasa.data.model.utils.projection.SimpleAdmin;
 import com.lasa.data.repo.repository.AdminRepository;
 import com.lasa.data.repo.repository.LecturerRepository;
 import com.lasa.data.repo.repository.StudentRepository;

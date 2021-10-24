@@ -5,10 +5,11 @@
  */
 package com.lasa.business.services;
 
-import com.lasa.data.dto.TopicDTO;
-import com.lasa.data.entity.Topic;
-import com.lasa.data.entity.utils.criteria.TopicSearchCriteria;
-import com.lasa.data.entity.utils.page.TopicPage;
+import com.lasa.data.model.request.TopicRequestModel;
+import com.lasa.data.model.view.TopicViewModel;
+import com.lasa.data.model.entity.Topic;
+import com.lasa.data.model.utils.criteria.TopicSearchCriteria;
+import com.lasa.data.model.utils.page.TopicPage;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
@@ -21,15 +22,15 @@ import java.util.List;
 @Service
 public interface TopicService {
     
-    Page<TopicDTO> findWithArgument(TopicPage topicPage, TopicSearchCriteria searchCriteria);
+    Page<TopicViewModel> findWithArgument(TopicPage topicPage, TopicSearchCriteria searchCriteria);
 
-    List<TopicDTO> findWithArgument(TopicSearchCriteria searchCriteria);
+    List<TopicViewModel> findWithArgument(TopicSearchCriteria searchCriteria);
     
-    TopicDTO findById(Integer id);
+    TopicViewModel findById(Integer id);
     
-    List<Topic> createTopics(List<Topic> topics);
+    List<TopicViewModel> createTopics(List<TopicRequestModel> topics);
     
-    List<Topic> updateTopics(List<Topic> topics);
+    List<TopicViewModel> updateTopics(List<TopicRequestModel> topics);
     
     void deleteTopics(List<Integer> ids);
     

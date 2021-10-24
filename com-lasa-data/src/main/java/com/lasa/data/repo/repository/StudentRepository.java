@@ -5,10 +5,9 @@
  */
 package com.lasa.data.repo.repository;
 
-import com.lasa.data.entity.Student;
+import com.lasa.data.model.entity.Student;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
-import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

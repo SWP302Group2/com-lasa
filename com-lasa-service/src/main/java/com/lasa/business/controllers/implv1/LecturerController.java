@@ -7,10 +7,10 @@ package com.lasa.business.controllers.implv1;
 
 import com.lasa.business.controllers.LecturerOperations;
 import com.lasa.business.services.LecturerService;
-import com.lasa.data.dto.LecturerDTO;
-import com.lasa.data.entity.Lecturer;
-import com.lasa.data.entity.utils.criteria.LecturerSearchCriteria;
-import com.lasa.data.entity.utils.page.LecturerPage;
+import com.lasa.data.model.view.LecturerViewModel;
+import com.lasa.data.model.entity.Lecturer;
+import com.lasa.data.model.utils.criteria.LecturerSearchCriteria;
+import com.lasa.data.model.utils.page.LecturerPage;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.Objects;
 
 /**
  *
@@ -46,9 +45,9 @@ public class LecturerController implements LecturerOperations {
     }
 
     @Override
-    public ResponseEntity<LecturerDTO> findById(Integer id) {
+    public ResponseEntity<LecturerViewModel> findById(Integer id) {
         return ResponseEntity
-                .ok(new LecturerDTO(lecturerService.findLecturerById(id)));
+                .ok(new LecturerViewModel(lecturerService.findLecturerById(id)));
     }
 
     @Override

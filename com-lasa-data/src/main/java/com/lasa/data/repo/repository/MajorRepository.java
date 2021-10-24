@@ -5,7 +5,7 @@
  */
 package com.lasa.data.repo.repository;
 
-import com.lasa.data.entity.Major;
+import com.lasa.data.model.entity.Major;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;

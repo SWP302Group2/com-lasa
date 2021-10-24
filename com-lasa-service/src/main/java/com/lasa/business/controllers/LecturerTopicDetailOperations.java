@@ -5,8 +5,8 @@
  */
 package com.lasa.business.controllers;
 
-import com.lasa.data.entity.LecturerTopicDetail;
-import com.lasa.data.entity.key.LecturerTopicDetailKey;
+import com.lasa.data.model.entity.LecturerTopicDetail;
+import com.lasa.data.model.entity.key.LecturerTopicDetailKey;
 import io.swagger.annotations.ApiParam;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

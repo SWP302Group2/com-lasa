@@ -5,11 +5,10 @@
  */
 package com.lasa.business.services;
 
-import com.lasa.data.dto.FavoriteLecturerDTO;
-import com.lasa.data.dto.LecturerDTO;
-import com.lasa.data.entity.FavoriteLecturer;
-import com.lasa.data.entity.Lecturer;
-import com.lasa.data.entity.key.FavoriteLecturerKey;
+import com.lasa.data.model.view.FavoriteLecturerViewModel;
+import com.lasa.data.model.view.LecturerViewModel;
+import com.lasa.data.model.entity.FavoriteLecturer;
+import com.lasa.data.model.entity.key.FavoriteLecturerKey;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,9 +20,9 @@ import java.util.List;
 @Service
 public interface FavoriteLecturerService {
     
-    List<FavoriteLecturerDTO> findAllLecturerAndStudentInFavoriteLecturer();
+    List<FavoriteLecturerViewModel> findAllLecturerAndStudentInFavoriteLecturer();
 
-    List<LecturerDTO> findTopFavoriteLecturer(Integer topNumber);
+    List<LecturerViewModel> findTopFavoriteLecturer(Integer topNumber);
     
     List<FavoriteLecturer> addFavoriteLecturers(List<FavoriteLecturer> favoriteLecturers);
 

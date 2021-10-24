@@ -5,14 +5,13 @@
  */
 package com.lasa.business.controllers;
 
-import com.lasa.data.entity.Major;
-import com.lasa.data.entity.utils.criteria.MajorSearchCriteria;
-import com.lasa.data.entity.utils.page.MajorPage;
+import com.lasa.data.model.entity.Major;
+import com.lasa.data.model.utils.criteria.MajorSearchCriteria;
+import com.lasa.data.model.utils.page.MajorPage;
 import io.swagger.annotations.ApiParam;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**

@@ -1,7 +1,6 @@
 package com.lasa.data.repo.customrepository.impl;
 
-import com.lasa.data.entity.FavoriteLecturer;
-import com.lasa.data.entity.Lecturer;
+import com.lasa.data.model.entity.Lecturer;
 import com.lasa.data.repo.customrepository.FavoriteLecturerCustomRepository;
 import org.springframework.stereotype.Repository;
 

@@ -5,9 +5,9 @@
  */
 package com.lasa.business.controllers;
 
-import com.lasa.data.entity.Lecturer;
-import com.lasa.data.entity.utils.criteria.LecturerSearchCriteria;
-import com.lasa.data.entity.utils.page.LecturerPage;
+import com.lasa.data.model.entity.Lecturer;
+import com.lasa.data.model.utils.criteria.LecturerSearchCriteria;
+import com.lasa.data.model.utils.page.LecturerPage;
 import io.swagger.annotations.ApiParam;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

@@ -6,9 +6,11 @@
 package com.lasa.business.services.implv1;
 
 import com.lasa.business.services.LecturerTopicDetailService;
-import com.lasa.data.dto.LecturerTopicDetailDTO;
-import com.lasa.data.entity.LecturerTopicDetail;
-import com.lasa.data.entity.key.LecturerTopicDetailKey;
+import com.lasa.data.model.entity.Topic;
+import com.lasa.data.model.view.LecturerTopicDetailViewModel;
+import com.lasa.data.model.entity.LecturerTopicDetail;
+import com.lasa.data.model.entity.key.LecturerTopicDetailKey;
+import com.lasa.data.model.view.TopicViewModel;
 import com.lasa.data.repo.repository.LecturerTopicDetailRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -33,11 +35,11 @@ public class LecturerTopicDetailServiceImpl implements LecturerTopicDetailServic
     }
 
     @Override
-    public List<LecturerTopicDetailDTO> findAllLecturerAndTopicInLecturerTopicDetail() {
+    public List<LecturerTopicDetailViewModel> findAllLecturerAndTopicInLecturerTopicDetail() {
         return lecturerTopicDetailRepository.
                 findAllLecturerAndTopicInLecturerTopicDetail()
                 .stream()
-                .map(t -> new LecturerTopicDetailDTO(t))
+                .map(t -> new LecturerTopicDetailViewModel(t))
                 .collect(Collectors.toList());
     }
 

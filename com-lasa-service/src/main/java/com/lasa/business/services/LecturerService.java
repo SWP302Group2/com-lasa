@@ -5,10 +5,10 @@
  */
 package com.lasa.business.services;
 
-import com.lasa.data.dto.LecturerDTO;
-import com.lasa.data.entity.Lecturer;
-import com.lasa.data.entity.utils.criteria.LecturerSearchCriteria;
-import com.lasa.data.entity.utils.page.LecturerPage;
+import com.lasa.data.model.view.LecturerViewModel;
+import com.lasa.data.model.entity.Lecturer;
+import com.lasa.data.model.utils.criteria.LecturerSearchCriteria;
+import com.lasa.data.model.utils.page.LecturerPage;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
@@ -21,9 +21,9 @@ import java.util.List;
 @Service
 public interface LecturerService {
 
-    Page<LecturerDTO> findAll(LecturerPage lecturerPage, LecturerSearchCriteria searchCriteria);
+    Page<LecturerViewModel> findAll(LecturerPage lecturerPage, LecturerSearchCriteria searchCriteria);
 
-    List<LecturerDTO> findAll(LecturerSearchCriteria searchCriteria);
+    List<LecturerViewModel> findAll(LecturerSearchCriteria searchCriteria);
 
     Lecturer createLecturer(Lecturer lecturer);
 

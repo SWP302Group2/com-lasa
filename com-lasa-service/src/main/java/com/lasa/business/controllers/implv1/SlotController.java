@@ -11,12 +11,18 @@ import com.lasa.business.services.BookingRequestService;
 import com.lasa.business.services.LecturerTopicDetailService;
 import com.lasa.business.services.SlotService;
 import com.lasa.business.services.SlotTopicDetailService;
-import com.lasa.data.dto.BookingRequestDTO;
-import com.lasa.data.dto.SlotDTO;
-import com.lasa.data.entity.*;
-import com.lasa.data.entity.utils.criteria.BookingRequestSearchCriteria;
-import com.lasa.data.entity.utils.criteria.SlotSearchCriteria;
-import com.lasa.data.entity.utils.page.SlotPage;
+import com.lasa.data.model.request.SlotRequestModel;
+import com.lasa.data.model.request.SlotTopicDetailRequestModel;
+import com.lasa.data.model.view.BookingRequestViewModel;
+import com.lasa.data.model.view.SlotTopicDetailViewModel;
+import com.lasa.data.model.view.SlotViewModel;
+import com.lasa.data.model.entity.Slot;
+import com.lasa.data.model.entity.SlotTopicDetail;
+import com.lasa.data.model.entity.Topic;
+import com.lasa.data.model.utils.criteria.BookingRequestSearchCriteria;
+import com.lasa.data.model.utils.criteria.SlotSearchCriteria;
+import com.lasa.data.model.utils.page.SlotPage;
+import com.lasa.data.model.view.TopicViewModel;
 import com.lasa.security.appuser.MyUserDetails;
 import com.lasa.security.utils.exception.ExceptionUtils;
 import io.swagger.annotations.Api;
@@ -71,13 +77,13 @@ public class SlotController implements SlotOperations {
 
     @Override
     @IsLecturer
-    public ResponseEntity<SlotDTO> findById(Integer id) {
+    public ResponseEntity<SlotViewModel> findById(Integer id) {
         return ResponseEntity.ok(slotService.findById(id));
     }
 
     @Override
     public ResponseEntity<?> findByIdIncludeBookingRequests(Integer id, Integer status) {
-        SlotDTO slotDTO = slotService.findById(id);
+        SlotViewModel slotDTO = slotService.findById(id);
 
         if(Objects.isNull(slotDTO))
             return ResponseEntity.ok(null);
@@ -90,44 +96,41 @@ public class SlotController implements SlotOperations {
         if(Objects.nonNull(status))
             searchCriteria.setStatus(status);
 
-        List<BookingRequestDTO> bookingRequestDTOS = bookingRequestService.findAll(searchCriteria);
+        List<BookingRequestViewModel> bookingRequestDTOS = bookingRequestService.findAll(searchCriteria);
         bookingRequestDTOS.stream()
                 .forEach(t -> slotDTO.addBookingRequest(t));
+
         return ResponseEntity.ok(slotDTO);
     }
 
     @Override
     @Transactional
     @IsLecturer
-    public ResponseEntity<Slot> createSlot(Slot slot) throws ExceptionUtils.ArgumentException {
-        List<Integer> lecturerIds;
+    public ResponseEntity<SlotViewModel> createSlot(SlotRequestModel slotRequestModel) throws ExceptionUtils.ArgumentException {
+        List<Integer> topicIds;
         MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        slot.setLecturerId(userDetails.getId());
+        slotRequestModel.setLecturerId(userDetails.getId());
 
-        if(slot.getTimeStart().isAfter(slot.getTimeEnd()))
+        if(slotRequestModel.getTimeStart().isAfter(slotRequestModel.getTimeEnd()))
             throw new ExceptionUtils.ArgumentException("TIME_START_AFTER_TIME_END");
-        else if(slotService.verifySlot(slot).equals(false))
+        else if(slotService.verifySlot(slotRequestModel).equals(false))
             throw new ExceptionUtils.ArgumentException("SLOT_DUPLICATED");
-        else if(Objects.isNull(slot.getTopics()))
-            lecturerIds = lecturerTopicDetailService.findListTopicIdByLecturerId(slot.getLecturerId());
+        else if(Objects.isNull(slotRequestModel.getTopics()))
+            topicIds = lecturerTopicDetailService.findListTopicIdByLecturerId(slotRequestModel.getLecturerId());
         else
-            lecturerIds = slot.getTopics().stream()
-                    .map(t -> t.getTopic().getId())
-                    .collect(Collectors.toList());
+            topicIds = slotRequestModel.getTopics();
 
-        slotService.createSlot(slot);
-        List<SlotTopicDetail> slotTopicDetails = lecturerIds.stream()
-                .map(
-                        t -> SlotTopicDetail.builder()
-                                    .slot(slot)
-                                    .topic(Topic.builder().id(t).build())
-                                    .build()
+        SlotViewModel viewModel = slotService.createSlot(slotRequestModel);
+        List<SlotTopicDetailRequestModel> slotTopicDetails = topicIds.stream()
+                .map(t -> SlotTopicDetailRequestModel.builder()
+                        .slotId(viewModel.getId())
+                        .topicId(t)
+                        .build()
                 ).collect(Collectors.toList());
-
         slotTopicDetailService.createSlotTopicDetails(slotTopicDetails);
 
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(slot);
+                .body(viewModel);
     }
 
     @Override

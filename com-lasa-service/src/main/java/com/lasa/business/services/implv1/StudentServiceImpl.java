@@ -6,11 +6,12 @@
 package com.lasa.business.services.implv1;
 
 import com.lasa.business.services.StudentService;
-import com.lasa.data.dto.StudentDTO;
-import com.lasa.data.entity.Student;
-import com.lasa.data.entity.utils.criteria.StudentSearchCriteria;
-import com.lasa.data.entity.utils.page.StudentPage;
-import com.lasa.data.entity.utils.specification.StudentSpecification;
+import com.lasa.data.model.request.StudentRequestModel;
+import com.lasa.data.model.view.StudentViewModel;
+import com.lasa.data.model.entity.Student;
+import com.lasa.data.model.utils.criteria.StudentSearchCriteria;
+import com.lasa.data.model.utils.page.StudentPage;
+import com.lasa.data.model.utils.specification.StudentSpecification;
 import com.lasa.data.repo.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -22,6 +23,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -40,35 +42,38 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public Page<StudentDTO> findWithArgument(StudentSearchCriteria searchCriteria, StudentPage studentPage) {
+    public Page<StudentViewModel> findWithArgument(StudentSearchCriteria searchCriteria, StudentPage studentPage) {
         Pageable pageable = PageRequest.of(studentPage.getPage(), studentPage.getSize(), Sort.by(studentPage.getOrderBy(), studentPage.getSortBy()));
         return studentRepository
                 .findAll(StudentSpecification.searchSpecification(searchCriteria), pageable)
-                .map(t -> new StudentDTO(t));
+                .map(t -> new StudentViewModel(t));
     }
 
     @Override
-    public List<StudentDTO> findWithArgument(StudentSearchCriteria searchCriteria) {
+    public List<StudentViewModel> findWithArgument(StudentSearchCriteria searchCriteria) {
         return studentRepository
                 .findAll(StudentSpecification.searchSpecification(searchCriteria))
                 .stream()
-                .map(t -> new StudentDTO(t))
+                .map(t -> new StudentViewModel(t))
                 .collect(Collectors.toList());
     }
 
     @Override
-    public Student findByStudentId(Integer id) {
-        return studentRepository.findById(id).orElse(null);
+    public StudentViewModel findByStudentId(Integer id) {
+        Optional<Student> student = studentRepository.findById(id);
+        if(student.isPresent())
+            return new StudentViewModel(student.get());
+        return null;
     }
 
     @Override
-    public Student createStudent(Student student) {
+    public StudentViewModel createStudent(StudentRequestModel student) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     @Transactional
-    public Student updateStudent(Student updateStudent) {
+    public StudentViewModel updateStudent(StudentRequestModel updateStudent) {
         
         Student student = studentRepository.findById(updateStudent.getId()).get();
         
@@ -93,7 +98,7 @@ public class StudentServiceImpl implements StudentService {
         if(updateStudent.getAddress() != null)
             student.setAddress(updateStudent.getAddress());
         
-        return studentRepository.save(student);
+        return new StudentViewModel(studentRepository.save(student));
     }
 
     @Override

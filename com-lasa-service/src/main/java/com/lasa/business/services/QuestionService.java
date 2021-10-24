@@ -5,10 +5,10 @@
  */
 package com.lasa.business.services;
 
-import com.lasa.data.dto.QuestionDTO;
-import com.lasa.data.entity.Question;
-import com.lasa.data.entity.utils.criteria.QuestionSearchCriteria;
-import com.lasa.data.entity.utils.page.QuestionPage;
+import com.lasa.data.model.view.QuestionViewModel;
+import com.lasa.data.model.entity.Question;
+import com.lasa.data.model.utils.criteria.QuestionSearchCriteria;
+import com.lasa.data.model.utils.page.QuestionPage;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
@@ -21,11 +21,11 @@ import java.util.List;
 @Service
 public interface QuestionService {
     
-    Page<QuestionDTO> findAll(QuestionPage questionPage, QuestionSearchCriteria searchCriteria);
+    Page<QuestionViewModel> findAll(QuestionPage questionPage, QuestionSearchCriteria searchCriteria);
 
-    List<QuestionDTO> findAll(QuestionSearchCriteria searchCriteria);
+    List<QuestionViewModel> findAll(QuestionSearchCriteria searchCriteria);
     
-    QuestionDTO findById(Integer id);
+    QuestionViewModel findById(Integer id);
     
     public List<Question> createQuestions(List<Question> questions);
     

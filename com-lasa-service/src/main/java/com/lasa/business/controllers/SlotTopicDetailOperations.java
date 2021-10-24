@@ -5,10 +5,11 @@
  */
 package com.lasa.business.controllers;
 
-import com.lasa.data.entity.SlotTopicDetail;
-import com.lasa.data.entity.key.SlotTopicDetailKey;
-import com.lasa.data.entity.utils.criteria.SlotTopicDetailSearchCriteria;
-import com.lasa.data.entity.utils.page.SlotTopicDetailPage;
+import com.lasa.data.model.entity.SlotTopicDetail;
+import com.lasa.data.model.entity.key.SlotTopicDetailKey;
+import com.lasa.data.model.request.SlotTopicDetailRequestModel;
+import com.lasa.data.model.utils.criteria.SlotTopicDetailSearchCriteria;
+import com.lasa.data.model.utils.page.SlotTopicDetailPage;
 import io.swagger.annotations.ApiParam;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,19 +27,18 @@ public interface SlotTopicDetailOperations {
     ResponseEntity<?> findWithArguments(SlotTopicDetailPage slotTopicDetailPage, SlotTopicDetailSearchCriteria searchCriteria);
 
     @GetMapping(value = "/{id}")
-    SlotTopicDetail findById(
-            @ApiParam(name = "id", type = "Integer", value = "By id, you may find a slot topic.", required = true)
-            @PathVariable SlotTopicDetailKey id);
+    ResponseEntity<?> findById(@ApiParam(name = "id", type = "Integer", value = "By id, you may find a slot topic.", required = true)
+                               @PathVariable SlotTopicDetailKey id);
 
     @PostMapping
-    List<SlotTopicDetail> createSlotTopicDetails(
+    ResponseEntity<?> createSlotTopicDetails(
             @ApiParam(name = "details", type = "body", value = "Add topic of slot", required = true)
-            @RequestBody List<SlotTopicDetail> details);
+            @RequestBody List<SlotTopicDetailRequestModel> details);
 
     @PutMapping
-    List<SlotTopicDetail> updateSlotTopicDetails(
+    ResponseEntity<?> updateSlotTopicDetails(
             @ApiParam(name = "details", type = "body", value = "Update a slot topic by id", required = true)
-            @RequestBody List<SlotTopicDetail> details);
+            @RequestBody List<SlotTopicDetailRequestModel> details);
 
     @DeleteMapping
     void deleteSlotTopicDetails(

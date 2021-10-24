@@ -7,12 +7,15 @@ package com.lasa.business.controllers.implv1;
 
 import com.lasa.business.controllers.TopicOperations;
 import com.lasa.business.services.TopicService;
-import com.lasa.data.entity.Topic;
-import com.lasa.data.entity.utils.criteria.TopicSearchCriteria;
-import com.lasa.data.entity.utils.page.TopicPage;
+import com.lasa.data.model.entity.Topic;
+import com.lasa.data.model.request.TopicRequestModel;
+import com.lasa.data.model.utils.criteria.TopicSearchCriteria;
+import com.lasa.data.model.utils.page.TopicPage;
+import com.lasa.data.model.view.TopicViewModel;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -44,13 +47,13 @@ public class TopicController implements TopicOperations {
     }
      
     @Override
-    public List<Topic> createTopics(List<Topic> topics) {
-        return topicService.createTopics(topics);
+    public ResponseEntity<List<TopicViewModel>> createTopics(List<TopicRequestModel> topics) {
+        return ResponseEntity.ok(topicService.createTopics(topics));
     }
     
     @Override
-    public List<Topic> updateTopics(List<Topic> topics) {
-        return topicService.updateTopics(topics);
+    public ResponseEntity<List<TopicViewModel>> updateTopics(List<TopicRequestModel> topics) {
+        return ResponseEntity.ok(topicService.updateTopics(topics));
     }
 
     @Override
@@ -59,8 +62,11 @@ public class TopicController implements TopicOperations {
     }
 
     @Override
-    public void deleteTopics(List<Integer> ids) {
+    public ResponseEntity deleteTopics(List<Integer> ids) {
         topicService.deleteTopics(ids);
+        return ResponseEntity
+                .status(HttpStatus.NO_CONTENT)
+                .build();
     }
 
     

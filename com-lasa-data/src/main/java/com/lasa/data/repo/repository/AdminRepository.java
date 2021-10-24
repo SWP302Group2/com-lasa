@@ -5,7 +5,7 @@
  */
 package com.lasa.data.repo.repository;
 
-import com.lasa.data.entity.Admin;
+import com.lasa.data.model.entity.Admin;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

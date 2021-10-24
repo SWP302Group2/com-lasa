@@ -11,5 +11,5 @@ import springfox.documentation.annotations.ApiIgnore;
 @ApiIgnore
 public interface ApplicationOperations {
     @GetMapping(value = "/information")
-    ResponseEntity<?> getUserInformation(@AuthenticationPrincipal MyUserDetails myUserDetails);
+    ResponseEntity<?> getUserInformation();
 }

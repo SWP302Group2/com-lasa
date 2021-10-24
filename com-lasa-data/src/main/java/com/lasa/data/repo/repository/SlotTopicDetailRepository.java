@@ -5,8 +5,8 @@
  */
 package com.lasa.data.repo.repository;
 
-import com.lasa.data.entity.SlotTopicDetail;
-import com.lasa.data.entity.key.SlotTopicDetailKey;
+import com.lasa.data.model.entity.SlotTopicDetail;
+import com.lasa.data.model.entity.key.SlotTopicDetailKey;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

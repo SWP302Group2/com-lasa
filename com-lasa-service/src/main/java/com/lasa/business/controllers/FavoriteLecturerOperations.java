@@ -5,9 +5,9 @@
  */
 package com.lasa.business.controllers;
 
-import com.lasa.data.entity.FavoriteLecturer;
-import com.lasa.data.entity.key.FavoriteLecturerKey;
-import com.lasa.data.entity.utils.criteria.FavoriteLecturerSearchCriteria;
+import com.lasa.data.model.entity.FavoriteLecturer;
+import com.lasa.data.model.entity.key.FavoriteLecturerKey;
+import com.lasa.data.model.utils.criteria.FavoriteLecturerSearchCriteria;
 import io.swagger.annotations.ApiParam;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

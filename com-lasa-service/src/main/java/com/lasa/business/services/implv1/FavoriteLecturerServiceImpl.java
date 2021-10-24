@@ -6,11 +6,10 @@
 package com.lasa.business.services.implv1;
 
 import com.lasa.business.services.FavoriteLecturerService;
-import com.lasa.data.dto.FavoriteLecturerDTO;
-import com.lasa.data.dto.LecturerDTO;
-import com.lasa.data.entity.FavoriteLecturer;
-import com.lasa.data.entity.Lecturer;
-import com.lasa.data.entity.key.FavoriteLecturerKey;
+import com.lasa.data.model.view.FavoriteLecturerViewModel;
+import com.lasa.data.model.view.LecturerViewModel;
+import com.lasa.data.model.entity.FavoriteLecturer;
+import com.lasa.data.model.entity.key.FavoriteLecturerKey;
 import com.lasa.data.repo.repository.FavoriteLecturerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -35,20 +34,20 @@ public class FavoriteLecturerServiceImpl implements FavoriteLecturerService {
     }
 
     @Override
-    public List<FavoriteLecturerDTO> findAllLecturerAndStudentInFavoriteLecturer() {
+    public List<FavoriteLecturerViewModel> findAllLecturerAndStudentInFavoriteLecturer() {
         return favoriteLecturerRepo
                 .findAllLecturerAndStudentInFavoriteLecturer()
                 .stream()
-                .map(t -> new FavoriteLecturerDTO(t))
+                .map(t -> new FavoriteLecturerViewModel(t))
                 .collect(Collectors.toList());
     }
 
     @Override
-    public List<LecturerDTO> findTopFavoriteLecturer(Integer topNumber) {
+    public List<LecturerViewModel> findTopFavoriteLecturer(Integer topNumber) {
         return favoriteLecturerRepo
                 .findTopFavoriteLecturer(topNumber)
                 .stream()
-                .map(t -> new LecturerDTO(t))
+                .map(t -> new LecturerViewModel(t))
                 .collect(Collectors.toList());
     }
 

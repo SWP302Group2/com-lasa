@@ -5,10 +5,10 @@
  */
 package com.lasa.business.services;
 
-import com.lasa.data.dto.StudentDTO;
-import com.lasa.data.entity.Student;
-import com.lasa.data.entity.utils.criteria.StudentSearchCriteria;
-import com.lasa.data.entity.utils.page.StudentPage;
+import com.lasa.data.model.request.StudentRequestModel;
+import com.lasa.data.model.view.StudentViewModel;
+import com.lasa.data.model.utils.criteria.StudentSearchCriteria;
+import com.lasa.data.model.utils.page.StudentPage;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
@@ -21,15 +21,15 @@ import java.util.List;
 @Service
 public interface StudentService {
     
-    Page<StudentDTO> findWithArgument(StudentSearchCriteria searchCriteria, StudentPage studentPage);
+    Page<StudentViewModel> findWithArgument(StudentSearchCriteria searchCriteria, StudentPage studentPage);
 
-    List<StudentDTO> findWithArgument(StudentSearchCriteria searchCriteria);
+    List<StudentViewModel> findWithArgument(StudentSearchCriteria searchCriteria);
     
-    Student findByStudentId(Integer id);
+    StudentViewModel findByStudentId(Integer id);
     
-    Student createStudent(Student student);
+    StudentViewModel createStudent(StudentRequestModel student);
     
-    Student updateStudent(Student student);
+    StudentViewModel updateStudent(StudentRequestModel student);
     
     void deleteStudents(List<Integer> ids);
 }

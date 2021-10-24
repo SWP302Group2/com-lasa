@@ -7,9 +7,9 @@ package com.lasa.business.controllers.implv1;
 
 import com.lasa.business.controllers.FavoriteLecturerOperations;
 import com.lasa.business.services.FavoriteLecturerService;
-import com.lasa.data.entity.FavoriteLecturer;
-import com.lasa.data.entity.key.FavoriteLecturerKey;
-import com.lasa.data.entity.utils.criteria.FavoriteLecturerSearchCriteria;
+import com.lasa.data.model.entity.FavoriteLecturer;
+import com.lasa.data.model.entity.key.FavoriteLecturerKey;
+import com.lasa.data.model.utils.criteria.FavoriteLecturerSearchCriteria;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

@@ -7,10 +7,12 @@ package com.lasa.business.controllers.implv1;
 
 import com.lasa.business.controllers.SlotTopicDetailOperations;
 import com.lasa.business.services.SlotTopicDetailService;
-import com.lasa.data.entity.SlotTopicDetail;
-import com.lasa.data.entity.key.SlotTopicDetailKey;
-import com.lasa.data.entity.utils.criteria.SlotTopicDetailSearchCriteria;
-import com.lasa.data.entity.utils.page.SlotTopicDetailPage;
+import com.lasa.data.model.entity.SlotTopicDetail;
+import com.lasa.data.model.entity.key.SlotTopicDetailKey;
+import com.lasa.data.model.request.SlotTopicDetailRequestModel;
+import com.lasa.data.model.utils.criteria.SlotTopicDetailSearchCriteria;
+import com.lasa.data.model.utils.page.SlotTopicDetailPage;
+import com.lasa.data.model.view.SlotTopicDetailViewModel;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -45,18 +47,18 @@ public class SlotTopicDetailController implements SlotTopicDetailOperations {
     }
 
     @Override
-    public SlotTopicDetail findById(SlotTopicDetailKey id) {
-        return slotTopicDetailService.findById(id);
+    public ResponseEntity<SlotTopicDetailViewModel> findById(SlotTopicDetailKey id) {
+        return ResponseEntity.ok(slotTopicDetailService.findById(id));
     }
 
     @Override
-    public List<SlotTopicDetail> createSlotTopicDetails(List<SlotTopicDetail> details) {
-        return slotTopicDetailService.createSlotTopicDetails(details);
+    public ResponseEntity<List<SlotTopicDetailViewModel>> createSlotTopicDetails(List<SlotTopicDetailRequestModel> details) {
+        return ResponseEntity.ok(slotTopicDetailService.createSlotTopicDetails(details));
     }
 
     @Override
-    public List<SlotTopicDetail> updateSlotTopicDetails(List<SlotTopicDetail> details) {
-        return slotTopicDetailService.updateSlotTopicDetails(details);
+    public ResponseEntity<List<SlotTopicDetailViewModel>> updateSlotTopicDetails(List<SlotTopicDetailRequestModel> details) {
+        return ResponseEntity.ok(slotTopicDetailService.updateSlotTopicDetails(details));
     }
 
     @Override

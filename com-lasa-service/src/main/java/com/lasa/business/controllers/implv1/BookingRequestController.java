@@ -9,13 +9,13 @@ import com.lasa.business.controllers.BookingRequestOperations;
 import com.lasa.business.controllers.utils.authorization.IsStudent;
 import com.lasa.business.services.BookingRequestService;
 import com.lasa.business.services.QuestionService;
-import com.lasa.data.dto.BookingRequestDTO;
-import com.lasa.data.dto.QuestionDTO;
-import com.lasa.data.entity.BookingRequest;
-import com.lasa.data.entity.BookingRequest_;
-import com.lasa.data.entity.utils.criteria.BookingRequestSearchCriteria;
-import com.lasa.data.entity.utils.criteria.QuestionSearchCriteria;
-import com.lasa.data.entity.utils.page.BookingRequestPage;
+import com.lasa.data.model.view.BookingRequestViewModel;
+import com.lasa.data.model.view.QuestionViewModel;
+import com.lasa.data.model.entity.BookingRequest;
+import com.lasa.data.model.entity.BookingRequest_;
+import com.lasa.data.model.utils.criteria.BookingRequestSearchCriteria;
+import com.lasa.data.model.utils.criteria.QuestionSearchCriteria;
+import com.lasa.data.model.utils.page.BookingRequestPage;
 import com.lasa.security.appuser.MyUserDetails;
 import com.lasa.security.utils.exception.ExceptionUtils;
 import io.swagger.annotations.Api;
@@ -67,13 +67,13 @@ public class BookingRequestController implements BookingRequestOperations {
     }
 
     @Override
-    public ResponseEntity<BookingRequestDTO> findById(@PathVariable Integer id) {
+    public ResponseEntity<BookingRequestViewModel> findById(@PathVariable Integer id) {
         return ResponseEntity.ok(bookingRequestService.findByBookingRequestId(id));
     }
 
     @Override
     public ResponseEntity<?> findByIdIncludeQuestions(Integer id) {
-        BookingRequestDTO bookingRequestDTO = bookingRequestService.findByBookingRequestId(id);
+        BookingRequestViewModel bookingRequestDTO = bookingRequestService.findByBookingRequestId(id);
 
         if(Objects.isNull(bookingRequestDTO))
             return ResponseEntity.ok(null);
@@ -83,7 +83,7 @@ public class BookingRequestController implements BookingRequestOperations {
         QuestionSearchCriteria searchCriteria = QuestionSearchCriteria.builder()
                 .bookingId(bookingIds)
                 .build();
-        List<QuestionDTO> questionDTOS = questionService.findAll(searchCriteria);
+        List<QuestionViewModel> questionDTOS = questionService.findAll(searchCriteria);
         questionDTOS.stream()
                 .forEach(t -> bookingRequestDTO.addQuestion(t));
         return ResponseEntity.ok(bookingRequestDTO);

@@ -7,11 +7,10 @@ package com.lasa.business.controllers.implv1;
 
 import com.lasa.business.controllers.MajorOperations;
 import com.lasa.business.services.MajorService;
-import com.lasa.data.dto.MajorDTO;
-import com.lasa.data.dto.TopicDTO;
-import com.lasa.data.entity.Major;
-import com.lasa.data.entity.utils.criteria.MajorSearchCriteria;
-import com.lasa.data.entity.utils.page.MajorPage;
+import com.lasa.data.model.view.MajorViewModel;
+import com.lasa.data.model.entity.Major;
+import com.lasa.data.model.utils.criteria.MajorSearchCriteria;
+import com.lasa.data.model.utils.page.MajorPage;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -19,7 +18,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Objects;
 
@@ -50,19 +48,19 @@ public class MajorController implements MajorOperations {
     }
 
     @Override
-    public ResponseEntity<MajorDTO> findById(String id) {
-        /*return ResponseEntity.ok(new MajorDTO(majorService.findById(id)));*/
+    public ResponseEntity<MajorViewModel> findById(String id) {
+        /*return ResponseEntity.ok(new MajorViewModel(majorService.findById(id)));*/
         return null;
     }
 
     @Override
     public ResponseEntity<?> findByIdIncludeTopics(String id) {
-        MajorDTO majorDTO = majorService.findById(id);
+        MajorViewModel majorViewModel = majorService.findById(id);
 
-        if(Objects.isNull(majorDTO))
+        if(Objects.isNull(majorViewModel))
             return ResponseEntity.ok(null);
 
-        return ResponseEntity.ok(majorDTO);
+        return ResponseEntity.ok(majorViewModel);
     }
 
     @Override

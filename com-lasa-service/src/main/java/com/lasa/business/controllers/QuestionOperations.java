@@ -5,9 +5,9 @@
  */
 package com.lasa.business.controllers;
 
-import com.lasa.data.entity.Question;
-import com.lasa.data.entity.utils.criteria.QuestionSearchCriteria;
-import com.lasa.data.entity.utils.page.QuestionPage;
+import com.lasa.data.model.entity.Question;
+import com.lasa.data.model.utils.criteria.QuestionSearchCriteria;
+import com.lasa.data.model.utils.page.QuestionPage;
 import io.swagger.annotations.ApiParam;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

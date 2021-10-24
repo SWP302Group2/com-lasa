@@ -5,15 +5,15 @@
  */
 package com.lasa.business.services;
 
-import com.lasa.data.dto.SlotDTO;
-import com.lasa.data.entity.Slot;
-import com.lasa.data.entity.utils.criteria.SlotSearchCriteria;
-import com.lasa.data.entity.utils.page.SlotPage;
+import com.lasa.data.model.request.SlotRequestModel;
+import com.lasa.data.model.view.SlotViewModel;
+import com.lasa.data.model.entity.Slot;
+import com.lasa.data.model.utils.criteria.SlotSearchCriteria;
+import com.lasa.data.model.utils.page.SlotPage;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  *
@@ -22,15 +22,15 @@ import java.util.Optional;
 @Service
 public interface SlotService {
     
-    Page<SlotDTO> findWithArguments(SlotSearchCriteria searchCriteria, SlotPage slotPage);
+    Page<SlotViewModel> findWithArguments(SlotSearchCriteria searchCriteria, SlotPage slotPage);
 
-    List<SlotDTO> findWithArguments(SlotSearchCriteria searchCriteria);
+    List<SlotViewModel> findWithArguments(SlotSearchCriteria searchCriteria);
 
-    SlotDTO findById(Integer id);
+    SlotViewModel findById(Integer id);
 
-    Boolean verifySlot(Slot slot);
+    Boolean verifySlot(SlotRequestModel slot);
 
-    Slot createSlot(Slot slot);
+    SlotViewModel createSlot(SlotRequestModel slot);
 
     List<Slot> createSlots(List<Slot> slots);
     

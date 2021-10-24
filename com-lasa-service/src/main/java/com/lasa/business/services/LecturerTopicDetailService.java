@@ -5,9 +5,11 @@
  */
 package com.lasa.business.services;
 
-import com.lasa.data.dto.LecturerTopicDetailDTO;
-import com.lasa.data.entity.LecturerTopicDetail;
-import com.lasa.data.entity.key.LecturerTopicDetailKey;
+import com.lasa.data.model.entity.FavoriteLecturer;
+import com.lasa.data.model.entity.Topic;
+import com.lasa.data.model.view.LecturerTopicDetailViewModel;
+import com.lasa.data.model.entity.LecturerTopicDetail;
+import com.lasa.data.model.entity.key.LecturerTopicDetailKey;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,7 +21,7 @@ import java.util.List;
 @Service
 public interface LecturerTopicDetailService {
 
-    List<LecturerTopicDetailDTO> findAllLecturerAndTopicInLecturerTopicDetail();
+    List<LecturerTopicDetailViewModel> findAllLecturerAndTopicInLecturerTopicDetail();
 
     List<Integer> findListTopicIdByLecturerId(Integer lecturerId);
 

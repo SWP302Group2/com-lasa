@@ -6,12 +6,12 @@
 package com.lasa.business.services.implv1;
 
 import com.lasa.business.services.MajorService;
-import com.lasa.data.dto.MajorDTO;
-import com.lasa.data.entity.Major;
-import com.lasa.data.entity.utils.criteria.MajorSearchCriteria;
-import com.lasa.data.entity.utils.page.MajorPage;
-import com.lasa.data.entity.utils.projection.MajorWithSimpleTopic;
-import com.lasa.data.entity.utils.specification.MajorSpecification;
+import com.lasa.data.model.view.MajorViewModel;
+import com.lasa.data.model.entity.Major;
+import com.lasa.data.model.utils.criteria.MajorSearchCriteria;
+import com.lasa.data.model.utils.page.MajorPage;
+import com.lasa.data.model.utils.projection.MajorWithSimpleTopic;
+import com.lasa.data.model.utils.specification.MajorSpecification;
 import com.lasa.data.repo.repository.MajorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -43,19 +43,19 @@ public class MajorServiceImpl implements MajorService {
 
 
     @Override
-    public Page<MajorDTO> findAll(MajorPage majorPage, MajorSearchCriteria searchCriteria) {
+    public Page<MajorViewModel> findAll(MajorPage majorPage, MajorSearchCriteria searchCriteria) {
         Pageable pageable = PageRequest.of(majorPage.getPage(), majorPage.getSize(), Sort.by(majorPage.getOrderBy(), majorPage.getSortBy()));
         return majorRepository
                 .findAll(MajorSpecification.searchSpecification(searchCriteria), pageable)
-                .map(t -> new MajorDTO(t));
+                .map(t -> new MajorViewModel(t));
     }
 
     @Override
-    public List<MajorDTO> findAll(MajorSearchCriteria searchCriteria) {
+    public List<MajorViewModel> findAll(MajorSearchCriteria searchCriteria) {
         return majorRepository
                 .findAll(MajorSpecification.searchSpecification(searchCriteria))
                 .stream()
-                .map(t -> new MajorDTO(t))
+                .map(t -> new MajorViewModel(t))
                 .collect(Collectors.toList());
     }
 
@@ -65,8 +65,8 @@ public class MajorServiceImpl implements MajorService {
     }
 
     @Override
-    public MajorDTO findById(String id) {
-        return new MajorDTO(majorRepository.findById(id).get());
+    public MajorViewModel findById(String id) {
+        return new MajorViewModel(majorRepository.findById(id).get());
     }
 
     @Override

@@ -2,11 +2,11 @@
 package com.lasa.business.services.implv1;
 
 import com.lasa.business.services.QuestionService;
-import com.lasa.data.dto.QuestionDTO;
-import com.lasa.data.entity.Question;
-import com.lasa.data.entity.utils.criteria.QuestionSearchCriteria;
-import com.lasa.data.entity.utils.page.QuestionPage;
-import com.lasa.data.entity.utils.specification.QuestionSpecification;
+import com.lasa.data.model.view.QuestionViewModel;
+import com.lasa.data.model.entity.Question;
+import com.lasa.data.model.utils.criteria.QuestionSearchCriteria;
+import com.lasa.data.model.utils.page.QuestionPage;
+import com.lasa.data.model.utils.specification.QuestionSpecification;
 import com.lasa.data.repo.repository.QuestionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -39,28 +39,28 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public Page<QuestionDTO> findAll(QuestionPage questionPage, QuestionSearchCriteria searchCriteria) {
+    public Page<QuestionViewModel> findAll(QuestionPage questionPage, QuestionSearchCriteria searchCriteria) {
         Pageable pageable = PageRequest.of(questionPage.getPage(), questionPage.getSize(), Sort.by(questionPage.getOrderBy(), questionPage.getSortBy()));
         return questionRepository
                 .findAll(QuestionSpecification.searchSpecification(searchCriteria), pageable)
-                .map(t -> new QuestionDTO(t));
+                .map(t -> new QuestionViewModel(t));
     }
 
     @Override
-    public List<QuestionDTO> findAll(QuestionSearchCriteria searchCriteria) {
+    public List<QuestionViewModel> findAll(QuestionSearchCriteria searchCriteria) {
         return questionRepository
                 .findAll(QuestionSpecification.searchSpecification(searchCriteria))
                 .stream()
-                .map(t -> new QuestionDTO(t))
+                .map(t -> new QuestionViewModel(t))
                 .collect(Collectors.toList());
     }
 
     @Override
-    public QuestionDTO findById(Integer id) {
+    public QuestionViewModel findById(Integer id) {
         Optional<Question> question = questionRepository.findById(id);
 
         if(question.isPresent())
-            return new QuestionDTO(question.get());
+            return new QuestionViewModel(question.get());
 
         return null;
     }

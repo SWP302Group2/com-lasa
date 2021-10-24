@@ -1,11 +1,11 @@
 package com.lasa.business.services.implv1;
 
 import com.lasa.business.services.BookingRequestService;
-import com.lasa.data.dto.BookingRequestDTO;
-import com.lasa.data.entity.BookingRequest;
-import com.lasa.data.entity.utils.criteria.BookingRequestSearchCriteria;
-import com.lasa.data.entity.utils.page.BookingRequestPage;
-import com.lasa.data.entity.utils.specification.BookingRequestSpecification;
+import com.lasa.data.model.view.BookingRequestViewModel;
+import com.lasa.data.model.entity.BookingRequest;
+import com.lasa.data.model.utils.criteria.BookingRequestSearchCriteria;
+import com.lasa.data.model.utils.page.BookingRequestPage;
+import com.lasa.data.model.utils.specification.BookingRequestSpecification;
 import com.lasa.data.repo.repository.BookingRequestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -16,7 +16,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -38,27 +37,27 @@ public class BookingRequestServiceImpl implements BookingRequestService {
     }
 
     @Override
-    public Page<BookingRequestDTO> findAll(BookingRequestPage bookingRequestPage, BookingRequestSearchCriteria searchCriteria) {
+    public Page<BookingRequestViewModel> findAll(BookingRequestPage bookingRequestPage, BookingRequestSearchCriteria searchCriteria) {
         Pageable pageable = PageRequest.of(bookingRequestPage.getPage(), bookingRequestPage.getSize(), Sort.by(bookingRequestPage.getOrderBy(), bookingRequestPage.getSortBy()));
         return bookingRepository
                 .findAll(BookingRequestSpecification.searchSpecification(searchCriteria), pageable)
-                .map(t -> new BookingRequestDTO(t));
+                .map(t -> new BookingRequestViewModel(t));
     }
 
     @Override
-    public List<BookingRequestDTO> findAll(BookingRequestSearchCriteria searchCriteria) {
+    public List<BookingRequestViewModel> findAll(BookingRequestSearchCriteria searchCriteria) {
         return bookingRepository
                 .findAll(BookingRequestSpecification.searchSpecification(searchCriteria))
                 .stream()
-                .map(t -> new BookingRequestDTO(t))
+                .map(t -> new BookingRequestViewModel(t))
                 .collect(Collectors.toList());
     }
 
     @Override
-    public BookingRequestDTO findByBookingRequestId(Integer id) {
+    public BookingRequestViewModel findByBookingRequestId(Integer id) {
         Optional<BookingRequest> bookingRequest = bookingRepository.findById(id);
         if(bookingRequest.isPresent())
-            return new BookingRequestDTO(bookingRequest.get());
+            return new BookingRequestViewModel(bookingRequest.get());
 
         return null;
     }

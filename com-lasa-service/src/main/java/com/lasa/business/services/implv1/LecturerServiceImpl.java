@@ -6,11 +6,11 @@
 package com.lasa.business.services.implv1;
 
 import com.lasa.business.services.LecturerService;
-import com.lasa.data.dto.LecturerDTO;
-import com.lasa.data.entity.Lecturer;
-import com.lasa.data.entity.utils.criteria.LecturerSearchCriteria;
-import com.lasa.data.entity.utils.page.LecturerPage;
-import com.lasa.data.entity.utils.specification.LecturerSpecification;
+import com.lasa.data.model.view.LecturerViewModel;
+import com.lasa.data.model.entity.Lecturer;
+import com.lasa.data.model.utils.criteria.LecturerSearchCriteria;
+import com.lasa.data.model.utils.page.LecturerPage;
+import com.lasa.data.model.utils.specification.LecturerSpecification;
 import com.lasa.data.repo.repository.FavoriteLecturerRepository;
 import com.lasa.data.repo.repository.LecturerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +22,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -45,19 +44,19 @@ public class LecturerServiceImpl implements LecturerService {
     }
 
     @Override
-    public Page<LecturerDTO> findAll(LecturerPage lecturerPage, LecturerSearchCriteria searchCriteria) {
+    public Page<LecturerViewModel> findAll(LecturerPage lecturerPage, LecturerSearchCriteria searchCriteria) {
         Pageable pageable = PageRequest.of(lecturerPage.getPage(), lecturerPage.getSize(), Sort.by(lecturerPage.getOrderBy(), lecturerPage.getSortBy()));
         return lecturerRepository
                 .findAll(LecturerSpecification.searchSpecification(searchCriteria), pageable)
-                .map(t -> new LecturerDTO(t));
+                .map(t -> new LecturerViewModel(t));
     }
 
     @Override
-    public List<LecturerDTO> findAll(LecturerSearchCriteria searchCriteria) {
+    public List<LecturerViewModel> findAll(LecturerSearchCriteria searchCriteria) {
         return lecturerRepository
                 .findAll(LecturerSpecification.searchSpecification(searchCriteria))
                 .stream()
-                .map(t -> new LecturerDTO(t))
+                .map(t -> new LecturerViewModel(t))
                 .collect(Collectors.toList());
     }
 

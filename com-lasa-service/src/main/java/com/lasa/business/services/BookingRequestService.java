@@ -6,10 +6,10 @@
  */
 package com.lasa.business.services;
 
-import com.lasa.data.dto.BookingRequestDTO;
-import com.lasa.data.entity.BookingRequest;
-import com.lasa.data.entity.utils.criteria.BookingRequestSearchCriteria;
-import com.lasa.data.entity.utils.page.BookingRequestPage;
+import com.lasa.data.model.view.BookingRequestViewModel;
+import com.lasa.data.model.entity.BookingRequest;
+import com.lasa.data.model.utils.criteria.BookingRequestSearchCriteria;
+import com.lasa.data.model.utils.page.BookingRequestPage;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
@@ -23,11 +23,11 @@ import java.util.List;
 @Service
 public interface BookingRequestService {
 
-    Page<BookingRequestDTO> findAll(BookingRequestPage bookingRequestPage, BookingRequestSearchCriteria searchCriteria);
+    Page<BookingRequestViewModel> findAll(BookingRequestPage bookingRequestPage, BookingRequestSearchCriteria searchCriteria);
 
-    List<BookingRequestDTO> findAll(BookingRequestSearchCriteria searchCriteria);
+    List<BookingRequestViewModel> findAll(BookingRequestSearchCriteria searchCriteria);
 
-    BookingRequestDTO findByBookingRequestId(Integer id);
+    BookingRequestViewModel findByBookingRequestId(Integer id);
 
     Boolean verifyBookingRequest(Integer studentId, Integer slotId);
 

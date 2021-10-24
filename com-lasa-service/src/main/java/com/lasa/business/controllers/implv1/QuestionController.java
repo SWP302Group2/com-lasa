@@ -7,10 +7,10 @@ package com.lasa.business.controllers.implv1;
 
 import com.lasa.business.controllers.QuestionOperations;
 import com.lasa.business.services.QuestionService;
-import com.lasa.data.dto.QuestionDTO;
-import com.lasa.data.entity.Question;
-import com.lasa.data.entity.utils.criteria.QuestionSearchCriteria;
-import com.lasa.data.entity.utils.page.QuestionPage;
+import com.lasa.data.model.view.QuestionViewModel;
+import com.lasa.data.model.entity.Question;
+import com.lasa.data.model.utils.criteria.QuestionSearchCriteria;
+import com.lasa.data.model.utils.page.QuestionPage;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -48,8 +48,8 @@ public class QuestionController implements QuestionOperations {
     }
     
     @Override
-    public ResponseEntity<QuestionDTO> findById(@PathVariable Integer id) {
-        QuestionDTO question = questionService.findById(id);
+    public ResponseEntity<QuestionViewModel> findById(@PathVariable Integer id) {
+        QuestionViewModel question = questionService.findById(id);
         if(Objects.isNull(question))
             return ResponseEntity.ok(null);
 

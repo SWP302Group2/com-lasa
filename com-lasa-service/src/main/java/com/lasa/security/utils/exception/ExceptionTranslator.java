@@ -9,10 +9,12 @@ import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.UnsupportedJwtException;
 import io.jsonwebtoken.security.SignatureException;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -27,7 +29,7 @@ import java.security.GeneralSecurityException;
 @RestControllerAdvice
 public class ExceptionTranslator {
 
-    /*@ExceptionHandler(value = {Exception.class})
+   /* @ExceptionHandler(value = {Exception.class})
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ResponseObject processUnknownException(Exception e, HttpServletRequest request) {
         System.out.println(e.getClass());
@@ -92,7 +94,7 @@ public class ExceptionTranslator {
                 .build();
     }
 
-    @ExceptionHandler(value = {HttpRequestMethodNotSupportedException.class})
+    @ExceptionHandler(value = {HttpRequestMethodNotSupportedException.class, EmptyResultDataAccessException.class})
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ResponseObject processNotFoundResponse(Exception e, HttpServletRequest request) {
         System.out.println(e.getClass());
@@ -118,7 +120,7 @@ public class ExceptionTranslator {
                 .build();
     }
 
-    @ExceptionHandler(value = {ExceptionUtils.EmailDomainException.class, ExceptionUtils.UserAlreadyExistException.class})
+    @ExceptionHandler(value = {ExceptionUtils.EmailDomainException.class, ExceptionUtils.UserAlreadyExistException.class, UsernameNotFoundException.class})
     @ResponseStatus(HttpStatus.NOT_ACCEPTABLE)
     public ResponseObject processEmailDomainException(Exception e, HttpServletRequest request) {
         System.out.println(e.getClass());

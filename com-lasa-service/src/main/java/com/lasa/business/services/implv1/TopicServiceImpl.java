@@ -6,11 +6,12 @@
 package com.lasa.business.services.implv1;
 
 import com.lasa.business.services.TopicService;
-import com.lasa.data.dto.TopicDTO;
-import com.lasa.data.entity.Topic;
-import com.lasa.data.entity.utils.criteria.TopicSearchCriteria;
-import com.lasa.data.entity.utils.page.TopicPage;
-import com.lasa.data.entity.utils.specification.TopicSpecification;
+import com.lasa.data.model.request.TopicRequestModel;
+import com.lasa.data.model.view.TopicViewModel;
+import com.lasa.data.model.entity.Topic;
+import com.lasa.data.model.utils.criteria.TopicSearchCriteria;
+import com.lasa.data.model.utils.page.TopicPage;
+import com.lasa.data.model.utils.specification.TopicSpecification;
 import com.lasa.data.repo.repository.TopicRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -41,29 +42,36 @@ public class TopicServiceImpl implements TopicService {
     }
 
     @Override
-    public Page<TopicDTO> findWithArgument(TopicPage topicPage, TopicSearchCriteria searchCriteria) {
+    public Page<TopicViewModel> findWithArgument(TopicPage topicPage, TopicSearchCriteria searchCriteria) {
         Pageable pageable = PageRequest.of(topicPage.getPage(), topicPage.getSize(), Sort.by(topicPage.getOrderBy(), topicPage.getSortBy()));
         return topicRepository
                 .findAll(TopicSpecification.searchSpecification(searchCriteria), pageable)
-                .map(t -> new TopicDTO(t));
+                .map(t -> new TopicViewModel(t));
     }
 
     @Override
-    public List<TopicDTO> findWithArgument(TopicSearchCriteria searchCriteria) {
+    public List<TopicViewModel> findWithArgument(TopicSearchCriteria searchCriteria) {
         return topicRepository.findAll(TopicSpecification.searchSpecification(searchCriteria))
                 .stream()
-                .map(t -> new TopicDTO(t))
+                .map(t -> new TopicViewModel(t))
                 .collect(Collectors.toList());
     }
 
     @Override
-    public List<Topic> createTopics(List<Topic> topics) {
-        return topicRepository.saveAll(topics);
+    public List<TopicViewModel> createTopics(List<TopicRequestModel> topics) {
+        List<Topic> topicList = topics.stream()
+                .map(t -> t.toEntity())
+                .collect(Collectors.toList());
+
+        return topicRepository.saveAll(topicList)
+                .stream()
+                .map(t -> new TopicViewModel(t))
+                .collect(Collectors.toList());
     }
     
     @Override
     @Transactional
-    public List<Topic> updateTopics(List<Topic> topics) {
+    public List<TopicViewModel> updateTopics(List<TopicRequestModel> topics) {
         
         Set updateId = topics
                 .stream()
@@ -73,18 +81,15 @@ public class TopicServiceImpl implements TopicService {
                 || t.getStatus() != null
                 || t.getMajorId() != null
                 )
-                .map(Topic::getId)
+                .map(TopicRequestModel::getId)
                 .collect(Collectors.toSet());
         
-        List<Topic> topicList = (List<Topic>) topicRepository
-                .findAllById(updateId)
-                .stream()
-                .collect(Collectors.toList());
+        List<Topic> topicList = topicRepository.findAllById(updateId);
         
         topicList
                 .stream()
                 .forEach(topic -> {
-                    Topic updateTopic = topics
+                    TopicRequestModel updateTopic = topics
                             .stream()
                             .filter(t -> t.getId().equals(topic.getId()))
                             .findAny()
@@ -110,8 +115,13 @@ public class TopicServiceImpl implements TopicService {
                         topic.setStatus(updateTopic.getStatus());
                     }
                 });
-        
-        return topicRepository.saveAll(topics);
+
+
+
+        return topicRepository.saveAll(topicList)
+                .stream()
+                .map(t -> new TopicViewModel(t))
+                .collect(Collectors.toList());
     }
     
     @Override
@@ -120,8 +130,8 @@ public class TopicServiceImpl implements TopicService {
     }
     
     @Override
-    public TopicDTO findById(Integer id) {
-        return new TopicDTO(topicRepository.findById(id).orElse(null));
+    public TopicViewModel findById(Integer id) {
+        return new TopicViewModel(topicRepository.findById(id).orElse(null));
     }
     
 }

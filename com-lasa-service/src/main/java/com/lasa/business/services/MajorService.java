@@ -5,11 +5,11 @@
  */
 package com.lasa.business.services;
 
-import com.lasa.data.dto.MajorDTO;
-import com.lasa.data.entity.Major;
-import com.lasa.data.entity.utils.criteria.MajorSearchCriteria;
-import com.lasa.data.entity.utils.page.MajorPage;
-import com.lasa.data.entity.utils.projection.MajorWithSimpleTopic;
+import com.lasa.data.model.view.MajorViewModel;
+import com.lasa.data.model.entity.Major;
+import com.lasa.data.model.utils.criteria.MajorSearchCriteria;
+import com.lasa.data.model.utils.page.MajorPage;
+import com.lasa.data.model.utils.projection.MajorWithSimpleTopic;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
@@ -22,13 +22,13 @@ import java.util.List;
 @Service
 public interface MajorService {
     
-    Page<MajorDTO> findAll(MajorPage majorPage, MajorSearchCriteria searchCriteria);
+    Page<MajorViewModel> findAll(MajorPage majorPage, MajorSearchCriteria searchCriteria);
 
-    List<MajorDTO> findAll(MajorSearchCriteria searchCriteria);
+    List<MajorViewModel> findAll(MajorSearchCriteria searchCriteria);
 
     List<MajorWithSimpleTopic> findAllWithTopicIds();
     
-    MajorDTO findById(String id);
+    MajorViewModel findById(String id);
     
     List<Major> createMajors(List<Major> majors);
     

@@ -7,9 +7,11 @@ package com.lasa.business.controllers.implv1;
 
 import com.lasa.business.controllers.StudentOperations;
 import com.lasa.business.services.StudentService;
-import com.lasa.data.entity.Student;
-import com.lasa.data.entity.utils.criteria.StudentSearchCriteria;
-import com.lasa.data.entity.utils.page.StudentPage;
+import com.lasa.data.model.entity.Student;
+import com.lasa.data.model.request.StudentRequestModel;
+import com.lasa.data.model.utils.criteria.StudentSearchCriteria;
+import com.lasa.data.model.utils.page.StudentPage;
+import com.lasa.data.model.view.StudentViewModel;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -44,18 +46,18 @@ public class StudentController implements StudentOperations {
     }
 
     @Override
-    public Student findByStudentId(Integer id) {
-        return service.findByStudentId(id);
+    public ResponseEntity<StudentViewModel> findByStudentId(Integer id) {
+        return ResponseEntity.ok(service.findByStudentId(id));
     }
 
     @Override
-    public Student createStudent(Student student) {
-        return service.createStudent(student);
+    public ResponseEntity<StudentViewModel> createStudent(StudentRequestModel student) {
+        return ResponseEntity.ok(service.createStudent(student));
     }
 
     @Override
-    public Student updateStudent(Student student) {
-        return service.updateStudent(student);
+    public ResponseEntity<StudentViewModel> updateStudent(StudentRequestModel student) {
+        return ResponseEntity.ok(service.updateStudent(student));
     }
 
     @Override

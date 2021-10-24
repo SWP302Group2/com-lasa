@@ -1,8 +1,8 @@
 package com.lasa.security.appuser;
 
-import com.lasa.data.entity.Admin;
-import com.lasa.data.entity.Lecturer;
-import com.lasa.data.entity.Student;
+import com.lasa.data.model.entity.Admin;
+import com.lasa.data.model.entity.Lecturer;
+import com.lasa.data.model.entity.Student;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;

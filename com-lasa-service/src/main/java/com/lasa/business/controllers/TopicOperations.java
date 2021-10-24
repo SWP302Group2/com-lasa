@@ -5,9 +5,10 @@
  */
 package com.lasa.business.controllers;
 
-import com.lasa.data.entity.Topic;
-import com.lasa.data.entity.utils.criteria.TopicSearchCriteria;
-import com.lasa.data.entity.utils.page.TopicPage;
+import com.lasa.data.model.entity.Topic;
+import com.lasa.data.model.request.TopicRequestModel;
+import com.lasa.data.model.utils.criteria.TopicSearchCriteria;
+import com.lasa.data.model.utils.page.TopicPage;
 import io.swagger.annotations.ApiParam;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,22 +26,21 @@ public interface TopicOperations {
     ResponseEntity<?> findWithArguments(TopicPage topicPage, TopicSearchCriteria searchCriteria);
 
     @GetMapping(value = "/{id}")
-    ResponseEntity<?> findById(
-            @ApiParam(name = "id", type = "Integer", value = "By id, you may find a topic", required = true)
-            @PathVariable Integer id);
+    ResponseEntity<?> findById(@ApiParam(name = "id", type = "Integer", value = "Find topic by id", required = true)
+                               @PathVariable Integer id);
 
     @PostMapping
-    List<Topic> createTopics(
+    ResponseEntity<?> createTopics(
             @ApiParam(name = "id", type = "body", value = "Add a new topic", required = true)
-            @RequestBody List<Topic> topics);
+            @RequestBody List<TopicRequestModel> topics);
 
     @PutMapping
-    List<Topic> updateTopics(
+    ResponseEntity<?> updateTopics(
             @ApiParam(name = "topics", type = "body", value = "Update a topic", required = true)
-            @RequestBody List<Topic> topics);
+            @RequestBody List<TopicRequestModel> topics);
 
     @DeleteMapping
-    void deleteTopics(
+    ResponseEntity<?> deleteTopics(
             @ApiParam(name = "ids", type = "body", value = "By id, you may remove a topic", required = true)
             @RequestBody List<Integer> ids);
 }

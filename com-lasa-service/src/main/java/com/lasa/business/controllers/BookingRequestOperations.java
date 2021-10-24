@@ -5,16 +5,13 @@
  */
 package com.lasa.business.controllers;
 
-import com.lasa.data.entity.BookingRequest;
-import com.lasa.data.entity.utils.criteria.BookingRequestSearchCriteria;
-import com.lasa.data.entity.utils.page.BookingRequestPage;
-import com.lasa.security.appuser.MyUserDetails;
+import com.lasa.data.model.entity.BookingRequest;
+import com.lasa.data.model.utils.criteria.BookingRequestSearchCriteria;
+import com.lasa.data.model.utils.page.BookingRequestPage;
 import com.lasa.security.utils.exception.ExceptionUtils;
 import io.swagger.annotations.ApiParam;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.List;
 
