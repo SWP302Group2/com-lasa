@@ -8,6 +8,7 @@ package com.lasa.business.controllers.implv1;
 import com.lasa.business.controllers.BookingRequestOperations;
 import com.lasa.business.controllers.utils.IsStudent;
 import com.lasa.business.services.BookingRequestService;
+import com.lasa.business.services.EmailSenderService;
 import com.lasa.data.entity.BookingRequest;
 import com.lasa.data.entity.BookingRequest_;
 import com.lasa.data.entity.utils.criteria.BookingRequestSearchCriteria;
@@ -39,10 +40,14 @@ public class BookingRequestController implements BookingRequestOperations {
     private final BookingRequestService bookingRequestService;
     private static final int QUESTIONS_SIZE = 5;
     private static final String QUESTIONS_SIZE_STRING = "FIVE";
+    private final EmailSenderService emailSenderService;
+
 
     @Autowired
-    public BookingRequestController(@Qualifier("BookingRequestServiceImplV1") BookingRequestService service) {
+    public BookingRequestController(@Qualifier("BookingRequestServiceImplV1") BookingRequestService service,
+                                    @Qualifier("EmailSenderServiceImpl") EmailSenderService emailSenderService) {
         this.bookingRequestService = service;
+        this.emailSenderService = emailSenderService;
     }
 
     @Override
