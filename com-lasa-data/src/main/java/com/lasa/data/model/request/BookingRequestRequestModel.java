@@ -25,7 +25,7 @@ public class BookingRequestRequestModel {
     public BookingRequest toEntity() {
         return BookingRequest.builder()
                 .id(id)
-                .studentId(id)
+                .studentId(studentId)
                 .status(status)
                 .topicId(topicId)
                 .slotId(slotId)

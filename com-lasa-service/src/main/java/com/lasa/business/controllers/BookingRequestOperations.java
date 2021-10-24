@@ -5,7 +5,7 @@
  */
 package com.lasa.business.controllers;
 
-import com.lasa.data.model.entity.BookingRequest;
+import com.lasa.data.model.request.BookingRequestRequestModel;
 import com.lasa.data.model.utils.criteria.BookingRequestSearchCriteria;
 import com.lasa.data.model.utils.page.BookingRequestPage;
 import com.lasa.security.utils.exception.ExceptionUtils;
@@ -36,18 +36,14 @@ public interface BookingRequestOperations {
 
 
     @PostMapping
-    ResponseEntity<?> createBookingRequest(
-            @ApiParam(name = "bookingRequest", type = "body", value = "Add a new booking request")
-            @RequestBody BookingRequest bookingRequest
-    ) throws ExceptionUtils.ArgumentException, ExceptionUtils.DuplicatedException;
+    ResponseEntity<?> createBookingRequest(@ApiParam(name = "bookingRequest", type = "body", value = "Add a new booking request")
+                                           @RequestBody BookingRequestRequestModel bookingRequest) throws ExceptionUtils.ArgumentException, ExceptionUtils.DuplicatedException;
     
     @PutMapping
-    BookingRequest updateBookingRequest(
-            @ApiParam(name = "bookingRequest", type = "body", value = "Update a booking request by id")
-            @RequestBody BookingRequest BookingRequest);
+    ResponseEntity<?> updateBookingRequest(@ApiParam(name = "bookingRequest", type = "body", value = "Update a booking request by id")
+                                           @RequestBody BookingRequestRequestModel BookingRequest);
     
     @DeleteMapping
-    void deleteBookingRequests(
-            @ApiParam(name = "ids", type = "body", value = "By id, you may remove booking request")
-            @RequestBody List<Integer> ids);
+    void deleteBookingRequests(@ApiParam(name = "ids", type = "body", value = "By id, you may remove booking request")
+                               @RequestBody List<Integer> ids);
 }

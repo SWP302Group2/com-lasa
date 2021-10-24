@@ -14,6 +14,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Collection;
 
 /**
@@ -69,7 +70,7 @@ public class Student implements Serializable {
     private Boolean gender;
     
     @Column(name = "birthday")
-    private LocalDate birthday;
+    private LocalDateTime birthday;
     
     @Column(name = "address")
     private String address;
@@ -78,7 +79,7 @@ public class Student implements Serializable {
     private String avatarUrl;
 
     @Builder
-    public Student(Integer id, String email, String mssv, String majorId, String name, String phone, Collection<BookingRequest> bookingRequests, Collection<FavoriteLecturer> favoriteLecturer, Integer status, Boolean gender, LocalDate birthday, String address, String avatarUrl) {
+    public Student(Integer id, String email, String mssv, String majorId, String name, String phone, Collection<BookingRequest> bookingRequests, Collection<FavoriteLecturer> favoriteLecturer, Integer status, Boolean gender, LocalDateTime birthday, String address, String avatarUrl) {
         this.id = id;
         this.email = email;
         this.mssv = mssv;

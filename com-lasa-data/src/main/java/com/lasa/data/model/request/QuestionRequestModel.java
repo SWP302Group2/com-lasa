@@ -1,7 +1,10 @@
 package com.lasa.data.model.request;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.lasa.data.model.entity.BookingRequest;
 import com.lasa.data.model.entity.Question;
+import com.lasa.data.model.view.BookingRequestViewModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -33,4 +36,5 @@ public class QuestionRequestModel {
                 .content(content)
                 .build();
     }
+
 }

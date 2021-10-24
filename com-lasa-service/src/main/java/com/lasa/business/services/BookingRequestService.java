@@ -6,8 +6,8 @@
  */
 package com.lasa.business.services;
 
+import com.lasa.data.model.request.BookingRequestRequestModel;
 import com.lasa.data.model.view.BookingRequestViewModel;
-import com.lasa.data.model.entity.BookingRequest;
 import com.lasa.data.model.utils.criteria.BookingRequestSearchCriteria;
 import com.lasa.data.model.utils.page.BookingRequestPage;
 import org.springframework.data.domain.Page;
@@ -31,9 +31,9 @@ public interface BookingRequestService {
 
     Boolean verifyBookingRequest(Integer studentId, Integer slotId);
 
-    BookingRequest createBookingRequest(BookingRequest bookingRequest);
+    BookingRequestViewModel createBookingRequest(BookingRequestRequestModel bookingRequestModel);
 
-    BookingRequest updateBookingRequest(BookingRequest bookingRequest);
+    BookingRequestViewModel updateBookingRequest(BookingRequestRequestModel bookingRequest);
 
     void deleteBookingRequests(List<Integer> ids);
 

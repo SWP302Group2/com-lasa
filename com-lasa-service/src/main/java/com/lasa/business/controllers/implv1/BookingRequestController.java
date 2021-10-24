@@ -6,12 +6,11 @@
 package com.lasa.business.controllers.implv1;
 
 import com.lasa.business.controllers.BookingRequestOperations;
-import com.lasa.business.controllers.utils.authorization.IsStudent;
 import com.lasa.business.services.BookingRequestService;
 import com.lasa.business.services.QuestionService;
+import com.lasa.data.model.request.BookingRequestRequestModel;
 import com.lasa.data.model.view.BookingRequestViewModel;
 import com.lasa.data.model.view.QuestionViewModel;
-import com.lasa.data.model.entity.BookingRequest;
 import com.lasa.data.model.entity.BookingRequest_;
 import com.lasa.data.model.utils.criteria.BookingRequestSearchCriteria;
 import com.lasa.data.model.utils.criteria.QuestionSearchCriteria;
@@ -90,9 +89,8 @@ public class BookingRequestController implements BookingRequestOperations {
     }
 
     @Override
-    @IsStudent
     @Transactional(isolation = Isolation.SERIALIZABLE)
-    public ResponseEntity<?> createBookingRequest(@RequestBody BookingRequest bookingRequest) throws ExceptionUtils.ArgumentException, ExceptionUtils.DuplicatedException {
+    public ResponseEntity<BookingRequestViewModel> createBookingRequest(@RequestBody BookingRequestRequestModel bookingRequest) throws ExceptionUtils.ArgumentException, ExceptionUtils.DuplicatedException {
         MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         //check questions size must <= 5, questions not empty, and student not already have a booking before
         if(Objects.isNull(bookingRequest.getQuestions()))
@@ -110,9 +108,8 @@ public class BookingRequestController implements BookingRequestOperations {
             throw new ExceptionUtils.ArgumentException("CONTENT_IS_EMPTY");
 
         bookingRequest.setStudentId(userDetails.getId());
-        bookingRequest.getQuestions().stream()
-                .forEach(t -> t.setBookingRequest(bookingRequest));
         bookingRequest.setStatus(1);
+        System.out.println(bookingRequest.getStudentId());
 
         return ResponseEntity
                 .status(HttpStatus.CREATED)
@@ -121,8 +118,8 @@ public class BookingRequestController implements BookingRequestOperations {
     }
 
     @Override
-    public BookingRequest updateBookingRequest(@RequestBody BookingRequest BookingRequest) {
-        return bookingRequestService.updateBookingRequest(BookingRequest);
+    public ResponseEntity<BookingRequestViewModel> updateBookingRequest(@RequestBody BookingRequestRequestModel BookingRequest) {
+        return ResponseEntity.ok(bookingRequestService.updateBookingRequest(BookingRequest));
     }
 
     @Override

@@ -1,6 +1,8 @@
 package com.lasa.business.services.implv1;
 
 import com.lasa.business.services.BookingRequestService;
+import com.lasa.data.model.entity.Question;
+import com.lasa.data.model.request.BookingRequestRequestModel;
 import com.lasa.data.model.view.BookingRequestViewModel;
 import com.lasa.data.model.entity.BookingRequest;
 import com.lasa.data.model.utils.criteria.BookingRequestSearchCriteria;
@@ -16,6 +18,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -71,8 +74,15 @@ public class BookingRequestServiceImpl implements BookingRequestService {
     }
 
     @Override
-    public BookingRequest createBookingRequest(BookingRequest bookingRequest) {
-        return bookingRepository.save(bookingRequest);
+    public BookingRequestViewModel createBookingRequest(BookingRequestRequestModel bookingRequestModel) {
+        BookingRequest bookingRequest = bookingRequestModel.toEntity();
+        System.out.println(bookingRequest.getStudentId());
+        List<Question> questions = new ArrayList<>();
+        bookingRequestModel.getQuestions().stream()
+                .forEach(t -> questions.add(t.toEntity(bookingRequest)));
+        bookingRequest.setQuestions(questions);
+
+        return new BookingRequestViewModel(bookingRepository.save(bookingRequest));
     }
 
 //    @Transactional
@@ -106,19 +116,19 @@ public class BookingRequestServiceImpl implements BookingRequestService {
 //    }
     @Override
     @Transactional
-    public BookingRequest updateBookingRequest(BookingRequest bookingRequest) {
+    public BookingRequestViewModel updateBookingRequest(BookingRequestRequestModel bookingRequestModel) {
         
         BookingRequest updatedBookingRequest = 
-                bookingRepository.getById(bookingRequest.getId());
+                bookingRepository.getById(bookingRequestModel.getId());
         
         if(updatedBookingRequest != null) {
-            if(bookingRequest.getTopicId() != null) {
-                updatedBookingRequest.setTopicId(bookingRequest.getTopicId());
+            if(bookingRequestModel.getTopicId() != null) {
+                updatedBookingRequest.setTopicId(bookingRequestModel.getTopicId());
             }
-            if(bookingRequest.getStatus() != null) {
-                updatedBookingRequest.setStatus(bookingRequest.getStatus());
+            if(bookingRequestModel.getStatus() != null) {
+                updatedBookingRequest.setStatus(bookingRequestModel.getStatus());
             }
-            return bookingRepository.save(updatedBookingRequest);
+            return new BookingRequestViewModel(bookingRepository.save(updatedBookingRequest));
         }
         return null;
     }

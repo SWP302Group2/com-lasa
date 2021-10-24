@@ -76,7 +76,6 @@ public class SlotController implements SlotOperations {
     }
 
     @Override
-    @IsLecturer
     public ResponseEntity<SlotViewModel> findById(Integer id) {
         return ResponseEntity.ok(slotService.findById(id));
     }

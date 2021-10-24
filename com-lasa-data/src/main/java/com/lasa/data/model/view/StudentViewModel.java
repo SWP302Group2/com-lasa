@@ -5,6 +5,7 @@ import lombok.*;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -19,7 +20,7 @@ public class StudentViewModel implements Serializable {
     private String phone;
     private Integer status;
     private Boolean gender;
-    private LocalDate birthday;
+    private LocalDateTime birthday;
     private String address;
     private String avatarUrl;
 

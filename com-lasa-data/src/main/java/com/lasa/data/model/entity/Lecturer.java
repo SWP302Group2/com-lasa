@@ -41,7 +41,6 @@ public class Lecturer implements Serializable {
     @Column(name = "phone")
     private String phone;
 
-    @Transient
     @Column(name = "meetingurl")
     private String meetingUrl;
     
