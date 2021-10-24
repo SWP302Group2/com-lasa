@@ -1,6 +1,7 @@
 package com.lasa.data.model.utils.criteria;
 
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -23,4 +24,12 @@ public class TopicSearchCriteria {
      
     @ApiModelProperty(name = "status", dataType = "Integer", value = "Search topic by status")
     private Integer status;
+
+    @Builder
+    public TopicSearchCriteria(String name, String courseId, List<String> majorId, Integer status) {
+        this.name = name;
+        this.courseId = courseId;
+        this.majorId = majorId;
+        this.status = status;
+    }
 }

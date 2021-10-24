@@ -2,6 +2,7 @@
 package com.lasa.business.services.implv1;
 
 import com.lasa.business.services.QuestionService;
+import com.lasa.data.model.request.QuestionRequestModel;
 import com.lasa.data.model.view.QuestionViewModel;
 import com.lasa.data.model.entity.Question;
 import com.lasa.data.model.utils.criteria.QuestionSearchCriteria;
@@ -66,18 +67,25 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public List<Question> createQuestions(List<Question> questions) {
-        return questionRepository.saveAll(questions);
+    public List<QuestionViewModel> createQuestions(List<QuestionRequestModel> questionModels) {
+        List<Question> questions = questionModels.stream()
+                .map(t -> t.toEntity())
+                .collect(Collectors.toList());
+
+        return questionRepository.saveAll(questions)
+                .stream()
+                .map(t -> new QuestionViewModel(t))
+                .collect(Collectors.toList());
     }
 
     @Transactional
     @Override
-    public List<Question> updateQuestions(List<Question> questions) {
+    public List<QuestionViewModel> updateQuestions(List<QuestionRequestModel> questions) {
         
         Set updateId = questions
                 .stream()
                 .filter(updateQuestion -> updateQuestion.getContent() != null)
-                .map(Question::getId)
+                .map(QuestionRequestModel::getId)
                 .collect(Collectors.toSet());
 
         List<Question> questionList = (List<Question>) questionRepository
@@ -86,16 +94,18 @@ public class QuestionServiceImpl implements QuestionService {
                 .collect(Collectors.toList());
 
         questionList.forEach((question -> {
-            Question updateQuestion = questions
+            QuestionRequestModel updateQuestion = questions
                     .stream()
                     .filter(t-> t.getId().equals(question.getId()))
                     .findAny()
                     .get();
-            
             question.setContent(updateQuestion.getContent());
         }));
 
-        return questionRepository.saveAll(questionList);
+        return questionRepository.saveAll(questionList)
+                .stream()
+                .map(t -> new QuestionViewModel(t))
+                .collect(Collectors.toList());
     }
 
     @Override

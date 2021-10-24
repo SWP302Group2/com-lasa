@@ -7,13 +7,14 @@ package com.lasa.business.controllers.implv1;
 
 import com.lasa.business.controllers.QuestionOperations;
 import com.lasa.business.services.QuestionService;
+import com.lasa.data.model.request.QuestionRequestModel;
 import com.lasa.data.model.view.QuestionViewModel;
-import com.lasa.data.model.entity.Question;
 import com.lasa.data.model.utils.criteria.QuestionSearchCriteria;
 import com.lasa.data.model.utils.page.QuestionPage;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -57,18 +58,20 @@ public class QuestionController implements QuestionOperations {
     }
     
     @Override
-    public List<Question> createQuestions(@RequestBody List<Question> questions) {
-        return questionService.createQuestions(questions);
+    public ResponseEntity<List<QuestionViewModel>> createQuestions(@RequestBody List<QuestionRequestModel> questions) {
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(questionService.createQuestions(questions));
     }
     
     @Override
-    public List<Question> updateQuestions(@RequestBody List<Question> questions) {
-        return questionService.updateQuestions(questions);
+    public ResponseEntity<List<QuestionViewModel>> updateQuestions(@RequestBody List<QuestionRequestModel> questions) {
+        return ResponseEntity.ok(questionService.updateQuestions(questions));
     }
     
     @Override
-    public void deleteQuestions(@RequestBody List<Integer> ids) {
+    public ResponseEntity deleteQuestions(@RequestBody List<Integer> ids) {
         questionService.deleteQuestion(ids);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
     
 }

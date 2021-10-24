@@ -6,6 +6,7 @@
 package com.lasa.business.services.implv1;
 
 import com.lasa.business.services.MajorService;
+import com.lasa.data.model.request.MajorRequestModel;
 import com.lasa.data.model.view.MajorViewModel;
 import com.lasa.data.model.entity.Major;
 import com.lasa.data.model.utils.criteria.MajorSearchCriteria;
@@ -23,6 +24,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -66,23 +68,32 @@ public class MajorServiceImpl implements MajorService {
 
     @Override
     public MajorViewModel findById(String id) {
-        return new MajorViewModel(majorRepository.findById(id).get());
+        Optional<Major> major = majorRepository.findById(id);
+        if(major.isPresent())
+            return new MajorViewModel(major.get());
+        return null;
     }
 
     @Override
-    public List<Major> createMajors(List<Major> majors) {
-        return majorRepository.saveAll(majors);
+    public List<MajorViewModel> createMajors(List<MajorRequestModel> majorModels) {
+        List<Major> majors = majorModels.stream()
+                .map(t -> t.toEntity())
+                .collect(Collectors.toList());
+        return majorRepository.saveAll(majors)
+                .stream()
+                .map(t -> new MajorViewModel(t))
+                .collect(Collectors.toList());
     }
 
     @Override
     @Transactional
-    public List<Major> updateMajors(List<Major> majors) {
+    public List<MajorViewModel> updateMajors(List<MajorRequestModel> majors) {
         
         Set updateId = majors
                 .stream()
                 .filter(t -> t.getDescription() != null
                             || t.getName() != null)
-                .map(Major::getId)
+                .map(MajorRequestModel::getId)
                 .collect(Collectors.toSet());
 
         List<Major> majorList = (List<Major>) majorRepository
@@ -91,7 +102,7 @@ public class MajorServiceImpl implements MajorService {
                 .collect(Collectors.toList());
 
         majorList.forEach((major -> {
-            Major updateMajor = majors
+            MajorRequestModel updateMajor = majors
                     .stream()
                     .filter(t-> t.getId().equals(major.getId()))
                     .findAny()
@@ -105,7 +116,10 @@ public class MajorServiceImpl implements MajorService {
             
         }));
 
-        return majorRepository.saveAll(majorList);
+        return majorRepository.saveAll(majorList)
+                .stream()
+                .map(t -> new MajorViewModel(t))
+                .collect(Collectors.toList());
     }
 
     @Override

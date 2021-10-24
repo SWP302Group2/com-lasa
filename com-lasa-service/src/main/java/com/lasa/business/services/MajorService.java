@@ -5,8 +5,8 @@
  */
 package com.lasa.business.services;
 
+import com.lasa.data.model.request.MajorRequestModel;
 import com.lasa.data.model.view.MajorViewModel;
-import com.lasa.data.model.entity.Major;
 import com.lasa.data.model.utils.criteria.MajorSearchCriteria;
 import com.lasa.data.model.utils.page.MajorPage;
 import com.lasa.data.model.utils.projection.MajorWithSimpleTopic;
@@ -30,9 +30,9 @@ public interface MajorService {
     
     MajorViewModel findById(String id);
     
-    List<Major> createMajors(List<Major> majors);
+    List<MajorViewModel> createMajors(List<MajorRequestModel> majors);
     
-    List<Major> updateMajors(List<Major> majors);
+    List<MajorViewModel> updateMajors(List<MajorRequestModel> majors);
     
     void deleteMajors(List<String> ids);
 }

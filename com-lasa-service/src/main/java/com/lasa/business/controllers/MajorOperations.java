@@ -6,8 +6,10 @@
 package com.lasa.business.controllers;
 
 import com.lasa.data.model.entity.Major;
+import com.lasa.data.model.request.MajorRequestModel;
 import com.lasa.data.model.utils.criteria.MajorSearchCriteria;
 import com.lasa.data.model.utils.page.MajorPage;
+import com.lasa.data.model.view.MajorViewModel;
 import io.swagger.annotations.ApiParam;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -34,14 +36,12 @@ public interface MajorOperations {
                                             @PathVariable(value = "id", required = false) String id);
 
     @PostMapping
-    void createMajors(
-            @ApiParam(name = "majors", type = "body", value = "Add a major")
-            @RequestBody List<Major> majors);
+    ResponseEntity<?> createMajors(@ApiParam(name = "majors", type = "body", value = "Add a major")
+                                   @RequestBody List<MajorRequestModel> majors);
 
     @PutMapping
-    List<Major> updateMajors(
-            @ApiParam(name = "majors", type = "body", value = "Update a major")
-            @RequestBody List<Major> majors);
+    ResponseEntity<?> updateMajors(@ApiParam(name = "majors", type = "body", value = "Update a major")
+                             @RequestBody List<MajorRequestModel> majors);
 
     @DeleteMapping
     void deleteMajors(

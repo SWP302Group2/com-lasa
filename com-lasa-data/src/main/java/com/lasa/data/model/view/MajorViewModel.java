@@ -4,6 +4,7 @@ import com.lasa.data.model.entity.Major;
 import lombok.*;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 
 @Getter
@@ -14,7 +15,7 @@ public class MajorViewModel implements Serializable {
     private String id;
     private String name;
     private String description;
-    private Collection<TopicViewModel> topics;
+    private Collection<TopicViewModel> topics = new ArrayList<>();
 
     public MajorViewModel(Major major) {
         this.id = major.getId();

@@ -5,7 +5,7 @@
  */
 package com.lasa.business.controllers;
 
-import com.lasa.data.model.entity.Question;
+import com.lasa.data.model.request.QuestionRequestModel;
 import com.lasa.data.model.utils.criteria.QuestionSearchCriteria;
 import com.lasa.data.model.utils.page.QuestionPage;
 import io.swagger.annotations.ApiParam;
@@ -28,19 +28,19 @@ public interface QuestionOperations {
     ResponseEntity<?> findById(
             @ApiParam(name = "ids", type = "Integer", value = "Get a question based on id.", required = true)
             @PathVariable Integer id);
-    
+
     @PostMapping
-    List<Question> createQuestions(
+    ResponseEntity<?> createQuestions(
             @ApiParam(name = "questions", type = "body", value = "Add a new question", required = true)
-            @RequestBody List<Question> questions);
-    
+            @RequestBody List<QuestionRequestModel> questions);
+
     @PutMapping
-    List<Question> updateQuestions(
+    ResponseEntity<?> updateQuestions(
             @ApiParam(name = "questions", type = "body", value = "Update a question", required = true)
-            @RequestBody List<Question> questions);
+            @RequestBody List<QuestionRequestModel> questions);
     
     @DeleteMapping
-    void deleteQuestions(
+    ResponseEntity deleteQuestions(
             @ApiParam(name = "ids", type = "body", value = "Delete a question by id", required = true)
             @RequestBody List<Integer> ids);
 }

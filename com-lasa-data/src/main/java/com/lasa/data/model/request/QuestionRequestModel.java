@@ -12,11 +12,13 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class QuestionRequestModel {
+    private Integer id;
     private Integer bookingId;
     private String content;
 
     public Question toEntity() {
         return Question.builder()
+                .id(id)
                 .bookingRequest(BookingRequest.builder()
                         .id(bookingId)
                         .build())

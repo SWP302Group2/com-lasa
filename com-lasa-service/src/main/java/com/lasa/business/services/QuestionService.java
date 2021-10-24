@@ -5,6 +5,7 @@
  */
 package com.lasa.business.services;
 
+import com.lasa.data.model.request.QuestionRequestModel;
 import com.lasa.data.model.view.QuestionViewModel;
 import com.lasa.data.model.entity.Question;
 import com.lasa.data.model.utils.criteria.QuestionSearchCriteria;
@@ -27,10 +28,10 @@ public interface QuestionService {
     
     QuestionViewModel findById(Integer id);
     
-    public List<Question> createQuestions(List<Question> questions);
+    List<QuestionViewModel> createQuestions(List<QuestionRequestModel> questions);
     
-    public List<Question> updateQuestions(List<Question> questions);
+    List<QuestionViewModel> updateQuestions(List<QuestionRequestModel> questions);
     
-    public void deleteQuestion(List<Integer> ids);
+    void deleteQuestion(List<Integer> ids);
     
 }
