@@ -27,7 +27,7 @@ public class AdminRequestModelTest {
         model.setId(id);
         model.setName(name);
         model.setEmail(email);
-        model.setBirthday(LocalDateTime.now());
+        model.setBirthday(birthDay);
         model.setPassword(password);
         model.setGender(gender);
         model.setPhone(phone);

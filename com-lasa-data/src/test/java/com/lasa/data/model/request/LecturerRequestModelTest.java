@@ -36,7 +36,7 @@ public class LecturerRequestModelTest {
         model.setMeetingUrl(meetingUrl);
         model.setStatus(status);
         model.setGender(gender); 
-        model.setBirthday(LocalDate.now());
+        model.setBirthday(birthDay);
         model.setAddress(address);
         model.setAvatarUrl(avatarUrl);
 

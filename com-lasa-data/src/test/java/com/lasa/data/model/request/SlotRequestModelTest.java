@@ -25,12 +25,12 @@ public class SlotRequestModelTest {
         Integer id = 1;
         Integer lecturerId = 1;
         LocalDateTime timeStart = LocalDateTime.now();
-        LocalDateTime timeEnd = LocalDateTime.now();
+        LocalDateTime timeEnd = LocalDateTime.now().plusMinutes(30);
 
         model.setId(id);
         model.setLecturerId(lecturerId);
-        model.setTimeStart(LocalDateTime.now());
-        model.setTimeEnd(LocalDateTime.now());
+        model.setTimeStart(timeStart);
+        model.setTimeEnd(timeEnd);
        
         Slot slot = model.toEntity();
 

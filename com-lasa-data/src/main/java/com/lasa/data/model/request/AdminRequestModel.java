@@ -26,9 +26,7 @@ public class AdminRequestModel {
     private String email;
     private String phone;
     private Boolean gender;
-    @JsonDeserialize(using = LocalDateDeserializer.class)
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-    @JsonFormat(pattern = "YYYY-MM-dd HH:mm:ss")
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss[.SSS][.SS][.S]")
     private LocalDateTime birthday;
     private String avatarUrl;
 

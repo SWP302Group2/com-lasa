@@ -10,6 +10,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.time.LocalDateTime;
+
 /**
  *
  * @author ASUS
@@ -26,6 +28,7 @@ public class StudentRequestModelTest {
         String phone = "0915241265";
         Integer status = 1;
         Boolean gender = true;
+        LocalDateTime birthDay = LocalDateTime.now();
 
         model.setId(id);
         model.setMssv(mssv); 
@@ -33,6 +36,7 @@ public class StudentRequestModelTest {
         model.setPhone(phone);
         model.setStatus(status); 
         model.setGender(gender);
+        model.setBirthday(birthDay);
           
         Student student = model.toEntity();
 
@@ -42,6 +46,7 @@ public class StudentRequestModelTest {
         Assertions.assertEquals(student.getPhone() ,phone);
         Assertions.assertEquals(student.getStatus(), status);
         Assertions.assertEquals(student.getGender() ,gender);
+        Assertions.assertEquals(student.getBirthday(), birthDay);
         
     }
     

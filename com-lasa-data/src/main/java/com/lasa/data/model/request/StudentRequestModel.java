@@ -11,6 +11,7 @@ import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -28,7 +29,7 @@ public class StudentRequestModel {
     @JsonDeserialize(using = LocalDateDeserializer.class)
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     @JsonFormat(pattern = "YYYY-MM-dd HH:mm:ss")
-    private LocalDate birthday;
+    private LocalDateTime birthday;
     private String address;
     private String avatarUrl;
 
