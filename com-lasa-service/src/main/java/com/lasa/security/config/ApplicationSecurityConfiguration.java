@@ -2,6 +2,7 @@ package com.lasa.security.config;
 
 import com.lasa.security.filter.ExceptionHandlerFilter;
 import com.lasa.security.filter.JwtRequestFilter;
+import com.lasa.security.filter.UUIDHandlerFilter;
 import com.lasa.security.utils.jwt.JwtConfig;
 import com.lasa.security.utils.jwt.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,14 +40,20 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
     private final JwtConfig jwtConfig;
     private final JwtRequestFilter jwtRequestFilter;
     private final ExceptionHandlerFilter exceptionHandlerFilter;
+    private final UUIDHandlerFilter uuidHandlerFilter;
 
     @Autowired
-    public ApplicationSecurityConfiguration(UserDetailsService userDetailsService, JwtUtil jwtUtil, JwtConfig jwtConfig, JwtRequestFilter jwtRequestFilter, ExceptionHandlerFilter exceptionHandlerFilter) {
+    public ApplicationSecurityConfiguration(UserDetailsService userDetailsService,
+                                            JwtUtil jwtUtil, JwtConfig jwtConfig,
+                                            JwtRequestFilter jwtRequestFilter,
+                                            ExceptionHandlerFilter exceptionHandlerFilter,
+                                            UUIDHandlerFilter uuidHandlerFilter) {
         this.userDetailsService = userDetailsService;
         this.jwtUtil = jwtUtil;
         this.jwtConfig = jwtConfig;
         this.jwtRequestFilter = jwtRequestFilter;
         this.exceptionHandlerFilter = exceptionHandlerFilter;
+        this.uuidHandlerFilter = uuidHandlerFilter;
     }
 
     @Override
@@ -86,6 +93,7 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         http
+                .addFilterBefore(uuidHandlerFilter, LogoutFilter.class)
                 .addFilterBefore(exceptionHandlerFilter, LogoutFilter.class)
                 .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
     }
