@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -122,12 +123,18 @@ public class BookingRequestServiceImpl implements BookingRequestService {
                 bookingRepository.getById(bookingRequestModel.getId());
         
         if(updatedBookingRequest != null) {
-            if(bookingRequestModel.getTopicId() != null) {
+            if(Objects.nonNull(bookingRequestModel.getStatus()))
                 updatedBookingRequest.setTopicId(bookingRequestModel.getTopicId());
-            }
-            if(bookingRequestModel.getStatus() != null) {
+
+            if(Objects.nonNull(bookingRequestModel.getStatus()))
                 updatedBookingRequest.setStatus(bookingRequestModel.getStatus());
-            }
+
+            if(Objects.nonNull(bookingRequestModel.getTitle()) )
+                updatedBookingRequest.setTitle(bookingRequestModel.getTitle());
+
+            if(Objects.nonNull(bookingRequestModel.getRating()))
+                updatedBookingRequest.setId(bookingRequestModel.getRating());
+
             return new BookingRequestViewModel(bookingRepository.save(updatedBookingRequest));
         }
         return null;

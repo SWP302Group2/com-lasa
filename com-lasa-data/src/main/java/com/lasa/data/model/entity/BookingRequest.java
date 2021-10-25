@@ -59,8 +59,11 @@ public class BookingRequest implements Serializable {
     @ApiModelProperty(name = "title", example = "ok", dataType = "String", position = 5) 
     private String title;
 
+    @Column(name = "rating")
+    private Integer rating;
+
     @Builder
-    public BookingRequest(Integer id, Integer studentId, Integer status, List<Question> questions, Integer topicId, Integer slotId, String title) {
+    public BookingRequest(Integer id, Integer studentId, Integer status, List<Question> questions, Integer topicId, Integer slotId, String title, Integer rating) {
         this.id = id;
         this.studentId = studentId;
         this.status = status;
@@ -68,5 +71,6 @@ public class BookingRequest implements Serializable {
         this.topicId = topicId;
         this.slotId = slotId;
         this.title = title;
+        this.rating = rating;
     }
 }

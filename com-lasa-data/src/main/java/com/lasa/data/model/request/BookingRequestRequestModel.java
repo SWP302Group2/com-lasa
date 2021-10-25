@@ -21,6 +21,7 @@ public class BookingRequestRequestModel {
     private Integer topicId;
     private Integer slotId;
     private String title;
+    private Integer rating;
 
     public BookingRequest toEntity() {
         return BookingRequest.builder()
@@ -30,6 +31,7 @@ public class BookingRequestRequestModel {
                 .topicId(topicId)
                 .slotId(slotId)
                 .title(title)
+                .rating(rating)
                 .build();
     }
 }

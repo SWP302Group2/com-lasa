@@ -22,6 +22,7 @@ public class BookingRequestViewModel implements Serializable {
     private Integer topicId;
     private Integer slotId;
     private String title;
+    private Integer rating;
 
     public BookingRequestViewModel(BookingRequest bookingRequest) {
         this.id = bookingRequest.getId();
@@ -30,6 +31,7 @@ public class BookingRequestViewModel implements Serializable {
         this.topicId = bookingRequest.getTopicId();
         this.slotId = bookingRequest.getSlotId();
         this.title = bookingRequest.getTitle();
+        this.rating = bookingRequest.getRating();
     }
 
     public void addQuestion(QuestionViewModel dto) {
