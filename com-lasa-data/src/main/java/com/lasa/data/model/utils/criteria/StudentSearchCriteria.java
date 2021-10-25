@@ -1,6 +1,7 @@
 package com.lasa.data.model.utils.criteria;
 
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -35,4 +36,19 @@ public class StudentSearchCriteria {
 
     @ApiModelProperty(name = "address", dataType = "String", value = "Search student by address")
     private String address;
+
+    private List<Integer> studentId;
+
+    @Builder
+    public StudentSearchCriteria(String email, String mssv, List<String> majorId, String name, String phone, Integer status, Boolean gender, String address, List<Integer> studentId) {
+        this.email = email;
+        this.mssv = mssv;
+        this.majorId = majorId;
+        this.name = name;
+        this.phone = phone;
+        this.status = status;
+        this.gender = gender;
+        this.address = address;
+        this.studentId = studentId;
+    }
 }

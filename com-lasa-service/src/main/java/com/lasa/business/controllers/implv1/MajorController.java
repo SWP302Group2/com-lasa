@@ -112,7 +112,7 @@ public class MajorController implements MajorOperations {
             return ResponseEntity.ok(majorViewModel);
         }
 
-        private List<TopicViewModel> getTopics (List < String > majorIds) {
+        private List<TopicViewModel> getTopics (List<String> majorIds) {
             return topicService.findWithArgument(TopicSearchCriteria.builder()
                     .majorId(majorIds)
                     .build());

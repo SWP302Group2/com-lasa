@@ -30,6 +30,7 @@ public class SlotRequestModel {
     private List<Integer> topics;
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss[.SSS][.SS][.S]")
     private LocalDateTime timeEnd;
+    private Integer status;
 
     public Slot toEntity() {
         return Slot.builder()
@@ -37,6 +38,7 @@ public class SlotRequestModel {
                 .lecturerId(lecturerId)
                 .timeStart(timeStart)
                 .timeEnd(timeEnd)
+                .status(status)
                 .build();
     }
 }

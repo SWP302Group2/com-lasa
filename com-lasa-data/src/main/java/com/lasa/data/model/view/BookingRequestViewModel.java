@@ -18,6 +18,7 @@ public class BookingRequestViewModel implements Serializable {
     private Integer id;
     private Integer studentId;
     private Integer status;
+    private StudentViewModel student;
     private List<QuestionViewModel> questions = new ArrayList<>();
     private Integer topicId;
     private Integer slotId;

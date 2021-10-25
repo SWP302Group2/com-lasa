@@ -8,18 +8,22 @@ package com.lasa.business.controllers.implv1;
 import com.lasa.business.controllers.BookingRequestOperations;
 import com.lasa.business.services.BookingRequestService;
 import com.lasa.business.services.QuestionService;
+import com.lasa.business.services.StudentService;
 import com.lasa.data.model.request.BookingRequestRequestModel;
+import com.lasa.data.model.utils.criteria.StudentSearchCriteria;
 import com.lasa.data.model.view.BookingRequestViewModel;
 import com.lasa.data.model.view.QuestionViewModel;
 import com.lasa.data.model.entity.BookingRequest_;
 import com.lasa.data.model.utils.criteria.BookingRequestSearchCriteria;
 import com.lasa.data.model.utils.criteria.QuestionSearchCriteria;
 import com.lasa.data.model.utils.page.BookingRequestPage;
+import com.lasa.data.model.view.StudentViewModel;
 import com.lasa.security.appuser.MyUserDetails;
 import com.lasa.security.utils.exception.ExceptionUtils;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -34,6 +38,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -46,23 +51,72 @@ public class BookingRequestController implements BookingRequestOperations {
 
     private final BookingRequestService bookingRequestService;
     private final QuestionService questionService;
+    private final StudentService studentService;
     private static final int QUESTIONS_SIZE = 5;
     private static final String QUESTIONS_SIZE_STRING = "FIVE";
 
     @Autowired
     public BookingRequestController(@Qualifier("BookingRequestServiceImplV1") BookingRequestService service,
-                                    @Qualifier("QuestionServiceImplV1") QuestionService questionService) {
+                                    @Qualifier("QuestionServiceImplV1") QuestionService questionService,
+                                    @Qualifier("StudentServiceImplV1") StudentService studentService) {
         this.bookingRequestService = service;
         this.questionService = questionService;
+        this.studentService = studentService;
     }
 
     @Override
     public ResponseEntity<?> findWithArguments(BookingRequestPage bookingRequestPage, BookingRequestSearchCriteria searchCriteria) {
-        if(bookingRequestPage.isPaging())
-            return ResponseEntity.ok(bookingRequestService.findAll(bookingRequestPage, searchCriteria));
-        else
-            return ResponseEntity.ok(bookingRequestService.findAll(searchCriteria));
+        if(bookingRequestPage.isPaging()) {
+            Page<BookingRequestViewModel> page = bookingRequestService.findAll(bookingRequestPage, searchCriteria);
 
+            if(searchCriteria.getGetStudent().equals(true)) {
+                List<Integer> studentIds = page.stream()
+                        .map(t -> t.getStudentId())
+                        .collect(Collectors.toList());
+
+                List<StudentViewModel> students = getStudents(studentIds);
+                page.stream()
+                        .forEach(t -> {
+                            StudentViewModel student = students.stream()
+                                    .filter(x -> t.getId().equals(t.getStudentId()))
+                                    .findAny()
+                                    .get();
+                            t.setStudent(student);
+                        });
+            }
+
+            return ResponseEntity.ok(page);
+        }
+        else {
+            List<BookingRequestViewModel> list = bookingRequestService.findAll(searchCriteria);
+
+            if(searchCriteria.getGetStudent().equals(true)) {
+                List<Integer> studentIds = list.stream()
+                        .map(t -> t.getStudentId())
+                        .collect(Collectors.toList());
+
+                List<StudentViewModel> students = getStudents(studentIds);
+                list.stream()
+                        .forEach(t -> {
+                            StudentViewModel student = students.stream()
+                                    .filter(x -> t.getId().equals(t.getStudentId()))
+                                    .findAny()
+                                    .get();
+                            t.setStudent(student);
+                        });
+            }
+
+            return ResponseEntity.ok(list);
+        }
+
+
+    }
+
+    private List<StudentViewModel> getStudents(List<Integer> ids) {
+        StudentSearchCriteria searchCriteria = StudentSearchCriteria.builder()
+                .studentId(ids)
+                .build();
+        return studentService.findWithArgument(searchCriteria);
     }
 
     @Override
