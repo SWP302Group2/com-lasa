@@ -78,7 +78,7 @@ public class BookingRequestController implements BookingRequestOperations {
                 page.stream()
                         .forEach(t -> {
                             StudentViewModel student = students.stream()
-                                    .filter(x -> t.getId().equals(t.getStudentId()))
+                                    .filter(x -> x.getId().equals(t.getStudentId()))
                                     .findAny()
                                     .get();
                             t.setStudent(student);
@@ -99,7 +99,7 @@ public class BookingRequestController implements BookingRequestOperations {
                 list.stream()
                         .forEach(t -> {
                             StudentViewModel student = students.stream()
-                                    .filter(x -> t.getId().equals(t.getStudentId()))
+                                    .filter(x -> x.getId().equals(t.getStudentId()))
                                     .findAny()
                                     .get();
                             t.setStudent(student);
