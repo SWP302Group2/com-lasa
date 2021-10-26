@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +25,7 @@ public class BookingRequestViewModel implements Serializable {
     private Integer slotId;
     private String title;
     private Integer rating;
+    private LocalDateTime createTime;
 
     public BookingRequestViewModel(BookingRequest bookingRequest) {
         this.id = bookingRequest.getId();
@@ -33,6 +35,7 @@ public class BookingRequestViewModel implements Serializable {
         this.slotId = bookingRequest.getSlotId();
         this.title = bookingRequest.getTitle();
         this.rating = bookingRequest.getRating();
+        this.createTime = bookingRequest.getCreateTime();
     }
 
     public void addQuestion(QuestionViewModel dto) {
