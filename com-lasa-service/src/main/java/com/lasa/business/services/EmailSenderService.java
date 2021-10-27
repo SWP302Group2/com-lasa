@@ -8,6 +8,6 @@ import javax.mail.MessagingException;
 public interface EmailSenderService {
     public void sendEmailWithAttachment(String toEmail,
                                         String body,
-                                        String subject,
-                                        String attachment) throws MessagingException;
+                                        String subject
+                                        ) throws MessagingException;
 }

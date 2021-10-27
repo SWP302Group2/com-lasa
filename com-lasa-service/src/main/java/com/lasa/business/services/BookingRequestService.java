@@ -6,6 +6,7 @@
  */
 package com.lasa.business.services;
 
+import com.lasa.data.model.entity.BookingRequest;
 import com.lasa.data.model.request.BookingRequestRequestModel;
 import com.lasa.data.model.view.BookingRequestViewModel;
 import com.lasa.data.model.utils.criteria.BookingRequestSearchCriteria;
@@ -13,6 +14,7 @@ import com.lasa.data.model.utils.page.BookingRequestPage;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
+import javax.mail.MessagingException;
 import java.util.List;
 
 /**
@@ -37,4 +39,7 @@ public interface BookingRequestService {
 
     void deleteBookingRequests(List<Integer> ids);
 
+    void confirmBookingRequest(Integer bookingId, Integer status) throws MessagingException;
+
+    void announcedMailBeforeMeeting() throws MessagingException;
 }

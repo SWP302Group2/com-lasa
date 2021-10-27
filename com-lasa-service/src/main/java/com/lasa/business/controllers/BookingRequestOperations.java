@@ -5,6 +5,7 @@
  */
 package com.lasa.business.controllers;
 
+import com.lasa.data.model.entity.BookingRequest;
 import com.lasa.data.model.request.BookingRequestRequestModel;
 import com.lasa.data.model.utils.criteria.BookingRequestSearchCriteria;
 import com.lasa.data.model.utils.page.BookingRequestPage;
@@ -13,6 +14,7 @@ import io.swagger.annotations.ApiParam;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.mail.MessagingException;
 import java.util.List;
 
 /**
@@ -46,4 +48,9 @@ public interface BookingRequestOperations {
     @DeleteMapping
     ResponseEntity<?> deleteBookingRequests(@ApiParam(name = "ids", type = "body", value = "By id, you may remove booking request")
                                @RequestBody List<Integer> ids);
+
+    @GetMapping(value = "/confirm/{id}/{status}")
+    ResponseEntity<?> confirmBookingRequest(@ApiParam(name = "id", type = "Integer", value = "Confirm booking request")
+                               @PathVariable("id") Integer id,
+                               @PathVariable("status") Integer status) throws MessagingException;
 }

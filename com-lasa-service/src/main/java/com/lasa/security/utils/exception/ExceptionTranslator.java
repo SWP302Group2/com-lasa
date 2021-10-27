@@ -8,6 +8,8 @@ import com.lasa.security.utils.exception.ExceptionUtils.UserAccountException;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.UnsupportedJwtException;
 import io.jsonwebtoken.security.SignatureException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
@@ -28,6 +30,7 @@ import java.security.GeneralSecurityException;
 @RestControllerAdvice
 public class ExceptionTranslator {
 
+    private final Logger LOGGER = LogManager.getLogger(ExceptionTranslator.class);
    /* @ExceptionHandler(value = {Exception.class})
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ResponseObject processUnknownException(Exception e, HttpServletRequest request) {

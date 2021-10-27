@@ -7,8 +7,10 @@ package com.lasa.business.controllers.implv1;
 
 import com.lasa.business.controllers.BookingRequestOperations;
 import com.lasa.business.services.BookingRequestService;
+import com.lasa.business.services.EmailSenderService;
 import com.lasa.business.services.QuestionService;
 import com.lasa.business.services.StudentService;
+import com.lasa.data.model.entity.BookingRequest;
 import com.lasa.data.model.request.BookingRequestRequestModel;
 import com.lasa.data.model.utils.criteria.StudentSearchCriteria;
 import com.lasa.data.model.view.BookingRequestViewModel;
@@ -34,6 +36,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.mail.MessagingException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -54,7 +57,6 @@ public class BookingRequestController implements BookingRequestOperations {
     private final StudentService studentService;
     private static final int QUESTIONS_SIZE = 5;
     private static final String QUESTIONS_SIZE_STRING = "FIVE";
-    private final EmailSenderService emailSenderService;
 
 
     @Autowired
@@ -62,9 +64,8 @@ public class BookingRequestController implements BookingRequestOperations {
                                     @Qualifier("QuestionServiceImplV1") QuestionService questionService,
                                     @Qualifier("EmailSenderServiceImpl") EmailSenderService emailSenderService) {
         this.bookingRequestService = service;
-        this.questionService = questionService;                                     
+        this.questionService = questionService;
         this.emailSenderService = emailSenderService;
-
     }
 
     @Override
@@ -183,6 +184,13 @@ public class BookingRequestController implements BookingRequestOperations {
     public ResponseEntity<?> deleteBookingRequests(@RequestBody List<Integer> ids) {
         bookingRequestService.deleteBookingRequests(ids);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @Override
+    public ResponseEntity<?> confirmBookingRequest(@PathVariable  Integer id,
+                                      @PathVariable Integer status) throws MessagingException {
+         bookingRequestService.confirmBookingRequest(id, status);
+         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
 

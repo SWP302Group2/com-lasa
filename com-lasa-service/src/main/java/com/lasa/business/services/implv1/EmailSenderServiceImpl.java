@@ -20,7 +20,7 @@ public class EmailSenderServiceImpl implements EmailSenderService {
     @Autowired
     private JavaMailSender mailSender;
     @Override
-    public void sendEmailWithAttachment(String toEmail, String body, String subject, String attachment) throws MessagingException {
+    public void sendEmailWithAttachment(String toEmail, String body, String subject) throws MessagingException {
         MimeMessage mimeMessage = mailSender.createMimeMessage();
         MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage,true);
 
@@ -28,10 +28,6 @@ public class EmailSenderServiceImpl implements EmailSenderService {
         mimeMessageHelper.setTo(toEmail);
         mimeMessageHelper.setText(body);
         mimeMessageHelper.setSubject(subject);
-
-        FileSystemResource fileSystem = new FileSystemResource(new File(attachment));
-
-        mimeMessageHelper.addAttachment(fileSystem.getFilename(), fileSystem);
         mailSender.send(mimeMessage);
 
 
