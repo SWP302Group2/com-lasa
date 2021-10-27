@@ -24,4 +24,7 @@ public class BookingRequestSearchCriteria {
     
     @ApiModelProperty(name = "status", dataType = "Integer", value = "Search booking request by status")
     private Integer status;
+
+    @ApiModelProperty(name = "getStudent", dataType = "Boolean", value = "Get information of student make this booking request")
+    private Boolean getStudent = false;
 }

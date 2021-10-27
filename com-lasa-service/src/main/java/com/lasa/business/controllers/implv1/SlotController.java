@@ -109,6 +109,7 @@ public class SlotController implements SlotOperations {
         List<Integer> topicIds;
         MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         slotRequestModel.setLecturerId(userDetails.getId());
+        slotRequestModel.setStatus(1);
 
         if(slotRequestModel.getTimeStart().isAfter(slotRequestModel.getTimeEnd()))
             throw new ExceptionUtils.ArgumentException("TIME_START_AFTER_TIME_END");

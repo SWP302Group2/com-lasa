@@ -51,13 +51,17 @@ public class Slot implements Serializable {
     @Column(name = "timeend")
     private LocalDateTime timeEnd;
 
+    @Column(name = "status")
+    private Integer status;
+
     @Builder
-    public Slot(Integer id, Integer lecturerId, Collection<BookingRequest> bookingRequests, Collection<SlotTopicDetail> topics, LocalDateTime timeStart, LocalDateTime timeEnd) {
+    public Slot(Integer id, Integer lecturerId, Collection<BookingRequest> bookingRequests, Collection<SlotTopicDetail> topics, LocalDateTime timeStart, LocalDateTime timeEnd, Integer status) {
         this.id = id;
         this.lecturerId = lecturerId;
         this.bookingRequests = bookingRequests;
         this.topics = topics;
         this.timeStart = timeStart;
         this.timeEnd = timeEnd;
+        this.status = status;
     }
 }

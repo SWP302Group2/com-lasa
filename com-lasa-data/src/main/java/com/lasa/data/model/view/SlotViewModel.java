@@ -23,21 +23,26 @@ public class SlotViewModel implements Serializable {
     private Collection<BookingRequestViewModel> bookingRequests = new ArrayList<>();
     private LecturerViewModel lecturer;
     private LocalDateTime timeEnd;
+    private Integer status;
 
     public SlotViewModel(Slot slot) {
         this.id = slot.getId();
         this.lecturerId = slot.getLecturerId();
         this.timeStart = slot.getTimeStart();
         this.timeEnd = slot.getTimeEnd();
+        this.status = slot.getStatus();
     }
 
     @Builder
-    public SlotViewModel(Integer id, Integer lecturerId, LocalDateTime timeStart, Collection<TopicViewModel> topics, LocalDateTime timeEnd) {
+    public SlotViewModel(Integer id, Integer lecturerId, LocalDateTime timeStart, Collection<TopicViewModel> topics, Collection<BookingRequestViewModel> bookingRequests, LecturerViewModel lecturer, LocalDateTime timeEnd, Integer status) {
         this.id = id;
         this.lecturerId = lecturerId;
         this.timeStart = timeStart;
         this.topics = topics;
+        this.bookingRequests = bookingRequests;
+        this.lecturer = lecturer;
         this.timeEnd = timeEnd;
+        this.status = status;
     }
 
     public SlotViewModel SlotDTOWithTopics(Slot slot) {

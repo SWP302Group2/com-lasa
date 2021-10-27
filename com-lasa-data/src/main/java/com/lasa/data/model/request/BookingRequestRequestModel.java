@@ -1,11 +1,13 @@
 package com.lasa.data.model.request;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.lasa.data.model.entity.BookingRequest;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +23,9 @@ public class BookingRequestRequestModel {
     private Integer topicId;
     private Integer slotId;
     private String title;
+    private Integer rating;
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss[.SSS][.SS][.S]")
+    private LocalDateTime createTime;
 
     public BookingRequest toEntity() {
         return BookingRequest.builder()
@@ -30,6 +35,8 @@ public class BookingRequestRequestModel {
                 .topicId(topicId)
                 .slotId(slotId)
                 .title(title)
+                .rating(rating)
+                .createTime(createTime)
                 .build();
     }
 }

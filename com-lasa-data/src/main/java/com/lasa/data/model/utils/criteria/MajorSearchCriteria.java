@@ -11,5 +11,5 @@ import lombok.Setter;
 public class MajorSearchCriteria {
     @ApiModelProperty(name = "name", dataType = "String", value = "Search major by name")
     private String name;
-    private Boolean getTopic;
+    private Boolean getTopic = false;
 }
