@@ -1,4 +1,1 @@
-2021-10-24 21:03:14 WARN spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning 
-2021-10-24 21:18:27 WARN ACCOUNT_NOT_ENABLED 
-2021-10-24 21:19:07 WARN ACCOUNT_NOT_ENABLED 
-2021-10-24 21:19:58 WARN ACCOUNT_NOT_ENABLED 
+2021-10-28 23:16:59 WARN spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning 

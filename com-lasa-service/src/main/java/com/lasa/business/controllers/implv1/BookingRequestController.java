@@ -55,6 +55,7 @@ public class BookingRequestController implements BookingRequestOperations {
     private final BookingRequestService bookingRequestService;
     private final QuestionService questionService;
     private final StudentService studentService;
+    private final EmailSenderService emailSenderService;
     private static final int QUESTIONS_SIZE = 5;
     private static final String QUESTIONS_SIZE_STRING = "FIVE";
 
@@ -62,9 +63,11 @@ public class BookingRequestController implements BookingRequestOperations {
     @Autowired
     public BookingRequestController(@Qualifier("BookingRequestServiceImplV1") BookingRequestService service,
                                     @Qualifier("QuestionServiceImplV1") QuestionService questionService,
+                                    @Qualifier("StudentServiceImplV1") StudentService studentService,
                                     @Qualifier("EmailSenderServiceImpl") EmailSenderService emailSenderService) {
         this.bookingRequestService = service;
         this.questionService = questionService;
+        this.studentService = studentService;
         this.emailSenderService = emailSenderService;
     }
 
