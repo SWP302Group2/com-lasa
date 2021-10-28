@@ -193,7 +193,7 @@ public class BookingRequestServiceImpl implements BookingRequestService {
     }
 
     @Override
-//    @Scheduled(fixedRate = 2000L)
+    @Scheduled(fixedRate = 60000L)
     public void announcedMailBeforeMeeting() throws MessagingException {
         SimpleDateFormat dateFormat = new SimpleDateFormat(
                 "yyyy/MM/dd HH:mm:ss");
