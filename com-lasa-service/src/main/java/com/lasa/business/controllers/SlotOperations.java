@@ -13,8 +13,12 @@ import com.lasa.data.model.view.SlotViewModel;
 import com.lasa.security.utils.exception.ExceptionUtils;
 import io.swagger.annotations.ApiParam;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import java.util.List;
 
 /**
@@ -22,19 +26,20 @@ import java.util.List;
  * @author Admin
  */
 @RequestMapping("/default")
+@Validated
 public interface SlotOperations {
 
     @GetMapping
-    ResponseEntity<?> findWithArguments(SlotSearchCriteria searchCriteria, SlotPage slotPage) throws ExceptionUtils.ArgumentException;
+    ResponseEntity<?> findWithArguments(@Valid SlotSearchCriteria searchCriteria, SlotPage slotPage) throws ExceptionUtils.ArgumentException;
 
     @GetMapping(value = "/{id}")
     ResponseEntity<?> findById(@ApiParam(name = "id", type = "Integer", value = "Find a slot by id", required = true)
-                               @PathVariable Integer id);
+                               @Min(value = 1) @PathVariable Integer id);
 
     @GetMapping(value = "/{id}/booking-requests")
     ResponseEntity<?> findByIdIncludeBookingRequests(@ApiParam(name = "id", type = "Integer", value = "Find a slot by id", required = true)
-                                                     @PathVariable Integer id,
-                                                     @RequestParam(value = "stauts", required = false) Integer status);
+                                                     @Min(value = 1) @PathVariable Integer id,
+                                                     @Min(value = 1) @Max(value = 5) @RequestParam(value = "status", required = false) Integer status);
 
 
 

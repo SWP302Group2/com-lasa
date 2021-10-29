@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import java.util.List;
 
 
@@ -14,15 +16,17 @@ import java.util.List;
 public class BookingRequestSearchCriteria {
     
     @ApiModelProperty(name = "slotId", dataType = "Integer", value = "Search booking request by  slotIds")
-    private List<Integer> slotId;
+    private List<@Min(1) Integer> slotId;
     
     @ApiModelProperty(name = "studentId", dataType = "Integer", value = "Search booking request by studentIds")
-    private List<Integer> studentId;
+    private List<@Min(1) Integer> studentId;
      
     @ApiModelProperty(name = "topicId", dataType = "Integer", value = "Search booking request by topicIds")
-    private List<Integer> topicId;
+    private List<@Min(1) Integer> topicId;
     
     @ApiModelProperty(name = "status", dataType = "Integer", value = "Search booking request by status")
+    @Min(-1)
+    @Max(4)
     private Integer status;
 
     @ApiModelProperty(name = "getStudent", dataType = "Boolean", value = "Get information of student make this booking request")

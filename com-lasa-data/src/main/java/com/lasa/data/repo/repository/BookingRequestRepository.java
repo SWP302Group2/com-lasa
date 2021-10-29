@@ -25,5 +25,6 @@ public interface BookingRequestRepository extends JpaRepository<BookingRequest, 
 
     Optional<BookingRequest> findBookingRequestByStudentIdAndSlotId(Integer studentId, Integer slotId);
 
+    long countByStudentIdAndSlotId(Integer studentId, Integer slotId);
 
 }

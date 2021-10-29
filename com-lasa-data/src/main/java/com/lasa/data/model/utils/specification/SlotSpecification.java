@@ -38,7 +38,9 @@ public class SlotSpecification {
             if(Objects.nonNull(searchCriteria.getTopicId())) {
                 Join<Slot, SlotTopicDetail>  slotTopicJoin = root.join(Slot_.topics);
                 predicates.add(slotTopicJoin.get(SlotTopicDetail_.topic).get(Topic_.id).in(searchCriteria.getTopicId()));
+                query.distinct(true);
             }
+
 
             if(predicates.isEmpty())
                 return null;
