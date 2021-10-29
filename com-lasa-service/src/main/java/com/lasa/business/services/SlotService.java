@@ -7,7 +7,6 @@ package com.lasa.business.services;
 
 import com.lasa.data.model.request.SlotRequestModel;
 import com.lasa.data.model.view.SlotViewModel;
-import com.lasa.data.model.entity.Slot;
 import com.lasa.data.model.utils.criteria.SlotSearchCriteria;
 import com.lasa.data.model.utils.page.SlotPage;
 import org.springframework.data.domain.Page;
@@ -32,9 +31,7 @@ public interface SlotService {
 
     SlotViewModel createSlot(SlotRequestModel slot);
 
-    List<Slot> createSlots(List<Slot> slots);
-    
-    List<Slot> updateSlots(List<Slot> slots);
+    SlotViewModel updateSlots(SlotRequestModel slots);
     
     void deleteSlots(List<Integer> ids);
 }
