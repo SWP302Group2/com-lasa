@@ -1,4 +1,4 @@
-INSERT	INTO Lecturer(Email, nname, Phone, Status, Gender, Birthday, Address, AvatarURL)
+INSERT	INTO Lecturer(Email, name, Phone, Status, Gender, Birthday, Address, AvatarURL)
 VALUES ('khiemtd@fe.edu.vn',N'Tran Duy Khiem',null,1,null,null,null,null),
 ('linhnh@fe.edu.vn',N'Nguyen Hoang Linh',null,1,null,null,null,null),
 ('linhvt@fe.edu.vn',N'Vu Tung Linh',null,1,null,null,null,null),
