@@ -14,13 +14,12 @@ import lombok.Setter;
 import org.hibernate.validator.constraints.Range;
 import org.springframework.beans.factory.annotation.Autowired;
 
-<<<<<<< HEAD
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-=======
+
 import javax.validation.Valid;
 import javax.validation.constraints.*;
->>>>>>> daily-task
+
 import java.util.List;
 
 @Getter
