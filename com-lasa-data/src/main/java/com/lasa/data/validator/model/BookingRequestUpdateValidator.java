@@ -18,6 +18,8 @@ public class BookingRequestUpdateValidator implements ConstraintValidator<ValidB
 
     @Override
     public boolean isValid(Integer id, ConstraintValidatorContext constraintValidatorContext) {
-        return repository.existsById(id);
+        if(id <= 0)
+            return false;
+        return repository.countUpdatableBooking(id) == 1;
     }
 }

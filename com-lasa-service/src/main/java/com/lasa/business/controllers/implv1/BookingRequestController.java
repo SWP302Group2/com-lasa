@@ -154,7 +154,7 @@ public class BookingRequestController implements BookingRequestOperations {
     public ResponseEntity<BookingRequestViewModel> createBookingRequest(BookingRequestRequestModel bookingRequest) {
         Integer studentId = ((MyUserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId();
         if(!studentId.equals(bookingRequest.getStudentId()))
-            throw new BadCredentialsException("CREATE_BOOKING_ERROR");
+            throw new BadCredentialsException("PERMISSION_DENIED");
 
         bookingRequest.setStatus(1);
         return ResponseEntity

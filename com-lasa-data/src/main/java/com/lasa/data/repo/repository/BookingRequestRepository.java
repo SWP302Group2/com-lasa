@@ -27,4 +27,10 @@ public interface BookingRequestRepository extends JpaRepository<BookingRequest, 
 
     long countByStudentIdAndSlotId(Integer studentId, Integer slotId);
 
+    @Query("select count(b) from BookingRequest b where b.id = ?1 and b.status = 1")
+    long countUpdatableBooking(Integer id);
+
+    @Query("select count(b) from BookingRequest b where b.id = ?1 and b.status = 5")
+    long countRateableBooking(Integer id);
+
 }

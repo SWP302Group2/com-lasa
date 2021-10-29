@@ -18,6 +18,7 @@ public class BookingRequestValidator implements ConstraintValidator<ValidBooking
 
     @Override
     public boolean isValid(BookingRequestRequestModel bookingRequestRequestModel, ConstraintValidatorContext constraintValidatorContext) {
+
         return repository.countByStudentIdAndSlotId(bookingRequestRequestModel.getStudentId(), bookingRequestRequestModel.getSlotId()) == 0;
     }
 }

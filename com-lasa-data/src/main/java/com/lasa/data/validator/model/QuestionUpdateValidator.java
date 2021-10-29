@@ -24,7 +24,7 @@ public class QuestionUpdateValidator implements ConstraintValidator<ValidQuestio
             return true;
         else {
             if(bookingRequestRequestModel.getQuestions().isEmpty())
-                return true;
+                return false;
 
             int count = repository.countByIdAndBookingRequestIdIn(
                     bookingRequestRequestModel.getId(),

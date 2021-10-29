@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
+import java.util.Objects;
 
 public class TopicIdValidator implements ConstraintValidator<ValidTopicId, BookingRequestRequestModel> {
 
@@ -20,10 +21,16 @@ public class TopicIdValidator implements ConstraintValidator<ValidTopicId, Booki
 
     @Override
     public boolean isValid(BookingRequestRequestModel bookingRequestRequestModel, ConstraintValidatorContext constraintValidatorContext) {
+        if(Objects.nonNull(bookingRequestRequestModel.getId()) && Objects.nonNull(bookingRequestRequestModel.getTopicId())) {
+            if(bookingRequestRequestModel.getTopicId() <= 0 || bookingRequestRequestModel.getSlotId() <= 0)
+                return false;
 
-        return slotTopicDetailRepository.existsById(SlotTopicDetailKey.builder()
-                        .slotId(bookingRequestRequestModel.getSlotId())
-                        .topicId(bookingRequestRequestModel.getTopicId())
-                .build());
+            return slotTopicDetailRepository.existsById(SlotTopicDetailKey.builder()
+                    .slotId(bookingRequestRequestModel.getSlotId())
+                    .topicId(bookingRequestRequestModel.getTopicId())
+                    .build());
+        }
+
+        return true;
     }
 }

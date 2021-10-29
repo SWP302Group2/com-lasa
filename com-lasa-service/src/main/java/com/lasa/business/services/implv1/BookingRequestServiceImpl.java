@@ -132,8 +132,20 @@ public class BookingRequestServiceImpl implements BookingRequestService {
             if(Objects.nonNull(bookingRequestModel.getTitle()) )
                 updatedBookingRequest.setTitle(bookingRequestModel.getTitle());
 
-            if(Objects.nonNull(bookingRequestModel.getRating()))
+            if(Objects.nonNull(bookingRequestModel.getRating())) {
                 updatedBookingRequest.setId(bookingRequestModel.getRating());
+                //after rated booking status = 6
+                updatedBookingRequest.setStatus(6);
+            }
+            if(Objects.nonNull(bookingRequestModel.getQuestions()))
+                updatedBookingRequest.getQuestions().stream()
+                        .forEach(t -> {
+                            bookingRequestModel.getQuestions().stream()
+                                    .forEach(x -> {
+                                        if(x.getId().equals(t.getId()) && !x.getContent().equals(""))
+                                            t.setContent(x.getContent());
+                                    });
+                        });
 
             return new BookingRequestViewModel(bookingRepository.save(updatedBookingRequest));
         }
