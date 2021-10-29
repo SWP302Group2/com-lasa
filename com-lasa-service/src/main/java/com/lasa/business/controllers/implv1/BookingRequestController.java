@@ -27,6 +27,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
@@ -150,7 +151,11 @@ public class BookingRequestController implements BookingRequestOperations {
     @Override
     @Transactional
     @IsStudent
-    public ResponseEntity<BookingRequestViewModel> createBookingRequest(BookingRequestRequestModel bookingRequest) throws ExceptionUtils.ArgumentException, ExceptionUtils.DuplicatedException {
+    public ResponseEntity<BookingRequestViewModel> createBookingRequest(BookingRequestRequestModel bookingRequest) {
+        Integer studentId = ((MyUserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId();
+        if(!studentId.equals(bookingRequest.getStudentId()))
+            throw new BadCredentialsException("CREATE_BOOKING_ERROR");
+
         bookingRequest.setStatus(1);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
