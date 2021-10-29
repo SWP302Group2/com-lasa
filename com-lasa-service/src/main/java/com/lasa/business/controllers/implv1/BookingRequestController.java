@@ -6,6 +6,7 @@
 package com.lasa.business.controllers.implv1;
 
 import com.lasa.business.controllers.BookingRequestOperations;
+import com.lasa.business.controllers.utils.authorization.IsStudent;
 import com.lasa.business.services.BookingRequestService;
 import com.lasa.business.services.QuestionService;
 import com.lasa.business.services.StudentService;
@@ -29,11 +30,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+import javax.validation.constraints.Min;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -65,7 +69,8 @@ public class BookingRequestController implements BookingRequestOperations {
     }
 
     @Override
-    public ResponseEntity<?> findWithArguments(BookingRequestPage bookingRequestPage, BookingRequestSearchCriteria searchCriteria) {
+    public ResponseEntity<?> findWithArguments(BookingRequestPage bookingRequestPage,
+                                               BookingRequestSearchCriteria searchCriteria) {
         if(bookingRequestPage.isPaging()) {
             Page<BookingRequestViewModel> page = bookingRequestService.findAll(bookingRequestPage, searchCriteria);
 
@@ -120,7 +125,7 @@ public class BookingRequestController implements BookingRequestOperations {
     }
 
     @Override
-    public ResponseEntity<BookingRequestViewModel> findById(@PathVariable Integer id) {
+    public ResponseEntity<BookingRequestViewModel> findById(Integer id) {
         return ResponseEntity.ok(bookingRequestService.findByBookingRequestId(id));
     }
 
@@ -143,8 +148,9 @@ public class BookingRequestController implements BookingRequestOperations {
     }
 
     @Override
-    @Transactional(isolation = Isolation.SERIALIZABLE)
-    public ResponseEntity<BookingRequestViewModel> createBookingRequest(@RequestBody BookingRequestRequestModel bookingRequest) throws ExceptionUtils.ArgumentException, ExceptionUtils.DuplicatedException {
+    @Transactional
+    @IsStudent
+    public ResponseEntity<BookingRequestViewModel> createBookingRequest(BookingRequestRequestModel bookingRequest) throws ExceptionUtils.ArgumentException, ExceptionUtils.DuplicatedException {
         MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         //check questions size must <= 5, questions not empty, and student not already have a booking before
         if(Objects.isNull(bookingRequest.getQuestions()))
@@ -172,7 +178,7 @@ public class BookingRequestController implements BookingRequestOperations {
     }
 
     @Override
-    public ResponseEntity<BookingRequestViewModel> updateBookingRequest(@RequestBody BookingRequestRequestModel BookingRequest) {
+    public ResponseEntity<BookingRequestViewModel> updateBookingRequest(BookingRequestRequestModel BookingRequest) {
         return ResponseEntity.ok(bookingRequestService.updateBookingRequest(BookingRequest));
     }
 

@@ -8,8 +8,10 @@ package com.lasa.data.repo.repository;
 import com.lasa.data.model.entity.Lecturer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -23,6 +25,8 @@ public interface LecturerRepository extends JpaRepository<Lecturer, Integer>, Jp
     Optional<Lecturer> findByName(String name);
 
     Optional<Lecturer> findLecturerByEmail(String email);
+
+    long countById(Integer id);
 
    /* @Override
     @EntityGraph(attributePaths = {"students.student", "slots"})

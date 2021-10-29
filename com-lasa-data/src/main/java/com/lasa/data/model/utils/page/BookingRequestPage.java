@@ -7,15 +7,19 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.domain.Sort;
 
+import javax.validation.constraints.Min;
+
 @Getter
 @Setter
 @NoArgsConstructor
 public class BookingRequestPage {
 
     @ApiModelProperty(name = "page", value = "number of page", dataType = "Integer")
+    @Min(0)
     private Integer page = 0;
 
     @ApiModelProperty(name = "size", value = "number of element in page", dataType = "Integer")
+    @Min(0)
     private Integer size = 10;
 
     @ApiModelProperty(

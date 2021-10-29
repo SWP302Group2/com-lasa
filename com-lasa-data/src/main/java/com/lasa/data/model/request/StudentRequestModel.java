@@ -41,6 +41,7 @@ public class StudentRequestModel {
                 .birthday(birthday)
                 .avatarUrl(avatarUrl)
                 .address(address)
+                .majorId(majorId)
                 .build();
     }
 }

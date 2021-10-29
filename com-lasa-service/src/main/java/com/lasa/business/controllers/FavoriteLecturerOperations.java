@@ -5,13 +5,15 @@
  */
 package com.lasa.business.controllers;
 
-import com.lasa.data.model.entity.FavoriteLecturer;
 import com.lasa.data.model.entity.key.FavoriteLecturerKey;
+import com.lasa.data.model.request.FavoriteLecturerRequestModel;
 import com.lasa.data.model.utils.criteria.FavoriteLecturerSearchCriteria;
+import com.lasa.data.validator.model.ValidList;
 import io.swagger.annotations.ApiParam;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -25,12 +27,12 @@ public interface FavoriteLecturerOperations {
     ResponseEntity<?> findWithArguments(FavoriteLecturerSearchCriteria searchCriteria);
 
     @PostMapping
-    List<FavoriteLecturer> createFavoriteLecturer(
+    ResponseEntity<?> createFavoriteLecturer(
             @ApiParam(name = "favoriteLecturers", type = "body", value = "Create a favorite lecturer", required = true)
-            @RequestBody List<FavoriteLecturer> favoriteLecturers);
+            @Valid @RequestBody ValidList<FavoriteLecturerRequestModel> favoriteLecturers);
     
     @DeleteMapping
-    void deleteFavoriteLecturers(
+    ResponseEntity<?> deleteFavoriteLecturers(
              @ApiParam(name = "favoriteLecturers", type = "body", value = "Delete a favorite lecturer", required = false)
-            @RequestBody List<FavoriteLecturerKey> ids);
+             @RequestBody List<FavoriteLecturerKey> ids);
 }
