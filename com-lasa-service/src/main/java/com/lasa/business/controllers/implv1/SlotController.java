@@ -11,18 +11,14 @@ import com.lasa.business.services.BookingRequestService;
 import com.lasa.business.services.LecturerTopicDetailService;
 import com.lasa.business.services.SlotService;
 import com.lasa.business.services.SlotTopicDetailService;
+import com.lasa.data.model.request.SlotBookingRequestModel;
 import com.lasa.data.model.request.SlotRequestModel;
 import com.lasa.data.model.request.SlotTopicDetailRequestModel;
 import com.lasa.data.model.view.BookingRequestViewModel;
-import com.lasa.data.model.view.SlotTopicDetailViewModel;
 import com.lasa.data.model.view.SlotViewModel;
-import com.lasa.data.model.entity.Slot;
-import com.lasa.data.model.entity.SlotTopicDetail;
-import com.lasa.data.model.entity.Topic;
 import com.lasa.data.model.utils.criteria.BookingRequestSearchCriteria;
 import com.lasa.data.model.utils.criteria.SlotSearchCriteria;
 import com.lasa.data.model.utils.page.SlotPage;
-import com.lasa.data.model.view.TopicViewModel;
 import com.lasa.security.appuser.MyUserDetails;
 import com.lasa.security.utils.exception.ExceptionUtils;
 import io.swagger.annotations.Api;
@@ -30,6 +26,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -105,21 +103,19 @@ public class SlotController implements SlotOperations {
     @Override
     @Transactional
     @IsLecturer
-    public ResponseEntity<SlotViewModel> createSlot(SlotRequestModel slotRequestModel) throws ExceptionUtils.ArgumentException {
+    @PreAuthorize("#slotRequestModel.lecturerId = authentication.principal.id")
+    public ResponseEntity<SlotViewModel> createSlot(SlotRequestModel slotRequestModel){
         List<Integer> topicIds;
-        MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        slotRequestModel.setLecturerId(userDetails.getId());
-        slotRequestModel.setStatus(1);
+        Integer lecturerId = ((MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId();
+        if(!lecturerId.equals(slotRequestModel.getLecturerId()))
+            throw new BadCredentialsException("PERMISSION_DENIED");
 
-        if(slotRequestModel.getTimeStart().isAfter(slotRequestModel.getTimeEnd()))
-            throw new ExceptionUtils.ArgumentException("TIME_START_AFTER_TIME_END");
-        else if(slotService.verifySlot(slotRequestModel).equals(false))
-            throw new ExceptionUtils.ArgumentException("SLOT_DUPLICATED");
-        else if(Objects.isNull(slotRequestModel.getTopics()))
+        if(Objects.isNull(slotRequestModel.getTopics()))
             topicIds = lecturerTopicDetailService.findListTopicIdByLecturerId(slotRequestModel.getLecturerId());
         else
             topicIds = slotRequestModel.getTopics();
 
+        slotRequestModel.setStatus(1);
         SlotViewModel viewModel = slotService.createSlot(slotRequestModel);
         List<SlotTopicDetailRequestModel> slotTopicDetails = topicIds.stream()
                 .map(t -> SlotTopicDetailRequestModel.builder()
@@ -127,6 +123,7 @@ public class SlotController implements SlotOperations {
                         .topicId(t)
                         .build()
                 ).collect(Collectors.toList());
+
         slotTopicDetailService.createSlotTopicDetails(slotTopicDetails);
 
         return ResponseEntity.status(HttpStatus.CREATED)
@@ -134,8 +131,17 @@ public class SlotController implements SlotOperations {
     }
 
     @Override
-    public List<Slot> updateSlots(List<Slot> slots) {
-        return slotService.updateSlots(slots);
+    @IsLecturer
+    @PreAuthorize("#slotRequestModel.lecturerId = authentication.principal.id")
+    public ResponseEntity<SlotViewModel> updateSlots(SlotRequestModel slotRequestModel) {
+        return ResponseEntity.ok(slotService.updateSlots(slotRequestModel));
+    }
+
+    @Override
+    @IsLecturer
+    @PreAuthorize("#model.lecturerId = authentication.principal.id && #id = authentication.principal.id")
+    public ResponseEntity<SlotViewModel> updateBookingRequests(Integer id, SlotBookingRequestModel model) {
+        return ResponseEntity.ok(slotService.acceptDenyBooking(model));
     }
 
     @Override

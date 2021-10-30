@@ -38,7 +38,7 @@ public interface BookingRequestOperations {
 
     @GetMapping(value = "/{id}/questions")
     ResponseEntity<?> findByIdIncludeQuestions(@ApiParam(name = "id", type = "Integer", value = "Get booking request by id")
-                                               @Min(0) @PathVariable("id") Integer id);
+                                               @Min(1) @PathVariable("id") Integer id);
 
 
     @PostMapping

@@ -29,4 +29,6 @@ public interface LecturerTopicDetailRepository extends JpaRepository<LecturerTop
 
     @Query("FROM LecturerTopicDetail l JOIN FETCH l.topic as t WHERE l.lecturer.id = ?1" )
     List<LecturerTopicDetail> findDetailWithTopicsByLecturerId(Integer lecturerId);
+
+    long countByLecturerId(Integer lecturerId);
 }
