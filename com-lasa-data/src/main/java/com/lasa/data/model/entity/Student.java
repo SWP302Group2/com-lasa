@@ -47,7 +47,7 @@ public class Student implements Serializable {
     @Column(name = "majorid")
     private String majorId;
     
-    @Column(name = "nname")
+    @Column(name = "name")
     private String name;
     
     @Column(name = "phone")

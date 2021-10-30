@@ -1320,7 +1320,7 @@ VALUES	(1, N'Where do you see yourself in five years?'),
 (599, N'How many pillows do you sleep with?'),
 (600, N'What would you sing at Karaoke night?');
 
-INSERT	INTO Student (Email, Mssv, MajorId, nname, Phone, Status, Gender, Birthday, Address, AvatarURL)
+INSERT	INTO Student (Email, Mssv, MajorId, name, Phone, Status, Gender, Birthday, Address, AvatarURL)
 VALUES	('chauvdpse62163@fpt.edu.vn','SE62163','SE',N'Võ Diệp Phước Châu','0901111111',1,null,null,null,null),
 ('phucvse63445@fpt.edu.vn','SE63445','SE',N'Cao Văn Phú','0901111111',1,null,null,null,null),
 ('trangvttsa140190@fpt.edu.vn','SA140190','SA',N'Vũ Thị Thùy Trang','0901111111',1,null,null,null,null),
@@ -1496,7 +1496,7 @@ VALUES	('chauvdpse62163@fpt.edu.vn','SE62163','SE',N'Võ Diệp Phước Châu',
 ('hoađttss160035@fpt.edu.vn','SS160035','SS',N'Đặng Thị Thanh Hoa','0901111111',1,null,null,null,null);
 
 
-INSERT	INTO Lecturer(Email,nname, Phone, MeetingURL, Status, Gender, Birthday, Address, AvatarURL)
+INSERT	INTO Lecturer(Email,name, Phone, MeetingURL, Status, Gender, Birthday, Address, AvatarURL)
 VALUES	('khiemtd@fe.edu.vn',N'Tran Duy Khiem',null,'https://meet.google.com/ryu-stnz-rww',1,null,null,null,null),
 ('linhnh@fe.edu.vn',N'Nguyễn Hoàng Linh',null,'https://meet.google.com/ryu-stnz-rww',1,null,null,null,null),
 ('linhvt@fe.edu.vn',N'Vũ Tùng Linh',null,'https://meet.google.com/ryu-stnz-rww',1,null,null,null,null),
