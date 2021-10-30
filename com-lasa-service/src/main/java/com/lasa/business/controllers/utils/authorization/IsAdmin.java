@@ -1,5 +1,6 @@
 package com.lasa.business.controllers.utils.authorization;
 
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 
 import java.lang.annotation.ElementType;
@@ -9,6 +10,6 @@ import java.lang.annotation.Target;
 
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
-@PreAuthorize("hasRole('ROLE_' + T(com.lasa.security.utils.permission.ApplicationUserRole).ADMIN.name())")
+@Secured("ROLE_ADMIN")
 public @interface IsAdmin {
 }

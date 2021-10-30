@@ -150,7 +150,6 @@ public class BookingRequestController implements BookingRequestOperations {
 
     @Override
     @Transactional
-    @IsStudent
     public ResponseEntity<BookingRequestViewModel> createBookingRequest(BookingRequestRequestModel bookingRequest) {
         Integer studentId = ((MyUserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId();
         if(!studentId.equals(bookingRequest.getStudentId()))
@@ -164,8 +163,13 @@ public class BookingRequestController implements BookingRequestOperations {
     }
 
     @Override
-    public ResponseEntity<BookingRequestViewModel> updateBookingRequest(BookingRequestRequestModel BookingRequest) {
-        return ResponseEntity.ok(bookingRequestService.updateBookingRequest(BookingRequest));
+    @IsStudent
+    public ResponseEntity<BookingRequestViewModel> updateBookingRequest(BookingRequestRequestModel bookingRequest) {
+        Integer studentId = ((MyUserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId();
+        if(!studentId.equals(bookingRequest.getStudentId()))
+            throw new BadCredentialsException("PERMISSION_DENIED");
+
+        return ResponseEntity.ok(bookingRequestService.updateBookingRequest(bookingRequest));
     }
 
     @Override

@@ -7,12 +7,19 @@ import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.lasa.data.model.entity.Slot;
+import com.lasa.data.validator.*;
+import com.lasa.data.validator.group.PostValidator;
+import com.lasa.data.validator.group.PutValidator;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.validator.constraints.Range;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -22,6 +29,10 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@ValidTimeStartAndTimeEnd(groups = PostValidator.class, message = "TIME_START_AND_TIME_END_NOT_VALID")
+@ValidSlotCreate(groups = PostValidator.class, message = "SLOT_DUPLICATE_OR_NOT_VALID")
+@ValidSlotTopicForCreateSlot(groups = PostValidator.class, message = "TOPICS_EMPTY_OR_NOT_VALID")
+@ValidSlotUpdate(groups = PutValidator.class, message = "SLOT_NOT_AVAILABLE_FOR_UPDATE")
 public class SlotRequestModel {
     private Integer id;
     private Integer lecturerId;
@@ -30,6 +41,8 @@ public class SlotRequestModel {
     private List<Integer> topics;
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss[.SSS][.SS][.S]")
     private LocalDateTime timeEnd;
+
+    @ValidOneOf(value = 0, message = "STATUS_NOT_VALID", groups = PutValidator.class)
     private Integer status;
 
     public Slot toEntity() {

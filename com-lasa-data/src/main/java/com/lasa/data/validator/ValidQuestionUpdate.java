@@ -7,7 +7,7 @@ import javax.validation.Payload;
 import java.lang.annotation.*;
 
 @Documented
-@Target({ElementType.TYPE_USE})
+@Target({ElementType.TYPE})
 @Constraint(validatedBy = QuestionUpdateValidator.class)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ValidQuestionUpdate {

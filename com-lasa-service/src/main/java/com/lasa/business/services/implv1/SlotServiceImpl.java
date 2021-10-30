@@ -10,8 +10,8 @@ import com.lasa.business.services.LecturerTopicDetailService;
 import com.lasa.business.services.SlotService;
 import com.lasa.business.services.SlotTopicDetailService;
 import com.lasa.data.model.entity.*;
+import com.lasa.data.model.request.SlotBookingRequestModel;
 import com.lasa.data.model.request.SlotRequestModel;
-import com.lasa.data.model.request.SlotTopicDetailRequestModel;
 import com.lasa.data.model.view.LecturerViewModel;
 import com.lasa.data.model.view.SlotViewModel;
 import com.lasa.data.model.view.SlotTopicDetailViewModel;
@@ -29,6 +29,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -198,7 +199,7 @@ public class SlotServiceImpl implements SlotService {
 
     @Override
     public Boolean verifySlot(SlotRequestModel slot) {
-        if(slotRepository.countSlotByTimeStartAndTimeEndAndLecturerIdIn(slot.getTimeStart(), slot.getTimeEnd(), slot.getLecturerId()) > 0)
+        if(slotRepository.countActiveSlotByTimeStartAndTimeEndAndLecturerId(slot.getTimeStart(), slot.getTimeEnd(), slot.getLecturerId()) > 0)
             return false;
         return true;
     }
@@ -209,13 +210,44 @@ public class SlotServiceImpl implements SlotService {
     }
 
     @Override
-    public List<Slot> createSlots(List<Slot> slots) {
-        return slotRepository.saveAll(slots);
+    @Transactional
+    public SlotViewModel updateSlots(SlotRequestModel slotRequestModel) {
+        Slot slot = slotRepository.findById(slotRequestModel.getId()).get();
+
+        if(Objects.nonNull(slotRequestModel.getStatus())) {
+            slot.setStatus(slotRequestModel.getStatus());
+            if(slot.getStatus() == 0)
+                //if slot status = 0 => denied all booking
+                slot.getBookingRequests().forEach(t -> t.setStatus(-1));
+        }
+
+        return new SlotViewModel(slotRepository.save(slot));
+
     }
 
     @Override
-    public List<Slot> updateSlots(List<Slot> slots) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    @Transactional
+    public SlotViewModel acceptDenyBooking(SlotBookingRequestModel model) {
+        Slot slot = slotRepository.findById(model.getSlotId()).get();
+        if(model.getStatus().equals(2)) {
+            slot.setStatus(2);
+            List<BookingRequest> bookingRequests = new ArrayList<>(slot.getBookingRequests());
+            bookingRequests.forEach(t -> {
+                if(t.getId().equals(model.getBookingId()))
+                    t.setStatus(2);
+                else
+                    t.setStatus(-1);
+            });
+        }
+        if(model.getStatus().equals(-1)) {
+            List<BookingRequest> bookingRequests = new ArrayList<>(slot.getBookingRequests());
+            bookingRequests.stream().forEach(t -> {
+                if(t.getId().equals(model.getBookingId()))
+                    t.setStatus(-1);
+            });
+        }
+
+        return new SlotViewModel(slotRepository.save(slot));
     }
 
     @Override

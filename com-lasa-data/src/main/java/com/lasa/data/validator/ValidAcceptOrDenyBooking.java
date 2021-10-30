@@ -1,17 +1,16 @@
 package com.lasa.data.validator;
 
-import com.lasa.data.validator.model.BookingRequestRateValidator;
-import com.lasa.data.validator.model.BookingRequestUpdateValidator;
+import com.lasa.data.validator.model.AcceptOrDenyBookingValidator;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
 import java.lang.annotation.*;
 
-@Documented
 @Target({ElementType.TYPE})
-@Constraint(validatedBy = BookingRequestRateValidator.class)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface ValidBookingRequestRate {
+@Documented
+@Constraint(validatedBy = AcceptOrDenyBookingValidator.class)
+public @interface ValidAcceptOrDenyBooking {
     String message() default "";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
