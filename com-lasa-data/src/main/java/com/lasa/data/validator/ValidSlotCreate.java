@@ -8,7 +8,7 @@ import javax.validation.Payload;
 import java.lang.annotation.*;
 
 @Documented
-@Target({ElementType.TYPE_USE})
+@Target({ElementType.TYPE})
 @Constraint(validatedBy = SlotCreateValidator.class)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ValidSlotCreate {
