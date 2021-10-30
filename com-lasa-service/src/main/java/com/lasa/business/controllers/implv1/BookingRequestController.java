@@ -150,7 +150,6 @@ public class BookingRequestController implements BookingRequestOperations {
 
     @Override
     @Transactional
-    @IsStudent
     public ResponseEntity<BookingRequestViewModel> createBookingRequest(BookingRequestRequestModel bookingRequest) {
         Integer studentId = ((MyUserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId();
         if(!studentId.equals(bookingRequest.getStudentId()))
