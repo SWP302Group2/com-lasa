@@ -41,7 +41,6 @@ public class LecturerSearchCriteriaTest {
                 .createQuery("select l from Lecturer l where l.email like ?1", Lecturer.class)
                 .setParameter(1, "%" + searchEmail + "%")
                 .getResultList();
-        System.out.println(expectedList.size());
         Assertions.assertEquals(expectedList, actualList);
 
     }
@@ -55,11 +54,15 @@ public class LecturerSearchCriteriaTest {
                 .name(searchName)
                 .build();
 
+        List<Lecturer> actualList = lecturerRepository.findAll(LecturerSpecification.searchSpecification(searchCriteria));
+
         List<Lecturer> expectedList = entityManager.getEntityManager()
                 .createQuery("select l from Lecturer l where l.email like ?1 and l.name like ?2", Lecturer.class)
                 .setParameter(1, "%" + searchEmail + "%")
                 .setParameter(2, "%" + searchName + "%")
                 .getResultList();
+
+        Assertions.assertEquals(expectedList, actualList);
     }
 
 }
