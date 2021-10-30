@@ -24,15 +24,13 @@ public class LecturerRepositoryTest {
      
     public LecturerRepositoryTest() {
     }
-     @Test
+    /* @Test
     public void testFindByName() {  
-    /*    
          Lecturer lecturer = lecturerRepository
-                 .findByName("Tran Duy Khiem").get();     
-        String expectedLecturerName = "Tran Duy Khiem";
+                 .findByName("Trần Duy Khiêm").get();
+        String expectedLecturerName = "Trần Duy Khiêm";
         Assertions.assertEquals(lecturer.getName(), expectedLecturerName);
-        */
-    }
+    }*/
     
      @Test
     public void testFindLecturerByEmail() {      
@@ -40,7 +38,6 @@ public class LecturerRepositoryTest {
                  .findById(1).get();     
         String expectedLecturerEmail = "khiemtd@fe.edu.vn";
         Assertions.assertEquals(lecturer.getEmail(), expectedLecturerEmail);
-        
     }
    
 }

@@ -32,8 +32,7 @@ public class FavoriteLecturerRepositoryTest {
         List<FavoriteLecturer> favorite = favoriteRequestRepository.findAllLecturerAndStudentInFavoriteLecturer();
         Assertions.assertEquals(favorite.get(0).getStudent().getEmail(), expectedEmail);
         Assertions.assertEquals(favorite.get(0).getLecturer().getEmail(), expectedEmailLecturer);
-        */
-        
+*/
     }
 
     
