@@ -31,7 +31,7 @@ public class Topic implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     
-    @Column(name = "nname")   
+    @Column(name = "name")   
     private String name;
     
     @OneToMany(targetEntity = LecturerTopicDetail.class,mappedBy = "topic")

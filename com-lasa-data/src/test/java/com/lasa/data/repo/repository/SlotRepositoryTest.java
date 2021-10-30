@@ -29,10 +29,12 @@ public class SlotRepositoryTest {
      
      @Test
     public void testCountSlotByTimeStartAndTimeEndAndLecturerIdIn(){
+        
         LocalDateTime timeStart = LocalDateTime.parse("2021-10-08T09:43:32"); 
         LocalDateTime timeEnd = LocalDateTime.parse("2021-10-08T12:43:32");  
-        long count = slotRepository.countSlotByTimeStartAndTimeEndAndLecturerIdIn(timeStart, timeEnd, 1);
+        long count = slotRepository.countActiveSlotByTimeStartAndTimeEndAndLecturerId(timeStart, timeEnd, 1);
         Assertions.assertEquals(count, 18);    
+
     }
     
     
