@@ -35,7 +35,7 @@ public class Lecturer implements Serializable {
     @Column(name = "email")
     private String email;
 
-    @Column(name = "name")
+    @Column(name = "nname")
     private String name;
     
     @Column(name = "phone")
