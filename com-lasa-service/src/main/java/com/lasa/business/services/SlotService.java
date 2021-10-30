@@ -5,6 +5,7 @@
  */
 package com.lasa.business.services;
 
+import com.lasa.data.model.request.SlotBookingRequestModel;
 import com.lasa.data.model.request.SlotRequestModel;
 import com.lasa.data.model.view.SlotViewModel;
 import com.lasa.data.model.utils.criteria.SlotSearchCriteria;
@@ -32,6 +33,8 @@ public interface SlotService {
     SlotViewModel createSlot(SlotRequestModel slot);
 
     SlotViewModel updateSlots(SlotRequestModel slots);
+
+    SlotViewModel acceptDenyBooking(SlotBookingRequestModel model);
     
     void deleteSlots(List<Integer> ids);
 }

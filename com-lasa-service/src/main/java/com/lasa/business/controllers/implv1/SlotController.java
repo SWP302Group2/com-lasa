@@ -11,6 +11,7 @@ import com.lasa.business.services.BookingRequestService;
 import com.lasa.business.services.LecturerTopicDetailService;
 import com.lasa.business.services.SlotService;
 import com.lasa.business.services.SlotTopicDetailService;
+import com.lasa.data.model.request.SlotBookingRequestModel;
 import com.lasa.data.model.request.SlotRequestModel;
 import com.lasa.data.model.request.SlotTopicDetailRequestModel;
 import com.lasa.data.model.view.BookingRequestViewModel;
@@ -25,6 +26,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.transaction.annotation.Transactional;
@@ -101,6 +103,7 @@ public class SlotController implements SlotOperations {
     @Override
     @Transactional
     @IsLecturer
+    @PreAuthorize("#slotRequestModel.lecturerId = authentication.principal.id")
     public ResponseEntity<SlotViewModel> createSlot(SlotRequestModel slotRequestModel){
         List<Integer> topicIds;
         Integer lecturerId = ((MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId();
@@ -129,13 +132,16 @@ public class SlotController implements SlotOperations {
 
     @Override
     @IsLecturer
+    @PreAuthorize("#slotRequestModel.lecturerId = authentication.principal.id")
     public ResponseEntity<SlotViewModel> updateSlots(SlotRequestModel slotRequestModel) {
-        List<Integer> topicIds;
-        Integer lecturerId = ((MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId();
-        if(!lecturerId.equals(slotRequestModel.getLecturerId()))
-            throw new BadCredentialsException("PERMISSION_DENIED");
-
         return ResponseEntity.ok(slotService.updateSlots(slotRequestModel));
+    }
+
+    @Override
+    @IsLecturer
+    @PreAuthorize("#model.lecturerId = authentication.principal.id && #id = authentication.principal.id")
+    public ResponseEntity<SlotViewModel> updateBookingRequests(Integer id, SlotBookingRequestModel model) {
+        return ResponseEntity.ok(slotService.acceptDenyBooking(model));
     }
 
     @Override

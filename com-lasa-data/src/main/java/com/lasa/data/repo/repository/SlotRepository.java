@@ -11,6 +11,7 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.time.LocalDateTime;
 
 
@@ -38,5 +39,8 @@ public interface SlotRepository extends JpaRepository<Slot, Integer>, JpaSpecifi
 
     @Query("select count(s) from Slot s where s.id = ?1 and s.status = 1")
     long countActiveSlot(Integer id);
+
+    @Query("select count(s) from Slot as s join s.bookingRequests as b where s.id = ?1 and s.lecturerId = ?2 and s.status = 1 and b.id = ?3 and b.status = 1")
+    long countAvailableUpdateBookingOfSlot(Integer slotId,Integer lecturerId, Integer bookingId);
 
 }

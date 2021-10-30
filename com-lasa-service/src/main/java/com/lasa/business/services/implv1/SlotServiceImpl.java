@@ -10,6 +10,7 @@ import com.lasa.business.services.LecturerTopicDetailService;
 import com.lasa.business.services.SlotService;
 import com.lasa.business.services.SlotTopicDetailService;
 import com.lasa.data.model.entity.*;
+import com.lasa.data.model.request.SlotBookingRequestModel;
 import com.lasa.data.model.request.SlotRequestModel;
 import com.lasa.data.model.view.LecturerViewModel;
 import com.lasa.data.model.view.SlotViewModel;
@@ -30,6 +31,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -221,6 +223,31 @@ public class SlotServiceImpl implements SlotService {
 
         return new SlotViewModel(slotRepository.save(slot));
 
+    }
+
+    @Override
+    @Transactional
+    public SlotViewModel acceptDenyBooking(SlotBookingRequestModel model) {
+        Slot slot = slotRepository.findById(model.getSlotId()).get();
+        if(model.getStatus().equals(2)) {
+            slot.setStatus(2);
+            List<BookingRequest> bookingRequests = new ArrayList<>(slot.getBookingRequests());
+            bookingRequests.forEach(t -> {
+                if(t.getId().equals(model.getBookingId()))
+                    t.setStatus(2);
+                else
+                    t.setStatus(-1);
+            });
+        }
+        if(model.getStatus().equals(-1)) {
+            List<BookingRequest> bookingRequests = new ArrayList<>(slot.getBookingRequests());
+            bookingRequests.stream().forEach(t -> {
+                if(t.getId().equals(model.getBookingId()))
+                    t.setStatus(-1);
+            });
+        }
+
+        return new SlotViewModel(slotRepository.save(slot));
     }
 
     @Override
