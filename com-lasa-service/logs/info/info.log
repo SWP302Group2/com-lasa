@@ -1,47 +1,49 @@
-2021-10-31 17:27:41 INFO Starting Application using Java 1.8.0_291 on DESKTOP-MA8M88E with PID 12132 (C:\Users\Admin\OneDrive - Unicorn\Documents\GitHub\com-lasa\com-lasa-service\target\classes started by Admin in C:\Users\Admin\OneDrive - Unicorn\Documents\GitHub\com-lasa\com-lasa-service) 
-2021-10-31 17:27:41 INFO No active profile set, falling back to default profiles: default 
-2021-10-31 17:27:42 INFO Bootstrapping Spring Data JPA repositories in DEFAULT mode. 
-2021-10-31 17:27:42 INFO Finished Spring Data repository scanning in 96 ms. Found 11 JPA repository interfaces. 
-2021-10-31 17:27:42 INFO Bean 'org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler@291373d3' of type [org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying) 
-2021-10-31 17:27:42 INFO Bean 'methodSecurityMetadataSource' of type [org.springframework.security.access.method.DelegatingMethodSecurityMetadataSource] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying) 
-2021-10-31 17:27:43 INFO Tomcat initialized with port(s): 8080 (http) 
-2021-10-31 17:27:43 INFO Initializing ProtocolHandler ["http-nio-8080"] 
-2021-10-31 17:27:43 INFO Starting service [Tomcat] 
-2021-10-31 17:27:43 INFO Starting Servlet engine: [Apache Tomcat/9.0.53] 
-2021-10-31 17:27:43 INFO Initializing Spring embedded WebApplicationContext 
-2021-10-31 17:27:43 INFO Root WebApplicationContext: initialization completed in 2029 ms 
-2021-10-31 17:27:43 INFO webapp - Starting... 
-2021-10-31 17:27:45 INFO webapp - Start completed. 
-2021-10-31 17:27:45 INFO HHH000204: Processing PersistenceUnitInfo [name: default] 
-2021-10-31 17:27:45 INFO HHH000412: Hibernate ORM core version 5.4.32.Final 
-2021-10-31 17:27:45 INFO HCANN000001: Hibernate Commons Annotations {5.1.2.Final} 
-2021-10-31 17:27:45 INFO HHH000400: Using dialect: org.hibernate.dialect.SQLServer2012Dialect 
-2021-10-31 17:27:47 INFO HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform] 
-2021-10-31 17:27:47 INFO Initialized JPA EntityManagerFactory for persistence unit 'default' 
-2021-10-31 17:27:48 INFO Will secure Ant [pattern='/v2/api-docs'] with [] 
-2021-10-31 17:27:48 INFO Will secure Ant [pattern='/configuration/ui'] with [] 
-2021-10-31 17:27:48 INFO Will secure Ant [pattern='/swagger-resources/**'] with [] 
-2021-10-31 17:27:48 INFO Will secure Ant [pattern='/configuration/security'] with [] 
-2021-10-31 17:27:48 INFO Will secure Ant [pattern='/swagger-ui.html'] with [] 
-2021-10-31 17:27:48 INFO Will secure Ant [pattern='/webjars/**'] with [] 
-2021-10-31 17:27:48 INFO Will secure any request with [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@5b0e5d5f, org.springframework.security.web.context.SecurityContextPersistenceFilter@507f7cd1, org.springframework.security.web.header.HeaderWriterFilter@614361fa, org.springframework.web.filter.CorsFilter@58b5d5fc, com.lasa.security.filter.UUIDHandlerFilter@3a988299, com.lasa.security.filter.ExceptionHandlerFilter@71262020, org.springframework.security.web.authentication.logout.LogoutFilter@25172993, com.lasa.security.filter.JwtRequestFilter@33356666, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@78aa1753, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@24731caf, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@42536da6, org.springframework.security.web.session.SessionManagementFilter@30bf881e, org.springframework.security.web.access.ExceptionTranslationFilter@3b839f68, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@38445703] 
-2021-10-31 17:27:48 INFO Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)] 
-2021-10-31 17:27:48 INFO Starting ProtocolHandler ["http-nio-8080"] 
-2021-10-31 17:27:48 INFO Tomcat started on port(s): 8080 (http) with context path '/las' 
-2021-10-31 17:27:48 INFO Context refreshed 
-2021-10-31 17:27:48 INFO Found 1 custom documentation plugin(s) 
-2021-10-31 17:27:48 INFO Scanning for api listing references 
-2021-10-31 17:27:48 INFO Generating unique operation named: findWithArgumentsUsingGET_1 
-2021-10-31 17:27:48 INFO Generating unique operation named: findByIdUsingGET_1 
-2021-10-31 17:27:48 INFO Generating unique operation named: findByIdUsingGET_2 
-2021-10-31 17:27:48 INFO Generating unique operation named: findWithArgumentUsingGET_1 
-2021-10-31 17:27:48 INFO Generating unique operation named: findByIdUsingGET_3 
-2021-10-31 17:27:48 INFO Generating unique operation named: findWithArgumentsUsingGET_2 
-2021-10-31 17:27:48 INFO Generating unique operation named: findByIdUsingGET_4 
-2021-10-31 17:27:48 INFO Generating unique operation named: findWithArgumentsUsingGET_3 
-2021-10-31 17:27:48 INFO Generating unique operation named: findByIdUsingGET_5 
-2021-10-31 17:27:48 INFO Generating unique operation named: findWithArgumentsUsingGET_4 
-2021-10-31 17:27:48 INFO Generating unique operation named: findWithArgumentsUsingGET_5 
-2021-10-31 17:27:48 INFO Generating unique operation named: findByIdUsingGET_6 
-2021-10-31 17:27:48 INFO Generating unique operation named: findWithArgumentsUsingGET_6 
-2021-10-31 17:27:48 INFO Started Application in 7.485 seconds (JVM running for 8.157) 
+2021-10-31 20:17:06 INFO HV000001: Hibernate Validator 6.2.0.Final 
+2021-10-31 20:17:06 INFO Starting Application using Java 1.8.0_291 on DESKTOP-MA8M88E with PID 16256 (C:\Users\Admin\OneDrive - Unicorn\Documents\GitHub\com-lasa\com-lasa-service\target\classes started by Admin in C:\Users\Admin\OneDrive - Unicorn\Documents\GitHub\com-lasa\com-lasa-service) 
+2021-10-31 20:17:06 INFO No active profile set, falling back to default profiles: default 
+2021-10-31 20:17:07 INFO Bootstrapping Spring Data JPA repositories in DEFAULT mode. 
+2021-10-31 20:17:07 INFO Finished Spring Data repository scanning in 103 ms. Found 11 JPA repository interfaces. 
+2021-10-31 20:17:07 INFO Bean 'application' of type [com.lasa.Application$$EnhancerBySpringCGLIB$$1be13152] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying) 
+2021-10-31 20:17:07 INFO Bean 'org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler@3078cac' of type [org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying) 
+2021-10-31 20:17:07 INFO Bean 'methodSecurityMetadataSource' of type [org.springframework.security.access.method.DelegatingMethodSecurityMetadataSource] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying) 
+2021-10-31 20:17:08 INFO Tomcat initialized with port(s): 8080 (http) 
+2021-10-31 20:17:08 INFO Initializing ProtocolHandler ["http-nio-8080"] 
+2021-10-31 20:17:08 INFO Starting service [Tomcat] 
+2021-10-31 20:17:08 INFO Starting Servlet engine: [Apache Tomcat/9.0.53] 
+2021-10-31 20:17:08 INFO Initializing Spring embedded WebApplicationContext 
+2021-10-31 20:17:08 INFO Root WebApplicationContext: initialization completed in 2213 ms 
+2021-10-31 20:17:08 INFO webapp - Starting... 
+2021-10-31 20:17:10 INFO webapp - Start completed. 
+2021-10-31 20:17:10 INFO HHH000204: Processing PersistenceUnitInfo [name: default] 
+2021-10-31 20:17:10 INFO HHH000412: Hibernate ORM core version 5.4.32.Final 
+2021-10-31 20:17:10 INFO HCANN000001: Hibernate Commons Annotations {5.1.2.Final} 
+2021-10-31 20:17:10 INFO HHH000400: Using dialect: org.hibernate.dialect.SQLServer2012Dialect 
+2021-10-31 20:17:12 INFO HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform] 
+2021-10-31 20:17:12 INFO Initialized JPA EntityManagerFactory for persistence unit 'default' 
+2021-10-31 20:17:13 INFO Will secure Ant [pattern='/v2/api-docs'] with [] 
+2021-10-31 20:17:13 INFO Will secure Ant [pattern='/configuration/ui'] with [] 
+2021-10-31 20:17:13 INFO Will secure Ant [pattern='/swagger-resources/**'] with [] 
+2021-10-31 20:17:13 INFO Will secure Ant [pattern='/configuration/security'] with [] 
+2021-10-31 20:17:13 INFO Will secure Ant [pattern='/swagger-ui.html'] with [] 
+2021-10-31 20:17:13 INFO Will secure Ant [pattern='/webjars/**'] with [] 
+2021-10-31 20:17:13 INFO Will secure any request with [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@6963b0bd, org.springframework.security.web.context.SecurityContextPersistenceFilter@77226121, org.springframework.security.web.header.HeaderWriterFilter@284f25e6, org.springframework.web.filter.CorsFilter@68a94e58, com.lasa.security.filter.UUIDHandlerFilter@72ec16f8, com.lasa.security.filter.ExceptionHandlerFilter@fb5d334, org.springframework.security.web.authentication.logout.LogoutFilter@24f2608b, com.lasa.security.filter.JwtRequestFilter@7d5a0b14, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@760c777d, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@1d0f7bcf, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@49741274, org.springframework.security.web.session.SessionManagementFilter@531299d3, org.springframework.security.web.access.ExceptionTranslationFilter@24e7087a, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@25109d84] 
+2021-10-31 20:17:13 INFO Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)] 
+2021-10-31 20:17:14 INFO Starting ProtocolHandler ["http-nio-8080"] 
+2021-10-31 20:17:14 INFO Tomcat started on port(s): 8080 (http) with context path '/las' 
+2021-10-31 20:17:14 INFO Context refreshed 
+2021-10-31 20:17:14 INFO Found 1 custom documentation plugin(s) 
+2021-10-31 20:17:14 INFO Scanning for api listing references 
+2021-10-31 20:17:14 INFO Generating unique operation named: findWithArgumentsUsingGET_1 
+2021-10-31 20:17:14 INFO Generating unique operation named: findByIdUsingGET_1 
+2021-10-31 20:17:14 INFO Generating unique operation named: findByIdUsingGET_2 
+2021-10-31 20:17:14 INFO Generating unique operation named: findWithArgumentUsingGET_1 
+2021-10-31 20:17:14 INFO Generating unique operation named: findByIdUsingGET_3 
+2021-10-31 20:17:14 INFO Generating unique operation named: findWithArgumentsUsingGET_2 
+2021-10-31 20:17:14 INFO Generating unique operation named: findByIdUsingGET_4 
+2021-10-31 20:17:14 INFO Generating unique operation named: findWithArgumentsUsingGET_3 
+2021-10-31 20:17:14 INFO Generating unique operation named: findByIdUsingGET_5 
+2021-10-31 20:17:14 INFO Generating unique operation named: findWithArgumentsUsingGET_4 
+2021-10-31 20:17:14 INFO Generating unique operation named: findWithArgumentsUsingGET_5 
+2021-10-31 20:17:14 INFO Generating unique operation named: findByIdUsingGET_6 
+2021-10-31 20:17:14 INFO Generating unique operation named: findWithArgumentsUsingGET_6 
+2021-10-31 20:17:14 INFO Started Application in 8.178 seconds (JVM running for 8.835) 
