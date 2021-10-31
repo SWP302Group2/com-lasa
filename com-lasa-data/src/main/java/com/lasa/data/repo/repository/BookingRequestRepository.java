@@ -9,8 +9,10 @@ import com.lasa.data.model.entity.BookingRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -25,6 +27,23 @@ public interface BookingRequestRepository extends JpaRepository<BookingRequest, 
 
     Optional<BookingRequest> findBookingRequestByStudentIdAndSlotId(Integer studentId, Integer slotId);
 
+    @Query(value = "SELECT * FROM BookingRequest b WHERE b.status = 2", nativeQuery = true)
+    List<BookingRequest> findAllBookingRequestByStatus();
+//
+//    @Query(value =
+//            "SELECT b.id as booking_id, stu.id as student_id," +
+//                    " sl.id as slot_id, stu.email, stu.name as student_name " +
+//            "FROM bookingrequest b INNER JOIN student stu ON b.studentid = stu.id  " +
+//            "WHERE b.studentid = :bookingRequestId"
+//           , nativeQuery = true)
+//
+//    @Query(value =
+//            "SELECT b.id as booking_id, b.slotid, b.status as booking_status, stu.*" +
+//
+//                    "FROM bookingrequest b INNER JOIN student stu ON b.studentid = stu.id  " +
+//                    "WHERE b.studentid = :bookingRequestId"
+//            , nativeQuery = true)
+//    Optional<?> findByIdAndGetBookingRequestAndSlotAndStudent(@Param("bookingRequestId") Integer bookingRequestId);
     long countByStudentIdAndSlotId(Integer studentId, Integer slotId);
 
     @Query("select count(b) from BookingRequest b where b.id = ?1 and b.status = 1")

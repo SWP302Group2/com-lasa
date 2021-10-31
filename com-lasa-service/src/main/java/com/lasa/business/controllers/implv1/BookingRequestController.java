@@ -8,13 +8,14 @@ package com.lasa.business.controllers.implv1;
 import com.lasa.business.controllers.BookingRequestOperations;
 import com.lasa.business.controllers.utils.authorization.IsStudent;
 import com.lasa.business.services.BookingRequestService;
+import com.lasa.business.services.EmailSenderService;
 import com.lasa.business.services.QuestionService;
 import com.lasa.business.services.StudentService;
+import com.lasa.data.model.entity.BookingRequest;
 import com.lasa.data.model.request.BookingRequestRequestModel;
 import com.lasa.data.model.utils.criteria.StudentSearchCriteria;
 import com.lasa.data.model.view.BookingRequestViewModel;
 import com.lasa.data.model.view.QuestionViewModel;
-import com.lasa.data.model.entity.BookingRequest_;
 import com.lasa.data.model.utils.criteria.BookingRequestSearchCriteria;
 import com.lasa.data.model.utils.criteria.QuestionSearchCriteria;
 import com.lasa.data.model.utils.page.BookingRequestPage;
@@ -37,6 +38,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.mail.MessagingException;
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import java.util.ArrayList;
@@ -57,16 +59,20 @@ public class BookingRequestController implements BookingRequestOperations {
     private final BookingRequestService bookingRequestService;
     private final QuestionService questionService;
     private final StudentService studentService;
+    private final EmailSenderService emailSenderService;
     private static final int QUESTIONS_SIZE = 5;
     private static final String QUESTIONS_SIZE_STRING = "FIVE";
+
 
     @Autowired
     public BookingRequestController(@Qualifier("BookingRequestServiceImplV1") BookingRequestService service,
                                     @Qualifier("QuestionServiceImplV1") QuestionService questionService,
-                                    @Qualifier("StudentServiceImplV1") StudentService studentService) {
+                                    @Qualifier("StudentServiceImplV1") StudentService studentService,
+                                    @Qualifier("EmailSenderServiceImpl") EmailSenderService emailSenderService) {
         this.bookingRequestService = service;
         this.questionService = questionService;
         this.studentService = studentService;
+        this.emailSenderService = emailSenderService;
     }
 
     @Override
@@ -176,6 +182,13 @@ public class BookingRequestController implements BookingRequestOperations {
     public ResponseEntity<?> deleteBookingRequests(@RequestBody List<Integer> ids) {
         bookingRequestService.deleteBookingRequests(ids);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @Override
+    public ResponseEntity<?> confirmBookingRequest(@PathVariable  Integer id,
+                                      @PathVariable Integer status) throws MessagingException {
+         bookingRequestService.confirmBookingRequest(id, status);
+         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
 

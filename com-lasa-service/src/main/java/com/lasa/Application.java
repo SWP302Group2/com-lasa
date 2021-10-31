@@ -13,6 +13,7 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.validation.beanvalidation.MethodValidationPostProcessor;
 import springfox.documentation.builders.PathSelectors;
@@ -32,6 +33,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableJpaRepositories(basePackages = "com.lasa.*")
 @EnableSwagger2
 @EnableTransactionManagement
+@EnableScheduling
 public class Application extends SpringBootServletInitializer {
 
     @Override

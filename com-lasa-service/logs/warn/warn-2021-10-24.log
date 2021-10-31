@@ -1,0 +1,2 @@
+2021-10-24 17:36:35 WARN spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning 
+2021-10-24 19:24:08 WARN webapp - Thread starvation or clock leap detected (housekeeper delta=1h15m985ms430µs200ns). 

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN" monitorInterval="30">
+    <Properties>
+        <Property name="LOG_PATTERN">%d{yyyy-MM-dd HH:mm:ss} %p %m %n</Property>
+        <Property name="APP_LOG_ROOT">C:\Users\Admin\OneDrive - Unicorn\Documents\GitHub\com-lasa\com-lasa-service\logs</Property>
+    </Properties>
+
+    <Appenders>
+
+        <Console name="console" target="SYSTEM_OUT" follow="true">
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+            <ThresholdFilter level="INFO"/>
+        </Console>
+
+        <RollingFile name="debugLog" fileName="${sys:APP_LOG_ROOT}/debug/debug.log"
+                     filePattern="${sys:APP_LOG_ROOT}/debug/debug-%d{yyyy-MM-dd}.log">
+            <LevelRangeFilter minLevel="DEBUG" maxLevel="DEBUG" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+            <Policies>
+                <OnStartupTriggeringPolicy/>
+                <SizeBasedTriggeringPolicy size="10MB" />
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+            </Policies>
+            <ThresholdFilter level="DEBUG"/>
+            <DefaultRolloverStrategy max="10"/>
+        </RollingFile>
+
+        <RollingFile name="warnLog" fileName="${sys:APP_LOG_ROOT}/warn/warn.log"
+                     filePattern="${sys:APP_LOG_ROOT}/warn/warn-%d{yyyy-MM-dd}.log">
+            <LevelRangeFilter minLevel="WARN" maxLevel="WARN" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+            <Policies>
+                <OnStartupTriggeringPolicy/>
+                <SizeBasedTriggeringPolicy size="10MB" />
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+            </Policies>
+            <ThresholdFilter level="WARN"/>
+            <DefaultRolloverStrategy max="10"/>
+        </RollingFile>
+
+        <RollingFile name="errorLog" fileName="${sys:APP_LOG_ROOT}/error/error.log"
+                     filePattern="${sys:APP_LOG_ROOT}/error/error-%d{yyyy-MM-dd}.log">
+            <LevelRangeFilter minLevel="ERROR" maxLevel="ERROR" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+            <Policies>
+                <OnStartupTriggeringPolicy/>
+                <SizeBasedTriggeringPolicy size="10MB" />
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+            </Policies>
+            <ThresholdFilter level="ERROR"/>
+            <DefaultRolloverStrategy max="10"/>
+        </RollingFile>
+
+        <RollingFile name="infoLog" fileName="${sys:APP_LOG_ROOT}/info/info.log"
+                     filePattern="${sys:APP_LOG_ROOT}/info/info-%d{yyyy-MM-dd}.log">
+            <LevelRangeFilter minLevel="INFO" maxLevel="INFO" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+            <Policies>
+                <OnStartupTriggeringPolicy/>
+                <SizeBasedTriggeringPolicy size="10MB" />
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+            </Policies>
+            <ThresholdFilter level="INFO"/>
+            <DefaultRolloverStrategy max="10"/>
+        </RollingFile>
+
+    </Appenders>
+
+    <Loggers>
+
+        <Logger name="com.lasa" additivity="false">
+            <AppenderRef ref="infoLog" />
+            <AppenderRef ref="errorLog"/>
+            <AppenderRef ref="warnLog"/>
+            <AppenderRef ref="debugLog"/>
+            <AppenderRef ref="console" />
+        </Logger>
+
+        <Root level="INFO">
+            <AppenderRef ref="console"/>
+            <AppenderRef ref="infoLog" />
+            <AppenderRef ref="errorLog"/>
+            <AppenderRef ref="debugLog"/>
+            <AppenderRef ref="warnLog"/>
+        </Root>
+
+    </Loggers>
+
+</Configuration>
+
+
+
+
+
+
