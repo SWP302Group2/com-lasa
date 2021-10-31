@@ -8,10 +8,18 @@ import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
+import org.hibernate.validator.constraints.time.DurationMin;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.validation.annotation.Validated;
 
+import javax.validation.constraints.Future;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 import java.time.LocalDateTime;
 import java.util.List;
+
+import static java.time.LocalDateTime.MIN;
 
 @Getter
 @Setter
@@ -19,7 +27,7 @@ import java.util.List;
 public class SlotSearchCriteria {
     
     @ApiModelProperty(name = "lecId", dataType = "Integer", value = "Get lecturer by id")
-    private List<Integer> lecId;
+    private List<@Min(value = 1)Integer> lecId;
 
     @JsonDeserialize(using = LocalDateDeserializer.class)
     @JsonSerialize(using = LocalDateTimeSerializer.class)
@@ -42,10 +50,10 @@ public class SlotSearchCriteria {
     private Boolean getLecturer = false;
 
     @ApiModelProperty(name = "slotId", dataType = "Integer", value = "Get slot by a list slotId")
-    private List<Integer> slotId;
+    private List<@Min(1) Integer> slotId;
 
     @ApiModelProperty(name = "topicId", dataType = "Integer", value = "Get slot by a list slotId")
-    private List<Integer> topicId;
+    private List<@Min(1) Integer> topicId;
 
     @Builder
     public SlotSearchCriteria(List<Integer> lecId, LocalDateTime timeStart, LocalDateTime timeEnd, Boolean getTopic, Boolean getLecturer, List<Integer> slotId, List<Integer> topicId) {

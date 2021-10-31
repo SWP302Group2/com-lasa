@@ -21,7 +21,7 @@ import java.security.GeneralSecurityException;
 public interface AuthenticationOperations {
 
     @PostMapping
-    public ResponseEntity<?> loginAuthentication(
+    ResponseEntity<?> loginAuthentication(
             @ApiParam(name = "authenticationRequest", type = "body", value = "To authenticated, you must enter username and password", required = true)
             @RequestBody AuthenticationRequest authenticationRequest,
                                                  HttpServletResponse response,

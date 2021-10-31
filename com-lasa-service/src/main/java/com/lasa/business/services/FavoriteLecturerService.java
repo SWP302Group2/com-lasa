@@ -5,12 +5,14 @@
  */
 package com.lasa.business.services;
 
+import com.lasa.data.model.request.FavoriteLecturerRequestModel;
 import com.lasa.data.model.view.FavoriteLecturerViewModel;
 import com.lasa.data.model.view.LecturerViewModel;
 import com.lasa.data.model.entity.FavoriteLecturer;
 import com.lasa.data.model.entity.key.FavoriteLecturerKey;
 import org.springframework.stereotype.Service;
 
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -24,7 +26,7 @@ public interface FavoriteLecturerService {
 
     List<LecturerViewModel> findTopFavoriteLecturer(Integer topNumber);
     
-    List<FavoriteLecturer> addFavoriteLecturers(List<FavoriteLecturer> favoriteLecturers);
+    List<FavoriteLecturerViewModel> addFavoriteLecturers(List<FavoriteLecturerRequestModel> favoriteLecturers);
 
     void deleteFavoriteLecturers(List<FavoriteLecturerKey> ids);
     

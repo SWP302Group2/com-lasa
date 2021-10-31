@@ -17,15 +17,22 @@ import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.validation.BindException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 @RestControllerAdvice
 public class ExceptionTranslator {
@@ -160,5 +167,38 @@ public class ExceptionTranslator {
                 .path(request.getRequestURI())
                 .build();
     }
+
+    @ExceptionHandler(value = {ConstraintViolationException.class, MethodArgumentNotValidException.class, BindException.class})
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseObject processConstraintViolationException(Exception ex, HttpServletRequest request) {
+        System.out.println(ex.getClass());
+        System.out.println(ex.getMessage());
+        HashMap<String, String> errors = new HashMap<>();
+        if(ex instanceof ConstraintViolationException) {
+            ((ConstraintViolationException) ex).getConstraintViolations().stream()
+                    .forEach(t -> errors.put(t.getPropertyPath().toString(), t.getMessage()));
+        }
+
+        if(ex instanceof BindException) {
+            ((BindException) ex).getFieldErrors().stream()
+                    .forEach(t -> errors.put(t.getField(), t.getDefaultMessage()));
+        }
+
+        if(ex instanceof MethodArgumentNotValidException) {
+            ((MethodArgumentNotValidException)ex).getAllErrors().stream()
+                    .forEach(t -> {
+                        if(!t.getCode().equals("NotNull") && !t.getCode().equals("NotEmpty"))
+                            errors.put(t.getCode(), t.getDefaultMessage());
+                    });
+        }
+
+        return ResponseObject.builder()
+                .status(HttpStatus.BAD_REQUEST.value())
+                .errors(errors)
+                .path(request.getRequestURI())
+                .build();
+    }
+
+
 
 }

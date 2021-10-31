@@ -62,4 +62,6 @@ public interface SlotTopicDetailRepository extends JpaRepository<SlotTopicDetail
     )
     Page<SlotTopicDetail> findAllSlotAndTopic(Pageable pageable);
 
+    long countByTopicIdAndSlotId(Integer topicId, Integer slotId);
+
 }

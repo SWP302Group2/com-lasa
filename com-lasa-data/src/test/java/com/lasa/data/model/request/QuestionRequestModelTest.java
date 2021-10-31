@@ -10,6 +10,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.Set;
+
 /**
  *
  * @author ASUS
@@ -17,7 +19,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 public class QuestionRequestModelTest {
     
-   @Test
+    @Test
     public void toEntityTestGivenRightArgumentReturnWells() {
         QuestionRequestModel model = new QuestionRequestModel();
         Integer id = 1;
@@ -35,4 +37,20 @@ public class QuestionRequestModelTest {
         Assertions.assertEquals(question.getContent(), content);
         
     }
+
+    /*@Test
+    public void testDataBind() {
+        QuestionRequestModel model = new QuestionRequestModel();
+        Integer id = 1;
+        Integer bookingId = null;
+        String content = "question?";
+
+        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+        Validator validator = factory.getValidator();
+
+        Set<ConstraintViolation<QuestionRequestModel>> violations = validator.validate(model);
+        for (ConstraintViolation<QuestionRequestModel> violation : violations) {
+            System.out.println(violation.getMessage());
+        }
+    }*/
 }

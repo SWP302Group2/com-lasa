@@ -9,12 +9,17 @@ import com.lasa.data.model.entity.BookingRequest;
 import com.lasa.data.model.request.BookingRequestRequestModel;
 import com.lasa.data.model.utils.criteria.BookingRequestSearchCriteria;
 import com.lasa.data.model.utils.page.BookingRequestPage;
+import com.lasa.data.validator.group.PostValidator;
+import com.lasa.data.validator.group.PutValidator;
 import com.lasa.security.utils.exception.ExceptionUtils;
 import io.swagger.annotations.ApiParam;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.mail.MessagingException;
+import javax.validation.Valid;
+import javax.validation.constraints.Min;
 import java.util.List;
 
 /**
@@ -22,28 +27,30 @@ import java.util.List;
  * @author hai
  */
 @RequestMapping("/default")
+@Validated
 public interface BookingRequestOperations {
 
     @GetMapping
-    ResponseEntity<?> findWithArguments(BookingRequestPage bookingRequestPage,
-                                        BookingRequestSearchCriteria searchCriteria);
+    ResponseEntity<?> findWithArguments(@Valid BookingRequestPage bookingRequestPage,
+                                        @Valid BookingRequestSearchCriteria searchCriteria);
 
     @GetMapping(value = "/{id}")
     ResponseEntity<?> findById(@ApiParam(name = "id", type = "Integer", value = "Get booking request by id")
-                               @PathVariable("id") Integer id);
+                               @Min(0) @PathVariable("id") Integer id);
 
     @GetMapping(value = "/{id}/questions")
     ResponseEntity<?> findByIdIncludeQuestions(@ApiParam(name = "id", type = "Integer", value = "Get booking request by id")
-                                               @PathVariable("id") Integer id);
+                                               @Min(1) @PathVariable("id") Integer id);
 
 
     @PostMapping
     ResponseEntity<?> createBookingRequest(@ApiParam(name = "bookingRequest", type = "body", value = "Add a new booking request")
-                                           @RequestBody BookingRequestRequestModel bookingRequest) throws ExceptionUtils.ArgumentException, ExceptionUtils.DuplicatedException;
+                                           @Validated(PostValidator.class) @RequestBody BookingRequestRequestModel bookingRequest)
+            throws ExceptionUtils.ArgumentException, ExceptionUtils.DuplicatedException;
     
     @PutMapping
     ResponseEntity<?> updateBookingRequest(@ApiParam(name = "bookingRequest", type = "body", value = "Update a booking request by id")
-                                           @RequestBody BookingRequestRequestModel BookingRequest);
+                                           @Validated(PutValidator.class) @RequestBody BookingRequestRequestModel BookingRequest);
     
     @DeleteMapping
     ResponseEntity<?> deleteBookingRequests(@ApiParam(name = "ids", type = "body", value = "By id, you may remove booking request")
