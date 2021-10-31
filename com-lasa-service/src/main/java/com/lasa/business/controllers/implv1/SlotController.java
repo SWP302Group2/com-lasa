@@ -139,7 +139,7 @@ public class SlotController implements SlotOperations {
 
     @Override
     @IsLecturer
-    @PreAuthorize("#model.lecturerId = authentication.principal.id && #id = authentication.principal.id")
+    @PreAuthorize("(#model.lecturerId = authentication.principal.id) && (#id = authentication.principal.id)")
     public ResponseEntity<SlotViewModel> updateBookingRequests(Integer id, SlotBookingRequestModel model) {
         return ResponseEntity.ok(slotService.acceptDenyBooking(model));
     }

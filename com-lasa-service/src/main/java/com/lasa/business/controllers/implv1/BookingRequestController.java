@@ -16,7 +16,6 @@ import com.lasa.data.model.request.BookingRequestRequestModel;
 import com.lasa.data.model.utils.criteria.StudentSearchCriteria;
 import com.lasa.data.model.view.BookingRequestViewModel;
 import com.lasa.data.model.view.QuestionViewModel;
-import com.lasa.data.model.entity.BookingRequest_;
 import com.lasa.data.model.utils.criteria.BookingRequestSearchCriteria;
 import com.lasa.data.model.utils.criteria.QuestionSearchCriteria;
 import com.lasa.data.model.utils.page.BookingRequestPage;
