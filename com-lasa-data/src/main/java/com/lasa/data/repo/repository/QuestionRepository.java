@@ -20,5 +20,6 @@ import java.util.List;
 @Repository
 public interface QuestionRepository extends JpaRepository<Question, Integer>, JpaSpecificationExecutor<Question> {
 
-    Integer countByIdAndBookingRequestIdIn(Integer id, List<Integer> bookingId);
+    @Query("select count(q) from Question q where q.bookingRequest.id = ?1 and q.id in ?2")
+    long countByIdAndBookingRequestIdIn(Integer bookingId, List<Integer> questionId);
 }
