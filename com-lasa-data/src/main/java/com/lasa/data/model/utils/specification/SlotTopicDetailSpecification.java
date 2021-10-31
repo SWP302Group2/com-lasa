@@ -26,11 +26,11 @@ public class SlotTopicDetailSpecification {
             if(Objects.nonNull(searchCriteria.getTopicId()))
                 predicates.add(root.get(SlotTopicDetail_.topic).get(Topic_.id).in(searchCriteria.getTopicId()));
 
-            if(searchCriteria.getGetTopicAndSlot().equals(true)) {
+          /*  if(searchCriteria.getGetTopicAndSlot().equals(true)) {
                 Fetch<SlotTopicDetail, Topic> detailTopicFetch = root.fetch(SlotTopicDetail_.topic);
                 Fetch<SlotTopicDetail, Slot> detailSlotFetch = root.fetch(SlotTopicDetail_.slot);
                 query.distinct(true);
-            }
+            }*/
 
 
             if(predicates.isEmpty())

@@ -1320,6 +1320,21 @@ VALUES	(1, N'Where do you see yourself in five years?'),
 (599, N'How many pillows do you sleep with?'),
 (600, N'What would you sing at Karaoke night?');
 
+INSERT	INTO Major(Id, Name, Description)
+VALUES	('SS', N'Unknown',null),
+('SA', N'Unknown',null),
+('SE', N'SoftwareEngineering',null),
+('IA', N'InformationAssurance',null),
+('AI', N'ArtificalIntelligence',null),
+('HM', N'HotelManagement',null),
+('BA', N'BusinessAdministration',null),
+('GD', N'GraphicDesign',null),
+('MC', N'Multimediacommunication',null),
+('IB', N'InternationalBussiness',null),
+('JP', N'JapaneseLanguage',null),
+('EN', N'EnglishLanguage',null);
+
+
 INSERT	INTO Student (Email, Mssv, MajorId, name, Phone, Status, Gender, Birthday, Address, AvatarURL)
 VALUES	('chauvdpse62163@fpt.edu.vn','SE62163','SE',N'Võ Diệp Phước Châu','0901111111',1,null,null,null,null),
 ('phucvse63445@fpt.edu.vn','SE63445','SE',N'Cao Văn Phú','0901111111',1,null,null,null,null),
