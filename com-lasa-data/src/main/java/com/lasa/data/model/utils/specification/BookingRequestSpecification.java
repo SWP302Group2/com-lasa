@@ -26,7 +26,7 @@ public class BookingRequestSpecification {
                 predicates.add(root.get(BookingRequest_.studentId).in(searchCriteria.getStudentId()));
 
             if(Objects.nonNull(searchCriteria.getTopicId()))
-                predicates.add(root.get(BookingRequest_.topicId).in(searchCriteria.getStudentId()));
+                predicates.add(root.get(BookingRequest_.topicId).in(searchCriteria.getTopicId()));
 
             if(predicates.isEmpty())
                 return null;
