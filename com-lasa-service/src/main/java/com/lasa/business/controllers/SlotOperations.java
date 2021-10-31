@@ -9,7 +9,6 @@ import com.lasa.data.model.request.SlotBookingRequestModel;
 import com.lasa.data.model.request.SlotRequestModel;
 import com.lasa.data.model.utils.criteria.SlotSearchCriteria;
 import com.lasa.data.model.utils.page.SlotPage;
-import com.lasa.data.model.view.SlotViewModel;
 import com.lasa.data.validator.group.PostValidator;
 import com.lasa.data.validator.group.PutValidator;
 import com.lasa.security.utils.exception.ExceptionUtils;
@@ -47,7 +46,7 @@ public interface SlotOperations {
 
     @PostMapping
     ResponseEntity<?> createSlot(@ApiParam(name = "slots", type = "body", value = "Add a new slot")
-                                             @Validated(PostValidator.class) @RequestBody SlotRequestModel slot);
+                                              @RequestBody SlotRequestModel slot);
 
     @PutMapping
     ResponseEntity<?> updateSlots(
@@ -56,7 +55,7 @@ public interface SlotOperations {
 
     @PutMapping("/{id}/booking-requests")
     ResponseEntity<?> updateBookingRequests(@Min(value = 1) @PathVariable("id") Integer id,
-                                            @Validated @RequestBody SlotBookingRequestModel model);
+                                            @Validated(PutValidator.class) @RequestBody SlotBookingRequestModel model);
 
 
     @DeleteMapping

@@ -1,17 +1,17 @@
 package com.lasa.data.validator;
 
-import com.lasa.data.validator.model.TopicIdValidator;
+import com.lasa.data.validator.model.BookingQuestionUpdateValidator;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
 import java.lang.annotation.*;
 
 @Documented
-@Target(ElementType.TYPE)
-@Constraint(validatedBy = TopicIdValidator.class)
+@Constraint(validatedBy = BookingQuestionUpdateValidator.class)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface ValidTopicId {
-    String message() default "TOPIC_ID_NOT_VALID";
+@Target(ElementType.TYPE)
+public @interface ValidBookingQuestionUpdate {
+    String message() default "";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 }

@@ -7,7 +7,7 @@ import javax.validation.Payload;
 import java.lang.annotation.*;
 
 @Documented
-@Target({ElementType.TYPE})
+@Target(ElementType.TYPE)
 @Constraint(validatedBy = BookingRequestValidator.class)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ValidBookingRequest {
