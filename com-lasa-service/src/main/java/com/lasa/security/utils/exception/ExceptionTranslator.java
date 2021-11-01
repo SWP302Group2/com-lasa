@@ -158,8 +158,8 @@ public class ExceptionTranslator {
     @ExceptionHandler(value = {ExceptionUtils.DuplicatedException.class})
     @ResponseStatus(HttpStatus.CONFLICT)
     public ResponseObject processConflictException(Exception e, HttpServletRequest request) {
-        System.out.println(e.getClass());
-        System.out.println(e.getMessage());
+        LOGGER.warn("Conflict " + e.getMessage());
+        System.out.println("LOI SO 10");
         return ResponseObject.builder()
                 .status(HttpStatus.CONFLICT.value())
                 .error(e.getClass().getSimpleName())
@@ -171,8 +171,8 @@ public class ExceptionTranslator {
     @ExceptionHandler(value = {ConstraintViolationException.class, MethodArgumentNotValidException.class, BindException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseObject processConstraintViolationException(Exception ex, HttpServletRequest request) {
-        System.out.println(ex.getClass());
-        System.out.println(ex.getMessage());
+        LOGGER.debug("Contraint Violation " + ex.getMessage());
+        System.out.println("LOI SO 11");
         HashMap<String, String> errors = new HashMap<>();
         if(ex instanceof ConstraintViolationException) {
             ((ConstraintViolationException) ex).getConstraintViolations().stream()

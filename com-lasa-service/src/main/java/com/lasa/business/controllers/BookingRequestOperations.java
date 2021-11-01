@@ -67,12 +67,12 @@ public interface BookingRequestOperations {
     ResponseEntity<?> deleteBookingRequests(@ApiParam(name = "ids", type = "body", value = "By id, you may remove booking request")
                                @RequestBody List<Integer> ids);
 
+//    @GetMapping(value = "/confirm/{id}/{status}")
+//    ResponseEntity<?> confirmBookingRequest(@ApiParam(name = "id", type = "Integer", value = "Confirm booking request")
+//                               @PathVariable("id") Integer id,
+//                               @PathVariable("status") Integer status) throws MessagingException;
     @DeleteMapping(value = "/{id}/questions")
     ResponseEntity<?> deleteBookingQuestions(@PathVariable("id") Integer id,
                                              @Validated @RequestBody BookingQuestionDeleteRequestModel model);
 
-    @GetMapping(value = "/confirm/{id}/{status}")
-    ResponseEntity<?> confirmBookingRequest(@ApiParam(name = "id", type = "Integer", value = "Confirm booking request")
-                               @PathVariable("id") Integer id,
-                               @PathVariable("status") Integer status) throws MessagingException;
 }
