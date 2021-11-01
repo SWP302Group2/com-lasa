@@ -184,12 +184,12 @@ public class BookingRequestController implements BookingRequestOperations {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
-    @Override
-    public ResponseEntity<?> confirmBookingRequest(@PathVariable  Integer id,
-                                      @PathVariable Integer status) throws MessagingException {
-         bookingRequestService.confirmBookingRequest(id, status);
-         return ResponseEntity.status(HttpStatus.OK).build();
-    }
+//    @Override
+//    public ResponseEntity<?> confirmBookingRequest(@PathVariable  Integer id,
+//                                      @PathVariable Integer status) throws MessagingException {
+//         bookingRequestService.confirmBookingRequest(id, status);
+//         return ResponseEntity.status(HttpStatus.OK).build();
+//    }
 
 
 }
