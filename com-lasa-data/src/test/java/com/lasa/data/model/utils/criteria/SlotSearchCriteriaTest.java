@@ -35,7 +35,7 @@ public class SlotSearchCriteriaTest {
         this.entityManager = entityManager;
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     public void testSearchTimeStartEndWithArgument() {
         LocalDateTime timeStart = LocalDateTime.parse("2021-10-08T09:43:32"); 
         LocalDateTime timeEnd = LocalDateTime.parse("2021-10-08T12:43:32");  
@@ -45,10 +45,12 @@ public class SlotSearchCriteriaTest {
                 .build();
         List<Slot> actualList = slotRepository.findAll(SlotSpecification.searchSpecification(searchCriteria));
         List<Slot> expectedList = entityManager.getEntityManager()
-                .createQuery("select time from Slot time where time.timeStart like ?1 and time.timeEnd like ?2", Slot.class)
-                .setParameter(1, "%" + timeStart + "%")
-                .setParameter(2, "%" + timeEnd + "%")
+                .createQuery("select slot from Slot slot where slot.timeStart <= ?2 and slot.timeStart >= ?1 " +
+                        "and slot.timeEnd <= ?2 and slot.timeEnd >= ?1", Slot.class)
+                .setParameter(1,   timeStart)
+                .setParameter(2,   timeEnd )
                 .getResultList();
+
         Assertions.assertEquals(expectedList, actualList);
     }
 
