@@ -2,7 +2,7 @@
 <Configuration status="WARN" monitorInterval="30">
     <Properties>
         <Property name="LOG_PATTERN">%d{yyyy-MM-dd HH:mm:ss} %p %m %n</Property>
-        <Property name="APP_LOG_ROOT">C:\Users\Admin\OneDrive - Unicorn\Documents\GitHub\com-lasa\com-lasa-service\logs</Property>
+        <Property name="APP_LOG_ROOT">logs</Property>
     </Properties>
 
     <Appenders>

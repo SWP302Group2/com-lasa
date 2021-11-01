@@ -145,5 +145,4 @@ public class SlotController implements SlotOperations {
     public void deleteSlots(List<Integer> ids) {
         slotService.deleteSlots(ids);
     }
-
 }

@@ -201,7 +201,7 @@ public class BookingRequestServiceImpl implements BookingRequestService {
 //            }
 //        }
 
-        BookingRequest bookingRequest = bookingRepository.findById(bookingId).get();
+      /*  BookingRequest bookingRequest = bookingRepository.findById(bookingId).get();
         Student student = studentRepository.findById(bookingRequest.getStudentId()).get();
         Slot slot  = slotRepository.findById(bookingRequest.getSlotId()).get();
         Lecturer lecturer = lecturerRepository.findById(slot.getLecturerId()).get();
@@ -244,14 +244,14 @@ public class BookingRequestServiceImpl implements BookingRequestService {
                         "\n I hope you have a good day.",
                         "Meeting day at " + dateStartFormat);
             }
-        }
+        }*/
     }
 
     @Override
     @Scheduled(fixedRate = 60000L)
     public void announcedMailBeforeMeeting() throws MessagingException {
 
-        Slot slot = null;
+        /*Slot slot = null;
         Student student = null;
         Lecturer lecturer = null;
         List<BookingRequest> listAnnounced =  bookingRepository.findAllBookingRequestByStatus();
@@ -285,6 +285,6 @@ public class BookingRequestServiceImpl implements BookingRequestService {
                     bookingRequest.setStatus(3);
                     bookingRepository.save(bookingRequest);
             }
-        }
+        }*/
     }
 }

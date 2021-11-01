@@ -12,6 +12,8 @@ import com.lasa.business.services.EmailSenderService;
 import com.lasa.business.services.QuestionService;
 import com.lasa.business.services.StudentService;
 import com.lasa.data.model.entity.BookingRequest;
+import com.lasa.data.model.request.BookingQuestionDeleteRequestModel;
+import com.lasa.data.model.request.BookingQuestionRequestModel;
 import com.lasa.data.model.request.BookingRequestRequestModel;
 import com.lasa.data.model.utils.criteria.StudentSearchCriteria;
 import com.lasa.data.model.view.BookingRequestViewModel;
@@ -28,6 +30,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.transaction.annotation.Isolation;
@@ -60,9 +63,6 @@ public class BookingRequestController implements BookingRequestOperations {
     private final QuestionService questionService;
     private final StudentService studentService;
     private final EmailSenderService emailSenderService;
-    private static final int QUESTIONS_SIZE = 5;
-    private static final String QUESTIONS_SIZE_STRING = "FIVE";
-
 
     @Autowired
     public BookingRequestController(@Qualifier("BookingRequestServiceImplV1") BookingRequestService service,
@@ -170,12 +170,27 @@ public class BookingRequestController implements BookingRequestOperations {
 
     @Override
     @IsStudent
-    public ResponseEntity<BookingRequestViewModel> updateBookingRequest(BookingRequestRequestModel bookingRequest) {
+    @PreAuthorize("(#id = authentication.principal.id) && (#model.studentId = authentication.principal.id)")
+    public ResponseEntity<List<QuestionViewModel>> addBookingQuestions(Integer id, BookingQuestionRequestModel model) {
+        return ResponseEntity.ok(questionService.createQuestions(model.getQuestions()));
+    }
+
+    @Override
+    @IsStudent
+    @PreAuthorize("#model.studentId = authentication.principal.id")
+    public ResponseEntity<BookingRequestViewModel> updateBookingRequest(BookingRequestRequestModel model) {
         Integer studentId = ((MyUserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId();
-        if(!studentId.equals(bookingRequest.getStudentId()))
+        if(!studentId.equals(model.getStudentId()))
             throw new BadCredentialsException("PERMISSION_DENIED");
 
-        return ResponseEntity.ok(bookingRequestService.updateBookingRequest(bookingRequest));
+        return ResponseEntity.ok(bookingRequestService.updateBookingRequest(model));
+    }
+
+    @Override
+    @IsStudent
+    @PreAuthorize("(#id = authentication.principal.id) && (#model.studentId = authentication.principal.id)")
+    public ResponseEntity<List<QuestionViewModel>> updateBookingQuestions(Integer id, BookingQuestionRequestModel model) {
+        return ResponseEntity.ok(questionService.updateQuestions(model.getQuestions()));
     }
 
     @Override
@@ -184,12 +199,17 @@ public class BookingRequestController implements BookingRequestOperations {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
+//    @Override
+//    public ResponseEntity<?> confirmBookingRequest(@PathVariable  Integer id,
+//                                      @PathVariable Integer status) throws MessagingException {
+//         bookingRequestService.confirmBookingRequest(id, status);
+//         return ResponseEntity.status(HttpStatus.OK).build();
+//    }
     @Override
-    public ResponseEntity<?> confirmBookingRequest(@PathVariable  Integer id,
-                                      @PathVariable Integer status) throws MessagingException {
-         bookingRequestService.confirmBookingRequest(id, status);
-         return ResponseEntity.status(HttpStatus.OK).build();
+    @IsStudent
+    @PreAuthorize("#model.studentId = authentication.principal.id")
+    public ResponseEntity<?> deleteBookingQuestions(Integer id, BookingQuestionDeleteRequestModel model) {
+        questionService.deleteQuestion(model.getQuestionIds());
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
-
-
 }
