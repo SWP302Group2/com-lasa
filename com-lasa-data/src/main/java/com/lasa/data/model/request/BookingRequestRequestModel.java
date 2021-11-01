@@ -35,6 +35,7 @@ public class BookingRequestRequestModel {
     @NotNull(groups = PostValidator.class, message = "STUDENT_ID_IS_NULL")
     private Integer studentId;
 
+    @ValidOneOf(value = 0, groups = PutValidator.class)
     private Integer status;
 
     @NotEmpty(groups = PostValidator.class, message = "QUESTIONS_IS_EMPTY")
@@ -49,7 +50,6 @@ public class BookingRequestRequestModel {
     @NotEmpty(groups = PostValidator.class, message = "TITLE_IS_EMPTY")
     private String title;
 
-    @Range(min = -1, max = 1)
     private Integer rating ;
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss[.SSS][.SS][.S]")
     private LocalDateTime createTime;

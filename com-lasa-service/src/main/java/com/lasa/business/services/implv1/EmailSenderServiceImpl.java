@@ -30,6 +30,5 @@ public class EmailSenderServiceImpl implements EmailSenderService {
         mimeMessageHelper.setSubject(subject);
         mailSender.send(mimeMessage);
 
-
     }
 }

@@ -6,9 +6,12 @@
 package com.lasa.business.controllers;
 
 import com.lasa.data.model.entity.BookingRequest;
+import com.lasa.data.model.request.BookingQuestionDeleteRequestModel;
+import com.lasa.data.model.request.BookingQuestionRequestModel;
 import com.lasa.data.model.request.BookingRequestRequestModel;
 import com.lasa.data.model.utils.criteria.BookingRequestSearchCriteria;
 import com.lasa.data.model.utils.page.BookingRequestPage;
+import com.lasa.data.validator.ValidBookingQuestionDelete;
 import com.lasa.data.validator.group.PostValidator;
 import com.lasa.data.validator.group.PutValidator;
 import com.lasa.security.utils.exception.ExceptionUtils;
@@ -47,10 +50,18 @@ public interface BookingRequestOperations {
     ResponseEntity<?> createBookingRequest(@ApiParam(name = "bookingRequest", type = "body", value = "Add a new booking request")
                                            @Validated(PostValidator.class) @RequestBody BookingRequestRequestModel bookingRequest)
             throws ExceptionUtils.ArgumentException, ExceptionUtils.DuplicatedException;
+
+    @PostMapping(value = "/{id}/questions")
+    ResponseEntity<?> addBookingQuestions(@PathVariable(value = "id") Integer id,
+                                          @Validated(PostValidator.class) @RequestBody BookingQuestionRequestModel model);
     
     @PutMapping
     ResponseEntity<?> updateBookingRequest(@ApiParam(name = "bookingRequest", type = "body", value = "Update a booking request by id")
                                            @Validated(PutValidator.class) @RequestBody BookingRequestRequestModel BookingRequest);
+
+    @PutMapping(value = "/{id}/questions")
+    ResponseEntity<?> updateBookingQuestions(@PathVariable(value = "id") Integer id,
+                                             @Validated(PutValidator.class) @RequestBody BookingQuestionRequestModel model);
     
     @DeleteMapping
     ResponseEntity<?> deleteBookingRequests(@ApiParam(name = "ids", type = "body", value = "By id, you may remove booking request")
@@ -60,4 +71,8 @@ public interface BookingRequestOperations {
 //    ResponseEntity<?> confirmBookingRequest(@ApiParam(name = "id", type = "Integer", value = "Confirm booking request")
 //                               @PathVariable("id") Integer id,
 //                               @PathVariable("status") Integer status) throws MessagingException;
+    @DeleteMapping(value = "/{id}/questions")
+    ResponseEntity<?> deleteBookingQuestions(@PathVariable("id") Integer id,
+                                             @Validated @RequestBody BookingQuestionDeleteRequestModel model);
+
 }

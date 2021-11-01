@@ -1,93 +1,43 @@
-
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.lasa.data.repo.repository;
 
 import com.lasa.data.model.entity.Lecturer;
-
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.MethodOrderer.Alphanumeric;
+import java.util.Optional;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.Assertions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.test.annotation.Rollback;
-
 
 /**
  *
- * @author MyNhung
+ * @author ASUS
  */
 @DataJpaTest
-@TestMethodOrder(Alphanumeric.class)
 public class LecturerRepositoryTest {
     
-    @Autowired
+     @Autowired
     LecturerRepository lecturerRepository;
-    
+     
     public LecturerRepositoryTest() {
     }
-
-    @Test
-    public void testcase_01_FindById() {
-                 
-        Integer ExpectedId = 1;
-        String ExpectedEmail = "khiemtd@fe.edu.vn";
-        String ExpectedName = "Tran Duy Khiem";
+    /* @Test
+    public void testFindByName() {  
+         Lecturer lecturer = lecturerRepository
+                 .findByName("Trần Duy Khiêm").get();
+        String expectedLecturerName = "Trần Duy Khiêm";
+        Assertions.assertEquals(lecturer.getName(), expectedLecturerName);
+    }*/
     
-        Assertions.assertEquals(lecturerRepository.getById(ExpectedId).getId(),ExpectedId); 
-        Assertions.assertEquals(lecturerRepository.getById(ExpectedId).getEmail(),ExpectedEmail); 
-        Assertions.assertEquals(lecturerRepository.getById(ExpectedId).getName(),ExpectedName);
-        
+     @Test
+    public void testFindLecturerByEmail() {      
+         Lecturer lecturer = lecturerRepository
+                 .findById(1).get();     
+        String expectedLecturerEmail = "khiemtd@fe.edu.vn";
+        Assertions.assertEquals(lecturer.getEmail(), expectedLecturerEmail);
     }
-    
-    @Test
-    public void testcase_02_UpdateLecturer()
-    {
-        Integer ExpectedId = 2;
-        String  ExpectedEmail = "testUpdate@fe.edu.vn";
-        String ExpectedName = "testUpdate";
-        
-        Lecturer lecture = new Lecturer();
-        lecture.setId(ExpectedId);
-        lecture.setEmail(ExpectedEmail);
-        lecture.setName(ExpectedName);
-        
-     
-        lecturerRepository.save(lecture);
-        
-        Assertions.assertEquals(lecturerRepository.getById(ExpectedId).getId(),ExpectedId); 
-        Assertions.assertEquals(lecturerRepository.getById(ExpectedId).getEmail(),ExpectedEmail); 
-        Assertions.assertEquals(lecturerRepository.getById(ExpectedId).getName(),ExpectedName);
-    }
-    
-    @Test
-    @Rollback(false)
-    public void testcase_03_CreateLecturer()
-    {
-        Integer ExpectedId = 44;
-        String  ExpectedEmail = "NewLecturer@fe.edu.vn";
-        String ExpectedName = "NewLecturer";
-        
-        Lecturer lecture = new Lecturer();
-        lecture.setId(ExpectedId);
-        lecture.setEmail(ExpectedEmail);
-        lecture.setName(ExpectedName);
-        
-        lecturerRepository.save(lecture);
-        
-        Assertions.assertEquals(lecturerRepository.getById(ExpectedId).getId(),ExpectedId); 
-        Assertions.assertEquals(lecturerRepository.getById(ExpectedId).getEmail(),ExpectedEmail); 
-        Assertions.assertEquals(lecturerRepository.getById(ExpectedId).getName(),ExpectedName);
-    }
-    
-    @Test
-    @Rollback(false)
-    public void testcase_04_DeleteLecturer()
-    {
-        Integer ExpectedId = 44;
-        
-        lecturerRepository.deleteById(ExpectedId);
-        boolean IsLectureExist = lecturerRepository.existsById(ExpectedId);
-        
-        Assertions.assertEquals(IsLectureExist,false);
-    }
+   
 }

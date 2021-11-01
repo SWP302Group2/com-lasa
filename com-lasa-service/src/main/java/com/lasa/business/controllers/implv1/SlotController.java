@@ -106,9 +106,6 @@ public class SlotController implements SlotOperations {
     @PreAuthorize("#slotRequestModel.lecturerId = authentication.principal.id")
     public ResponseEntity<SlotViewModel> createSlot(SlotRequestModel slotRequestModel){
         List<Integer> topicIds;
-        Integer lecturerId = ((MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId();
-        if(!lecturerId.equals(slotRequestModel.getLecturerId()))
-            throw new BadCredentialsException("PERMISSION_DENIED");
 
         if(Objects.isNull(slotRequestModel.getTopics()))
             topicIds = lecturerTopicDetailService.findListTopicIdByLecturerId(slotRequestModel.getLecturerId());
