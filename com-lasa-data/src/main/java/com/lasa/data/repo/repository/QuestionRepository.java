@@ -24,4 +24,7 @@ public interface QuestionRepository extends JpaRepository<Question, Integer>, Jp
     long countByIdAndBookingRequestIdIn(Integer bookingId, List<Integer> questionId);
 
     long countByBookingRequestId(Integer bookingId);
+
+    @Query("select count(q) from Question q join q.bookingRequest as b where q.id in ?1 and b.status = 1 and b.studentId = ?2")
+    long countAvailableQuestionsForDelete(List<Integer> ids, Integer studentId);
 }

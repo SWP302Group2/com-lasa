@@ -35,7 +35,7 @@ public interface SlotOperations {
 
     @GetMapping(value = "/{id}")
     ResponseEntity<?> findById(@ApiParam(name = "id", type = "Integer", value = "Find a slot by id", required = true)
-                               @Min(value = 1) @PathVariable Integer id);
+                               @Min(value = 1) @PathVariable(value = "id") Integer id);
 
     @GetMapping(value = "/{id}/booking-requests")
     ResponseEntity<?> findByIdIncludeBookingRequests(@ApiParam(name = "id", type = "Integer", value = "Find a slot by id", required = true)
@@ -46,17 +46,16 @@ public interface SlotOperations {
 
     @PostMapping
     ResponseEntity<?> createSlot(@ApiParam(name = "slots", type = "body", value = "Add a new slot")
-                                              @RequestBody SlotRequestModel slot);
+                                              @RequestBody SlotRequestModel model);
 
     @PutMapping
     ResponseEntity<?> updateSlots(
             @ApiParam(name = "slots", type = "body", value = "Update a slot by id", required = true)
             @Validated(PutValidator.class) @RequestBody SlotRequestModel slots);
 
-    @PutMapping("/{id}/booking-requests")
+    @PutMapping(value = "/{id}/booking-requests")
     ResponseEntity<?> updateBookingRequests(@Min(value = 1) @PathVariable("id") Integer id,
-                                            @Validated(PutValidator.class) @RequestBody SlotBookingRequestModel model);
-
+                                            @Validated(value = PutValidator.class) @RequestBody SlotBookingRequestModel model);
 
     @DeleteMapping
     void deleteSlots(
