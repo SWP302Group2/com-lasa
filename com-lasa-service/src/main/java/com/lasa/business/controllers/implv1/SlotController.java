@@ -103,7 +103,7 @@ public class SlotController implements SlotOperations {
     @Override
     @Transactional
     @IsLecturer
-    @PreAuthorize("#slotRequestModel.lecturerId = authentication.principal.id")
+    @PreAuthorize("#slotRequestModel.lecturerId.equals(authentication.principal.id)")
     public ResponseEntity<SlotViewModel> createSlot(SlotRequestModel slotRequestModel){
         List<Integer> topicIds;
 
@@ -129,14 +129,14 @@ public class SlotController implements SlotOperations {
 
     @Override
     @IsLecturer
-    @PreAuthorize("#slotRequestModel.lecturerId = authentication.principal.id")
+    @PreAuthorize("#slotRequestModel.lecturerId.equals(authentication.principal.id)")
     public ResponseEntity<SlotViewModel> updateSlots(SlotRequestModel slotRequestModel) {
         return ResponseEntity.ok(slotService.updateSlots(slotRequestModel));
     }
 
     @Override
     @IsLecturer
-    @PreAuthorize("(#model.lecturerId = authentication.principal.id) && (#id = authentication.principal.id)")
+    @PreAuthorize("(#model.lecturerId.equals(authentication.principal.id)) && (#id.equals(authentication.principal.id))")
     public ResponseEntity<SlotViewModel> updateBookingRequests(Integer id, SlotBookingRequestModel model) {
         return ResponseEntity.ok(slotService.acceptDenyBooking(model));
     }
