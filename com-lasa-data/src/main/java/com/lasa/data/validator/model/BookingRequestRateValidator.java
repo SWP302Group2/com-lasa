@@ -22,7 +22,7 @@ public class BookingRequestRateValidator implements ConstraintValidator<ValidBoo
         if(Objects.isNull(model.getRating()))
             return true;
         else if(model.getRating() >= 0 && model.getRating() <= 10)
-            return repository.countUpdatableBooking(model.getId()) == 1;
+            return repository.countRateableBooking(model.getId()) == 1;
 
         return false;
     }

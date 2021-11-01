@@ -49,7 +49,7 @@ public interface BookingRequestRepository extends JpaRepository<BookingRequest, 
     @Query("select count(b) from BookingRequest b where b.id = ?1 and b.status = 1")
     long countUpdatableBooking(Integer id);
 
-    @Query("select count(b) from BookingRequest b where b.id = ?1 and b.status = 5")
+    @Query("select count(b) from BookingRequest b where b.id = ?1 and b.status = 4 and b.rating is null")
     long countRateableBooking(Integer id);
 
 }
