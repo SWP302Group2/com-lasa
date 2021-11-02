@@ -55,7 +55,7 @@ public class ExceptionTranslator {
     @ResponseStatus(HttpStatus.FORBIDDEN)
     public ResponseObject processForbiddenResponse(RuntimeException e, HttpServletRequest request) {
         LOGGER.warn(e.getMessage());
-        System.out.println("LOI SO 2");
+        System.out.println(e.getMessage());
         return ResponseObject.builder()
                 .status(HttpStatus.FORBIDDEN.value())
                 .error(e.getClass().getSimpleName())
@@ -68,7 +68,7 @@ public class ExceptionTranslator {
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     public ResponseObject processTokenException(RuntimeException e, HttpServletRequest request) {
         LOGGER.error(e.getMessage());
-        System.out.println("LOI SO 3");
+        System.out.println(e.getMessage());
         return ResponseObject.builder()
                 .status(HttpStatus.UNAUTHORIZED.value())
                 .error(e.getClass().getSimpleName())
@@ -81,7 +81,7 @@ public class ExceptionTranslator {
     @ResponseStatus(HttpStatus.FORBIDDEN)
     public ResponseObject processInvalidTokenException(Exception e,HttpServletRequest request) {
         LOGGER.warn(e.getMessage());
-        System.out.println("LOI SO 4");
+        System.out.println(e.getMessage());
         return ResponseObject.builder()
                 .status(HttpStatus.UNAUTHORIZED.value())
                 .error(TokenException.class.getSimpleName())
@@ -94,7 +94,7 @@ public class ExceptionTranslator {
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ResponseObject processQueryException(Exception e, HttpServletRequest request) {
         LOGGER.debug(e.getMessage());
-        System.out.println("LOI SO 5");
+        System.out.println(e.getMessage());
         return ResponseObject.builder()
                 .status(HttpStatus.NOT_FOUND.value())
                 .error("InvalidArgumentException")
@@ -107,7 +107,7 @@ public class ExceptionTranslator {
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ResponseObject processNotFoundResponse(Exception e, HttpServletRequest request) {
         LOGGER.debug(e.getMessage());
-        System.out.println("LOI SO 6");
+        System.out.println(e.getMessage());
         return ResponseObject.builder()
                 .status(HttpStatus.NOT_FOUND.value())
                 .error(e.getClass().getSimpleName())
@@ -120,7 +120,7 @@ public class ExceptionTranslator {
     @ResponseStatus(HttpStatus.NOT_ACCEPTABLE)
     public ResponseObject processGoogleException(Exception e, HttpServletRequest request) {
         LOGGER.info(e.getMessage());
-        System.out.println("LOI SO 7");
+        System.out.println(e.getMessage());
         return ResponseObject.builder()
                 .status(HttpStatus.NOT_ACCEPTABLE.value())
                 .error("GoogleException")
@@ -133,7 +133,7 @@ public class ExceptionTranslator {
     @ResponseStatus(HttpStatus.NOT_ACCEPTABLE)
     public ResponseObject processEmailDomainException(Exception e, HttpServletRequest request) {
         LOGGER.error(e.getMessage());
-        System.out.println("LOI SO 8");
+        System.out.println(e.getMessage());
         return ResponseObject.builder()
                 .status(HttpStatus.NOT_ACCEPTABLE.value())
                 .error(e.getClass().getSimpleName())
@@ -146,7 +146,7 @@ public class ExceptionTranslator {
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
     public ResponseObject processOverflowException(Exception e, HttpServletRequest request) {
         LOGGER.error(e.getMessage());
-        System.out.println("LOI SO 9");
+        System.out.println(e.getMessage());
         return ResponseObject.builder()
                 .status(HttpStatus.UNPROCESSABLE_ENTITY.value())
                 .error(e.getClass().getSimpleName())
@@ -159,7 +159,7 @@ public class ExceptionTranslator {
     @ResponseStatus(HttpStatus.CONFLICT)
     public ResponseObject processConflictException(Exception e, HttpServletRequest request) {
         LOGGER.warn("Conflict " + e.getMessage());
-        System.out.println("LOI SO 10");
+        System.out.println(e.getMessage());
         return ResponseObject.builder()
                 .status(HttpStatus.CONFLICT.value())
                 .error(e.getClass().getSimpleName())
@@ -172,7 +172,7 @@ public class ExceptionTranslator {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseObject processConstraintViolationException(Exception ex, HttpServletRequest request) {
         LOGGER.debug("Contraint Violation " + ex.getMessage());
-        System.out.println("LOI SO 11");
+        System.out.println(ex.getMessage());
         HashMap<String, String> errors = new HashMap<>();
         if(ex instanceof ConstraintViolationException) {
             ((ConstraintViolationException) ex).getConstraintViolations().stream()

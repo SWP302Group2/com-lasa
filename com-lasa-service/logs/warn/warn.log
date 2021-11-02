@@ -1,1 +1,2 @@
-2021-11-02 00:19:19 WARN spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning 
+2021-11-02 14:59:43 WARN spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning 
+2021-11-02 15:03:16 WARN Failed to evaluate expression '#slotRequestModel.lecturerId.equals(authentication.principal.id)' 
