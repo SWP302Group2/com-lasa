@@ -8,24 +8,34 @@ package com.lasa.business.controllers.implv1;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lasa.business.services.implv1.LecturerServiceImpl;
 import com.lasa.data.model.entity.Lecturer;
+import com.lasa.data.model.view.LecturerViewModel;
 import com.lasa.data.repo.repository.LecturerRepository;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.MethodOrderer.Alphanumeric;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.MvcResult;
+
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import org.junit.jupiter.api.TestMethodOrder;
+
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.*;
 /**
  *
  * @author ASUS
  */
-@TestMethodOrder(Alphanumeric.class)
 @SpringBootTest
 @AutoConfigureMockMvc
 public class LecturerControllerTest {
@@ -33,11 +43,14 @@ public class LecturerControllerTest {
    @Autowired
    private MockMvc mocMvc;
    
-   @Autowired
+   @Mock
    LecturerRepository lecturerRepository;
     
-   @InjectMocks
+   @Mock
    LecturerServiceImpl lecturerService;
+
+   @InjectMocks
+   LecturerController lecturerController;
    
    private final static ObjectMapper objectMapper = new ObjectMapper();
    
@@ -52,15 +65,19 @@ public class LecturerControllerTest {
 
     @Test
     public void testcase_01_FindByLecturerId() throws Exception {
-        int ID = 1;
-        String expected = "khiemtd@fe.edu.vn";
-        RequestBuilder request = get("/api/v1/lecturers/"+ID);
-        MvcResult result = this.mocMvc.perform(request).andReturn();   
+        int id = 1;
+        String email = "khiemtd@fe.edu.vn";
 
-        String Jsonstring = result.getResponse().getContentAsString(); 
-        Lecturer outputData = objectMapper.readValue(Jsonstring, Lecturer.class);        
-        assertEquals(expected, outputData.getEmail());
-        
+        LecturerViewModel expected = new LecturerViewModel();
+        expected.setId(id);
+        expected.setEmail(email);
+
+        when(lecturerService.findLecturerById(id)).thenReturn(expected);
+
+        ResponseEntity<LecturerViewModel> result = lecturerController.findById(id);
+        System.out.println(result.getBody());
+
+        Assertions.assertEquals(expected, result.getBody());
     }
 
  /*   @Test
