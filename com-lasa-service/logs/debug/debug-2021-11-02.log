@@ -1,2 +1,8 @@
-2021-11-02 14:57:36 DEBUG Securing POST /api/v1/booking-requests/564/questions 
-2021-11-02 14:57:37 DEBUG Secured POST /api/v1/booking-requests/564/questions 
+2021-11-02 14:59:53 DEBUG Securing POST /api/v1/booking-requests/564/questions 
+2021-11-02 14:59:54 DEBUG Secured POST /api/v1/booking-requests/564/questions 
+2021-11-02 15:00:25 DEBUG Securing GET /api/v1/slots 
+2021-11-02 15:00:25 DEBUG Secured GET /api/v1/slots 
+2021-11-02 15:03:15 DEBUG Securing POST /api/v1/slots 
+2021-11-02 15:03:16 DEBUG Secured POST /api/v1/slots 
+2021-11-02 15:05:33 DEBUG Securing POST /api/v1/slots 
+2021-11-02 15:05:34 DEBUG Secured POST /api/v1/slots 

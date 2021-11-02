@@ -205,7 +205,7 @@ public class BookingRequestController implements BookingRequestOperations {
 //    }
     @Override
     @IsStudent
-    @PreAuthorize("(#id.equals(#model.id)) && (#model.studentId.equals(authentication.principal.id))")
+    @PreAuthorize("#model.studentId.equals(authentication.principal.id)")
     public ResponseEntity<?> deleteBookingQuestions(Integer id, BookingQuestionDeleteRequestModel model) {
         questionService.deleteQuestion(model.getQuestionIds());
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
