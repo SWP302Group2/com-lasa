@@ -67,17 +67,13 @@ public class LecturerControllerTest {
     public void testcase_01_FindByLecturerId() throws Exception {
         int id = 1;
         String email = "khiemtd@fe.edu.vn";
-
         LecturerViewModel expected = new LecturerViewModel();
         expected.setId(id);
         expected.setEmail(email);
-
         when(lecturerService.findLecturerById(id)).thenReturn(expected);
 
         ResponseEntity<LecturerViewModel> result = lecturerController.findById(id);
-        System.out.println(result.getBody());
-
-        Assertions.assertEquals(expected, result.getBody());
+        Assertions.assertEquals(result.getBody(),expected);
     }
 
  /*   @Test
