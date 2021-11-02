@@ -160,7 +160,6 @@ public class BookingRequestServiceImpl implements BookingRequestService {
                                             t.setContent(x.getContent());
                                     });
                         });
-            System.out.println(updatedBookingRequest.getQuestions());
             return new BookingRequestViewModel(bookingRepository.save(updatedBookingRequest));
         }
         return null;
