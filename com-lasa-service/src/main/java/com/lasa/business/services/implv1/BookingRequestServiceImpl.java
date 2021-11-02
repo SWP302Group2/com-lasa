@@ -139,7 +139,7 @@ public class BookingRequestServiceImpl implements BookingRequestService {
                 bookingRepository.getById(bookingRequestModel.getId());
         
         if(updatedBookingRequest != null) {
-            if(Objects.nonNull(bookingRequestModel.getStatus()))
+            if(Objects.nonNull(bookingRequestModel.getTopicId()))
                 updatedBookingRequest.setTopicId(bookingRequestModel.getTopicId());
 
             if(Objects.nonNull(bookingRequestModel.getStatus()))
@@ -150,8 +150,6 @@ public class BookingRequestServiceImpl implements BookingRequestService {
 
             if(Objects.nonNull(bookingRequestModel.getRating())) {
                 updatedBookingRequest.setId(bookingRequestModel.getRating());
-                //after rated booking status = 6
-                updatedBookingRequest.setStatus(6);
             }
             if(Objects.nonNull(bookingRequestModel.getQuestions()))
                 updatedBookingRequest.getQuestions().stream()
@@ -162,7 +160,6 @@ public class BookingRequestServiceImpl implements BookingRequestService {
                                             t.setContent(x.getContent());
                                     });
                         });
-
             return new BookingRequestViewModel(bookingRepository.save(updatedBookingRequest));
         }
         return null;

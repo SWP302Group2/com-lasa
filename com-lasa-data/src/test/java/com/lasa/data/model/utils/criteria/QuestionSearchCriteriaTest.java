@@ -45,7 +45,7 @@ public class QuestionSearchCriteriaTest {
         List<Question> actualList = questionRepository.findAll(QuestionSpecification.searchSpecification(searchCriteria));
 
         List<Question> expectedList = entityManager.getEntityManager()
-                .createQuery("select q from Question q where q.bookingRequest.id like ?1", Question.class)
+                .createQuery("select q from Question q where q.bookingRequest.id in ?1", Question.class)
                 .setParameter(1, searchBookingId)
                 .getResultList();
         Assertions.assertEquals(expectedList, actualList);

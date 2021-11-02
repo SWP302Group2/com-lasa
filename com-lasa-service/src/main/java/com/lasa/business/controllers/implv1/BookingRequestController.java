@@ -6,6 +6,7 @@
 package com.lasa.business.controllers.implv1;
 
 import com.lasa.business.controllers.BookingRequestOperations;
+import com.lasa.business.controllers.utils.authorization.IsAdmin;
 import com.lasa.business.controllers.utils.authorization.IsStudent;
 import com.lasa.business.services.BookingRequestService;
 import com.lasa.business.services.EmailSenderService;
@@ -156,44 +157,40 @@ public class BookingRequestController implements BookingRequestOperations {
 
     @Override
     @Transactional
-    public ResponseEntity<BookingRequestViewModel> createBookingRequest(BookingRequestRequestModel bookingRequest) {
-        Integer studentId = ((MyUserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId();
-        if(!studentId.equals(bookingRequest.getStudentId()))
-            throw new BadCredentialsException("PERMISSION_DENIED");
+    @IsStudent
+    @PreAuthorize("#model.studentId.equals(authentication.principal.id)")
+    public ResponseEntity<BookingRequestViewModel> createBookingRequest(BookingRequestRequestModel model) {
 
-        bookingRequest.setStatus(1);
+        model.setStatus(1);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(bookingRequestService.createBookingRequest(bookingRequest));
+                .body(bookingRequestService.createBookingRequest(model));
 
     }
 
     @Override
     @IsStudent
-    @PreAuthorize("(#id = authentication.principal.id) && (#model.studentId = authentication.principal.id)")
+    @PreAuthorize("(#id.equals(authentication.principal.id)) && (#model.studentId.equals(authentication.principal.id))")
     public ResponseEntity<List<QuestionViewModel>> addBookingQuestions(Integer id, BookingQuestionRequestModel model) {
         return ResponseEntity.ok(questionService.createQuestions(model.getQuestions()));
     }
 
     @Override
     @IsStudent
-    @PreAuthorize("#model.studentId = authentication.principal.id")
+    @PreAuthorize("#model.studentId.equals(authentication.principal.id)")
     public ResponseEntity<BookingRequestViewModel> updateBookingRequest(BookingRequestRequestModel model) {
-        Integer studentId = ((MyUserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId();
-        if(!studentId.equals(model.getStudentId()))
-            throw new BadCredentialsException("PERMISSION_DENIED");
-
         return ResponseEntity.ok(bookingRequestService.updateBookingRequest(model));
     }
 
     @Override
     @IsStudent
-    @PreAuthorize("(#id = authentication.principal.id) && (#model.studentId = authentication.principal.id)")
+    @PreAuthorize("(#id.equals(authentication.principal.id)) && (#model.studentId.equals(authentication.principal.id))")
     public ResponseEntity<List<QuestionViewModel>> updateBookingQuestions(Integer id, BookingQuestionRequestModel model) {
         return ResponseEntity.ok(questionService.updateQuestions(model.getQuestions()));
     }
 
     @Override
+    @IsAdmin
     public ResponseEntity<?> deleteBookingRequests(@RequestBody List<Integer> ids) {
         bookingRequestService.deleteBookingRequests(ids);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
@@ -207,7 +204,7 @@ public class BookingRequestController implements BookingRequestOperations {
 //    }
     @Override
     @IsStudent
-    @PreAuthorize("#model.studentId = authentication.principal.id")
+    @PreAuthorize("#model.studentId.equals(authentication.principal.id)")
     public ResponseEntity<?> deleteBookingQuestions(Integer id, BookingQuestionDeleteRequestModel model) {
         questionService.deleteQuestion(model.getQuestionIds());
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
