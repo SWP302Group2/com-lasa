@@ -32,7 +32,8 @@ public class BookingRequestRequestModel {
     @ValidBookingRequestUpdate(groups = PutValidator.class, message = "BOOKING_REQUEST_NOT_FOUND")
     private Integer id;
 
-    @NotNull(groups = PostValidator.class, message = "STUDENT_ID_IS_NULL")
+//    @NotNull(groups = PostValidator.class, message = "STUDENT_ID_IS_NULL")
+    @NotNull(message =  "STUDENT_ID_IS_NULL")
     private Integer studentId;
 
     @ValidOneOf(value = 0, groups = PutValidator.class)
@@ -47,7 +48,7 @@ public class BookingRequestRequestModel {
     @ValidSlotId(groups = PostValidator.class, message = "SLOT_NOT_VALID_OR_NOT_AVAILABLE")
     private Integer slotId;
 
-    @NotEmpty(groups = PostValidator.class, message = "TITLE_IS_EMPTY")
+    @NotEmpty(groups = PostValidator.class)
     private String title;
 
     private Integer rating ;
