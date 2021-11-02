@@ -27,6 +27,7 @@ public class BookingRequestDeleteValidator implements ConstraintValidator<ValidB
                 return false;
             else {
                 return repository.countAvailableQuestionsForDelete(model.getQuestionIds(), model.getStudentId()) == model.getQuestionIds().size();
+                //update check >= 1 question later
             }
         }
 

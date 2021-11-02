@@ -50,7 +50,7 @@ public class TopicSearchCriteriaTest {
     }
 
     @Test
-    public void testStudentSearchCriteriaWithNameAndCourseIdArgument() {
+    public void testTopicSearchCriteriaWithNameAndCourseIdArgument() {
         String searchName = "Programming";
         String searchCourseId = "PRF192";
         TopicSearchCriteria searchCriteria = TopicSearchCriteria.builder()
@@ -64,6 +64,21 @@ public class TopicSearchCriteriaTest {
                 .createQuery("select s from Topic s where s.name like ?1 and s.courseId like ?2", Topic.class)
                 .setParameter(1, "%" + searchName + "%")
                 .setParameter(2, "%" + searchCourseId + "%")
+                .getResultList();
+        Assertions.assertEquals(expectedList, actualList);
+    }
+     @Test
+    public void testTopicSearchCriteriaWithMajorIdArgument() {
+        String searchMajor = "SS";
+        TopicSearchCriteria searchCriteria = TopicSearchCriteria.builder()
+                 .name(searchMajor)
+                .build();
+
+        List<Topic> actualList = topicRepository.findAll(TopicSpecification.searchSpecification(searchCriteria));
+
+        List<Topic> expectedList = entityManager.getEntityManager()
+                .createQuery("select s from Topic s where s.majorId like ?1", Topic.class)
+                .setParameter(1, "%" + searchMajor + "%")
                 .getResultList();
         Assertions.assertEquals(expectedList, actualList);
     }

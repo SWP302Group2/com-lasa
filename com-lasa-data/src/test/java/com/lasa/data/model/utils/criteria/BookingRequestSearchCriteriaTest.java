@@ -91,4 +91,19 @@ public class BookingRequestSearchCriteriaTest {
         Assertions.assertEquals(expectedList, actualList);
 
     }
+     @Test
+    public void testBookingSearchCriteriaWithStatus() {
+        int status = 1;
+        BookingRequestSearchCriteria searchCriteria = new BookingRequestSearchCriteria();
+        searchCriteria.setStatus(status);
+                
+        List<BookingRequest> actualList = bookingRepository.findAll(BookingRequestSpecification.searchSpecification(searchCriteria));
+
+        List<BookingRequest> expectedList = entityManager.getEntityManager()
+                .createQuery("select bk from BookingRequest bk where bk.status like ?1", BookingRequest.class)
+                .setParameter(1,  status)
+                .getResultList();
+        Assertions.assertEquals(expectedList, actualList);
+
+    }
 }
