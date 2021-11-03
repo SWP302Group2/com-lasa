@@ -35,7 +35,7 @@ public interface SlotService {
 
     SlotViewModel updateSlots(SlotRequestModel slots);
 
-    SlotViewModel acceptDenyBooking(SlotBookingRequestModel model) throws MessagingException;
+    SlotViewModel acceptDenyBooking(SlotBookingRequestModel model);
     
     void deleteSlots(List<Integer> ids);
 }

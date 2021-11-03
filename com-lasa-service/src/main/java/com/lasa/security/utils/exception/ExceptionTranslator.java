@@ -152,7 +152,7 @@ public class ExceptionTranslator {
                 .build();
     }
 
-    @ExceptionHandler(value = {ExceptionUtils.DuplicatedException.class, MessagingException.class})
+    @ExceptionHandler(value = {ExceptionUtils.DuplicatedException.class, ExceptionUtils.EmailSenderException.class})
     @ResponseStatus(HttpStatus.CONFLICT)
     public ResponseObject processConflictException(Exception e, HttpServletRequest request) {
         LOGGER.info(e.getMessage());

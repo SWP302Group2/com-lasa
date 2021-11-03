@@ -138,7 +138,7 @@ public class SlotController implements SlotOperations {
     @Override
     @IsLecturer
     @PreAuthorize("(#model.lecturerId.equals(authentication.principal.id)) && (#id.equals(authentication.principal.id))")
-    public ResponseEntity<SlotViewModel> updateBookingRequests(Integer id, SlotBookingRequestModel model) throws MessagingException {
+    public ResponseEntity<SlotViewModel> updateBookingRequests(Integer id, SlotBookingRequestModel model){
         return ResponseEntity.ok(slotService.acceptDenyBooking(model));
     }
 

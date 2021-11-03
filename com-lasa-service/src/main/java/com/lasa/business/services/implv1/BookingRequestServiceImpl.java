@@ -171,44 +171,4 @@ public class BookingRequestServiceImpl implements BookingRequestService {
         bookingRepository.deleteAllById(ids);
     }
 
-    @Override
-    @Scheduled(fixedDelay = 60000L)
-    public void announcedMailBeforeMeeting() throws MessagingException {
-
-        /*Slot slot = null;
-        Student student = null;
-        Lecturer lecturer = null;
-        List<BookingRequest> listAnnounced =  bookingRepository.findAllBookingRequestByStatus();
-        for (BookingRequest bookingRequest : listAnnounced) {
-            slot = slotRepository.findById(bookingRequest.getSlotId()).get();
-            student = studentRepository.findById(bookingRequest.getStudentId()).get();
-            lecturer = lecturerRepository.findById(slot.getLecturerId()).get();
-
-            LocalDateTime timeStart = slot.getTimeStart();
-            LocalDateTime timeEnd = slot.getTimeEnd();
-
-            DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
-            String timeStartFormat = timeStart.format(timeFormatter);
-
-            DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-            String createTimeFormat = bookingRequest.getCreateTime().format(dateFormatter);
-
-            LocalDateTime now = LocalDateTime.now();
-            Period period = Period.between(now.toLocalDate(),timeStart.toLocalDate());
-            Duration duration = Duration.between(now.toLocalTime(), timeEnd.toLocalTime());
-
-            if (period.toString().equals("P0D") && (duration.getSeconds() == 3600 || duration.getSeconds() == -3600)) {
-                    emailSenderService.sendEmailWithAttachment(student.getEmail(),
-                                        "Dear Student: " + student.getName() + ", " + student.getMssv() +
-                                                "\n Prepare for: " + timeStartFormat +
-                                            "\n The host of meeting is:"+ lecturer.getName() +
-                                            "\n Hear is link to google meet: "+ lecturer.getMeetingUrl(),
-
-                                    "Remind! You have an appointment created on " + createTimeFormat);
-
-                    bookingRequest.setStatus(3);
-                    bookingRepository.save(bookingRequest);
-            }
-        }*/
-    }
 }

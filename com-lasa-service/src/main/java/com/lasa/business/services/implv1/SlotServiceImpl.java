@@ -19,6 +19,7 @@ import com.lasa.data.model.utils.page.SlotPage;
 import com.lasa.data.model.utils.specification.SlotSpecification;
 import com.lasa.data.repo.repository.SlotRepository;
 import com.lasa.data.repo.repository.SlotTopicDetailRepository;
+import com.lasa.security.utils.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
@@ -227,7 +228,7 @@ public class SlotServiceImpl implements SlotService {
 
     @Override
     @Transactional
-    public SlotViewModel acceptDenyBooking(SlotBookingRequestModel model) throws MessagingException {
+    public SlotViewModel acceptDenyBooking(SlotBookingRequestModel model) {
         Slot slot = slotRepository.findById(model.getSlotId()).get();
         if(model.getStatus().equals(2)) {
             slot.setStatus(2);
@@ -235,7 +236,11 @@ public class SlotServiceImpl implements SlotService {
             bookingRequests.forEach(t -> {
                 if(t.getId().equals(model.getBookingId())) {
                     t.setStatus(2);
-                    emailSenderService.sendEmailAfterBookingAccepted(slot , t);
+                    try {
+                        emailSenderService.sendEmailAfterBookingAccepted(slot , t);
+                    } catch (MessagingException e) {
+                        throw new ExceptionUtils.EmailSenderException("EMAIL_SENDER_ERROR");
+                    }
                 }
                 else
                     t.setStatus(-1);

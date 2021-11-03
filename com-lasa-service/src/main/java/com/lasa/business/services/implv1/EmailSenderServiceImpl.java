@@ -76,7 +76,7 @@ public class EmailSenderServiceImpl implements EmailSenderService {
                         "\n" +
                         "\n Best regards, " +
                         "\n Lasa customer service team",
-                "BookingRequest Accepted for " + bookingRequest.getTitle())
+                "BookingRequest Accepted for " + bookingRequest.getTitle());
 
     }
 

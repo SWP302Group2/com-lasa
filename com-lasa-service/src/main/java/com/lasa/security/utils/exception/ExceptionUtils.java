@@ -8,6 +8,12 @@ public class ExceptionUtils {
         }
     }
 
+    public static class EmailSenderException extends RuntimeException {
+        public EmailSenderException(String message) {
+            super(message);
+        }
+    }
+
     public static class UserAccountException extends RuntimeException {
         public  UserAccountException(String message) {
             super(message);
