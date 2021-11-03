@@ -33,6 +33,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.mail.MessagingException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -137,7 +138,7 @@ public class SlotController implements SlotOperations {
     @Override
     @IsLecturer
     @PreAuthorize("(#model.lecturerId.equals(authentication.principal.id)) && (#id.equals(authentication.principal.id))")
-    public ResponseEntity<SlotViewModel> updateBookingRequests(Integer id, SlotBookingRequestModel model) {
+    public ResponseEntity<SlotViewModel> updateBookingRequests(Integer id, SlotBookingRequestModel model) throws MessagingException {
         return ResponseEntity.ok(slotService.acceptDenyBooking(model));
     }
 

@@ -39,7 +39,5 @@ public interface BookingRequestService {
 
     void deleteBookingRequests(List<Integer> ids);
 
-    void confirmBookingRequest(Integer bookingId, Integer status) throws MessagingException;
-
     void announcedMailBeforeMeeting() throws MessagingException;
 }

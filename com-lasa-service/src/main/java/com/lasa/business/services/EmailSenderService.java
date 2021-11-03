@@ -1,13 +1,17 @@
 package com.lasa.business.services;
 
+import com.lasa.data.model.entity.BookingRequest;
+import com.lasa.data.model.entity.Slot;
 import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
 
 @Service
 public interface EmailSenderService {
-    public void sendEmailWithAttachment(String toEmail,
+    void sendEmailWithAttachment(String toEmail,
                                         String body,
                                         String subject
                                         ) throws MessagingException;
+
+    void sendEmailAfterBookingAccepted(Slot slot, BookingRequest bookingRequest) throws MessagingException;
 }

@@ -69,7 +69,7 @@ public class BookingRequestController implements BookingRequestOperations {
     public BookingRequestController(@Qualifier("BookingRequestServiceImplV1") BookingRequestService service,
                                     @Qualifier("QuestionServiceImplV1") QuestionService questionService,
                                     @Qualifier("StudentServiceImplV1") StudentService studentService,
-                                    @Qualifier("EmailSenderServiceImpl") EmailSenderService emailSenderService) {
+                                    @Qualifier("EmailSenderServiceImplV1") EmailSenderService emailSenderService) {
         this.bookingRequestService = service;
         this.questionService = questionService;
         this.studentService = studentService;

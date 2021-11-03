@@ -13,6 +13,7 @@ import com.lasa.data.model.utils.page.SlotPage;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
+import javax.mail.MessagingException;
 import java.util.List;
 
 /**
@@ -34,7 +35,7 @@ public interface SlotService {
 
     SlotViewModel updateSlots(SlotRequestModel slots);
 
-    SlotViewModel acceptDenyBooking(SlotBookingRequestModel model);
+    SlotViewModel acceptDenyBooking(SlotBookingRequestModel model) throws MessagingException;
     
     void deleteSlots(List<Integer> ids);
 }

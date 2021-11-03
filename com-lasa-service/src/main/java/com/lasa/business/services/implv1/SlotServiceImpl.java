@@ -5,10 +5,7 @@
  */
 package com.lasa.business.services.implv1;
 
-import com.lasa.business.services.LecturerService;
-import com.lasa.business.services.LecturerTopicDetailService;
-import com.lasa.business.services.SlotService;
-import com.lasa.business.services.SlotTopicDetailService;
+import com.lasa.business.services.*;
 import com.lasa.data.model.entity.*;
 import com.lasa.data.model.request.SlotBookingRequestModel;
 import com.lasa.data.model.request.SlotRequestModel;
@@ -31,6 +28,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.mail.MessagingException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -51,6 +49,7 @@ public class SlotServiceImpl implements SlotService {
     private final LecturerService lecturerService;
     private final LecturerTopicDetailService lecturerTopicDetailService;
     private final SlotTopicDetailRepository slotTopicDetailRepository;
+    private final EmailSenderService emailSenderService;
 
     @Autowired
     public SlotServiceImpl(
@@ -58,13 +57,14 @@ public class SlotServiceImpl implements SlotService {
             @Qualifier("LecturerServiceImplV1") LecturerService lecturerService,
             @Qualifier("SlotTopicDetailServiceImplV1") SlotTopicDetailService slotTopicDetailService,
             @Qualifier("LecturerTopicDetailServiceImplV1") LecturerTopicDetailService lecturerTopicDetailService,
-            SlotTopicDetailRepository slotTopicDetailRepository
-                           ) {
+            SlotTopicDetailRepository slotTopicDetailRepository,
+            @Qualifier("EmailSenderServiceImplV1") EmailSenderService emailSenderService) {
         this.slotRepository = slotRepository;
         this.lecturerService = lecturerService;
         this.slotTopicDetailService = slotTopicDetailService;
         this.lecturerTopicDetailService = lecturerTopicDetailService;
         this.slotTopicDetailRepository = slotTopicDetailRepository;
+        this.emailSenderService = emailSenderService;
     }
 
 
@@ -227,14 +227,16 @@ public class SlotServiceImpl implements SlotService {
 
     @Override
     @Transactional
-    public SlotViewModel acceptDenyBooking(SlotBookingRequestModel model) {
+    public SlotViewModel acceptDenyBooking(SlotBookingRequestModel model) throws MessagingException {
         Slot slot = slotRepository.findById(model.getSlotId()).get();
         if(model.getStatus().equals(2)) {
             slot.setStatus(2);
             List<BookingRequest> bookingRequests = new ArrayList<>(slot.getBookingRequests());
             bookingRequests.forEach(t -> {
-                if(t.getId().equals(model.getBookingId()))
+                if(t.getId().equals(model.getBookingId())) {
                     t.setStatus(2);
+                    emailSenderService.sendEmailAfterBookingAccepted(slot , t);
+                }
                 else
                     t.setStatus(-1);
             });

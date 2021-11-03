@@ -17,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.mail.MessagingException;
 import javax.validation.Valid;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -55,7 +56,7 @@ public interface SlotOperations {
 
     @PutMapping(value = "/{id}/booking-requests")
     ResponseEntity<?> updateBookingRequests(@Min(value = 1) @PathVariable("id") Integer id,
-                                            @Validated(value = PutValidator.class) @RequestBody SlotBookingRequestModel model);
+                                            @Validated(value = PutValidator.class) @RequestBody SlotBookingRequestModel model) throws MessagingException;
 
     @DeleteMapping
     void deleteSlots(
