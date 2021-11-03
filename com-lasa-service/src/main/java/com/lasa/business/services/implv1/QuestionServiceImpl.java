@@ -67,6 +67,15 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
+    public boolean verifyAvailableQuestionForDelete(Integer bookingId, Integer studentId, List<Integer> questionIds) {
+        if(questionRepository.countAvailableQuestionsForDelete(questionIds, studentId) == questionIds.size()
+        && questionRepository.countByBookingRequestId(bookingId) >= 1)
+            return true;
+
+        return false;
+    }
+
+    @Override
     public List<QuestionViewModel> createQuestions(List<QuestionRequestModel> questionModels) {
         List<Question> questions = questionModels.stream()
                 .map(t -> t.toEntity())
@@ -112,4 +121,6 @@ public class QuestionServiceImpl implements QuestionService {
     public void deleteQuestion(List<Integer> ids) {
         questionRepository.deleteAllById(ids);
     }
+
+
 }

@@ -37,4 +37,8 @@ public interface SlotService {
     SlotViewModel acceptDenyBooking(SlotBookingRequestModel model);
     
     void deleteSlots(List<Integer> ids);
+
+    void updateStatusForCompletedSlotAndBooking();
+
+    void updateStatusForExpiredSlotAndBooking();
 }

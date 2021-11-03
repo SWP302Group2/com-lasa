@@ -188,17 +188,28 @@ public class BookingRequestController implements BookingRequestOperations {
     }
 
     @Override
-    @IsAdmin
-    public ResponseEntity<?> deleteBookingRequests(@RequestBody List<Integer> ids) {
-        bookingRequestService.deleteBookingRequests(ids);
+    @IsStudent
+    public ResponseEntity<?> deleteBookingRequests(List<Integer> id) throws ExceptionUtils.DeleteException {
+        if(!bookingRequestService.verifyBookingRequestForDelete(
+                ((MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId(),
+                id))
+            throw new ExceptionUtils.DeleteException("BOOKING_CAN_NOT_DELETE_OR_NOT_AVAILABLE");
+
+        bookingRequestService.deleteBookingRequests(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
     @Override
     @IsStudent
-    @PreAuthorize("#model.studentId.equals(authentication.principal.id)")
-    public ResponseEntity<?> deleteBookingQuestions(Integer id, BookingQuestionDeleteRequestModel model) {
-        questionService.deleteQuestion(model.getQuestionIds());
+    public ResponseEntity<?> deleteBookingQuestions(Integer bookingId, List<Integer> id) throws ExceptionUtils.DeleteException {
+        if(!questionService.verifyAvailableQuestionForDelete(
+                bookingId,
+                ((MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId(),
+                id
+        ))
+            throw new ExceptionUtils.DeleteException("QUESTION_CAN_NOT_DELETE_OR_NOT_AVAILABLE");
+
+        questionService.deleteQuestion(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }

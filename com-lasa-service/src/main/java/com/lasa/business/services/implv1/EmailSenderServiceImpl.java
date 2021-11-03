@@ -1,5 +1,7 @@
 package com.lasa.business.services.implv1;
 
+import com.lasa.business.config.utils.BookingRequestStatus;
+import com.lasa.business.config.utils.SlotStatus;
 import com.lasa.business.services.BookingRequestService;
 import com.lasa.business.services.EmailSenderService;
 import com.lasa.business.services.SlotService;
@@ -114,62 +116,78 @@ public class EmailSenderServiceImpl implements EmailSenderService {
                 .timeEnd(LocalDateTime.now().plusHours(6))
                 .getLecturer(true)
                 .getTopic(false)
-                .status(2)
+                .status(SlotStatus.ACCEPTED.getCode())
                 .build();
 
         List<SlotViewModel> slots = slotService.findWithArguments(slotSearchCriteria);
-        BookingRequestSearchCriteria bookingRequestSearchCriteria = BookingRequestSearchCriteria.builder()
-                .status(2)
-                .slotId(slots.stream()
-                        .map(t -> t.getId())
-                        .collect(Collectors.toList()))
-                .getStudent(true)
-                .build();
 
-        List<BookingRequestViewModel> bookingRequests = bookingRequestService.findAll(bookingRequestSearchCriteria);
+        if(!slots.isEmpty()) {
+            BookingRequestSearchCriteria bookingRequestSearchCriteria = BookingRequestSearchCriteria.builder()
+                    .status(BookingRequestStatus.ACCEPTED.getCode())
+                    .slotId(slots.stream()
+                            .map(t -> t.getId())
+                            .collect(Collectors.toList()))
+                    .getStudent(true)
+                    .build();
 
-        bookingRequests.stream().forEach(t -> {
-            slots.stream().forEach(x -> {
-                if (x.getId().equals(t.getSlotId())) {
-                    LocalDateTime timeStart = x.getTimeStart();
-                    LocalDateTime timeEnd = x.getTimeEnd();
+            List<BookingRequestViewModel> bookingRequests = bookingRequestService.findAll(bookingRequestSearchCriteria);
 
-                    DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-                    String dateStartFormat = timeStart.format(dateFormatter);
+            bookingRequests.stream().forEach(t -> {
+                slots.stream().forEach(x -> {
+                    if (x.getId().equals(t.getSlotId())) {
+                        LocalDateTime timeStart = x.getTimeStart();
+                        LocalDateTime timeEnd = x.getTimeEnd();
 
-                    DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
-                    String timeStartFormat = timeStart.format(timeFormatter);
-                    String timeEndFormat = timeEnd.format(timeFormatter);
+                        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                        String dateStartFormat = timeStart.format(dateFormatter);
 
-                    SlotRequestModel slotRequestModel = new SlotRequestModel();
-                    slotRequestModel.setId(x.getId());
-                    slotRequestModel.setStatus(3);
-                    slotService.updateSlots(slotRequestModel);
+                        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+                        String timeStartFormat = timeStart.format(timeFormatter);
+                        String timeEndFormat = timeEnd.format(timeFormatter);
 
-                    BookingRequestRequestModel bookingRequestRequestModel = new BookingRequestRequestModel();
-                    bookingRequestRequestModel.setId(t.getId());
-                    bookingRequestRequestModel.setStatus(3);
-                    bookingRequestService.updateBookingRequest(bookingRequestRequestModel);
+                        SlotRequestModel slotRequestModel = new SlotRequestModel();
+                        slotRequestModel.setId(x.getId());
+                        slotRequestModel.setStatus(SlotStatus.NOTIFIED.getCode());
+                        slotService.updateSlots(slotRequestModel);
 
-                    try {
-                        sendEmailWithAttachment(
-                                t.getStudent().getEmail(),
-                                "Dear Mr/Ms " + t.getStudent().getName() + ", " + t.getStudent().getMssv() +
-                                        "\n You have a meeting on " + dateStartFormat + "." +
-                                        "\n Time for meeting " + timeStartFormat + "-" + timeEndFormat + "." +
-                                        "\n The host of meeting is: "+ x.getLecturer().getName() + "." +
-                                        "\n Hear is link to google meet: " + x.getLecturer().getMeetingUrl() + "." +
-                                        "\n" +
-                                        "\n" +
-                                        "\n Best regards, " +
-                                        "\n Lasa customer service team.",
-                                "Notification Email for " + t.getTitle());
-                    } catch (MessagingException e) {
-                        throw new ExceptionUtils.EmailSenderException("EMAIL_SENDER_EMAIL");
+                        BookingRequestRequestModel bookingRequestRequestModel = new BookingRequestRequestModel();
+                        bookingRequestRequestModel.setId(t.getId());
+                        bookingRequestRequestModel.setStatus(BookingRequestStatus.NOTIFIED.getCode());
+                        bookingRequestService.updateBookingRequest(bookingRequestRequestModel);
+
+                        try {
+                            sendEmailWithAttachment(
+                                    t.getStudent().getEmail(),
+                                    "Dear Mr/Ms " + t.getStudent().getName() + ", " + t.getStudent().getMssv() +
+                                            "\n You have a meeting on " + dateStartFormat + "." +
+                                            "\n Time for meeting " + timeStartFormat + "-" + timeEndFormat + "." +
+                                            "\n The host of meeting is: "+ x.getLecturer().getName() + "." +
+                                            "\n Hear is link to google meet: " + x.getLecturer().getMeetingUrl() + "." +
+                                            "\n" +
+                                            "\n" +
+                                            "\n Best regards, " +
+                                            "\n Lasa customer service team.",
+                                    "Notification Email for " + t.getTitle());
+
+                            sendEmailWithAttachment(
+                                    x.getLecturer().getEmail(),
+                                    "Dear Mr/Ms " + x.getLecturer().getEmail()  +
+                                            "\n You have a meeting on " + dateStartFormat + "." +
+                                            "\n Time for meeting " + timeStartFormat + "-" + timeEndFormat + "." +
+                                            "\n Hear is link to google meet: " + x.getLecturer().getMeetingUrl() + "." +
+                                            "\n" +
+                                            "\n" +
+                                            "\n Best regards, " +
+                                            "\n Lasa customer service team.",
+                                    "Notification Email for your Slot " )  ;
+                        } catch (MessagingException e) {
+                            throw new ExceptionUtils.EmailSenderException("EMAIL_SENDER_EMAIL");
+                        }
                     }
-                }
+                });
             });
-        });
+        }
+
     }
 
 }

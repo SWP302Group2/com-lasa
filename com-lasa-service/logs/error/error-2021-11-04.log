@@ -1,0 +1,18 @@
+2021-11-04 00:49:42 ERROR 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+The dependencies of some of the beans in the application context form a cycle:
+
+   slotController defined in file [D:\GitHub\com-lasa\com-lasa-service\target\classes\com\lasa\business\controllers\implv1\SlotController.class]
+???????
+|  slotServiceImpl defined in file [D:\GitHub\com-lasa\com-lasa-service\target\classes\com\lasa\business\services\implv1\SlotServiceImpl.class]
+?     ?
+|  emailSenderServiceImpl
+???????
+
+ 

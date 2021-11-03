@@ -1,5 +1,6 @@
 package com.lasa.business.services.implv1;
 
+import com.lasa.business.config.utils.BookingRequestStatus;
 import com.lasa.business.services.BookingRequestService;
 import com.lasa.business.services.EmailSenderService;
 import com.lasa.data.model.entity.*;
@@ -18,15 +19,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.mail.MessagingException;
-import java.time.Duration;
-import java.time.LocalDateTime;
-import java.time.Period;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -43,14 +38,7 @@ import java.util.stream.Collectors;
 public class BookingRequestServiceImpl implements BookingRequestService {
 
     private final BookingRequestRepository bookingRepository;
-    @Autowired
-    private  EmailSenderService emailSenderService;
-    @Autowired
-    private StudentRepository studentRepository;
-    @Autowired
-    private LecturerRepository lecturerRepository;
-    @Autowired
-    private SlotRepository slotRepository;
+
     @Autowired
     public BookingRequestServiceImpl(BookingRequestRepository bookingRepository) {
         this.bookingRepository = bookingRepository;
@@ -83,11 +71,11 @@ public class BookingRequestServiceImpl implements BookingRequestService {
     }
 
     @Override
-    public Boolean verifyBookingRequest(Integer studentId, Integer slotId) {
-        if(bookingRepository.findBookingRequestByStudentIdAndSlotId(studentId, slotId).isPresent())
-            return false;
-        else
+    public Boolean verifyBookingRequestForDelete(Integer studentId, List<Integer> slotId) {
+        if(bookingRepository.countAvailableBookingForDelete(studentId, slotId) == slotId.size())
             return true;
+
+        return false;
     }
 
     @Override
@@ -164,11 +152,14 @@ public class BookingRequestServiceImpl implements BookingRequestService {
         }
         return null;
     }
-    
+
+
 
     @Override
     public void deleteBookingRequests(List<Integer> ids) {
-        bookingRepository.deleteAllById(ids);
+        bookingRepository.findAllById(ids)
+                .stream()
+                .forEach(t -> t.setStatus(BookingRequestStatus.DELETED.getCode()));
     }
 
 }

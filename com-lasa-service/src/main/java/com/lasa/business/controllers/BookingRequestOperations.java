@@ -64,15 +64,15 @@ public interface BookingRequestOperations {
                                              @Validated(PutValidator.class) @RequestBody BookingQuestionRequestModel model);
     
     @DeleteMapping
-    ResponseEntity<?> deleteBookingRequests(@ApiParam(name = "ids", type = "body", value = "By id, you may remove booking request")
-                               @RequestBody List<Integer> ids);
+    ResponseEntity<?> deleteBookingRequests(@ApiParam(name = "id", type = "param", value = "By id, you may remove booking request")
+                                            @RequestParam List<Integer> id) throws ExceptionUtils.DeleteException;
 
 //    @GetMapping(value = "/confirm/{id}/{status}")
 //    ResponseEntity<?> confirmBookingRequest(@ApiParam(name = "id", type = "Integer", value = "Confirm booking request")
 //                               @PathVariable("id") Integer id,
 //                               @PathVariable("status") Integer status) throws MessagingException;
-    @DeleteMapping(value = "/{id}/questions")
-    ResponseEntity<?> deleteBookingQuestions(@PathVariable("id") Integer id,
-                                             @Validated @RequestBody BookingQuestionDeleteRequestModel model);
+    @DeleteMapping(value = "/{bookingId}/questions")
+    ResponseEntity<?> deleteBookingQuestions(@PathVariable("bookingId") Integer bookingId,
+                                             @RequestParam List<Integer> id) throws ExceptionUtils.DeleteException;
 
 }

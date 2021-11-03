@@ -142,10 +142,11 @@ public class SlotController implements SlotOperations {
 
     @Override
     @IsLecturer
-    public void deleteSlots(List<Integer> id) throws ExceptionUtils.DeleteException {
+    public ResponseEntity<?> deleteSlots(List<Integer> id) throws ExceptionUtils.DeleteException {
         Boolean isVerify = slotService.verifySlotForDelete(id, ((MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId());
         if(!isVerify) throw new ExceptionUtils.DeleteException("SLOT_CAN_NOT_DELETE_OR_NOT_AVAILABLE");
 
         slotService.deleteSlots(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }

@@ -5,10 +5,14 @@
  */
 package com.lasa.business.services.implv1;
 
+import com.lasa.business.config.utils.BookingRequestStatus;
+import com.lasa.business.config.utils.SlotStatus;
 import com.lasa.business.services.*;
 import com.lasa.data.model.entity.*;
 import com.lasa.data.model.request.SlotBookingRequestModel;
 import com.lasa.data.model.request.SlotRequestModel;
+import com.lasa.data.model.utils.criteria.BookingRequestSearchCriteria;
+import com.lasa.data.model.utils.specification.BookingRequestSpecification;
 import com.lasa.data.model.view.LecturerViewModel;
 import com.lasa.data.model.view.SlotViewModel;
 import com.lasa.data.model.view.SlotTopicDetailViewModel;
@@ -17,6 +21,7 @@ import com.lasa.data.model.utils.criteria.SlotSearchCriteria;
 import com.lasa.data.model.utils.criteria.SlotTopicDetailSearchCriteria;
 import com.lasa.data.model.utils.page.SlotPage;
 import com.lasa.data.model.utils.specification.SlotSpecification;
+import com.lasa.data.repo.repository.BookingRequestRepository;
 import com.lasa.data.repo.repository.SlotRepository;
 import com.lasa.data.repo.repository.SlotTopicDetailRepository;
 import com.lasa.security.utils.exception.ExceptionUtils;
@@ -26,10 +31,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.mail.MessagingException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -48,26 +56,25 @@ public class SlotServiceImpl implements SlotService {
     private final SlotRepository slotRepository ;
     private final SlotTopicDetailService slotTopicDetailService;
     private final LecturerService lecturerService;
-    private final LecturerTopicDetailService lecturerTopicDetailService;
-    private final SlotTopicDetailRepository slotTopicDetailRepository;
-    private final EmailSenderService emailSenderService;
+    private EmailSenderService emailSenderService;
+    private final BookingRequestRepository bookingRequestRepository;
 
     @Autowired
     public SlotServiceImpl(
             SlotRepository slotRepository,
             @Qualifier("LecturerServiceImplV1") LecturerService lecturerService,
             @Qualifier("SlotTopicDetailServiceImplV1") SlotTopicDetailService slotTopicDetailService,
-            @Qualifier("LecturerTopicDetailServiceImplV1") LecturerTopicDetailService lecturerTopicDetailService,
-            SlotTopicDetailRepository slotTopicDetailRepository,
-            @Qualifier("EmailSenderServiceImplV1") EmailSenderService emailSenderService) {
+            BookingRequestRepository bookingRequestRepository) {
         this.slotRepository = slotRepository;
         this.lecturerService = lecturerService;
         this.slotTopicDetailService = slotTopicDetailService;
-        this.lecturerTopicDetailService = lecturerTopicDetailService;
-        this.slotTopicDetailRepository = slotTopicDetailRepository;
-        this.emailSenderService = emailSenderService;
+        this.bookingRequestRepository = bookingRequestRepository;
     }
 
+    @Autowired
+    public void setEmailSenderService(@Qualifier("EmailSenderServiceImplV1") EmailSenderService emailSenderService) {
+        this.emailSenderService = emailSenderService;
+    }
 
     @Override
     public Page<SlotViewModel> findWithArguments(SlotSearchCriteria searchCriteria, SlotPage slotPage) {
@@ -215,9 +222,9 @@ public class SlotServiceImpl implements SlotService {
 
         if(Objects.nonNull(slotRequestModel.getStatus())) {
             slot.setStatus(slotRequestModel.getStatus());
-            if(slot.getStatus() == 0)
+            if(slot.getStatus() == SlotStatus.CANCELED.getCode())
                 //if slot status = 0 => denied all booking
-                slot.getBookingRequests().forEach(t -> t.setStatus(-1));
+                slot.getBookingRequests().forEach(t -> t.setStatus(BookingRequestStatus.DENIED.getCode()));
         }
 
         return new SlotViewModel(slotRepository.save(slot));
@@ -228,12 +235,12 @@ public class SlotServiceImpl implements SlotService {
     @Transactional
     public SlotViewModel acceptDenyBooking(SlotBookingRequestModel model) {
         Slot slot = slotRepository.findById(model.getSlotId()).get();
-        if(model.getStatus().equals(2)) {
-            slot.setStatus(2);
+        if(model.getStatus().equals(SlotStatus.ACCEPTED.getCode())) {
+            slot.setStatus(SlotStatus.ACCEPTED.getCode());
             List<BookingRequest> bookingRequests = new ArrayList<>(slot.getBookingRequests());
             bookingRequests.forEach(t -> {
                 if(t.getId().equals(model.getBookingId())) {
-                    t.setStatus(2);
+                    t.setStatus(BookingRequestStatus.ACCEPTED.getCode());
                     try {
                         emailSenderService.sendEmailAfterBookingAccepted(slot , t);
                     } catch (MessagingException e) {
@@ -259,7 +266,69 @@ public class SlotServiceImpl implements SlotService {
     @Transactional
     public void deleteSlots(List<Integer> ids) {
         slotRepository.findAllById(ids).stream()
-                .forEach(t -> t.setStatus(-1));
+                .forEach(t -> t.setStatus(SlotStatus.DELETED.getCode()));
     }
-    
+
+    @Override
+    @Scheduled(fixedDelay = 1000000L)
+    @Transactional
+    public void updateStatusForCompletedSlotAndBooking() {
+        SlotSearchCriteria slotSearchCriteria = SlotSearchCriteria.builder()
+                .getLecturer(false)
+                .getTopic(false)
+                .timeEnd(LocalDateTime.now().minusMinutes(30))
+                .status(SlotStatus.NOTIFIED.getCode())
+                .build();
+
+        List<Slot> slot = slotRepository.findAll(SlotSpecification.searchSpecification(slotSearchCriteria));
+        if(!slot.isEmpty()) {
+
+            slot.stream().forEach(t -> t.setStatus(SlotStatus.COMPLETED.getCode()));
+
+            BookingRequestSearchCriteria bookingRequestSearchCriteria = BookingRequestSearchCriteria.builder()
+                    .slotId(slot.stream()
+                            .map(t -> t.getId())
+                            .collect(Collectors.toList()))
+                    .getStudent(false)
+                    .status(BookingRequestStatus.NOTIFIED.getCode())
+                    .build();
+
+            bookingRequestRepository.findAll(BookingRequestSpecification.searchSpecification(bookingRequestSearchCriteria))
+                    .stream()
+                    .forEach(t -> t.setStatus(BookingRequestStatus.COMPLETED.getCode()));
+        }
+
+    }
+
+    @Override
+    @Scheduled(fixedDelay = 100000L)
+    @Transactional
+    public void updateStatusForExpiredSlotAndBooking() {
+        SlotSearchCriteria slotSearchCriteria = SlotSearchCriteria.builder()
+                .getLecturer(false)
+                .getTopic(false)
+                .timeEnd(LocalDateTime.now().minusMinutes(1))
+                .status(SlotStatus.CREATED.getCode())
+                .build();
+
+        List<Slot> expiredSlot = slotRepository.findAll(SlotSpecification.searchSpecification(slotSearchCriteria));
+        if (!expiredSlot.isEmpty()) {
+            expiredSlot.stream()
+                    .forEach(t -> t.setStatus(SlotStatus.CANCELED.getCode()));
+
+            BookingRequestSearchCriteria bookingRequestSearchCriteria = BookingRequestSearchCriteria.builder()
+                    .status(BookingRequestStatus.CREATED.getCode())
+                    .slotId(expiredSlot.stream()
+                            .map(t -> t.getId())
+                            .collect(Collectors.toList()))
+                    .getStudent(false)
+                    .build();
+
+            bookingRequestRepository.findAll(BookingRequestSpecification.searchSpecification(bookingRequestSearchCriteria))
+                    .stream()
+                    .forEach(t -> t.setStatus(BookingRequestStatus.CANCELED.getCode()));
+        }
+    }
+
+
 }

@@ -27,6 +27,8 @@ public interface QuestionService {
     List<QuestionViewModel> findAll(QuestionSearchCriteria searchCriteria);
     
     QuestionViewModel findById(Integer id);
+
+    boolean verifyAvailableQuestionForDelete(Integer bookingId, Integer studentId, List<Integer> questionIds);
     
     List<QuestionViewModel> createQuestions(List<QuestionRequestModel> questions);
     
