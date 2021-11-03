@@ -57,6 +57,8 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
             else if(!userDetails.isAccountNonLocked()) throw new UserAccountException("ACCOUNT_IS_LOCKED");
 
+            else if(!userDetails.isAccountNonExpired()) throw new UserAccountException("ACCOUNT_IS_DELETED");
+
             else if(jwtUtil.validateToken(jwt, userDetails)) {
 
                     UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(

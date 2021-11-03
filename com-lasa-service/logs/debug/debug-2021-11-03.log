@@ -1,2 +1,2 @@
-2021-11-03 12:28:48 DEBUG Securing POST /api/v1/slots 
-2021-11-03 12:28:48 DEBUG Secured POST /api/v1/slots 
+2021-11-03 15:39:29 DEBUG Securing DELETE /api/v1/slots?id=1 
+2021-11-03 15:39:29 DEBUG Secured DELETE /api/v1/slots?id=1 

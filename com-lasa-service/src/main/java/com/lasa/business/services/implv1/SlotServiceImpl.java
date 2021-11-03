@@ -199,10 +199,8 @@ public class SlotServiceImpl implements SlotService {
     }
 
     @Override
-    public Boolean verifySlot(SlotRequestModel slot) {
-        if(slotRepository.countActiveSlotByTimeStartAndTimeEndAndLecturerId(slot.getTimeStart(), slot.getTimeEnd(), slot.getLecturerId()) > 0)
-            return false;
-        return true;
+    public Boolean verifySlotForDelete(List<Integer> id, Integer lecturerId) {
+        return slotRepository.countAvailableDeleteSlot(id, lecturerId) == id.size();
     }
 
     @Override
@@ -258,8 +256,10 @@ public class SlotServiceImpl implements SlotService {
     }
 
     @Override
+    @Transactional
     public void deleteSlots(List<Integer> ids) {
-        slotRepository.deleteAllById(ids);
+        slotRepository.findAllById(ids).stream()
+                .forEach(t -> t.setStatus(-1));
     }
     
 }

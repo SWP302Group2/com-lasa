@@ -2,6 +2,7 @@ package com.lasa.security.utils.exception;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.exc.MismatchedInputException;
+import com.lasa.security.utils.exception.ExceptionUtils.DeleteException;
 import com.lasa.security.utils.model.ResponseObject;
 import com.lasa.security.utils.exception.ExceptionUtils.TokenException;
 import com.lasa.security.utils.exception.ExceptionUtils.UserAccountException;
@@ -164,7 +165,7 @@ public class ExceptionTranslator {
                 .build();
     }
 
-    @ExceptionHandler(value = {ConstraintViolationException.class, MethodArgumentNotValidException.class, BindException.class})
+    @ExceptionHandler(value = {ConstraintViolationException.class, MethodArgumentNotValidException.class, BindException.class, DeleteException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseObject processConstraintViolationException(Exception ex, HttpServletRequest request) {
         LOGGER.info(ex.getMessage());
@@ -185,6 +186,10 @@ public class ExceptionTranslator {
                         if(!t.getCode().equals("NotNull") && !t.getCode().equals("NotEmpty"))
                             errors.put(t.getCode(), t.getDefaultMessage());
                     });
+        }
+
+        if(ex instanceof DeleteException) {
+            errors.put(DeleteException.class.getSimpleName(), ex.getMessage());
         }
 
         return ResponseObject.builder()

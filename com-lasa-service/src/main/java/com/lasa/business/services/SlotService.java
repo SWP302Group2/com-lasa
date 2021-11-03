@@ -13,7 +13,6 @@ import com.lasa.data.model.utils.page.SlotPage;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
-import javax.mail.MessagingException;
 import java.util.List;
 
 /**
@@ -29,7 +28,7 @@ public interface SlotService {
 
     SlotViewModel findById(Integer id);
 
-    Boolean verifySlot(SlotRequestModel slot);
+    Boolean verifySlotForDelete(List<Integer> id, Integer lecturerId);
 
     SlotViewModel createSlot(SlotRequestModel slot);
 

@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import java.time.LocalDateTime;
+import java.util.List;
 
 
 /**
@@ -43,5 +44,8 @@ public interface SlotRepository extends JpaRepository<Slot, Integer>, JpaSpecifi
 
     @Query("select count(s) from Slot as s join s.bookingRequests as b where s.id = ?1 and s.lecturerId = ?2 and s.status = 1 and b.id = ?3 and b.status = 1")
     long countAvailableUpdateBookingOfSlot(Integer slotId,Integer lecturerId, Integer bookingId);
+
+    @Query("select count(s) from Slot as s where s.id in ?1 and s.lecturerId = ?2 and (s.status = 0 or s.status = 4)")
+    long countAvailableDeleteSlot(List<Integer> id, Integer lecturerId);
 
 }
