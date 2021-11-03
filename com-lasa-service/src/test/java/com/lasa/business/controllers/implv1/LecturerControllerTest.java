@@ -70,11 +70,11 @@ public class LecturerControllerTest {
         expected.setId(1);
         expected.setEmail("khiemtd@fe.edu.vn");
         expected.setMeetingUrl("https://meet.google.com/ryu-stnz-rww");
-        expected.setStatus(1);
+        expected.setStatus(2);
         expected.setName("Khiem");
         when(lecturerService.createLecturer(lecturer)).thenReturn(expected);
         ResponseEntity<LecturerViewModel> result = lecturerController.createLecturer(lecturer);
-        Assertions.assertEquals(result.getBody(),expected);
+        Assertions.assertEquals(result.getBody().getStatus(),2);
     }
     
         @Test

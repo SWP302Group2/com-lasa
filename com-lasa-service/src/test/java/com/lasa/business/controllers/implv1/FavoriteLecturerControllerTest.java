@@ -11,14 +11,17 @@ import com.lasa.data.model.entity.Student;
 import com.lasa.data.model.request.FavoriteLecturerRequestModel;
 import com.lasa.data.model.view.FavoriteLecturerViewModel;
 import com.lasa.data.repo.repository.FavoriteLecturerRepository;
+import com.lasa.data.validator.model.ValidList;
 import java.util.ArrayList;
 import java.util.List;
-import org.junit.Test;
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Assertions;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import static org.mockito.Mockito.when;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.ResponseEntity;
 
 /**
  *
@@ -44,25 +47,26 @@ public class FavoriteLecturerControllerTest {
     @Test
     public void testFindAll() throws Exception {
     }
-/*
+
     @Test
-    public void testCreateFavoriteLecturer() throws Exception {        
-        List<FavoriteLecturerRequestModel> favorite = new ArrayList<>();
-       
-        favorite.setStudentId(1);
-             
+    public void testCreateFavoriteLecturer() throws Exception {                    
         Lecturer lecturer = new Lecturer();
         lecturer.setId(3);
         Student student = new Student();
         student.setId(1);
-        FavoriteLecturerViewModel expected = new FavoriteLecturerViewModel();
-        expected.setLecturer(lecturer);
-        expected.setStudent(student);
+        
+        FavoriteLecturerRequestModel model = new FavoriteLecturerRequestModel(3, 1);
+        ValidList<FavoriteLecturerRequestModel> favorite = new ValidList<>();    
+        favorite.add(model);
+        
+        FavoriteLecturerViewModel expectedModel = new FavoriteLecturerViewModel(student, lecturer);
+        List<FavoriteLecturerViewModel> expected = new ArrayList<>();
+        expected.add(expectedModel);
         
         when(favoriteLecturerService.addFavoriteLecturers(favorite)).thenReturn(expected);
-        ResponseEntity<BookingRequestViewModel> result = bookingController.createBookingRequest(booking);
+        ResponseEntity <List<FavoriteLecturerViewModel>> result = favoriteLecturerController.createFavoriteLecturer(favorite);
         Assertions.assertEquals(result.getBody(),expected);
-    }*/
+    }
     
     
 }
