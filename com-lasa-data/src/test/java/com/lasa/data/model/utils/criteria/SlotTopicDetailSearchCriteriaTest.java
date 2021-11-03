@@ -64,7 +64,7 @@ public class SlotTopicDetailSearchCriteriaTest {
         
         List<SlotTopicDetail> actualList = slotTopicDetailRepository.findAll(SlotTopicDetailSpecification.searchSpecification(searchCriteria));
         List<SlotTopicDetail> expectedList = entityManager.getEntityManager()
-                .createQuery("select s from SlotTopicDetail s where s.slot.id like ?1 and s.topic.id like ?2", SlotTopicDetail.class)
+                .createQuery("select s from SlotTopicDetail s where s.slot.id in ?1 and s.topic.id in ?2", SlotTopicDetail.class)
                 .setParameter(1, searchSlotId)
                 .setParameter(2, searchTopicId)
                 .getResultList();

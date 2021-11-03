@@ -51,3 +51,59 @@
 2021-11-02 17:12:45 INFO Closing JPA EntityManagerFactory for persistence unit 'default' 
 2021-11-02 17:12:45 INFO webapp - Shutdown initiated... 
 2021-11-02 17:12:45 INFO webapp - Shutdown completed. 
+2021-11-03 15:55:34 INFO HV000001: Hibernate Validator 6.2.0.Final 
+2021-11-03 15:55:34 INFO Starting Application using Java 1.8.0_301 on DESKTOP-GFQSIK2 with PID 17804 (D:\GitHub\com-lasa\com-lasa-service\target\classes started by hai in D:\GitHub\com-lasa\com-lasa-service) 
+2021-11-03 15:55:34 INFO No active profile set, falling back to default profiles: default 
+2021-11-03 15:55:35 INFO Bootstrapping Spring Data JPA repositories in DEFAULT mode. 
+2021-11-03 15:55:35 INFO Finished Spring Data repository scanning in 115 ms. Found 11 JPA repository interfaces. 
+2021-11-03 15:55:35 INFO Bean 'application' of type [com.lasa.Application$$EnhancerBySpringCGLIB$$746b9fba] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying) 
+2021-11-03 15:55:36 INFO Bean 'org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler@23b8d9f3' of type [org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying) 
+2021-11-03 15:55:36 INFO Bean 'methodSecurityMetadataSource' of type [org.springframework.security.access.method.DelegatingMethodSecurityMetadataSource] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying) 
+2021-11-03 15:55:36 INFO Tomcat initialized with port(s): 8080 (http) 
+2021-11-03 15:55:36 INFO Initializing ProtocolHandler ["http-nio-8080"] 
+2021-11-03 15:55:36 INFO Starting service [Tomcat] 
+2021-11-03 15:55:36 INFO Starting Servlet engine: [Apache Tomcat/9.0.53] 
+2021-11-03 15:55:36 INFO Initializing Spring embedded WebApplicationContext 
+2021-11-03 15:55:36 INFO Root WebApplicationContext: initialization completed in 1780 ms 
+2021-11-03 15:55:36 INFO webapp - Starting... 
+2021-11-03 15:55:37 INFO webapp - Start completed. 
+2021-11-03 15:55:37 INFO HHH000204: Processing PersistenceUnitInfo [name: default] 
+2021-11-03 15:55:37 INFO HHH000412: Hibernate ORM core version 5.4.32.Final 
+2021-11-03 15:55:37 INFO HCANN000001: Hibernate Commons Annotations {5.1.2.Final} 
+2021-11-03 15:55:37 INFO HHH000400: Using dialect: org.hibernate.dialect.SQLServer2012Dialect 
+2021-11-03 15:55:39 INFO HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform] 
+2021-11-03 15:55:39 INFO Initialized JPA EntityManagerFactory for persistence unit 'default' 
+2021-11-03 15:55:41 INFO Will secure Ant [pattern='/v2/api-docs'] with [] 
+2021-11-03 15:55:41 INFO Will secure Ant [pattern='/configuration/ui'] with [] 
+2021-11-03 15:55:41 INFO Will secure Ant [pattern='/swagger-resources/**'] with [] 
+2021-11-03 15:55:41 INFO Will secure Ant [pattern='/configuration/security'] with [] 
+2021-11-03 15:55:41 INFO Will secure Ant [pattern='/swagger-ui.html'] with [] 
+2021-11-03 15:55:41 INFO Will secure Ant [pattern='/webjars/**'] with [] 
+2021-11-03 15:55:41 INFO Will secure any request with [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@fabfc79, org.springframework.security.web.context.SecurityContextPersistenceFilter@767b9d66, org.springframework.security.web.header.HeaderWriterFilter@5342032a, org.springframework.web.filter.CorsFilter@59aa2fba, com.lasa.security.filter.UUIDHandlerFilter@1feb586d, com.lasa.security.filter.ExceptionHandlerFilter@75c33608, org.springframework.security.web.authentication.logout.LogoutFilter@1d40f597, com.lasa.security.filter.JwtRequestFilter@18b3db6e, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@266a47fd, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@16f8df70, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@578d5d02, org.springframework.security.web.session.SessionManagementFilter@22f057b4, org.springframework.security.web.access.ExceptionTranslationFilter@3ea8ff31, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@576b385d] 
+2021-11-03 15:55:41 INFO Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)] 
+2021-11-03 15:55:41 INFO Starting ProtocolHandler ["http-nio-8080"] 
+2021-11-03 15:55:41 INFO Tomcat started on port(s): 8080 (http) with context path '/las' 
+2021-11-03 15:55:41 INFO Context refreshed 
+2021-11-03 15:55:41 INFO Found 1 custom documentation plugin(s) 
+2021-11-03 15:55:41 INFO Scanning for api listing references 
+2021-11-03 15:55:41 INFO Generating unique operation named: findWithArgumentsUsingGET_1 
+2021-11-03 15:55:41 INFO Generating unique operation named: findByIdUsingGET_1 
+2021-11-03 15:55:41 INFO Generating unique operation named: findByIdUsingGET_2 
+2021-11-03 15:55:41 INFO Generating unique operation named: findWithArgumentUsingGET_1 
+2021-11-03 15:55:41 INFO Generating unique operation named: findByIdUsingGET_3 
+2021-11-03 15:55:41 INFO Generating unique operation named: findWithArgumentsUsingGET_2 
+2021-11-03 15:55:41 INFO Generating unique operation named: findByIdUsingGET_4 
+2021-11-03 15:55:41 INFO Generating unique operation named: findWithArgumentsUsingGET_3 
+2021-11-03 15:55:41 INFO Generating unique operation named: findByIdUsingGET_5 
+2021-11-03 15:55:41 INFO Generating unique operation named: findWithArgumentsUsingGET_4 
+2021-11-03 15:55:41 INFO Generating unique operation named: findWithArgumentsUsingGET_5 
+2021-11-03 15:55:41 INFO Generating unique operation named: findByIdUsingGET_6 
+2021-11-03 15:55:41 INFO Generating unique operation named: findWithArgumentsUsingGET_6 
+2021-11-03 15:55:41 INFO Started Application in 7.508 seconds (JVM running for 8.23) 
+2021-11-03 15:55:42 INFO Initializing Spring DispatcherServlet 'dispatcherServlet' 
+2021-11-03 15:55:42 INFO Initializing Servlet 'dispatcherServlet' 
+2021-11-03 15:55:42 INFO Completed initialization in 1 ms 
+2021-11-03 15:55:43 INFO SLOT_CAN_NOT_DELETE_OR_NOT_AVAILABLE 
+2021-11-03 16:05:58 INFO Closing JPA EntityManagerFactory for persistence unit 'default' 
+2021-11-03 16:05:58 INFO webapp - Shutdown initiated... 
+2021-11-03 16:05:58 INFO webapp - Shutdown completed. 

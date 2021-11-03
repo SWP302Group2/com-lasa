@@ -63,17 +63,14 @@ public class BookingRequestController implements BookingRequestOperations {
     private final BookingRequestService bookingRequestService;
     private final QuestionService questionService;
     private final StudentService studentService;
-    private final EmailSenderService emailSenderService;
 
     @Autowired
     public BookingRequestController(@Qualifier("BookingRequestServiceImplV1") BookingRequestService service,
                                     @Qualifier("QuestionServiceImplV1") QuestionService questionService,
-                                    @Qualifier("StudentServiceImplV1") StudentService studentService,
-                                    @Qualifier("EmailSenderServiceImpl") EmailSenderService emailSenderService) {
+                                    @Qualifier("StudentServiceImplV1") StudentService studentService) {
         this.bookingRequestService = service;
         this.questionService = questionService;
         this.studentService = studentService;
-        this.emailSenderService = emailSenderService;
     }
 
     @Override
@@ -160,7 +157,6 @@ public class BookingRequestController implements BookingRequestOperations {
     @IsStudent
     @PreAuthorize("#model.studentId.equals(authentication.principal.id)")
     public ResponseEntity<BookingRequestViewModel> createBookingRequest(BookingRequestRequestModel model) {
-
         model.setStatus(1);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
@@ -170,8 +166,10 @@ public class BookingRequestController implements BookingRequestOperations {
 
     @Override
     @IsStudent
-    @PreAuthorize("(#id.equals(authentication.principal.id)) && (#model.studentId.equals(authentication.principal.id))")
+    @PreAuthorize("(#id.equals(#model.id)) && (#model.studentId.equals(authentication.principal.id))")
     public ResponseEntity<List<QuestionViewModel>> addBookingQuestions(Integer id, BookingQuestionRequestModel model) {
+        model.getQuestions().stream()
+                .forEach(t -> t.setBookingId(model.getId()));
         return ResponseEntity.ok(questionService.createQuestions(model.getQuestions()));
     }
 
@@ -184,7 +182,7 @@ public class BookingRequestController implements BookingRequestOperations {
 
     @Override
     @IsStudent
-    @PreAuthorize("(#id.equals(authentication.principal.id)) && (#model.studentId.equals(authentication.principal.id))")
+    @PreAuthorize("(#id.equals(#model.id)) && (#model.studentId.equals(authentication.principal.id))")
     public ResponseEntity<List<QuestionViewModel>> updateBookingQuestions(Integer id, BookingQuestionRequestModel model) {
         return ResponseEntity.ok(questionService.updateQuestions(model.getQuestions()));
     }
@@ -196,12 +194,6 @@ public class BookingRequestController implements BookingRequestOperations {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
-//    @Override
-//    public ResponseEntity<?> confirmBookingRequest(@PathVariable  Integer id,
-//                                      @PathVariable Integer status) throws MessagingException {
-//         bookingRequestService.confirmBookingRequest(id, status);
-//         return ResponseEntity.status(HttpStatus.OK).build();
-//    }
     @Override
     @IsStudent
     @PreAuthorize("#model.studentId.equals(authentication.principal.id)")

@@ -69,3 +69,4 @@ Mockito cannot mock/spy because :
 	at com.intellij.rt.junit.IdeaTestRunner$Repeater.startRunnerWithArgs(IdeaTestRunner.java:33) [junit-rt.jar:?]
 	at com.intellij.rt.junit.JUnitStarter.prepareStreamsAndStart(JUnitStarter.java:235) [junit-rt.jar:?]
 	at com.intellij.rt.junit.JUnitStarter.main(JUnitStarter.java:54) [junit-rt.jar:?]
+2021-11-02 14:56:20 ERROR Cannot insert the value NULL into column 'BookingId', table 'MAS.dbo.Question'; column does not allow nulls. INSERT fails. 

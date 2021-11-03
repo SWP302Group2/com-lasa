@@ -1,2 +1,8 @@
 2021-11-02 16:55:54 DEBUG Securing GET /api/v1/lecturers/1 
 2021-11-02 16:55:54 DEBUG Secured GET /api/v1/lecturers/1 
+2021-11-02 16:16:18 DEBUG Securing POST /api/v1/booking-requests/564/questions 
+2021-11-02 16:16:19 DEBUG Secured POST /api/v1/booking-requests/564/questions 
+2021-11-02 16:16:26 DEBUG Securing DELETE /api/v1/booking-requests/564/questions 
+2021-11-02 16:16:26 DEBUG Secured DELETE /api/v1/booking-requests/564/questions 
+2021-11-02 16:17:13 DEBUG Securing DELETE /api/v1/booking-requests/564/questions 
+2021-11-02 16:17:13 DEBUG Secured DELETE /api/v1/booking-requests/564/questions 

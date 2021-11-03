@@ -55,8 +55,10 @@ public class SlotSearchCriteria {
     @ApiModelProperty(name = "topicId", dataType = "Integer", value = "Get slot by a list slotId")
     private List<@Min(1) Integer> topicId;
 
+    private Integer status;
+
     @Builder
-    public SlotSearchCriteria(List<Integer> lecId, LocalDateTime timeStart, LocalDateTime timeEnd, Boolean getTopic, Boolean getLecturer, List<Integer> slotId, List<Integer> topicId) {
+    public SlotSearchCriteria(List<@Min(value = 1) Integer> lecId, LocalDateTime timeStart, LocalDateTime timeEnd, Boolean getTopic, Boolean getLecturer, List<@Min(1) Integer> slotId, List<@Min(1) Integer> topicId, Integer status) {
         this.lecId = lecId;
         this.timeStart = timeStart;
         this.timeEnd = timeEnd;
@@ -64,5 +66,6 @@ public class SlotSearchCriteria {
         this.getLecturer = getLecturer;
         this.slotId = slotId;
         this.topicId = topicId;
+        this.status = status;
     }
 }

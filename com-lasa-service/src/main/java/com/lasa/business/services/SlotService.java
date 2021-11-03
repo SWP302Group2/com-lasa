@@ -28,7 +28,7 @@ public interface SlotService {
 
     SlotViewModel findById(Integer id);
 
-    Boolean verifySlot(SlotRequestModel slot);
+    Boolean verifySlotForDelete(List<Integer> id, Integer lecturerId);
 
     SlotViewModel createSlot(SlotRequestModel slot);
 

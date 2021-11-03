@@ -8,6 +8,12 @@ public class ExceptionUtils {
         }
     }
 
+    public static class EmailSenderException extends RuntimeException {
+        public EmailSenderException(String message) {
+            super(message);
+        }
+    }
+
     public static class UserAccountException extends RuntimeException {
         public  UserAccountException(String message) {
             super(message);
@@ -34,6 +40,12 @@ public class ExceptionUtils {
 
     public static class DuplicatedException extends Exception {
         public DuplicatedException(String message) {
+            super(message);
+        }
+    }
+
+    public static class DeleteException extends Exception {
+        public DeleteException(String message) {
             super(message);
         }
     }
