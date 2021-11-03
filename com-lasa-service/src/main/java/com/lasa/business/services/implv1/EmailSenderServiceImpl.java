@@ -107,11 +107,11 @@ public class EmailSenderServiceImpl implements EmailSenderService {
     }
 
     @Override
-    @Scheduled(fixedDelay = 60000L)
+    @Scheduled(fixedDelay = 100000L)
     public void sendEmailNotifyBeforeMeeting() {
         SlotSearchCriteria slotSearchCriteria = SlotSearchCriteria.builder()
-                .timeStart(LocalDateTime.now().minusHours(6))
-                .timeEnd(LocalDateTime.now())
+                .timeStart(LocalDateTime.now())
+                .timeEnd(LocalDateTime.now().plusHours(6))
                 .getLecturer(true)
                 .getTopic(false)
                 .status(2)
