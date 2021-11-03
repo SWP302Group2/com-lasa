@@ -41,6 +41,9 @@ public class SlotSpecification {
                 query.distinct(true);
             }
 
+            if(Objects.nonNull(searchCriteria.getStatus())) {
+                predicates.add(criteriaBuilder.equal(root.get(Slot_.status), searchCriteria.getStatus()));
+            }
 
             if(predicates.isEmpty())
                 return null;

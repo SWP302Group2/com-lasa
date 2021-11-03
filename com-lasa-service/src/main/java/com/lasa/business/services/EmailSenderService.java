@@ -14,4 +14,6 @@ public interface EmailSenderService {
                                         ) throws MessagingException;
 
     void sendEmailAfterBookingAccepted(Slot slot, BookingRequest bookingRequest) throws MessagingException;
+
+    void sendEmailNotifyBeforeMeeting();
 }

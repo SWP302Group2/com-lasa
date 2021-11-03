@@ -63,17 +63,14 @@ public class BookingRequestController implements BookingRequestOperations {
     private final BookingRequestService bookingRequestService;
     private final QuestionService questionService;
     private final StudentService studentService;
-    private final EmailSenderService emailSenderService;
 
     @Autowired
     public BookingRequestController(@Qualifier("BookingRequestServiceImplV1") BookingRequestService service,
                                     @Qualifier("QuestionServiceImplV1") QuestionService questionService,
-                                    @Qualifier("StudentServiceImplV1") StudentService studentService,
-                                    @Qualifier("EmailSenderServiceImplV1") EmailSenderService emailSenderService) {
+                                    @Qualifier("StudentServiceImplV1") StudentService studentService) {
         this.bookingRequestService = service;
         this.questionService = questionService;
         this.studentService = studentService;
-        this.emailSenderService = emailSenderService;
     }
 
     @Override
@@ -197,12 +194,6 @@ public class BookingRequestController implements BookingRequestOperations {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
-//    @Override
-//    public ResponseEntity<?> confirmBookingRequest(@PathVariable  Integer id,
-//                                      @PathVariable Integer status) throws MessagingException {
-//         bookingRequestService.confirmBookingRequest(id, status);
-//         return ResponseEntity.status(HttpStatus.OK).build();
-//    }
     @Override
     @IsStudent
     @PreAuthorize("#model.studentId.equals(authentication.principal.id)")
