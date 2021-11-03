@@ -34,7 +34,8 @@ public interface SlotRepository extends JpaRepository<Slot, Integer>, JpaSpecifi
     Page<SlotWithLecturerAndTopic> findWithArgument(@Param("search") SlotSearchCriteria search, Pageable pageable);
 */
 
-    @Query("select count(s) from Slot s where (s.timeStart >= ?1 and s.timeStart <= ?2) or (s.timeEnd >= ?1 and s.timeEnd <= ?2) and (s.lecturerId = ?3) and (s.status = 1)")
+    @Query("select count(s) from Slot s where ((s.timeStart >= ?1 and s.timeStart <= ?2) or (s.timeEnd >= ?1 and s.timeEnd <= ?2)) " +
+            "and (s.lecturerId = ?3) and (s.status = 1)")
     Integer countActiveSlotByTimeStartAndTimeEndAndLecturerId(LocalDateTime timeStart, LocalDateTime timeEnd, Integer lecturerId);
 
     @Query("select count(s) from Slot s where s.id = ?1 and s.status = 1")
