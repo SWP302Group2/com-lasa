@@ -15,6 +15,7 @@ import com.lasa.data.model.entity.BookingRequest;
 import com.lasa.data.model.entity.Slot;
 import com.lasa.data.model.request.SlotBookingRequestModel;
 import com.lasa.data.model.request.SlotRequestModel;
+import com.lasa.data.model.request.SlotTopicDetailRequestModel;
 import com.lasa.data.model.utils.criteria.BookingRequestSearchCriteria;
 import com.lasa.data.model.utils.criteria.LecturerSearchCriteria;
 import com.lasa.data.model.utils.criteria.SlotSearchCriteria;
@@ -28,6 +29,8 @@ import com.lasa.data.model.view.SlotViewModel;
 import com.lasa.data.repo.repository.BookingRequestRepository;
 import com.lasa.data.repo.repository.SlotRepository;
 import com.lasa.security.utils.exception.ExceptionUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
@@ -55,6 +58,7 @@ import java.util.stream.Collectors;
 @Qualifier("SlotServiceImplV1")
 public class SlotServiceImpl implements SlotService {
 
+    private final Logger LOGGER = LogManager.getLogger(SlotServiceImpl.class);
     private final SlotRepository slotRepository ;
     private final SlotTopicDetailService slotTopicDetailService;
     private final LecturerService lecturerService;
@@ -222,6 +226,18 @@ public class SlotServiceImpl implements SlotService {
     public SlotViewModel updateSlots(SlotRequestModel slotRequestModel) {
         Slot slot = slotRepository.findById(slotRequestModel.getId()).get();
 
+        if(Objects.nonNull(slotRequestModel.getTopics())) {
+            List<SlotTopicDetailRequestModel> slotTopicDetailRequestModels = slotRequestModel.getTopics()
+                                    .stream()
+                                    .map(t -> {
+                                        return SlotTopicDetailRequestModel.builder()
+                                                .topicId(t)
+                                                .slotId(slotRequestModel.getId())
+                                                .build();
+                                    }).collect(Collectors.toList());
+            slotTopicDetailService.createSlotTopicDetails(slotTopicDetailRequestModels);
+        }
+
         if(Objects.nonNull(slotRequestModel.getStatus())) {
             slot.setStatus(slotRequestModel.getStatus());
             if(slot.getStatus() == SlotStatus.CANCELED.getCode())
@@ -275,6 +291,7 @@ public class SlotServiceImpl implements SlotService {
     @Scheduled(fixedDelay = 1000000L)
     @Transactional
     public void updateStatusForCompletedSlotAndBooking() {
+        LOGGER.info("updateStatusForCompletedSlotAndBooking");
         SlotSearchCriteria slotSearchCriteria = SlotSearchCriteria.builder()
                 .getLecturer(false)
                 .getTopic(false)
@@ -286,6 +303,7 @@ public class SlotServiceImpl implements SlotService {
         if(!slot.isEmpty()) {
 
             slot.stream().forEach(t -> t.setStatus(SlotStatus.COMPLETED.getCode()));
+            slotRepository.saveAll(slot);
 
             BookingRequestSearchCriteria bookingRequestSearchCriteria = BookingRequestSearchCriteria.builder()
                     .slotId(slot.stream()
@@ -295,28 +313,32 @@ public class SlotServiceImpl implements SlotService {
                     .status(BookingRequestStatus.NOTIFIED.getCode())
                     .build();
 
-            bookingRequestRepository.findAll(BookingRequestSpecification.searchSpecification(bookingRequestSearchCriteria))
-                    .stream()
+            List<BookingRequest> bookingRequests = bookingRequestRepository.findAll(BookingRequestSpecification.searchSpecification(bookingRequestSearchCriteria));
+            bookingRequests.stream()
                     .forEach(t -> t.setStatus(BookingRequestStatus.COMPLETED.getCode()));
+            bookingRequestRepository.saveAll(bookingRequests);
         }
 
     }
 
     @Override
-    @Scheduled(fixedDelay = 100000L)
+    @Scheduled(initialDelay= 50000L, fixedDelay = 100000L)
     @Transactional
     public void updateStatusForExpiredSlotAndBooking() {
+        LOGGER.info("updateStatusForExpiredSlotAndBooking");
         SlotSearchCriteria slotSearchCriteria = SlotSearchCriteria.builder()
                 .getLecturer(false)
                 .getTopic(false)
                 .timeEnd(LocalDateTime.now().minusMinutes(1))
                 .status(SlotStatus.CREATED.getCode())
                 .build();
+        System.out.println(LocalDateTime.now());
 
         List<Slot> expiredSlot = slotRepository.findAll(SlotSpecification.searchSpecification(slotSearchCriteria));
         if (!expiredSlot.isEmpty()) {
             expiredSlot.stream()
-                    .forEach(t -> t.setStatus(SlotStatus.CANCELED.getCode()));
+                    .forEach(t -> t.setStatus(0));
+            slotRepository.saveAll(expiredSlot);
 
             BookingRequestSearchCriteria bookingRequestSearchCriteria = BookingRequestSearchCriteria.builder()
                     .status(BookingRequestStatus.CREATED.getCode())
@@ -326,9 +348,10 @@ public class SlotServiceImpl implements SlotService {
                     .getStudent(false)
                     .build();
 
-            bookingRequestRepository.findAll(BookingRequestSpecification.searchSpecification(bookingRequestSearchCriteria))
-                    .stream()
-                    .forEach(t -> t.setStatus(BookingRequestStatus.CANCELED.getCode()));
+            List<BookingRequest> bookingRequests = bookingRequestRepository.findAll(BookingRequestSpecification.searchSpecification(bookingRequestSearchCriteria));
+            bookingRequests.stream()
+                    .forEach(t -> t.setStatus(0));
+            bookingRequestRepository.saveAll(bookingRequests);
         }
     }
 

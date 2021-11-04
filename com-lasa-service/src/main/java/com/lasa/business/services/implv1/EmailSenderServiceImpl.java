@@ -18,6 +18,8 @@ import com.lasa.data.model.view.SlotViewModel;
 import com.lasa.data.repo.repository.LecturerRepository;
 import com.lasa.data.repo.repository.StudentRepository;
 import com.lasa.security.utils.exception.ExceptionUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.env.Environment;
@@ -37,6 +39,7 @@ import java.util.stream.Collectors;
 @Qualifier("EmailSenderServiceImplV1")
 public class EmailSenderServiceImpl implements EmailSenderService {
 
+    private final Logger LOGGER = LogManager.getLogger(EmailSenderServiceImpl.class);
     private final JavaMailSender mailSender;
     private final Environment environment;
     private final StudentRepository studentRepository;
@@ -80,6 +83,8 @@ public class EmailSenderServiceImpl implements EmailSenderService {
 
     @Override
     public void sendEmailAfterBookingAccepted(Slot slot, BookingRequest bookingRequest) throws MessagingException {
+
+        LOGGER.info("sendEmailAfterBookingAccepted");
             Lecturer lecturer = lecturerRepository.findById(slot.getLecturerId()).get();
             Student student = studentRepository.findById(bookingRequest.getStudentId()).get();
 
@@ -108,8 +113,9 @@ public class EmailSenderServiceImpl implements EmailSenderService {
     }
 
     @Override
-    @Scheduled(fixedDelay = 100000L)
+    @Scheduled(initialDelay = 10000L,fixedDelay = 100000L)
     public void sendEmailNotifyBeforeMeeting() {
+        LOGGER.info("sendEmailNotifyBeforeMeeting");
         SlotSearchCriteria slotSearchCriteria = SlotSearchCriteria.builder()
                 .timeStart(LocalDateTime.now())
                 .timeEnd(LocalDateTime.now().plusHours(6))

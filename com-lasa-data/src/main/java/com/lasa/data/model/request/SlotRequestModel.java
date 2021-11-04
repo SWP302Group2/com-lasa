@@ -21,6 +21,7 @@ import java.util.List;
 @ValidSlotCreate(groups = PostValidator.class, message = "SLOT_DUPLICATE_OR_NOT_VALID")
 @ValidSlotTopicForCreateSlot(groups = PostValidator.class, message = "TOPICS_EMPTY_OR_NOT_VALID")
 @ValidSlotUpdate(groups = PutValidator.class, message = "SLOT_NOT_AVAILABLE_FOR_UPDATE")
+@ValidTopicUpdate(groups = PutValidator.class, message = "TOPIC_DUPLICATE_OR_NOT_VALID")
 public class SlotRequestModel {
     private Integer id;
     private Integer lecturerId;
