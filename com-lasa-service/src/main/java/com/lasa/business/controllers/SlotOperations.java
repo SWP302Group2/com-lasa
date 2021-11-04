@@ -15,11 +15,9 @@ import com.lasa.security.utils.exception.ExceptionUtils;
 import io.swagger.annotations.ApiParam;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
 import javax.mail.MessagingException;
-import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -60,5 +58,5 @@ public interface SlotOperations {
                                             @Validated(value = PutValidator.class) @RequestBody SlotBookingRequestModel model) throws MessagingException;
 
     @DeleteMapping
-    void deleteSlots(@RequestParam List<Integer> id) throws ExceptionUtils.DeleteException;
+    ResponseEntity<?> deleteSlots(@RequestParam List<Integer> id) throws ExceptionUtils.DeleteException;
 }

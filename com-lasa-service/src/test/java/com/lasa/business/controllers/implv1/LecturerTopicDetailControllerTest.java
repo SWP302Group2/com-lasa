@@ -10,18 +10,20 @@ import com.lasa.data.model.entity.Lecturer;
 import com.lasa.data.model.entity.LecturerTopicDetail;
 import com.lasa.data.model.entity.Topic;
 import com.lasa.data.repo.repository.LecturerTopicDetailRepository;
-import java.util.ArrayList;
-import java.util.List;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import static org.mockito.Mockito.when;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.mockito.Mockito.when;
 
 /**
  *

@@ -10,16 +10,18 @@ import com.lasa.data.model.entity.Major;
 import com.lasa.data.model.request.MajorRequestModel;
 import com.lasa.data.model.view.MajorViewModel;
 import com.lasa.data.repo.repository.MajorRepository;
-import java.util.ArrayList;
-import java.util.List;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import static org.mockito.Mockito.when;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.ResponseEntity;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.mockito.Mockito.when;
 
 /**
  *
