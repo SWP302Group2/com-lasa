@@ -6,10 +6,11 @@
 package com.lasa.data.model.request;
 
 import com.lasa.data.model.entity.Slot;
-import java.time.LocalDateTime;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.time.LocalDateTime;
 
 /**
  *

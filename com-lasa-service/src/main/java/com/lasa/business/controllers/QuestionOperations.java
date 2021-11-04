@@ -10,7 +10,6 @@ import com.lasa.data.model.utils.criteria.QuestionSearchCriteria;
 import com.lasa.data.model.utils.page.QuestionPage;
 import io.swagger.annotations.ApiParam;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

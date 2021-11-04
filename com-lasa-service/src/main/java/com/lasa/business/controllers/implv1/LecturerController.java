@@ -8,16 +8,14 @@ package com.lasa.business.controllers.implv1;
 import com.lasa.business.controllers.LecturerOperations;
 import com.lasa.business.services.LecturerService;
 import com.lasa.data.model.request.LecturerRequestModel;
-import com.lasa.data.model.view.LecturerViewModel;
-import com.lasa.data.model.entity.Lecturer;
 import com.lasa.data.model.utils.criteria.LecturerSearchCriteria;
 import com.lasa.data.model.utils.page.LecturerPage;
+import com.lasa.data.model.view.LecturerViewModel;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 

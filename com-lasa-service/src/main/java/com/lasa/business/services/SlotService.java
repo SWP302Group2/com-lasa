@@ -7,9 +7,9 @@ package com.lasa.business.services;
 
 import com.lasa.data.model.request.SlotBookingRequestModel;
 import com.lasa.data.model.request.SlotRequestModel;
-import com.lasa.data.model.view.SlotViewModel;
 import com.lasa.data.model.utils.criteria.SlotSearchCriteria;
 import com.lasa.data.model.utils.page.SlotPage;
+import com.lasa.data.model.view.SlotViewModel;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 

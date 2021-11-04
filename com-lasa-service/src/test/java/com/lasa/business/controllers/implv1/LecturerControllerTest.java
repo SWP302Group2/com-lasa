@@ -10,7 +10,6 @@ import com.lasa.data.model.request.LecturerRequestModel;
 import com.lasa.data.model.view.LecturerViewModel;
 import com.lasa.data.repo.repository.LecturerRepository;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.MethodOrderer.Alphanumeric;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -19,6 +18,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
+
 import static org.mockito.Mockito.when;
 /**
  *

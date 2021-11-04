@@ -1,13 +1,12 @@
 package com.lasa.data.model.utils.specification;
 
-import com.lasa.data.model.entity.*;
-import com.lasa.data.model.utils.criteria.SlotTopicDetailSearchCriteria;
-import com.lasa.data.model.entity.Slot;
 import com.lasa.data.model.entity.SlotTopicDetail;
-import com.lasa.data.model.entity.Topic;
+import com.lasa.data.model.entity.SlotTopicDetail_;
+import com.lasa.data.model.entity.Slot_;
+import com.lasa.data.model.entity.Topic_;
+import com.lasa.data.model.utils.criteria.SlotTopicDetailSearchCriteria;
 import org.springframework.data.jpa.domain.Specification;
 
-import javax.persistence.criteria.Fetch;
 import javax.persistence.criteria.Predicate;
 import java.util.ArrayList;
 import java.util.List;

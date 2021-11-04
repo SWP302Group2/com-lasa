@@ -6,20 +6,17 @@
 package com.lasa.business.controllers.implv1;
 
 import com.lasa.business.services.implv1.SlotServiceImpl;
-import com.lasa.data.model.entity.Slot;
-import com.lasa.data.model.request.SlotRequestModel;
 import com.lasa.data.model.view.SlotViewModel;
 import com.lasa.data.repo.repository.SlotRepository;
-import java.util.ArrayList;
-import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import static org.mockito.Mockito.when;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.ResponseEntity;
+
+import static org.mockito.Mockito.when;
 
 /**
  *

@@ -7,9 +7,9 @@
 package com.lasa.business.services;
 
 import com.lasa.data.model.request.BookingRequestRequestModel;
-import com.lasa.data.model.view.BookingRequestViewModel;
 import com.lasa.data.model.utils.criteria.BookingRequestSearchCriteria;
 import com.lasa.data.model.utils.page.BookingRequestPage;
+import com.lasa.data.model.view.BookingRequestViewModel;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 

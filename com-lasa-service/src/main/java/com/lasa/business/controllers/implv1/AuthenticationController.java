@@ -2,15 +2,14 @@ package com.lasa.business.controllers.implv1;
 
 import com.lasa.business.controllers.AuthenticationOperations;
 import com.lasa.business.services.AuthenticationService;
+import com.lasa.security.utils.exception.ExceptionUtils;
 import com.lasa.security.utils.model.AuthenticationRequest;
 import com.lasa.security.utils.model.GoogleAuthenticationRequest;
 import com.lasa.security.utils.model.InformationResponse;
 import com.lasa.security.utils.model.ResponseObject;
-import com.lasa.security.utils.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

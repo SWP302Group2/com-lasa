@@ -6,16 +6,13 @@
 package com.lasa.business.services.implv1;
 
 import com.lasa.business.services.LecturerTopicDetailService;
-import com.lasa.data.model.entity.Topic;
-import com.lasa.data.model.view.LecturerTopicDetailViewModel;
 import com.lasa.data.model.entity.LecturerTopicDetail;
 import com.lasa.data.model.entity.key.LecturerTopicDetailKey;
-import com.lasa.data.model.view.TopicViewModel;
+import com.lasa.data.model.view.LecturerTopicDetailViewModel;
 import com.lasa.data.repo.repository.LecturerTopicDetailRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
-import org.springframework.validation.annotation.Validated;
 
 import java.util.List;
 import java.util.stream.Collectors;

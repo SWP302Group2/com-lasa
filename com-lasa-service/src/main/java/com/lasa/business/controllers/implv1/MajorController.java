@@ -7,15 +7,12 @@ package com.lasa.business.controllers.implv1;
 
 import com.lasa.business.controllers.MajorOperations;
 import com.lasa.business.services.MajorService;
-import com.lasa.business.services.QuestionService;
 import com.lasa.business.services.TopicService;
 import com.lasa.data.model.request.MajorRequestModel;
-import com.lasa.data.model.utils.criteria.QuestionSearchCriteria;
-import com.lasa.data.model.utils.criteria.TopicSearchCriteria;
-import com.lasa.data.model.view.MajorViewModel;
 import com.lasa.data.model.utils.criteria.MajorSearchCriteria;
+import com.lasa.data.model.utils.criteria.TopicSearchCriteria;
 import com.lasa.data.model.utils.page.MajorPage;
-import com.lasa.data.model.view.QuestionViewModel;
+import com.lasa.data.model.view.MajorViewModel;
 import com.lasa.data.model.view.TopicViewModel;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +20,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 

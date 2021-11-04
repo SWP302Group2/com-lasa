@@ -6,22 +6,18 @@
 package com.lasa.business.controllers.implv1;
 
 import com.lasa.business.controllers.BookingRequestOperations;
-import com.lasa.business.controllers.utils.authorization.IsAdmin;
 import com.lasa.business.controllers.utils.authorization.IsStudent;
 import com.lasa.business.services.BookingRequestService;
-import com.lasa.business.services.EmailSenderService;
 import com.lasa.business.services.QuestionService;
 import com.lasa.business.services.StudentService;
-import com.lasa.data.model.entity.BookingRequest;
-import com.lasa.data.model.request.BookingQuestionDeleteRequestModel;
 import com.lasa.data.model.request.BookingQuestionRequestModel;
 import com.lasa.data.model.request.BookingRequestRequestModel;
-import com.lasa.data.model.utils.criteria.StudentSearchCriteria;
-import com.lasa.data.model.view.BookingRequestViewModel;
-import com.lasa.data.model.view.QuestionViewModel;
 import com.lasa.data.model.utils.criteria.BookingRequestSearchCriteria;
 import com.lasa.data.model.utils.criteria.QuestionSearchCriteria;
+import com.lasa.data.model.utils.criteria.StudentSearchCriteria;
 import com.lasa.data.model.utils.page.BookingRequestPage;
+import com.lasa.data.model.view.BookingRequestViewModel;
+import com.lasa.data.model.view.QuestionViewModel;
 import com.lasa.data.model.view.StudentViewModel;
 import com.lasa.security.appuser.MyUserDetails;
 import com.lasa.security.utils.exception.ExceptionUtils;
@@ -32,22 +28,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.mail.MessagingException;
-import javax.validation.Valid;
-import javax.validation.constraints.Min;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.Objects;
 import java.util.stream.Collectors;
 

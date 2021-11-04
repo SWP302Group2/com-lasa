@@ -1,6 +1,5 @@
 package com.lasa.data.validator.model;
 
-import com.lasa.data.model.request.BookingRequestRequestModel;
 import com.lasa.data.repo.repository.SlotRepository;
 import com.lasa.data.validator.ValidSlotId;
 import org.springframework.beans.factory.annotation.Autowired;

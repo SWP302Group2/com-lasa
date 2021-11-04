@@ -3,13 +3,12 @@ package com.lasa.security.utils.exception;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.exc.MismatchedInputException;
 import com.lasa.security.utils.exception.ExceptionUtils.DeleteException;
-import com.lasa.security.utils.model.ResponseObject;
 import com.lasa.security.utils.exception.ExceptionUtils.TokenException;
 import com.lasa.security.utils.exception.ExceptionUtils.UserAccountException;
+import com.lasa.security.utils.model.ResponseObject;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.UnsupportedJwtException;
 import io.jsonwebtoken.security.SignatureException;
-import lombok.extern.java.Log;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -28,15 +27,11 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
-import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 @RestControllerAdvice
 public class ExceptionTranslator {

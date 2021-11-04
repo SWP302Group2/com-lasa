@@ -16,7 +16,6 @@ import com.lasa.data.model.utils.criteria.SlotSearchCriteria;
 import com.lasa.data.model.view.BookingRequestViewModel;
 import com.lasa.data.model.view.SlotViewModel;
 import com.lasa.data.repo.repository.LecturerRepository;
-import com.lasa.data.repo.repository.SlotRepository;
 import com.lasa.data.repo.repository.StudentRepository;
 import com.lasa.security.utils.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;

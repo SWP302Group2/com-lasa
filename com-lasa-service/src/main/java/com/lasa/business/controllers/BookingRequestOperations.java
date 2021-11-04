@@ -5,13 +5,10 @@
  */
 package com.lasa.business.controllers;
 
-import com.lasa.data.model.entity.BookingRequest;
-import com.lasa.data.model.request.BookingQuestionDeleteRequestModel;
 import com.lasa.data.model.request.BookingQuestionRequestModel;
 import com.lasa.data.model.request.BookingRequestRequestModel;
 import com.lasa.data.model.utils.criteria.BookingRequestSearchCriteria;
 import com.lasa.data.model.utils.page.BookingRequestPage;
-import com.lasa.data.validator.ValidBookingQuestionDelete;
 import com.lasa.data.validator.group.PostValidator;
 import com.lasa.data.validator.group.PutValidator;
 import com.lasa.security.utils.exception.ExceptionUtils;
@@ -20,7 +17,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.mail.MessagingException;
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import java.util.List;
