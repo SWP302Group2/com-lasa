@@ -12,6 +12,7 @@ import com.lasa.data.repo.repository.BookingRequestRepository;
 import com.lasa.data.repo.repository.LecturerRepository;
 import com.lasa.data.repo.repository.SlotRepository;
 import com.lasa.data.repo.repository.StudentRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
@@ -38,6 +39,7 @@ import java.util.stream.Collectors;
  * @author wifil
  */
 
+@AllArgsConstructor
 @Component
 @Qualifier("BookingRequestServiceImplV1")
 public class BookingRequestServiceImpl implements BookingRequestService {
@@ -93,9 +95,8 @@ public class BookingRequestServiceImpl implements BookingRequestService {
     @Override
     public BookingRequestViewModel createBookingRequest(BookingRequestRequestModel bookingRequestModel) {
         BookingRequest bookingRequest = bookingRequestModel.toEntity();
-        System.out.println(bookingRequest.getStudentId());
         List<Question> questions = new ArrayList<>();
-        bookingRequestModel.getQuestions().stream()
+            bookingRequestModel.getQuestions().stream()
                 .forEach(t -> questions.add(t.toEntity(bookingRequest)));
         bookingRequest.setQuestions(questions);
 
