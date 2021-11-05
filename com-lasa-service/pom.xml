@@ -203,10 +203,10 @@
                 <artifactId>tomcat7-maven-plugin</artifactId>
                 <version>2.2</version>
                 <configuration>
-                    <url>http://34.87.119.36:8080/manager/text</url>
+                    <url>https://lasfpt.online/manager/text</url>
                     <server>tomcat</server>
-                    <username>admin</username>
-                    <password>123456</password>
+                    <username>deployer</username>
+                    <password>deployer</password>
                     <path>/las</path>
                     <mainClass>com.lasa.Application</mainClass>
                 </configuration>
