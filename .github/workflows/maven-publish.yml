@@ -28,7 +28,7 @@ jobs:
       run: mvn -B package --file pom.xml
 
     - name: Tomcat undeploy
-      run: curl -v -u admin:123456 'http://34.87.119.36:8080/manager/text/undeploy?path=/las'
+      run: curl -v -u admin:123456 'https://lasfpt.online/manager/text/undeploy?path='
 
     - name: Tomcat deploy 
-      run: curl -v -u admin:123456 -T /home/runner/work/com-lasa/com-lasa/com-lasa-service/target/las.war 'http://34.87.119.36:8080/manager/text/deploy?path=/las'
+      run: curl -v -u admin:admin -T /home/runner/work/com-lasa/com-lasa/com-lasa-service/target/las.war 'https://lasfpt.online/manager/text/deploy?path='
