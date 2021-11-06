@@ -2,14 +2,18 @@ package com.lasa.business.services.implv1;
 
 import com.lasa.business.config.utils.BookingRequestStatus;
 import com.lasa.business.services.BookingRequestService;
+import com.lasa.business.services.StudentService;
 import com.lasa.data.model.entity.BookingRequest;
 import com.lasa.data.model.entity.Question;
 import com.lasa.data.model.request.BookingRequestRequestModel;
 import com.lasa.data.model.utils.criteria.BookingRequestSearchCriteria;
+import com.lasa.data.model.utils.criteria.StudentSearchCriteria;
 import com.lasa.data.model.utils.page.BookingRequestPage;
 import com.lasa.data.model.utils.specification.BookingRequestSpecification;
 import com.lasa.data.model.view.BookingRequestViewModel;
+import com.lasa.data.model.view.StudentViewModel;
 import com.lasa.data.repo.repository.BookingRequestRepository;
+import com.lasa.data.repo.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
@@ -35,27 +39,67 @@ import java.util.stream.Collectors;
 public class BookingRequestServiceImpl implements BookingRequestService {
 
     private final BookingRequestRepository bookingRepository;
+    private final StudentService studentService;
+    private final StudentRepository studentRepository;
 
     @Autowired
-    public BookingRequestServiceImpl(BookingRequestRepository bookingRepository) {
+    public BookingRequestServiceImpl(BookingRequestRepository bookingRepository, StudentService studentService, StudentRepository studentRepository) {
         this.bookingRepository = bookingRepository;
+        this.studentService = studentService;
+        this.studentRepository = studentRepository;
     }
 
     @Override
     public Page<BookingRequestViewModel> findAll(BookingRequestPage bookingRequestPage, BookingRequestSearchCriteria searchCriteria) {
         Pageable pageable = PageRequest.of(bookingRequestPage.getPage(), bookingRequestPage.getSize(), Sort.by(bookingRequestPage.getOrderBy(), bookingRequestPage.getSortBy()));
-        return bookingRepository
+        Page<BookingRequestViewModel> page = bookingRepository
                 .findAll(BookingRequestSpecification.searchSpecification(searchCriteria), pageable)
                 .map(t -> new BookingRequestViewModel(t));
+
+        if(searchCriteria.getGetStudent().equals(true)) {
+            List<Integer> studentIds = page.stream()
+                    .map(t -> t.getStudentId())
+                    .collect(Collectors.toList());
+
+            List<StudentViewModel> students = getStudents(studentIds);
+            page.stream()
+                    .forEach(t -> {
+                        StudentViewModel student = students.stream()
+                                .filter(x -> x.getId().equals(t.getStudentId()))
+                                .findAny()
+                                .get();
+                        t.setStudent(student);
+                    });
+        }
+
+        return page;
     }
 
     @Override
     public List<BookingRequestViewModel> findAll(BookingRequestSearchCriteria searchCriteria) {
-        return bookingRepository
+        List<BookingRequestViewModel> list = bookingRepository
                 .findAll(BookingRequestSpecification.searchSpecification(searchCriteria))
                 .stream()
                 .map(t -> new BookingRequestViewModel(t))
                 .collect(Collectors.toList());
+
+        if(searchCriteria.getGetStudent().equals(true)) {
+            List<Integer> studentIds = list.stream()
+                    .map(t -> t.getStudentId())
+                    .collect(Collectors.toList());
+
+            List<StudentViewModel> students = getStudents(studentIds);
+            list.stream()
+                    .forEach(t -> {
+                        StudentViewModel student = students.stream()
+                                .filter(x -> x.getId().equals(t.getStudentId()))
+                                .findAny()
+                                .get();
+                        t.setStudent(student);
+                    });
+        }
+
+        return list;
     }
 
     @Override
@@ -85,6 +129,12 @@ public class BookingRequestServiceImpl implements BookingRequestService {
         bookingRequest.setQuestions(questions);
 
         return new BookingRequestViewModel(bookingRepository.save(bookingRequest));
+    }
+
+    private List<StudentViewModel> getStudents(List<Integer> ids) {
+        return studentRepository.findAllById(ids).stream()
+                .map(t -> new StudentViewModel(t))
+                .collect(Collectors.toList());
     }
 
 //    @Transactional

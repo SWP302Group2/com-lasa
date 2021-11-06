@@ -63,57 +63,11 @@ public class BookingRequestController implements BookingRequestOperations {
     @Override
     public ResponseEntity<?> findWithArguments(BookingRequestPage bookingRequestPage,
                                                BookingRequestSearchCriteria searchCriteria) {
-        if(bookingRequestPage.isPaging()) {
-            Page<BookingRequestViewModel> page = bookingRequestService.findAll(bookingRequestPage, searchCriteria);
+        if(bookingRequestPage.isPaging())
+            return ResponseEntity.ok(bookingRequestService.findAll(bookingRequestPage, searchCriteria));
+        else
+            return ResponseEntity.ok(bookingRequestService.findAll(searchCriteria));
 
-            if(searchCriteria.getGetStudent().equals(true)) {
-                List<Integer> studentIds = page.stream()
-                        .map(t -> t.getStudentId())
-                        .collect(Collectors.toList());
-
-                List<StudentViewModel> students = getStudents(studentIds);
-                page.stream()
-                        .forEach(t -> {
-                            StudentViewModel student = students.stream()
-                                    .filter(x -> x.getId().equals(t.getStudentId()))
-                                    .findAny()
-                                    .get();
-                            t.setStudent(student);
-                        });
-            }
-
-            return ResponseEntity.ok(page);
-        }
-        else {
-            List<BookingRequestViewModel> list = bookingRequestService.findAll(searchCriteria);
-
-            if(searchCriteria.getGetStudent().equals(true)) {
-                List<Integer> studentIds = list.stream()
-                        .map(t -> t.getStudentId())
-                        .collect(Collectors.toList());
-
-                List<StudentViewModel> students = getStudents(studentIds);
-                list.stream()
-                        .forEach(t -> {
-                            StudentViewModel student = students.stream()
-                                    .filter(x -> x.getId().equals(t.getStudentId()))
-                                    .findAny()
-                                    .get();
-                            t.setStudent(student);
-                        });
-            }
-
-            return ResponseEntity.ok(list);
-        }
-
-
-    }
-
-    private List<StudentViewModel> getStudents(List<Integer> ids) {
-        StudentSearchCriteria searchCriteria = StudentSearchCriteria.builder()
-                .studentId(ids)
-                .build();
-        return studentService.findWithArgument(searchCriteria);
     }
 
     @Override
