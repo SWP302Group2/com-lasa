@@ -5,14 +5,12 @@
  */
 package com.lasa.data.repo.repository;
 
-import com.lasa.data.model.entity.SlotTopicDetail;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+
+import javax.annotation.Resource;
+import java.time.LocalDateTime;
 
 /**
  *
@@ -24,17 +22,16 @@ public class SlotRepositoryTest {
     public SlotRepositoryTest() {
     }
 
-     @Autowired
+    @Resource
     SlotRepository slotRepository;
      
-     @Test
+    @Test
     public void testCountSlotByTimeStartAndTimeEndAndLecturerIdIn(){
         
         LocalDateTime timeStart = LocalDateTime.parse("2021-10-08T09:43:32"); 
         LocalDateTime timeEnd = LocalDateTime.parse("2021-10-08T12:43:32");  
         long count = slotRepository.countActiveSlotByTimeStartAndTimeEndAndLecturerId(timeStart, timeEnd, 1);
-        Assertions.assertEquals(count, 18);    
-
+        Assertions.assertEquals(count, 0);
     }
     
     

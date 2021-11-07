@@ -2,12 +2,12 @@
 package com.lasa.business.services.implv1;
 
 import com.lasa.business.services.QuestionService;
-import com.lasa.data.model.request.QuestionRequestModel;
-import com.lasa.data.model.view.QuestionViewModel;
 import com.lasa.data.model.entity.Question;
+import com.lasa.data.model.request.QuestionRequestModel;
 import com.lasa.data.model.utils.criteria.QuestionSearchCriteria;
 import com.lasa.data.model.utils.page.QuestionPage;
 import com.lasa.data.model.utils.specification.QuestionSpecification;
+import com.lasa.data.model.view.QuestionViewModel;
 import com.lasa.data.repo.repository.QuestionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -67,6 +67,15 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
+    public boolean verifyAvailableQuestionForDelete(Integer bookingId, Integer studentId, List<Integer> questionIds) {
+        if(questionRepository.countAvailableQuestionsForDelete(questionIds, studentId) == questionIds.size()
+        && questionRepository.countByBookingRequestId(bookingId) >= 1)
+            return true;
+
+        return false;
+    }
+
+    @Override
     public List<QuestionViewModel> createQuestions(List<QuestionRequestModel> questionModels) {
         List<Question> questions = questionModels.stream()
                 .map(t -> t.toEntity())
@@ -112,4 +121,6 @@ public class QuestionServiceImpl implements QuestionService {
     public void deleteQuestion(List<Integer> ids) {
         questionRepository.deleteAllById(ids);
     }
+
+
 }

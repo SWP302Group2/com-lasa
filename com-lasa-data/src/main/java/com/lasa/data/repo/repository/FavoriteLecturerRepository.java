@@ -5,9 +5,9 @@
  */
 package com.lasa.data.repo.repository;
 
-import com.lasa.data.repo.customrepository.FavoriteLecturerCustomRepository;
 import com.lasa.data.model.entity.FavoriteLecturer;
 import com.lasa.data.model.entity.key.FavoriteLecturerKey;
+import com.lasa.data.repo.customrepository.FavoriteLecturerCustomRepository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;

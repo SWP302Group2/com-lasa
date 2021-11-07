@@ -7,7 +7,6 @@ package com.lasa.business.controllers.implv1;
 
 import com.lasa.business.controllers.TopicOperations;
 import com.lasa.business.services.TopicService;
-import com.lasa.data.model.entity.Topic;
 import com.lasa.data.model.request.TopicRequestModel;
 import com.lasa.data.model.utils.criteria.TopicSearchCriteria;
 import com.lasa.data.model.utils.page.TopicPage;

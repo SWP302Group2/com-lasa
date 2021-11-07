@@ -6,12 +6,12 @@
 package com.lasa.business.services.implv1;
 
 import com.lasa.business.services.TopicService;
-import com.lasa.data.model.request.TopicRequestModel;
-import com.lasa.data.model.view.TopicViewModel;
 import com.lasa.data.model.entity.Topic;
+import com.lasa.data.model.request.TopicRequestModel;
 import com.lasa.data.model.utils.criteria.TopicSearchCriteria;
 import com.lasa.data.model.utils.page.TopicPage;
 import com.lasa.data.model.utils.specification.TopicSpecification;
+import com.lasa.data.model.view.TopicViewModel;
 import com.lasa.data.repo.repository.TopicRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

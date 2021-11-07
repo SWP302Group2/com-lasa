@@ -66,12 +66,12 @@ public class MyUserDetails implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return true;
+        return status != -2;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return status != 2;
+        return status != -1;
     }
 
     @Override

@@ -7,7 +7,6 @@ package com.lasa.business.controllers.implv1;
 
 import com.lasa.business.controllers.StudentOperations;
 import com.lasa.business.services.StudentService;
-import com.lasa.data.model.entity.Student;
 import com.lasa.data.model.request.StudentRequestModel;
 import com.lasa.data.model.utils.criteria.StudentSearchCriteria;
 import com.lasa.data.model.utils.page.StudentPage;

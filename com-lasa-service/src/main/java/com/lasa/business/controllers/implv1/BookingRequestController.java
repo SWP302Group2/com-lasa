@@ -6,22 +6,18 @@
 package com.lasa.business.controllers.implv1;
 
 import com.lasa.business.controllers.BookingRequestOperations;
-import com.lasa.business.controllers.utils.authorization.IsAdmin;
 import com.lasa.business.controllers.utils.authorization.IsStudent;
 import com.lasa.business.services.BookingRequestService;
-import com.lasa.business.services.EmailSenderService;
 import com.lasa.business.services.QuestionService;
 import com.lasa.business.services.StudentService;
-import com.lasa.data.model.entity.BookingRequest;
-import com.lasa.data.model.request.BookingQuestionDeleteRequestModel;
 import com.lasa.data.model.request.BookingQuestionRequestModel;
 import com.lasa.data.model.request.BookingRequestRequestModel;
-import com.lasa.data.model.utils.criteria.StudentSearchCriteria;
-import com.lasa.data.model.view.BookingRequestViewModel;
-import com.lasa.data.model.view.QuestionViewModel;
 import com.lasa.data.model.utils.criteria.BookingRequestSearchCriteria;
 import com.lasa.data.model.utils.criteria.QuestionSearchCriteria;
+import com.lasa.data.model.utils.criteria.StudentSearchCriteria;
 import com.lasa.data.model.utils.page.BookingRequestPage;
+import com.lasa.data.model.view.BookingRequestViewModel;
+import com.lasa.data.model.view.QuestionViewModel;
 import com.lasa.data.model.view.StudentViewModel;
 import com.lasa.security.appuser.MyUserDetails;
 import com.lasa.security.utils.exception.ExceptionUtils;
@@ -32,22 +28,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.mail.MessagingException;
-import javax.validation.Valid;
-import javax.validation.constraints.Min;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -76,57 +63,11 @@ public class BookingRequestController implements BookingRequestOperations {
     @Override
     public ResponseEntity<?> findWithArguments(BookingRequestPage bookingRequestPage,
                                                BookingRequestSearchCriteria searchCriteria) {
-        if(bookingRequestPage.isPaging()) {
-            Page<BookingRequestViewModel> page = bookingRequestService.findAll(bookingRequestPage, searchCriteria);
+        if(bookingRequestPage.isPaging())
+            return ResponseEntity.ok(bookingRequestService.findAll(bookingRequestPage, searchCriteria));
+        else
+            return ResponseEntity.ok(bookingRequestService.findAll(searchCriteria));
 
-            if(searchCriteria.getGetStudent().equals(true)) {
-                List<Integer> studentIds = page.stream()
-                        .map(t -> t.getStudentId())
-                        .collect(Collectors.toList());
-
-                List<StudentViewModel> students = getStudents(studentIds);
-                page.stream()
-                        .forEach(t -> {
-                            StudentViewModel student = students.stream()
-                                    .filter(x -> x.getId().equals(t.getStudentId()))
-                                    .findAny()
-                                    .get();
-                            t.setStudent(student);
-                        });
-            }
-
-            return ResponseEntity.ok(page);
-        }
-        else {
-            List<BookingRequestViewModel> list = bookingRequestService.findAll(searchCriteria);
-
-            if(searchCriteria.getGetStudent().equals(true)) {
-                List<Integer> studentIds = list.stream()
-                        .map(t -> t.getStudentId())
-                        .collect(Collectors.toList());
-
-                List<StudentViewModel> students = getStudents(studentIds);
-                list.stream()
-                        .forEach(t -> {
-                            StudentViewModel student = students.stream()
-                                    .filter(x -> x.getId().equals(t.getStudentId()))
-                                    .findAny()
-                                    .get();
-                            t.setStudent(student);
-                        });
-            }
-
-            return ResponseEntity.ok(list);
-        }
-
-
-    }
-
-    private List<StudentViewModel> getStudents(List<Integer> ids) {
-        StudentSearchCriteria searchCriteria = StudentSearchCriteria.builder()
-                .studentId(ids)
-                .build();
-        return studentService.findWithArgument(searchCriteria);
     }
 
     @Override
@@ -188,17 +129,28 @@ public class BookingRequestController implements BookingRequestOperations {
     }
 
     @Override
-    @IsAdmin
-    public ResponseEntity<?> deleteBookingRequests(@RequestBody List<Integer> ids) {
-        bookingRequestService.deleteBookingRequests(ids);
+    @IsStudent
+    public ResponseEntity<?> deleteBookingRequests(List<Integer> id) throws ExceptionUtils.DeleteException {
+        if(!bookingRequestService.verifyBookingRequestForDelete(
+                ((MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId(),
+                id))
+            throw new ExceptionUtils.DeleteException("BOOKING_CAN_NOT_DELETE_OR_NOT_AVAILABLE");
+
+        bookingRequestService.deleteBookingRequests(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
     @Override
     @IsStudent
-    @PreAuthorize("#model.studentId.equals(authentication.principal.id)")
-    public ResponseEntity<?> deleteBookingQuestions(Integer id, BookingQuestionDeleteRequestModel model) {
-        questionService.deleteQuestion(model.getQuestionIds());
+    public ResponseEntity<?> deleteBookingQuestions(Integer bookingId, List<Integer> id) throws ExceptionUtils.DeleteException {
+        if(!questionService.verifyAvailableQuestionForDelete(
+                bookingId,
+                ((MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId(),
+                id
+        ))
+            throw new ExceptionUtils.DeleteException("QUESTION_CAN_NOT_DELETE_OR_NOT_AVAILABLE");
+
+        questionService.deleteQuestion(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }

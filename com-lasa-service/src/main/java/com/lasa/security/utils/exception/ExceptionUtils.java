@@ -43,4 +43,10 @@ public class ExceptionUtils {
             super(message);
         }
     }
+
+    public static class DeleteException extends Exception {
+        public DeleteException(String message) {
+            super(message);
+        }
+    }
 }

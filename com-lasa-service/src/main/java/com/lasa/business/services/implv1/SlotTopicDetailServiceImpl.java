@@ -6,22 +6,20 @@
 package com.lasa.business.services.implv1;
 
 import com.lasa.business.services.SlotTopicDetailService;
-import com.lasa.data.model.request.SlotTopicDetailRequestModel;
-import com.lasa.data.model.view.SlotTopicDetailViewModel;
 import com.lasa.data.model.entity.SlotTopicDetail;
 import com.lasa.data.model.entity.key.SlotTopicDetailKey;
+import com.lasa.data.model.request.SlotTopicDetailRequestModel;
 import com.lasa.data.model.utils.criteria.SlotTopicDetailSearchCriteria;
 import com.lasa.data.model.utils.dto.SlotTopicDetailSimple;
 import com.lasa.data.model.utils.page.SlotTopicDetailPage;
 import com.lasa.data.model.utils.specification.SlotTopicDetailSpecification;
-import com.lasa.data.model.view.TopicViewModel;
+import com.lasa.data.model.view.SlotTopicDetailViewModel;
 import com.lasa.data.repo.repository.SlotTopicDetailRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
