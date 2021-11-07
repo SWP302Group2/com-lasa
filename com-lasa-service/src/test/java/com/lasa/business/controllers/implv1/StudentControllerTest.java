@@ -9,6 +9,7 @@ import com.lasa.business.services.implv1.StudentServiceImpl;
 import com.lasa.data.model.request.StudentRequestModel;
 import com.lasa.data.model.view.StudentViewModel;
 import com.lasa.data.repo.repository.StudentRepository;
+import com.lasa.security.utils.exception.ExceptionUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -67,7 +68,7 @@ public class StudentControllerTest {
     }
     
     @Test
-    public void testUpdateStudent() {
+    public void testUpdateStudent() throws ExceptionUtils.UpdateException {
          int id = 1;
          
         StudentRequestModel student = new StudentRequestModel();
