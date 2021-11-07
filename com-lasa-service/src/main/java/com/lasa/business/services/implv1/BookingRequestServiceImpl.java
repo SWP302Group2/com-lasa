@@ -35,7 +35,6 @@ import java.util.stream.Collectors;
  * @author wifil
  */
 
-@AllArgsConstructor
 @Component
 @Qualifier("BookingRequestServiceImplV1")
 public class BookingRequestServiceImpl implements BookingRequestService {
