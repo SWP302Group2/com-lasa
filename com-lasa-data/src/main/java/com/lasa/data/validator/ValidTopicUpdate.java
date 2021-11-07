@@ -1,6 +1,5 @@
 package com.lasa.data.validator;
 
-import com.lasa.data.validator.model.TopicIdValidator;
 import com.lasa.data.validator.model.TopicUpdateValidator;
 
 import javax.validation.Constraint;

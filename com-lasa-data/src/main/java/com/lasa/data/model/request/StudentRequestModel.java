@@ -2,7 +2,6 @@ package com.lasa.data.model.request;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.lasa.data.model.entity.Student;
-import com.lasa.data.validator.ValidLecturerId;
 import com.lasa.data.validator.ValidLecturerIds;
 import com.lasa.data.validator.ValidMajorId;
 import com.lasa.data.validator.ValidOneOf;

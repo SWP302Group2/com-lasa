@@ -3,7 +3,6 @@ package com.lasa.data.model.request;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.lasa.data.model.entity.Lecturer;
-import com.lasa.data.validator.ValidLecturerId;
 import com.lasa.data.validator.ValidOneOf;
 import com.lasa.data.validator.ValidTopicIds;
 import lombok.AllArgsConstructor;
@@ -11,7 +10,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.validation.constraints.Min;
 import java.time.LocalDate;
 import java.util.List;
 

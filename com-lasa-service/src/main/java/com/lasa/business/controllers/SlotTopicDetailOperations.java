@@ -5,7 +5,6 @@
  */
 package com.lasa.business.controllers;
 
-import com.lasa.business.controllers.utils.authorization.IsAdmin;
 import com.lasa.data.model.entity.key.SlotTopicDetailKey;
 import com.lasa.data.model.request.SlotTopicDetailRequestModel;
 import com.lasa.data.model.utils.criteria.SlotTopicDetailSearchCriteria;

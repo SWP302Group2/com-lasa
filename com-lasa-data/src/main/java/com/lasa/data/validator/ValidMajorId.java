@@ -1,6 +1,5 @@
 package com.lasa.data.validator;
 
-import com.lasa.data.validator.model.LecturerIdsValidator;
 import com.lasa.data.validator.model.MajorIdsValidator;
 
 import javax.validation.Constraint;

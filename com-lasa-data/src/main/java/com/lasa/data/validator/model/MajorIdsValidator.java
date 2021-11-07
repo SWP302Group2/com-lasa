@@ -15,7 +15,7 @@ public class MajorIdsValidator implements ConstraintValidator<ValidMajorId, Stri
     }
 
     @Override
-    public boolean isValid(Integer String, ConstraintValidatorContext constraintValidatorContext) {
-        return majorRepository.existsById(String);
+    public boolean isValid(String id, ConstraintValidatorContext constraintValidatorContext) {
+        return majorRepository.existsById(id);
     }
 }
