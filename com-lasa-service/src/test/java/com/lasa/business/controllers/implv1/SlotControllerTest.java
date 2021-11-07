@@ -6,8 +6,13 @@
 package com.lasa.business.controllers.implv1;
 
 import com.lasa.business.services.implv1.SlotServiceImpl;
+import com.lasa.data.model.entity.Slot;
+import com.lasa.data.model.request.SlotBookingRequestModel;
+import com.lasa.data.model.request.SlotRequestModel;
 import com.lasa.data.model.view.SlotViewModel;
 import com.lasa.data.repo.repository.SlotRepository;
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -47,13 +52,14 @@ public class SlotControllerTest {
         Assertions.assertEquals(result.getBody(),expected);
     }
     
-   /* @Test
+ /*   @Test
     public void testCreateQuestion() throws Exception { 
         Slot slots = new Slot();
         slots.setId(1);
         slots.setLecturerId(2);
         slots.setStatus(1);
-        //slots.setTopics();
+        
+        slots.setTopics(topics);
         SlotViewModel expected = new SlotViewModel(slots);
         
         SlotRequestModel slot = new SlotRequestModel();
@@ -68,4 +74,6 @@ public class SlotControllerTest {
         ResponseEntity<SlotViewModel> result = slotController.createSlot(slot);
         Assertions.assertEquals(result.getBody(),expected);
     }*/
+    
+    
 }

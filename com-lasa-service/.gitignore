@@ -6,6 +6,7 @@ target/
 */target/**
 **/logs/**
 ${project.build.directory}
+**/logs/**
 
 ### STS ###
 .apt_generated
