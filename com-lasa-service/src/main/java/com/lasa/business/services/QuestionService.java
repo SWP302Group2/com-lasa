@@ -6,10 +6,9 @@
 package com.lasa.business.services;
 
 import com.lasa.data.model.request.QuestionRequestModel;
-import com.lasa.data.model.view.QuestionViewModel;
-import com.lasa.data.model.entity.Question;
 import com.lasa.data.model.utils.criteria.QuestionSearchCriteria;
 import com.lasa.data.model.utils.page.QuestionPage;
+import com.lasa.data.model.view.QuestionViewModel;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +26,8 @@ public interface QuestionService {
     List<QuestionViewModel> findAll(QuestionSearchCriteria searchCriteria);
     
     QuestionViewModel findById(Integer id);
+
+    boolean verifyAvailableQuestionForDelete(Integer bookingId, Integer studentId, List<Integer> questionIds);
     
     List<QuestionViewModel> createQuestions(List<QuestionRequestModel> questions);
     

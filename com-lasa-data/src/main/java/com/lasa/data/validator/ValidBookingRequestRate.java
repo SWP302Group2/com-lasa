@@ -1,7 +1,6 @@
 package com.lasa.data.validator;
 
 import com.lasa.data.validator.model.BookingRequestRateValidator;
-import com.lasa.data.validator.model.BookingRequestUpdateValidator;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;

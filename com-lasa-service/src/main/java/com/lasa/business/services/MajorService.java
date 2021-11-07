@@ -6,10 +6,10 @@
 package com.lasa.business.services;
 
 import com.lasa.data.model.request.MajorRequestModel;
-import com.lasa.data.model.view.MajorViewModel;
 import com.lasa.data.model.utils.criteria.MajorSearchCriteria;
 import com.lasa.data.model.utils.page.MajorPage;
 import com.lasa.data.model.utils.projection.MajorWithSimpleTopic;
+import com.lasa.data.model.view.MajorViewModel;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 

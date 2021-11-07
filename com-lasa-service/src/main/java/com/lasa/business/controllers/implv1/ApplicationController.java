@@ -5,8 +5,6 @@ import com.lasa.business.services.AdminService;
 import com.lasa.business.services.LecturerService;
 import com.lasa.business.services.StudentService;
 import com.lasa.data.model.view.AdminViewModel;
-import com.lasa.data.model.view.LecturerViewModel;
-import com.lasa.data.model.view.StudentViewModel;
 import com.lasa.security.appuser.MyUserDetails;
 import com.lasa.security.utils.model.InformationResponse;
 import org.springframework.beans.factory.annotation.Autowired;

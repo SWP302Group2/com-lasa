@@ -11,8 +11,8 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import java.time.LocalDateTime;
+import java.util.List;
 
 
 /**
@@ -34,7 +34,8 @@ public interface SlotRepository extends JpaRepository<Slot, Integer>, JpaSpecifi
     Page<SlotWithLecturerAndTopic> findWithArgument(@Param("search") SlotSearchCriteria search, Pageable pageable);
 */
 
-    @Query("select count(s) from Slot s where (s.timeStart >= ?1 and s.timeStart <= ?2) or (s.timeEnd >= ?1 and s.timeEnd <= ?2) and (s.lecturerId = ?3) and (s.status = 1)")
+    @Query("select count(s) from Slot s where ((s.timeStart >= ?1 and s.timeStart <= ?2) or (s.timeEnd >= ?1 and s.timeEnd <= ?2)) " +
+            "and (s.lecturerId = ?3) and (s.status = 1)")
     Integer countActiveSlotByTimeStartAndTimeEndAndLecturerId(LocalDateTime timeStart, LocalDateTime timeEnd, Integer lecturerId);
 
     @Query("select count(s) from Slot s where s.id = ?1 and s.status = 1")
@@ -42,5 +43,8 @@ public interface SlotRepository extends JpaRepository<Slot, Integer>, JpaSpecifi
 
     @Query("select count(s) from Slot as s join s.bookingRequests as b where s.id = ?1 and s.lecturerId = ?2 and s.status = 1 and b.id = ?3 and b.status = 1")
     long countAvailableUpdateBookingOfSlot(Integer slotId,Integer lecturerId, Integer bookingId);
+
+    @Query("select count(s) from Slot as s where s.id in ?1 and s.lecturerId = ?2 and (s.status = 0 or s.status = 4)")
+    long countAvailableDeleteSlot(List<Integer> id, Integer lecturerId);
 
 }

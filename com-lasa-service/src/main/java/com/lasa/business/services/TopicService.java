@@ -6,10 +6,9 @@
 package com.lasa.business.services;
 
 import com.lasa.data.model.request.TopicRequestModel;
-import com.lasa.data.model.view.TopicViewModel;
-import com.lasa.data.model.entity.Topic;
 import com.lasa.data.model.utils.criteria.TopicSearchCriteria;
 import com.lasa.data.model.utils.page.TopicPage;
+import com.lasa.data.model.view.TopicViewModel;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 

@@ -3,7 +3,10 @@ package com.lasa.data.model.request;
 import com.lasa.data.model.entity.Slot;
 import com.lasa.data.model.entity.SlotTopicDetail;
 import com.lasa.data.model.entity.Topic;
-import lombok.*;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
 @Setter
