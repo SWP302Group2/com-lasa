@@ -5,6 +5,7 @@ import com.lasa.business.services.implv1.SlotServiceImpl;
 import com.lasa.data.model.entity.Slot;
 import com.lasa.data.model.request.SlotRequestModel;
 import com.lasa.data.model.view.SlotViewModel;
+import com.lasa.data.repo.repository.BookingRequestRepository;
 import com.lasa.data.repo.repository.SlotRepository;
 import com.lasa.data.repo.repository.SlotTopicDetailRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -33,11 +34,7 @@ class SlotServiceTest {
     @Mock
     private LecturerServiceImpl lecturerService;
     @Mock
-    private LecturerTopicDetailService lecturerTopicDetailService;
-    @Mock
-    private SlotTopicDetailRepository slotTopicDetailRepository;
-    @Mock
-    private EmailSenderService emailSenderService;
+    private BookingRequestRepository bookingRequestRepository;
 
     @InjectMocks
     private SlotServiceImpl slotService;
@@ -47,7 +44,7 @@ class SlotServiceTest {
     @BeforeEach
     void setup(){
     slotService = new SlotServiceImpl(slotRepository,lecturerService, slotTopicDetailService,
-            lecturerTopicDetailService, slotTopicDetailRepository, emailSenderService);
+            bookingRequestRepository);
 
         slotRequestModel = new SlotRequestModel();
         slotRequestModel.setId(1);
