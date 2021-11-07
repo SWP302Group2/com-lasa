@@ -6,13 +6,15 @@
  */
 package com.lasa.business.services;
 
+import com.lasa.data.model.entity.BookingRequest;
 import com.lasa.data.model.request.BookingRequestRequestModel;
+import com.lasa.data.model.view.BookingRequestViewModel;
 import com.lasa.data.model.utils.criteria.BookingRequestSearchCriteria;
 import com.lasa.data.model.utils.page.BookingRequestPage;
-import com.lasa.data.model.view.BookingRequestViewModel;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
+import javax.mail.MessagingException;
 import java.util.List;
 
 /**
@@ -29,7 +31,7 @@ public interface BookingRequestService {
 
     BookingRequestViewModel findByBookingRequestId(Integer id);
 
-    Boolean verifyBookingRequestForDelete(Integer studentId, List<Integer> bookingId);
+    Boolean verifyBookingRequest(Integer studentId, Integer slotId);
 
     BookingRequestViewModel createBookingRequest(BookingRequestRequestModel bookingRequestModel);
 

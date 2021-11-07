@@ -1,10 +1,7 @@
 package com.lasa.data.model.view;
 
 import com.lasa.data.model.entity.Major;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.io.Serializable;
 import java.util.ArrayList;

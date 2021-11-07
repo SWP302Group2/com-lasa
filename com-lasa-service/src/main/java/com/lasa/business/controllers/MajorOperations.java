@@ -5,9 +5,11 @@
  */
 package com.lasa.business.controllers;
 
+import com.lasa.data.model.entity.Major;
 import com.lasa.data.model.request.MajorRequestModel;
 import com.lasa.data.model.utils.criteria.MajorSearchCriteria;
 import com.lasa.data.model.utils.page.MajorPage;
+import com.lasa.data.model.view.MajorViewModel;
 import io.swagger.annotations.ApiParam;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

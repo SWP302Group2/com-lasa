@@ -64,8 +64,4 @@ public interface SlotTopicDetailRepository extends JpaRepository<SlotTopicDetail
 
     long countByTopicIdAndSlotId(Integer topicId, Integer slotId);
 
-    long countByTopicIdInAndSlotId(List<Integer> topicId, Integer slotId);
-
-
-
 }

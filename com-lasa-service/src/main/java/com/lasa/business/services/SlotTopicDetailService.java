@@ -5,6 +5,7 @@
  */
 package com.lasa.business.services;
 
+import com.lasa.data.model.entity.SlotTopicDetail;
 import com.lasa.data.model.entity.key.SlotTopicDetailKey;
 import com.lasa.data.model.request.SlotTopicDetailRequestModel;
 import com.lasa.data.model.utils.criteria.SlotTopicDetailSearchCriteria;

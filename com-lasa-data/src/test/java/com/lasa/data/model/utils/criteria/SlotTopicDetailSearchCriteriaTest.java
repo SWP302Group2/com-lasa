@@ -8,18 +8,15 @@ package com.lasa.data.model.utils.criteria;
 import com.lasa.data.model.entity.SlotTopicDetail;
 import com.lasa.data.model.utils.specification.SlotTopicDetailSpecification;
 import com.lasa.data.repo.repository.SlotTopicDetailRepository;
-import org.junit.jupiter.api.Assertions;
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Assertions;;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-
-import java.util.ArrayList;
-import java.util.List;
-
-;
 
 /**
  *
@@ -67,7 +64,7 @@ public class SlotTopicDetailSearchCriteriaTest {
         
         List<SlotTopicDetail> actualList = slotTopicDetailRepository.findAll(SlotTopicDetailSpecification.searchSpecification(searchCriteria));
         List<SlotTopicDetail> expectedList = entityManager.getEntityManager()
-                .createQuery("select s from SlotTopicDetail s where s.slot.id in ?1 and s.topic.id in ?2", SlotTopicDetail.class)
+                .createQuery("select s from SlotTopicDetail s where s.slot.id like ?1 and s.topic.id like ?2", SlotTopicDetail.class)
                 .setParameter(1, searchSlotId)
                 .setParameter(2, searchTopicId)
                 .getResultList();

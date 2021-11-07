@@ -1,5 +1,6 @@
 package com.lasa.data.validator;
 
+import com.lasa.data.validator.model.SlotCreateValidator;
 import com.lasa.data.validator.model.SlotTopicForCreateSlotValidator;
 
 import javax.validation.Constraint;

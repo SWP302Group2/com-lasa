@@ -6,13 +6,13 @@
 package com.lasa.business.services.implv1;
 
 import com.lasa.business.services.MajorService;
-import com.lasa.data.model.entity.Major;
 import com.lasa.data.model.request.MajorRequestModel;
+import com.lasa.data.model.view.MajorViewModel;
+import com.lasa.data.model.entity.Major;
 import com.lasa.data.model.utils.criteria.MajorSearchCriteria;
 import com.lasa.data.model.utils.page.MajorPage;
 import com.lasa.data.model.utils.projection.MajorWithSimpleTopic;
 import com.lasa.data.model.utils.specification.MajorSpecification;
-import com.lasa.data.model.view.MajorViewModel;
 import com.lasa.data.repo.repository.MajorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

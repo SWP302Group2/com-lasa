@@ -6,12 +6,12 @@
 package com.lasa.business.services.implv1;
 
 import com.lasa.business.services.StudentService;
-import com.lasa.data.model.entity.Student;
 import com.lasa.data.model.request.StudentRequestModel;
+import com.lasa.data.model.view.StudentViewModel;
+import com.lasa.data.model.entity.Student;
 import com.lasa.data.model.utils.criteria.StudentSearchCriteria;
 import com.lasa.data.model.utils.page.StudentPage;
 import com.lasa.data.model.utils.specification.StudentSpecification;
-import com.lasa.data.model.view.StudentViewModel;
 import com.lasa.data.repo.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

@@ -7,12 +7,13 @@ package com.lasa.business.services;
 
 import com.lasa.data.model.request.SlotBookingRequestModel;
 import com.lasa.data.model.request.SlotRequestModel;
+import com.lasa.data.model.view.SlotViewModel;
 import com.lasa.data.model.utils.criteria.SlotSearchCriteria;
 import com.lasa.data.model.utils.page.SlotPage;
-import com.lasa.data.model.view.SlotViewModel;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
+import javax.mail.MessagingException;
 import java.util.List;
 
 /**
@@ -28,7 +29,7 @@ public interface SlotService {
 
     SlotViewModel findById(Integer id);
 
-    Boolean verifySlotForDelete(List<Integer> id, Integer lecturerId);
+    Boolean verifySlot(SlotRequestModel slot);
 
     SlotViewModel createSlot(SlotRequestModel slot);
 
@@ -37,8 +38,4 @@ public interface SlotService {
     SlotViewModel acceptDenyBooking(SlotBookingRequestModel model);
     
     void deleteSlots(List<Integer> ids);
-
-    void updateStatusForCompletedSlotAndBooking();
-
-    void updateStatusForExpiredSlotAndBooking();
 }

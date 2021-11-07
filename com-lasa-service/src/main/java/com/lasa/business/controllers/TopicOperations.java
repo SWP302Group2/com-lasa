@@ -5,6 +5,7 @@
  */
 package com.lasa.business.controllers;
 
+import com.lasa.data.model.entity.Topic;
 import com.lasa.data.model.request.TopicRequestModel;
 import com.lasa.data.model.utils.criteria.TopicSearchCriteria;
 import com.lasa.data.model.utils.page.TopicPage;

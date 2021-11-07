@@ -47,16 +47,19 @@ public interface SlotOperations {
 
     @PostMapping
     ResponseEntity<?> createSlot(@ApiParam(name = "slots", type = "body", value = "Add a new slot")
-                                           @Validated(value = PostValidator.class) @RequestBody SlotRequestModel model);
+                                              @RequestBody SlotRequestModel model);
 
     @PutMapping
-    ResponseEntity<?> updateSlots(@ApiParam(name = "slots", type = "body", value = "Update a slot by id", required = true)
-                                  @Validated(PutValidator.class) @RequestBody SlotRequestModel slots);
+    ResponseEntity<?> updateSlots(
+            @ApiParam(name = "slots", type = "body", value = "Update a slot by id", required = true)
+            @Validated(PutValidator.class) @RequestBody SlotRequestModel slots);
 
     @PutMapping(value = "/{id}/booking-requests")
     ResponseEntity<?> updateBookingRequests(@Min(value = 1) @PathVariable("id") Integer id,
                                             @Validated(value = PutValidator.class) @RequestBody SlotBookingRequestModel model) throws MessagingException;
 
     @DeleteMapping
-    ResponseEntity<?> deleteSlots(@RequestParam List<Integer> id) throws ExceptionUtils.DeleteException;
+    void deleteSlots(
+            @ApiParam(name = "ids", type = "body", value = "Delete a slot by id", required = true)
+            @RequestBody List<Integer> ids);
 }

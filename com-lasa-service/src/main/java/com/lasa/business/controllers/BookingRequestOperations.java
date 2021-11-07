@@ -5,10 +5,13 @@
  */
 package com.lasa.business.controllers;
 
+import com.lasa.data.model.entity.BookingRequest;
+import com.lasa.data.model.request.BookingQuestionDeleteRequestModel;
 import com.lasa.data.model.request.BookingQuestionRequestModel;
 import com.lasa.data.model.request.BookingRequestRequestModel;
 import com.lasa.data.model.utils.criteria.BookingRequestSearchCriteria;
 import com.lasa.data.model.utils.page.BookingRequestPage;
+import com.lasa.data.validator.ValidBookingQuestionDelete;
 import com.lasa.data.validator.group.PostValidator;
 import com.lasa.data.validator.group.PutValidator;
 import com.lasa.security.utils.exception.ExceptionUtils;
@@ -17,6 +20,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.mail.MessagingException;
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import java.util.List;
@@ -60,15 +64,15 @@ public interface BookingRequestOperations {
                                              @Validated(PutValidator.class) @RequestBody BookingQuestionRequestModel model);
     
     @DeleteMapping
-    ResponseEntity<?> deleteBookingRequests(@ApiParam(name = "id", type = "param", value = "By id, you may remove booking request")
-                                            @RequestParam List<Integer> id) throws ExceptionUtils.DeleteException;
+    ResponseEntity<?> deleteBookingRequests(@ApiParam(name = "ids", type = "body", value = "By id, you may remove booking request")
+                               @RequestBody List<Integer> ids);
 
 //    @GetMapping(value = "/confirm/{id}/{status}")
 //    ResponseEntity<?> confirmBookingRequest(@ApiParam(name = "id", type = "Integer", value = "Confirm booking request")
 //                               @PathVariable("id") Integer id,
 //                               @PathVariable("status") Integer status) throws MessagingException;
-    @DeleteMapping(value = "/{bookingId}/questions")
-    ResponseEntity<?> deleteBookingQuestions(@PathVariable("bookingId") Integer bookingId,
-                                             @RequestParam List<Integer> id) throws ExceptionUtils.DeleteException;
+    @DeleteMapping(value = "/{id}/questions")
+    ResponseEntity<?> deleteBookingQuestions(@PathVariable("id") Integer id,
+                                             @Validated @RequestBody BookingQuestionDeleteRequestModel model);
 
 }

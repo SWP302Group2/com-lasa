@@ -8,16 +8,15 @@ package com.lasa.data.model.utils.criteria;
 import com.lasa.data.model.entity.BookingRequest;
 import com.lasa.data.model.utils.specification.BookingRequestSpecification;
 import com.lasa.data.repo.repository.BookingRequestRepository;
-import org.junit.jupiter.api.Assertions;
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  *

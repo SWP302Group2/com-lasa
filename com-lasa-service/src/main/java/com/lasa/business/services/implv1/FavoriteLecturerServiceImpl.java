@@ -7,10 +7,10 @@ package com.lasa.business.services.implv1;
 
 import com.lasa.business.services.FavoriteLecturerService;
 import com.lasa.data.model.entity.FavoriteLecturer;
-import com.lasa.data.model.entity.key.FavoriteLecturerKey;
 import com.lasa.data.model.request.FavoriteLecturerRequestModel;
 import com.lasa.data.model.view.FavoriteLecturerViewModel;
 import com.lasa.data.model.view.LecturerViewModel;
+import com.lasa.data.model.entity.key.FavoriteLecturerKey;
 import com.lasa.data.repo.repository.FavoriteLecturerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

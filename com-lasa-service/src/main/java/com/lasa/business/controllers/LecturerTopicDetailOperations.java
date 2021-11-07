@@ -9,6 +9,7 @@ import com.lasa.data.model.entity.LecturerTopicDetail;
 import com.lasa.data.model.entity.key.LecturerTopicDetailKey;
 import io.swagger.annotations.ApiParam;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

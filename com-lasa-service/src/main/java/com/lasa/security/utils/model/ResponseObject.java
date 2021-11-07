@@ -13,16 +13,17 @@ import java.util.HashMap;
 @ApiIgnore
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class ResponseObject {
+    private String timestamp;
     private int status;
     private String error;
     private HashMap<String, String> errors;
     private String message;
     private String path;
-    private LocalDateTime timestamp;
+    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     @Builder
-    public ResponseObject( int status, String error, HashMap<String, String> errors, String message, String path) {
-        this.timestamp = LocalDateTime.now();
+    public ResponseObject(String timestamp, int status, String error, HashMap<String, String> errors, String message, String path) {
+        this.timestamp = timestamp;
         this.status = status;
         this.error = error;
         this.errors = errors;

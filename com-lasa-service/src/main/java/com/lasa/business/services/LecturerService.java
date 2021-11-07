@@ -6,9 +6,10 @@
 package com.lasa.business.services;
 
 import com.lasa.data.model.request.LecturerRequestModel;
+import com.lasa.data.model.view.LecturerViewModel;
+import com.lasa.data.model.entity.Lecturer;
 import com.lasa.data.model.utils.criteria.LecturerSearchCriteria;
 import com.lasa.data.model.utils.page.LecturerPage;
-import com.lasa.data.model.view.LecturerViewModel;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 

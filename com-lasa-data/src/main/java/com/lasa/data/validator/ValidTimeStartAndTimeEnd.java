@@ -1,5 +1,6 @@
 package com.lasa.data.validator;
 
+import com.lasa.data.validator.model.SlotIdValidator;
 import com.lasa.data.validator.model.TimeStartAndTimeEndValidator;
 
 import javax.validation.Constraint;

@@ -1,18 +1,16 @@
 package com.lasa.business.services.implv1;
 
-import com.lasa.business.config.utils.BookingRequestStatus;
 import com.lasa.business.services.BookingRequestService;
-import com.lasa.business.services.StudentService;
-import com.lasa.data.model.entity.BookingRequest;
-import com.lasa.data.model.entity.Question;
+import com.lasa.business.services.EmailSenderService;
+import com.lasa.data.model.entity.*;
 import com.lasa.data.model.request.BookingRequestRequestModel;
+import com.lasa.data.model.view.BookingRequestViewModel;
 import com.lasa.data.model.utils.criteria.BookingRequestSearchCriteria;
-import com.lasa.data.model.utils.criteria.StudentSearchCriteria;
 import com.lasa.data.model.utils.page.BookingRequestPage;
 import com.lasa.data.model.utils.specification.BookingRequestSpecification;
-import com.lasa.data.model.view.BookingRequestViewModel;
-import com.lasa.data.model.view.StudentViewModel;
 import com.lasa.data.repo.repository.BookingRequestRepository;
+import com.lasa.data.repo.repository.LecturerRepository;
+import com.lasa.data.repo.repository.SlotRepository;
 import com.lasa.data.repo.repository.StudentRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,9 +19,15 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.mail.MessagingException;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -41,67 +45,34 @@ import java.util.stream.Collectors;
 public class BookingRequestServiceImpl implements BookingRequestService {
 
     private final BookingRequestRepository bookingRepository;
-    private final StudentService studentService;
-    private final StudentRepository studentRepository;
-
     @Autowired
-    public BookingRequestServiceImpl(BookingRequestRepository bookingRepository, StudentService studentService, StudentRepository studentRepository) {
+    private  EmailSenderService emailSenderService;
+    @Autowired
+    private StudentRepository studentRepository;
+    @Autowired
+    private LecturerRepository lecturerRepository;
+    @Autowired
+    private SlotRepository slotRepository;
+    @Autowired
+    public BookingRequestServiceImpl(BookingRequestRepository bookingRepository) {
         this.bookingRepository = bookingRepository;
-        this.studentService = studentService;
-        this.studentRepository = studentRepository;
     }
 
     @Override
     public Page<BookingRequestViewModel> findAll(BookingRequestPage bookingRequestPage, BookingRequestSearchCriteria searchCriteria) {
         Pageable pageable = PageRequest.of(bookingRequestPage.getPage(), bookingRequestPage.getSize(), Sort.by(bookingRequestPage.getOrderBy(), bookingRequestPage.getSortBy()));
-        Page<BookingRequestViewModel> page = bookingRepository
+        return bookingRepository
                 .findAll(BookingRequestSpecification.searchSpecification(searchCriteria), pageable)
                 .map(t -> new BookingRequestViewModel(t));
-
-        if(searchCriteria.getGetStudent().equals(true)) {
-            List<Integer> studentIds = page.stream()
-                    .map(t -> t.getStudentId())
-                    .collect(Collectors.toList());
-
-            List<StudentViewModel> students = getStudents(studentIds);
-            page.stream()
-                    .forEach(t -> {
-                        StudentViewModel student = students.stream()
-                                .filter(x -> x.getId().equals(t.getStudentId()))
-                                .findAny()
-                                .get();
-                        t.setStudent(student);
-                    });
-        }
-
-        return page;
     }
 
     @Override
     public List<BookingRequestViewModel> findAll(BookingRequestSearchCriteria searchCriteria) {
-        List<BookingRequestViewModel> list = bookingRepository
+        return bookingRepository
                 .findAll(BookingRequestSpecification.searchSpecification(searchCriteria))
                 .stream()
                 .map(t -> new BookingRequestViewModel(t))
                 .collect(Collectors.toList());
-
-        if(searchCriteria.getGetStudent().equals(true)) {
-            List<Integer> studentIds = list.stream()
-                    .map(t -> t.getStudentId())
-                    .collect(Collectors.toList());
-
-            List<StudentViewModel> students = getStudents(studentIds);
-            list.stream()
-                    .forEach(t -> {
-                        StudentViewModel student = students.stream()
-                                .filter(x -> x.getId().equals(t.getStudentId()))
-                                .findAny()
-                                .get();
-                        t.setStudent(student);
-                    });
-        }
-
-        return list;
     }
 
     @Override
@@ -114,11 +85,11 @@ public class BookingRequestServiceImpl implements BookingRequestService {
     }
 
     @Override
-    public Boolean verifyBookingRequestForDelete(Integer studentId, List<Integer> slotId) {
-        if(bookingRepository.countAvailableBookingForDelete(studentId, slotId) == slotId.size())
+    public Boolean verifyBookingRequest(Integer studentId, Integer slotId) {
+        if(bookingRepository.findBookingRequestByStudentIdAndSlotId(studentId, slotId).isPresent())
+            return false;
+        else
             return true;
-
-        return false;
     }
 
     @Override
@@ -130,12 +101,6 @@ public class BookingRequestServiceImpl implements BookingRequestService {
         bookingRequest.setQuestions(questions);
 
         return new BookingRequestViewModel(bookingRepository.save(bookingRequest));
-    }
-
-    private List<StudentViewModel> getStudents(List<Integer> ids) {
-        return studentRepository.findAllById(ids).stream()
-                .map(t -> new StudentViewModel(t))
-                .collect(Collectors.toList());
     }
 
 //    @Transactional
@@ -200,14 +165,11 @@ public class BookingRequestServiceImpl implements BookingRequestService {
         }
         return null;
     }
-
-
+    
 
     @Override
     public void deleteBookingRequests(List<Integer> ids) {
-        bookingRepository.findAllById(ids)
-                .stream()
-                .forEach(t -> t.setStatus(BookingRequestStatus.DELETED.getCode()));
+        bookingRepository.deleteAllById(ids);
     }
 
 }

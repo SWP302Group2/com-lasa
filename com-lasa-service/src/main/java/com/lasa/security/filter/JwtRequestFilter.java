@@ -1,8 +1,9 @@
 package com.lasa.security.filter;
 
-import com.lasa.security.utils.exception.ExceptionUtils.UserAccountException;
+import com.lasa.security.appuser.MyUserDetails;
 import com.lasa.security.utils.jwt.JwtConfig;
 import com.lasa.security.utils.jwt.JwtUtil;
+import com.lasa.security.utils.exception.ExceptionUtils.UserAccountException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -55,8 +56,6 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             if(!userDetails.isEnabled()) throw new UserAccountException("ACCOUNT_NOT_ENABLED");
 
             else if(!userDetails.isAccountNonLocked()) throw new UserAccountException("ACCOUNT_IS_LOCKED");
-
-            else if(!userDetails.isAccountNonExpired()) throw new UserAccountException("ACCOUNT_IS_DELETED");
 
             else if(jwtUtil.validateToken(jwt, userDetails)) {
 

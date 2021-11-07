@@ -6,11 +6,10 @@
 package com.lasa.data.model.request;
 
 import com.lasa.data.model.entity.Lecturer;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
-
 import java.time.LocalDate;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Assertions;
+import org.springframework.boot.test.context.SpringBootTest;
 
 /**
  *
