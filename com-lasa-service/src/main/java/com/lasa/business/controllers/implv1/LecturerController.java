@@ -80,7 +80,7 @@ public class LecturerController implements LecturerOperations {
 
     @Override
     @IsAdminOrLecturer
-    @PreAuthorize("(hasAuthority(ROLE_ADMIN)) or ((id.size() == 1) and (#id.get(0).equals(authentication.principal.id)))")
+    @PreAuthorize("(hasAuthority(ROLE_ADMIN)) or ((#id.size() == 1) and (#id.get(0).equals(authentication.principal.id)))")
     public ResponseEntity<?> deleteLecturers(List<Integer> id) throws ExceptionUtils.DeleteException {
         if(!lecturerService.verifyLecturer(id))
             throw new ExceptionUtils.DeleteException("LECTURER_NOT_AVAILABLE_FOR_DELETE");

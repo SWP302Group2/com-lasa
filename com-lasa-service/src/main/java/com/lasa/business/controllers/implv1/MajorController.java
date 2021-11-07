@@ -6,6 +6,8 @@
 package com.lasa.business.controllers.implv1;
 
 import com.lasa.business.controllers.MajorOperations;
+import com.lasa.business.controllers.utils.authorization.IsAdmin;
+import com.lasa.business.controllers.utils.authorization.IsNotAvailable;
 import com.lasa.business.services.MajorService;
 import com.lasa.business.services.TopicService;
 import com.lasa.data.model.request.MajorRequestModel;
@@ -116,19 +118,22 @@ public class MajorController implements MajorOperations {
         }
 
         @Override
-        public ResponseEntity<List<MajorViewModel>> createMajors (List < MajorRequestModel > majors) {
+        @IsAdmin
+        public ResponseEntity<List<MajorViewModel>> createMajors (List <MajorRequestModel> majors) {
             return ResponseEntity.status(HttpStatus.CREATED)
                     .body(majorService.createMajors(majors));
         }
 
         @Override
+        @IsAdmin
         public ResponseEntity<?> updateMajors (List < MajorRequestModel > majors) {
             return ResponseEntity.status(HttpStatus.CREATED)
                     .body(majorService.updateMajors(majors));
         }
 
         @Override
-        public void deleteMajors (List < String > ids) {
+        @IsNotAvailable
+        public void deleteMajors (List <String> ids) {
             majorService.deleteMajors(ids);
         }
 

@@ -31,6 +31,9 @@ public interface LecturerRepository extends JpaRepository<Lecturer, Integer>, Jp
     @Query("select count(l) from Lecturer l where l.id in ?1 and (l.status = 0 or l.status = 1 or l.status = -1)")
     long countAvailableForDelete(List<Integer> id);
 
+    @Query("Select count(l) from Lecturer l where l.id in ?1 and l.status = 1")
+    long countActiveLecturers(List<Integer> id);
+
    /* @Override
     @EntityGraph(attributePaths = {"students.student", "slots"})
     Page<Lecturer> findAll(Specification<Lecturer> specification, Pageable  pageable);*/

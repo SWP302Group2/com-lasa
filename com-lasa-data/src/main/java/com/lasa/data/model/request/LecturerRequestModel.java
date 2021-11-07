@@ -20,7 +20,6 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class LecturerRequestModel {
-    @ValidLecturerId(message = "LECTURER_NOT_AVAILABLE_FOR_UPDATE")
     private Integer id;
     private String name;
     private String phone;

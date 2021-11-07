@@ -28,6 +28,8 @@ public interface StudentService {
     StudentViewModel findByStudentId(Integer id);
     
     StudentViewModel createStudent(StudentRequestModel student);
+
+    boolean verifyStudent(List<Integer> ids);
     
     StudentViewModel updateStudent(StudentRequestModel student);
     

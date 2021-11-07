@@ -5,6 +5,7 @@
  */
 package com.lasa.business.services.implv1;
 
+import com.lasa.business.config.utils.TopicStatus;
 import com.lasa.business.services.TopicService;
 import com.lasa.data.model.entity.Topic;
 import com.lasa.data.model.request.TopicRequestModel;
@@ -125,8 +126,10 @@ public class TopicServiceImpl implements TopicService {
     }
     
     @Override
+    @Transactional
     public void deleteTopics(List<Integer> ids) {
-        topicRepository.deleteAllById(ids);
+        topicRepository.findAllById(ids).stream()
+                .forEach(t -> t.setStatus(TopicStatus.DELETED.getCode()));
     }
     
     @Override

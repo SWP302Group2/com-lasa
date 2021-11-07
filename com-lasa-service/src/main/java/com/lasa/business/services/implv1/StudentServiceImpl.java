@@ -5,13 +5,17 @@
  */
 package com.lasa.business.services.implv1;
 
+import com.lasa.business.config.utils.StudentStatus;
 import com.lasa.business.services.StudentService;
+import com.lasa.data.model.entity.FavoriteLecturer;
+import com.lasa.data.model.entity.Lecturer;
 import com.lasa.data.model.entity.Student;
 import com.lasa.data.model.request.StudentRequestModel;
 import com.lasa.data.model.utils.criteria.StudentSearchCriteria;
 import com.lasa.data.model.utils.page.StudentPage;
 import com.lasa.data.model.utils.specification.StudentSpecification;
 import com.lasa.data.model.view.StudentViewModel;
+import com.lasa.data.repo.repository.FavoriteLecturerRepository;
 import com.lasa.data.repo.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -23,6 +27,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -35,10 +40,12 @@ import java.util.stream.Collectors;
 public class StudentServiceImpl implements StudentService {
     
     private final StudentRepository studentRepository;
+    private final FavoriteLecturerRepository favoriteLecturerRepository;
 
     @Autowired
-    public StudentServiceImpl(StudentRepository studentRepository) {
+    public StudentServiceImpl(StudentRepository studentRepository, FavoriteLecturerRepository favoriteLecturerRepository) {
         this.studentRepository = studentRepository;
+        this.favoriteLecturerRepository = favoriteLecturerRepository;
     }
 
     @Override
@@ -72,6 +79,11 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
+    public boolean verifyStudent(List<Integer> ids) {
+        return studentRepository.countAvailableForDelete(ids) == ids.size();
+    }
+
+    @Override
     @Transactional
     public StudentViewModel updateStudent(StudentRequestModel updateStudent) {
         
@@ -97,13 +109,34 @@ public class StudentServiceImpl implements StudentService {
         
         if(updateStudent.getAddress() != null)
             student.setAddress(updateStudent.getAddress());
-        
+
+        if(Objects.nonNull(updateStudent.getStatus()))
+            student.setStatus(updateStudent.getStatus());
+
+        if(Objects.nonNull(updateStudent.getLecturers())) {
+            List<FavoriteLecturer> favoriteLecturers = updateStudent.getLecturers()
+                    .stream()
+                    .map(t -> FavoriteLecturer.builder()
+                            .lecturer(Lecturer.builder()
+                                    .id(t)
+                                    .build())
+                            .student(Student.builder()
+                                    .id(updateStudent.getId())
+                                    .build())
+                            .build())
+                    .collect(Collectors.toList());
+
+            favoriteLecturerRepository.deleteAllByStudentId(updateStudent.getId());
+            favoriteLecturerRepository.saveAll(favoriteLecturers);
+        }
+
         return new StudentViewModel(studentRepository.save(student));
     }
 
     @Override
     public void deleteStudents(List<Integer> ids) {
-        studentRepository.deleteAllById(ids);
+        studentRepository.findAllById(ids).stream()
+                .forEach(t -> t.setStatus(StudentStatus.DELETED.getCode()));
     }
     
 }

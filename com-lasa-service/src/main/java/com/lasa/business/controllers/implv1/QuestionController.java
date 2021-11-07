@@ -6,6 +6,7 @@
 package com.lasa.business.controllers.implv1;
 
 import com.lasa.business.controllers.QuestionOperations;
+import com.lasa.business.controllers.utils.authorization.IsAdmin;
 import com.lasa.business.services.QuestionService;
 import com.lasa.data.model.request.QuestionRequestModel;
 import com.lasa.data.model.utils.criteria.QuestionSearchCriteria;
@@ -58,17 +59,20 @@ public class QuestionController implements QuestionOperations {
     }
     
     @Override
+    @IsAdmin
     public ResponseEntity<List<QuestionViewModel>> createQuestions(@RequestBody List<QuestionRequestModel> questions) {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(questionService.createQuestions(questions));
     }
     
     @Override
+    @IsAdmin
     public ResponseEntity<List<QuestionViewModel>> updateQuestions(@RequestBody List<QuestionRequestModel> questions) {
         return ResponseEntity.ok(questionService.updateQuestions(questions));
     }
     
     @Override
+    @IsAdmin
     public ResponseEntity<?> deleteQuestions(@RequestBody List<Integer> ids) {
         questionService.deleteQuestion(ids);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();

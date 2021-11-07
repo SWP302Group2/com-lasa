@@ -6,6 +6,7 @@
 package com.lasa.business.controllers.implv1;
 
 import com.lasa.business.controllers.SlotTopicDetailOperations;
+import com.lasa.business.controllers.utils.authorization.IsAdmin;
 import com.lasa.business.services.SlotTopicDetailService;
 import com.lasa.data.model.entity.key.SlotTopicDetailKey;
 import com.lasa.data.model.request.SlotTopicDetailRequestModel;
@@ -51,16 +52,19 @@ public class SlotTopicDetailController implements SlotTopicDetailOperations {
     }
 
     @Override
+    @IsAdmin
     public ResponseEntity<List<SlotTopicDetailViewModel>> createSlotTopicDetails(List<SlotTopicDetailRequestModel> details) {
         return ResponseEntity.ok(slotTopicDetailService.createSlotTopicDetails(details));
     }
 
     @Override
+    @IsAdmin
     public ResponseEntity<List<SlotTopicDetailViewModel>> updateSlotTopicDetails(List<SlotTopicDetailRequestModel> details) {
         return ResponseEntity.ok(slotTopicDetailService.updateSlotTopicDetails(details));
     }
 
     @Override
+    @IsAdmin
     public void deleteSlotTopicDetails(List<SlotTopicDetailKey> ids) {
         slotTopicDetailService.deleteSlotTopicDetails(ids);
     }

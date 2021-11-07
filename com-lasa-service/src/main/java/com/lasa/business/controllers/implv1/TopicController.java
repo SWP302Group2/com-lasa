@@ -5,7 +5,9 @@
  */
 package com.lasa.business.controllers.implv1;
 
+import com.lasa.business.config.utils.TopicStatus;
 import com.lasa.business.controllers.TopicOperations;
+import com.lasa.business.controllers.utils.authorization.IsAdmin;
 import com.lasa.business.services.TopicService;
 import com.lasa.data.model.request.TopicRequestModel;
 import com.lasa.data.model.utils.criteria.TopicSearchCriteria;
@@ -46,11 +48,14 @@ public class TopicController implements TopicOperations {
     }
      
     @Override
+    @IsAdmin
     public ResponseEntity<List<TopicViewModel>> createTopics(List<TopicRequestModel> topics) {
+        topics.stream().forEach(t -> t.setStatus(TopicStatus.ACTIVATED.getCode()));
         return ResponseEntity.ok(topicService.createTopics(topics));
     }
     
     @Override
+    @IsAdmin
     public ResponseEntity<List<TopicViewModel>> updateTopics(List<TopicRequestModel> topics) {
         return ResponseEntity.ok(topicService.updateTopics(topics));
     }
@@ -61,6 +66,7 @@ public class TopicController implements TopicOperations {
     }
 
     @Override
+    @IsAdmin
     public ResponseEntity deleteTopics(List<Integer> ids) {
         topicService.deleteTopics(ids);
         return ResponseEntity

@@ -8,6 +8,7 @@ package com.lasa.business.controllers;
 import com.lasa.data.model.request.StudentRequestModel;
 import com.lasa.data.model.utils.criteria.StudentSearchCriteria;
 import com.lasa.data.model.utils.page.StudentPage;
+import com.lasa.security.utils.exception.ExceptionUtils;
 import io.swagger.annotations.ApiParam;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -35,9 +36,9 @@ public interface StudentOperations {
 
     @PutMapping
     ResponseEntity<?> updateStudent(@ApiParam(name = "student", type = "body", value = "Update a student", required = true)
-                                    @RequestBody StudentRequestModel student);
+                                    @RequestBody StudentRequestModel student) throws ExceptionUtils.UpdateException;
 
     @DeleteMapping
-    void deleteStudents(@ApiParam(name = "ids", type = "body", value = "Remove a student by id", required = true)
-                        @RequestBody List<Integer> ids);
+    ResponseEntity<?> deleteStudents(@ApiParam(name = "id", type = "param", value = "Remove a student by id", required = true)
+                        @RequestParam List<Integer> id) throws ExceptionUtils.DeleteException;
 }

@@ -41,5 +41,5 @@ public interface TopicOperations {
     @DeleteMapping
     ResponseEntity<?> deleteTopics(
             @ApiParam(name = "ids", type = "body", value = "By id, you may remove a topic", required = true)
-            @RequestBody List<Integer> ids);
+            @RequestParam List<Integer> ids);
 }
