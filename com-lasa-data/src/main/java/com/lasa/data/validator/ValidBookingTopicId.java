@@ -10,7 +10,7 @@ import java.lang.annotation.*;
 @Target(ElementType.TYPE)
 @Constraint(validatedBy = TopicIdValidator.class)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface ValidTopicId {
+public @interface ValidBookingTopicId {
     String message() default "TOPIC_ID_NOT_VALID";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};

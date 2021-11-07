@@ -8,8 +8,10 @@ package com.lasa.business.controllers;
 import com.lasa.data.model.request.LecturerRequestModel;
 import com.lasa.data.model.utils.criteria.LecturerSearchCriteria;
 import com.lasa.data.model.utils.page.LecturerPage;
+import com.lasa.security.utils.exception.ExceptionUtils;
 import io.swagger.annotations.ApiParam;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,6 +21,7 @@ import java.util.List;
  * @author hai
  */
 @RequestMapping("/default")
+@Validated
 public interface LecturerOperations {
     
     @GetMapping
@@ -37,11 +40,10 @@ public interface LecturerOperations {
     
     @PutMapping
     ResponseEntity<?> updateLecturer(@ApiParam(name = "lecturer", type = "body", value = "Update a lecturer", required = true)
-                                     @RequestBody LecturerRequestModel model);
+                                     @Validated @RequestBody LecturerRequestModel model) throws ExceptionUtils.UpdateException;
     
     @DeleteMapping
-    void deleteLecturers(
-            @ApiParam(name = "ids", type = "array", value = "Delete lecturer by id", required = true)
-            List<Integer> ids);
+    ResponseEntity<?> deleteLecturers(@ApiParam(name = "ids", type = "array", value = "Delete lecturer by id", required = true)
+                                      @RequestParam List<Integer> id) throws ExceptionUtils.DeleteException;
     
 }

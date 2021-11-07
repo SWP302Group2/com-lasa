@@ -31,4 +31,8 @@ public interface LecturerService {
 
     LecturerViewModel updateLecturer(LecturerRequestModel lecturer);
 
+    boolean verifyLecturer(List<Integer> id);
+
+    void deleteLecturer(List<Integer> id);
+
 }

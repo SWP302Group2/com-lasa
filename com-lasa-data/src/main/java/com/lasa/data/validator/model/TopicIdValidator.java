@@ -3,14 +3,14 @@ package com.lasa.data.validator.model;
 import com.lasa.data.model.entity.key.SlotTopicDetailKey;
 import com.lasa.data.model.request.BookingRequestRequestModel;
 import com.lasa.data.repo.repository.SlotTopicDetailRepository;
-import com.lasa.data.validator.ValidTopicId;
+import com.lasa.data.validator.ValidBookingTopicId;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import java.util.Objects;
 
-public class TopicIdValidator implements ConstraintValidator<ValidTopicId, BookingRequestRequestModel> {
+public class TopicIdValidator implements ConstraintValidator<ValidBookingTopicId, BookingRequestRequestModel> {
 
     private final SlotTopicDetailRepository slotTopicDetailRepository;
 

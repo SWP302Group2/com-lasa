@@ -8,6 +8,7 @@ package com.lasa.data.repo.repository;
 import com.lasa.data.model.entity.LecturerTopicDetail;
 import com.lasa.data.model.entity.key.LecturerTopicDetailKey;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
@@ -28,6 +29,8 @@ public interface LecturerTopicDetailRepository extends JpaRepository<LecturerTop
 
     @Query("FROM LecturerTopicDetail l JOIN FETCH l.topic as t WHERE l.lecturer.id = ?1" )
     List<LecturerTopicDetail> findDetailWithTopicsByLecturerId(Integer lecturerId);
+
+    void deleteAllByLecturerId(Integer id);
 
     long countByLecturerId(Integer lecturerId);
 }

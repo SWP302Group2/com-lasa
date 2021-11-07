@@ -6,6 +6,7 @@
 package com.lasa.business.controllers.implv1;
 
 import com.lasa.business.controllers.LecturerTopicDetailOperations;
+import com.lasa.business.controllers.utils.authorization.IsNotAvailable;
 import com.lasa.business.services.LecturerTopicDetailService;
 import com.lasa.data.model.entity.LecturerTopicDetail;
 import com.lasa.data.model.entity.key.LecturerTopicDetailKey;
@@ -41,6 +42,7 @@ public class LecturerTopicDetailController implements LecturerTopicDetailOperati
     }
 
     @Override
+    @IsNotAvailable
     public ResponseEntity<?> createLecturerTopicDetails(List<LecturerTopicDetail> lecturerTopicDetails) {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
@@ -48,6 +50,7 @@ public class LecturerTopicDetailController implements LecturerTopicDetailOperati
     }
 
     @Override
+    @IsNotAvailable
     public void deleteLecturerTopicDetails(List<LecturerTopicDetailKey> ids) {
         lecturerTopicDetailService.deleteLecturerTopicDetails(ids);
     }

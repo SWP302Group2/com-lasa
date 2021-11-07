@@ -49,4 +49,10 @@ public class ExceptionUtils {
             super(message);
         }
     }
+
+    public static class UpdateException extends Exception {
+        public UpdateException(String message) {
+            super(message);
+        }
+    }
 }
