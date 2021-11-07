@@ -28,7 +28,7 @@ import org.springframework.http.ResponseEntity;
 @AutoConfigureMockMvc
 public class TopicControllerTest {
     @Mock
-    TopicRepository topicRepository
+    TopicRepository topicRepository;
     
     @Mock
     TopicServiceImpl topicService;
