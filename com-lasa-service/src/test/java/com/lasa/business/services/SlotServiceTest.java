@@ -91,6 +91,6 @@ class SlotServiceTest {
         ids.add(1);
         ids.add(2);
         slotService.deleteSlots(ids);
-        verify(slotRepository).deleteAllById(ids);
+        verify(slotRepository).findAllById(ids);
     }
 }
