@@ -56,6 +56,7 @@ public class EmailSenderServiceTest {
         studentService = new StudentServiceImpl(studentRepository);
         lecturerService = new LecturerServiceImpl(lecturerRepository, favoriteLecturerRepository);
         emailSenderService = new EmailSenderServiceImpl(mailSender, environment, studentRepository, lecturerRepository);
+
         slot = new Slot();
         slot = Slot.builder().id(1)
                 .lecturerId(1)

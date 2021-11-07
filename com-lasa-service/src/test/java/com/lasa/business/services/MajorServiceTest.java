@@ -36,9 +36,10 @@ class MajorServiceTest {
     private MajorWithSimpleTopic majorWithSimpleTopic;
     private MajorWithSimpleTopic.SimpleTopic simpleTopic;
     private Collection<MajorWithSimpleTopic.SimpleTopic> topicCollection;
-    private Major major;
     private List<MajorRequestModel> majorModels;
     private MajorRequestModel majorRequestModel;
+    private List<Major> majors;
+
     @BeforeEach
     void setUp() {
         majorService = new MajorServiceImpl(majorRepository);
@@ -60,6 +61,7 @@ class MajorServiceTest {
             }
         };
         majorWithSimpleTopic = new MajorWithSimpleTopic() {
+
             @Override
             public String getId() {
                 return "number1";
@@ -78,11 +80,6 @@ class MajorServiceTest {
             }
         };
 
-        major = new Major();
-        major.builder()
-                .id("number1")
-                .name("hahaha")
-                .build();
         Collection<Integer> topicsIntegerCollection = new ArrayList<>();
         topicsIntegerCollection.add(1);
         topicsIntegerCollection.add(2);
@@ -90,6 +87,9 @@ class MajorServiceTest {
 
         majorModels = new ArrayList<>();
         majorModels.add(majorRequestModel);
+
+        majors = new ArrayList<>();
+        majors.add(majorRequestModel.toEntity());
     }
 
     @Test
@@ -101,7 +101,7 @@ class MajorServiceTest {
     }
 
     @Test
-    void findAllWithTopicIds() {
+    void shouldFindAllWithTopicIds() {
 
         List<MajorWithSimpleTopic> simpleTopicList = new ArrayList<>();
         simpleTopicList.add(majorWithSimpleTopic);
@@ -112,29 +112,21 @@ class MajorServiceTest {
     }
 
     @Test
-    void findById() {
+    void shouldGetIdEqualNumber2WhenFindById() {
 
-        Optional<Major> optionalMajor = Optional.of(major);
-        when(majorRepository.findById("number1"))
+        Optional<Major> optionalMajor = Optional.of(majorRequestModel.toEntity());
+        when(majorRepository.findById("number 2"))
                 .thenReturn(optionalMajor);
-        MajorViewModel result = majorService.findById("number1");
-        assertEquals("number1",result.getId());
+        MajorViewModel result = majorService.findById("number 2");
+        assertEquals("number 2",result.getId());
     }
 
     @Test
-    void createMajors() {
-//
-//        List<Major> majors = majorModels.stream()
-//                .map(t -> t.toEntity())
-//                .collect(Collectors.toList());
-//        when(majorRepository.saveAll(majors
-//                        .stream()
-//                        .map(t -> MajorViewModel))
-//                .thenReturn(majors
-//                        .stream()
-//                        .map(t -> new MajorViewModel())
-//                        .collect(Collectors.toList()));
-//        majorService.createMajors(majorModels);
+    void shouldCreateMajorsWithIdEqualNumber2() {
+        when(majorRepository.saveAll(majors))
+                .thenReturn(majors);
+        List<MajorViewModel> result = majorService.createMajors(majorModels);
+        assertEquals("number 2",result.get(0).getId());
     }
 
     @Test
@@ -143,7 +135,7 @@ class MajorServiceTest {
     }
 
     @Test
-    void deleteMajors() {
+    void shouldDeleteMajors() {
         List<String> ids = new ArrayList<>();
         ids.add("number1");
         ids.add("number2");

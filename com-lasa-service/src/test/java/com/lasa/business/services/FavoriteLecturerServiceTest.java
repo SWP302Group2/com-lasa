@@ -34,11 +34,9 @@ class FavoriteLecturerServiceTest {
 
     private FavoriteLecturerRequestModel favoriteLecturerRequestModel;
     private FavoriteLecturer favoriteLecturer;
-    private LecturerViewModel lecturerViewModel;
 
     private List<FavoriteLecturer> favoriteLecturerList;
     private List<FavoriteLecturerRequestModel> favoriteLecturerRequestModelList;
-    private List<LecturerViewModel> lecturerViewModelList;
     private List<Lecturer> lecturerList;
 
     @BeforeEach
@@ -64,7 +62,7 @@ class FavoriteLecturerServiceTest {
     }
 
     @Test
-    void findAllLecturerAndStudentInFavoriteLecturer() {
+    void shouldReturnLecturerIdAndStudentIdWhenFindAllLecturerAndStudentInFavoriteLecturer() {
         favoriteLecturerService.findAllLecturerAndStudentInFavoriteLecturer();
         Mockito.verify(favoriteLecturerRepository)
                 .findAllLecturerAndStudentInFavoriteLecturer();
@@ -73,20 +71,21 @@ class FavoriteLecturerServiceTest {
                 .thenReturn(favoriteLecturerList);
 
         List<FavoriteLecturerViewModel> result = favoriteLecturerService.findAllLecturerAndStudentInFavoriteLecturer();
-        assertEquals(result.get(0).getLecturer(), favoriteLecturer.getLecturer() );
+        assertEquals(1, result.get(0).getLecturer().getId());
+        assertEquals(1, result.get(0).getStudent().getId());
     }
 
     @Test
-    void findTopFavoriteLecturer() {
+    void shouldReturnLecturerWithId1WhenFindTopFavoriteLecturer() {
         favoriteLecturerService.findTopFavoriteLecturer(1);
         Mockito.verify(favoriteLecturerRepository)
                 .findTopFavoriteLecturer(1);
 
         when(favoriteLecturerRepository.findTopFavoriteLecturer(2))
                 .thenReturn(lecturerList);
-        lecturerViewModelList = favoriteLecturerService.findTopFavoriteLecturer(2);
+        List<LecturerViewModel> result = favoriteLecturerService.findTopFavoriteLecturer(2);
 
-        assertEquals(lecturerViewModelList.get(0).getId(), lecturerList.get(0).getId() );
+        assertEquals(1, result.get(0).getId());
     }
 
     @Test
@@ -100,5 +99,6 @@ class FavoriteLecturerServiceTest {
 
         Mockito.verify(favoriteLecturerRepository)
                 .saveAll(favoriteLecturers);
+
     }
 }

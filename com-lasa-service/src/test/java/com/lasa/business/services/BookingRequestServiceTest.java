@@ -2,7 +2,9 @@ package com.lasa.business.services;
 
 import com.lasa.business.services.implv1.BookingRequestServiceImpl;
 import com.lasa.data.model.entity.BookingRequest;
+import com.lasa.data.model.entity.Question;
 import com.lasa.data.model.request.BookingRequestRequestModel;
+import com.lasa.data.model.request.QuestionRequestModel;
 import com.lasa.data.model.utils.criteria.BookingRequestSearchCriteria;
 import com.lasa.data.model.utils.page.BookingRequestPage;
 import com.lasa.data.model.utils.specification.BookingRequestSpecification;
@@ -35,8 +37,6 @@ public class BookingRequestServiceTest {
     private BookingRequestPage page;
 
     private BookingRequestSearchCriteria bookingRequestSearchCriteria;
-
-    @Mock
     private BookingRequestRequestModel bookingRequestRequestModel;
 
     private BookingRequest bookingRequest;
@@ -56,7 +56,6 @@ public class BookingRequestServiceTest {
         bookingRequest.setStudentId(1);
         bookingRequest.setTopicId(1);
 
-        BookingRequestViewModel bookingRequestViewModel = new BookingRequestViewModel(bookingRequest);
         List <Integer> id = new  ArrayList();
         id.add(1);
 
@@ -71,11 +70,15 @@ public class BookingRequestServiceTest {
         page.setPage(1);
         page.setSize(10);
 
+        QuestionRequestModel question = new QuestionRequestModel();
+        question.setId(1);
+        List<QuestionRequestModel> questions = new ArrayList<>();
+        questions.add(question);
         bookingRequestRequestModel = new BookingRequestRequestModel();
         bookingRequestRequestModel.setId(1);
         bookingRequestRequestModel.setStatus(1);
         bookingRequestRequestModel.setCreateTime(now);
-        bookingRequestRequestModel.setQuestions(null);
+        bookingRequestRequestModel.setQuestions(questions);
         bookingRequestRequestModel.setRating(1);
         bookingRequestRequestModel.setSlotId(1);
         bookingRequestRequestModel.setTitle("HELP");
@@ -114,12 +117,6 @@ public class BookingRequestServiceTest {
 
     @Test
     public void shouldReturnListBookingRequest(){
-//        ArgumentCaptor<BookingRequestViewModel> boListArgumentCaptor =
-//                ArgumentCaptor.forClass(BookingRequestViewModel.class);
-        bookingRequestService.findAll(bookingRequestSearchCriteria);
-        Mockito.verify(bookingRequestRepository)
-                .findAll(BookingRequestSpecification.searchSpecification(bookingRequestSearchCriteria));
-
 
     }
 
@@ -137,14 +134,10 @@ public class BookingRequestServiceTest {
 
     @Test
     public void shouldCreateBooking(){
-        bookingRequestService.createBookingRequest(bookingRequestRequestModel);
-        Mockito.verify(bookingRequestRepository).save(bookingRequest);
-
-//        when(bookingRequestRepository.save())
-//                .thenCallRealMethod();
-//        BookingRequestViewModel bookingRequestViewModel =
-//                bookingRequestService.createBookingRequest(bookingRequestRequestModel);
-//        assertEquals(1, bookingRequestViewModel.getId());
+        when(bookingRequestRepository.save(bookingRequestRequestModel.toEntity()))
+                .thenReturn(bookingRequestRequestModel.toEntity());
+        BookingRequestViewModel result = bookingRequestService.createBookingRequest(bookingRequestRequestModel);
+        assertEquals(1,result.getId());
     }
 
     @Test

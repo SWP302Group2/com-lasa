@@ -15,7 +15,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Sort;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -26,9 +25,9 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static org.junit.jupiter.api.Assertions.*;
 @ExtendWith(MockitoExtension.class)
 @ExtendWith(SpringExtension.class)
 class LecturerServiceTest {
@@ -39,22 +38,22 @@ class LecturerServiceTest {
     private FavoriteLecturerRepository favoriteLecturerRepository;
     @InjectMocks
     private LecturerServiceImpl lecturerService;
-    @Mock
-    private LecturerViewModel lecturerViewModel;
 
+    private Collection<Integer> topics;
     private Lecturer lecturer;
+    private LecturerRequestModel lecturerRequestModel;
     @BeforeEach
     void setUp() {
         lecturerService = new LecturerServiceImpl(lecturerRepository, favoriteLecturerRepository);
-        lecturer = Lecturer.builder()
-                .id(1)
-                .email("tungvuive@gmail.com")
-                .name("abc")
-                .phone("0909123456")
-                .status(1)
-                .gender(true)
-                .address("dayladiachi")
-                .build();
+
+        topics = new ArrayList<>();
+        topics.add(1);
+
+        LocalDate now = LocalDate.now();
+        lecturerRequestModel = new LecturerRequestModel
+                (1,"abc","0909123456",
+                        "xyz",1,true, now,
+                        "dia chi", "avatar", topics);
     }
 
     @Test
@@ -100,29 +99,21 @@ class LecturerServiceTest {
     }
 
     @Test
-    void createLecturer() {
-        LocalDate now = LocalDate.now();
-        Collection<Integer> topics = new ArrayList<>();
-        topics.add(1);
-        LecturerRequestModel lecturerRequestModel = new LecturerRequestModel
-                (1,
-                        "abc",
-                        "0909123456",
-                        "xyz",
-                        1,
-                        true,
-                        now,
-                        "dia chi",
-                        "avatar",
-                        topics);
-        Lecturer lecturer = lecturerRequestModel.toEntity();
-        when(lecturerRepository.save(lecturer)).thenReturn(null);
-        lecturerViewModel  = lecturerService.createLecturer(lecturerRequestModel);
-
+    void shouldCreateLecturerIdIs1() {
+        lecturer = lecturerRequestModel.toEntity();
+        when(lecturerRepository.save(lecturer))
+                .thenReturn(lecturer);
+        LecturerViewModel result  = lecturerService.createLecturer(lecturerRequestModel);
+        assertEquals(1, result.getId());
     }
 
     @Test
-    void returnLecturerById() {
+    void shouldReturnPhoneNumberFindByLecturerId() {
+        Optional<Lecturer> optionalLecturer = Optional.of(lecturerRequestModel.toEntity());
+        when(lecturerRepository.findById(1))
+                .thenReturn(optionalLecturer);
+        LecturerViewModel result = lecturerService.findLecturerById(1);
+        assertEquals("0909123456",result.getPhone());
     }
 
     @Test

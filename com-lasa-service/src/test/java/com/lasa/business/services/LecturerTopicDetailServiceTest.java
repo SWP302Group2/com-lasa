@@ -67,7 +67,7 @@ class LecturerTopicDetailServiceTest {
 
     @Test
     void findById() {
-
+        // Null
     }
 
     @Test
@@ -80,6 +80,7 @@ class LecturerTopicDetailServiceTest {
 
     @Test
     void updateLecturerTopicDetails() {
+        // Null
     }
 
     @Test
