@@ -5,8 +5,11 @@
  */
 package com.lasa.business.services.implv1;
 
+import com.lasa.business.config.utils.LecturerStatus;
 import com.lasa.business.services.LecturerService;
 import com.lasa.data.model.entity.Lecturer;
+import com.lasa.data.model.entity.LecturerTopicDetail;
+import com.lasa.data.model.entity.Topic;
 import com.lasa.data.model.request.LecturerRequestModel;
 import com.lasa.data.model.utils.criteria.LecturerSearchCriteria;
 import com.lasa.data.model.utils.page.LecturerPage;
@@ -14,6 +17,7 @@ import com.lasa.data.model.utils.specification.LecturerSpecification;
 import com.lasa.data.model.view.LecturerViewModel;
 import com.lasa.data.repo.repository.FavoriteLecturerRepository;
 import com.lasa.data.repo.repository.LecturerRepository;
+import com.lasa.data.repo.repository.LecturerTopicDetailRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
@@ -21,8 +25,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -37,12 +43,14 @@ public class LecturerServiceImpl implements LecturerService {
 
     private final LecturerRepository lecturerRepository;
     private final FavoriteLecturerRepository favoriteLecturerRepository;
+    private final LecturerTopicDetailRepository lecturerTopicDetailRepository;
 
     @Autowired
     public LecturerServiceImpl(LecturerRepository lecturerRepository,
-                               FavoriteLecturerRepository favoriteLecturerRepository) {
+                               FavoriteLecturerRepository favoriteLecturerRepository, LecturerTopicDetailRepository lecturerTopicDetailRepository) {
         this.lecturerRepository = lecturerRepository;
         this.favoriteLecturerRepository = favoriteLecturerRepository;
+        this.lecturerTopicDetailRepository = lecturerTopicDetailRepository;
     }
 
     @Override
@@ -78,30 +86,65 @@ public class LecturerServiceImpl implements LecturerService {
     }
 
     @Override
+    @Transactional
     public LecturerViewModel updateLecturer(LecturerRequestModel model) {
         
         Lecturer lecturer = lecturerRepository.findById(model.getId()).get();
         
-        if(model.getName() != null)
+        if(Objects.nonNull(model.getPhone()))
             lecturer.setName(model.getName());
         
-        if(model.getPhone() != null)
+        if(Objects.nonNull(model.getPhone()))
             lecturer.setPhone(model.getPhone());
         
-        if(model.getBirthday() != null)
+        if(Objects.nonNull(model.getBirthday()))
             lecturer.setBirthday(model.getBirthday());
         
-        if(model.getGender() != null)
+        if(Objects.nonNull(model.getGender()))
             lecturer.setGender(model.getGender());
         
-        if(model.getAddress() != null)
+        if(Objects.nonNull(model.getAddress()))
             lecturer.setAddress(model.getAddress());
         
-        if(model.getMeetingUrl() != null)
+        if(Objects.nonNull(model.getMeetingUrl()))
             lecturer.setMeetingUrl(model.getMeetingUrl());
+
+        if(Objects.nonNull(model.getTopics())) {
+            List<LecturerTopicDetail> lecturerTopicDetails = model.getTopics()
+                    .stream()
+                    .map(t -> LecturerTopicDetail.builder()
+                            .lecturer(Lecturer.builder()
+                                    .id(model.getId())
+                                    .build())
+                            .topic(Topic.builder()
+                                    .id(t)
+                                    .build())
+                            .build())
+                    .collect(Collectors.toList());
+
+            lecturerTopicDetailRepository.deleteAllByLecturerId(model.getId());
+            lecturerTopicDetailRepository.saveAll(lecturerTopicDetails);
+        }
+
+        if(Objects.nonNull(model.getStatus())) {
+            lecturer.setStatus(model.getStatus());
+        }
         
         return new LecturerViewModel(lecturerRepository.save(lecturer));
 
+    }
+
+    @Override
+    public boolean verifyLecturer(List<Integer> id) {
+        return lecturerRepository.countAvailableForDelete(id) == id.size();
+    }
+
+    @Override
+    @Transactional
+    public void deleteLecturer(List<Integer> id) {
+        List<Lecturer> lecturers = lecturerRepository.findAllById(id);
+        lecturers.stream()
+                .forEach(t -> t.setStatus(LecturerStatus.DELETED.getCode()));
     }
 
 }

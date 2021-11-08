@@ -44,8 +44,7 @@ public interface BookingRequestOperations {
 
     @PostMapping
     ResponseEntity<?> createBookingRequest(@ApiParam(name = "bookingRequest", type = "body", value = "Add a new booking request")
-                                           @Validated(PostValidator.class) @RequestBody BookingRequestRequestModel bookingRequest)
-            throws ExceptionUtils.ArgumentException, ExceptionUtils.DuplicatedException;
+                                           @Validated(PostValidator.class) @RequestBody BookingRequestRequestModel bookingRequest);
 
     @PostMapping(value = "/{id}/questions")
     ResponseEntity<?> addBookingQuestions(@PathVariable(value = "id") Integer id,
@@ -62,11 +61,7 @@ public interface BookingRequestOperations {
     @DeleteMapping
     ResponseEntity<?> deleteBookingRequests(@ApiParam(name = "id", type = "param", value = "By id, you may remove booking request")
                                             @RequestParam List<Integer> id) throws ExceptionUtils.DeleteException;
-
-//    @GetMapping(value = "/confirm/{id}/{status}")
-//    ResponseEntity<?> confirmBookingRequest(@ApiParam(name = "id", type = "Integer", value = "Confirm booking request")
-//                               @PathVariable("id") Integer id,
-//                               @PathVariable("status") Integer status) throws MessagingException;
+    
     @DeleteMapping(value = "/{bookingId}/questions")
     ResponseEntity<?> deleteBookingQuestions(@PathVariable("bookingId") Integer bookingId,
                                              @RequestParam List<Integer> id) throws ExceptionUtils.DeleteException;

@@ -6,7 +6,6 @@ import lombok.Getter;
 import springfox.documentation.annotations.ApiIgnore;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 
 @Getter

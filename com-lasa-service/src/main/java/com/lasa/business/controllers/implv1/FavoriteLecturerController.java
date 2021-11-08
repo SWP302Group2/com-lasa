@@ -6,6 +6,7 @@
 package com.lasa.business.controllers.implv1;
 
 import com.lasa.business.controllers.FavoriteLecturerOperations;
+import com.lasa.business.controllers.utils.authorization.IsNotAvailable;
 import com.lasa.business.services.FavoriteLecturerService;
 import com.lasa.data.model.entity.key.FavoriteLecturerKey;
 import com.lasa.data.model.request.FavoriteLecturerRequestModel;
@@ -47,6 +48,7 @@ public class FavoriteLecturerController implements FavoriteLecturerOperations {
     }
 
     @Override
+    @IsNotAvailable
     public ResponseEntity deleteFavoriteLecturers(List<FavoriteLecturerKey> ids) {
         favoriteLecturerService.deleteFavoriteLecturers(ids);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();

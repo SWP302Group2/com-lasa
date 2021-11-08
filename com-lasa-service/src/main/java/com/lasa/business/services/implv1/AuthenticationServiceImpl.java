@@ -98,28 +98,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
                     if(role.equalsIgnoreCase(STUDENT.name())) {
                         studentSignup(payload, googleAuthenticationRequest);
-                        String name = (String) payload.get("name");
-                        String pictureUrl = (String) payload.get("picture");
-                        String majorId = null;
-                        if(Objects.nonNull(googleAuthenticationRequest.getName()))
-                            name = googleAuthenticationRequest.getName();
-
-                        if(Objects.nonNull(googleAuthenticationRequest.getAvatarUrl()))
-                            pictureUrl = googleAuthenticationRequest.getAvatarUrl();
-
-                        if(Objects.nonNull(googleAuthenticationRequest.getMajorId()))
-                            majorId = googleAuthenticationRequest.getMajorId();
-
-                        Student student = Student.builder()
-                                .email(payload.getEmail())
-                                .name(name)
-                                .mssv(googleAuthenticationRequest.getMssv())
-                                .status(1) //set student to active
-                                .majorId(majorId)
-                                .avatarUrl(pictureUrl)
-                                .build();
-                        //save student to database
-                        studentRepository.saveAndFlush(student);
 
                         //load user from database again to make sure user already in db and for generate user detail
                         MyUserDetails userDetails = (MyUserDetails) userDetailsService.loadUserByUsername(email);
@@ -158,7 +136,28 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     private void studentSignup(GoogleIdToken.Payload payload, GoogleAuthenticationRequest googleAuthenticationRequest) {
+        String name = (String) payload.get("name");
+        String pictureUrl = (String) payload.get("picture");
+        String majorId = null;
+        if(Objects.nonNull(googleAuthenticationRequest.getName()))
+            name = googleAuthenticationRequest.getName();
 
+        if(Objects.nonNull(googleAuthenticationRequest.getAvatarUrl()))
+            pictureUrl = googleAuthenticationRequest.getAvatarUrl();
+
+        if(Objects.nonNull(googleAuthenticationRequest.getMajorId()))
+            majorId = googleAuthenticationRequest.getMajorId();
+
+        Student student = Student.builder()
+                .email(payload.getEmail())
+                .name(name)
+                .mssv(googleAuthenticationRequest.getMssv())
+                .status(1) //set student to active
+                .majorId(majorId)
+                .avatarUrl(pictureUrl)
+                .build();
+        //save student to database
+        studentRepository.saveAndFlush(student);
     }
 
     private void lecturerSignup(GoogleIdToken.Payload payload, GoogleAuthenticationRequest googleAuthenticationRequest) {

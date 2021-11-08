@@ -21,7 +21,7 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@ValidTopicId(groups = {PostValidator.class, PutValidator.class}, message = "TOPIC_NOT_VALID")
+@ValidBookingTopicId(groups = {PostValidator.class, PutValidator.class}, message = "TOPIC_NOT_VALID")
 @ValidBookingRequest(groups = PostValidator.class, message = "BOOKING_REQUEST_DUPLICATED")
 @ValidQuestionUpdate(groups = PutValidator.class, message = "QUESTION_NOT_FOUND_OR_NOT_AVAILABLE")
 @ValidBookingRequestRate(groups = PutValidator.class, message = "BOOKING_REQUEST_NOT_AVAILABLE_FOR_RATE")

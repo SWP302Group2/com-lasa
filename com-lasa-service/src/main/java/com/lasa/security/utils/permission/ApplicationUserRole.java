@@ -11,24 +11,10 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @Getter
 public enum ApplicationUserRole {
-    STUDENT(Sets.newHashSet(
-            ApplicationUserAuthority.STUDENT_READ,
-            ApplicationUserAuthority.STUDENT_WRITE,
-            ApplicationUserAuthority.LECTURER_READ
-            )),
-    LECTURER(Sets.newHashSet(
-            ApplicationUserAuthority.LECTURER_READ,
-            ApplicationUserAuthority.LECTURER_WRITE,
-            ApplicationUserAuthority.STUDENT_READ
-            )),
-    ADMIN(Sets.newHashSet(
-            ApplicationUserAuthority.STUDENT_READ,
-            ApplicationUserAuthority.STUDENT_WRITE,
-            ApplicationUserAuthority.LECTURER_READ,
-            ApplicationUserAuthority.LECTURER_WRITE,
-            ApplicationUserAuthority.LECTURER_READ_ALL,
-            ApplicationUserAuthority.STUDENT_READ_ALL
-    ));
+    STUDENT(Sets.newHashSet()),
+    LECTURER(Sets.newHashSet()),
+    ADMIN(Sets.newHashSet()),
+    UNAVAILABLE(Sets.newHashSet());
 
     private final Set<ApplicationUserAuthority> authorities;
 

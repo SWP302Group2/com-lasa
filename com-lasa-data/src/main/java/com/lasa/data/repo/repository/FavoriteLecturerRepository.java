@@ -25,4 +25,6 @@ public interface FavoriteLecturerRepository extends JpaRepository<FavoriteLectur
     @Query("FROM FavoriteLecturer f JOIN FETCH f.lecturer JOIN FETCH f.student")
     List<FavoriteLecturer> findAllLecturerAndStudentInFavoriteLecturer();
 
+    void deleteAllByStudentId(Integer id);
+
 }
