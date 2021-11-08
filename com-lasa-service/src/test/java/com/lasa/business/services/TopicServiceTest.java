@@ -90,6 +90,6 @@ class TopicServiceTest {
         ids.add(2);
 
         topicService.deleteTopics(ids);
-        verify(topicRepository).deleteAllById(ids);
+        verify(topicRepository).findAllById(ids);
     }
 }

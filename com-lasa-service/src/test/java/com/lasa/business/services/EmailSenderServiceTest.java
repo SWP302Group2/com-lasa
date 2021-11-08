@@ -10,6 +10,7 @@ import com.lasa.data.model.entity.Slot;
 import com.lasa.data.model.entity.Student;
 import com.lasa.data.repo.repository.FavoriteLecturerRepository;
 import com.lasa.data.repo.repository.LecturerRepository;
+import com.lasa.data.repo.repository.LecturerTopicDetailRepository;
 import com.lasa.data.repo.repository.StudentRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -33,10 +34,10 @@ import java.util.Optional;
 @ExtendWith(MockitoExtension.class)
 @ExtendWith(SpringExtension.class)
 public class EmailSenderServiceTest {
-    @MockBean
+    @Mock
     private StudentRepository studentRepository;
 
-    @MockBean
+    @Mock
     private LecturerRepository lecturerRepository;
 
     @Mock
@@ -44,6 +45,8 @@ public class EmailSenderServiceTest {
 
     private StudentServiceImpl studentService;
     private LecturerServiceImpl lecturerService;
+    private LecturerTopicDetailRepository lecturerTopicDetailRepository;
+
     @InjectMocks
     private EmailSenderServiceImpl emailSenderService;
 
@@ -51,10 +54,11 @@ public class EmailSenderServiceTest {
     private Environment environment;
     private Slot slot;
     private BookingRequest bookingRequest;
+
     @BeforeEach
     public void setup(){
-        studentService = new StudentServiceImpl(studentRepository);
-        lecturerService = new LecturerServiceImpl(lecturerRepository, favoriteLecturerRepository);
+        studentService = new StudentServiceImpl(studentRepository, favoriteLecturerRepository);
+        lecturerService = new LecturerServiceImpl(lecturerRepository, favoriteLecturerRepository, lecturerTopicDetailRepository);
         emailSenderService = new EmailSenderServiceImpl(mailSender, environment, studentRepository, lecturerRepository);
 
         slot = new Slot();

@@ -10,6 +10,7 @@ import com.lasa.data.model.utils.specification.LecturerSpecification;
 import com.lasa.data.model.view.LecturerViewModel;
 import com.lasa.data.repo.repository.FavoriteLecturerRepository;
 import com.lasa.data.repo.repository.LecturerRepository;
+import com.lasa.data.repo.repository.LecturerTopicDetailRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -36,15 +37,19 @@ class LecturerServiceTest {
     private LecturerRepository lecturerRepository;
     @Mock
     private FavoriteLecturerRepository favoriteLecturerRepository;
+    @Mock
+    private LecturerTopicDetailRepository lecturerTopicDetailRepository;
+
     @InjectMocks
     private LecturerServiceImpl lecturerService;
 
-    private Collection<Integer> topics;
+
+    private List<Integer> topics;
     private Lecturer lecturer;
     private LecturerRequestModel lecturerRequestModel;
     @BeforeEach
     void setUp() {
-        lecturerService = new LecturerServiceImpl(lecturerRepository, favoriteLecturerRepository);
+        lecturerService = new LecturerServiceImpl(lecturerRepository, favoriteLecturerRepository, lecturerTopicDetailRepository);
 
         topics = new ArrayList<>();
         topics.add(1);

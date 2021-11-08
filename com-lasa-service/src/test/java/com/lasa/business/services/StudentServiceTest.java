@@ -5,6 +5,7 @@ import com.lasa.data.model.entity.Student;
 import com.lasa.data.model.entity.key.SlotTopicDetailKey;
 import com.lasa.data.model.request.StudentRequestModel;
 import com.lasa.data.model.view.StudentViewModel;
+import com.lasa.data.repo.repository.FavoriteLecturerRepository;
 import com.lasa.data.repo.repository.StudentRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -28,14 +29,17 @@ class StudentServiceTest {
 
     @Mock
     private StudentRepository studentRepository;
+    @Mock
+    private FavoriteLecturerRepository favoriteLecturerRepository;
     @InjectMocks
     private StudentServiceImpl studentService;
 
     private StudentRequestModel studentRequestModel;
     private Student student;
+
     @BeforeEach
     void setUp() {
-        studentService = new StudentServiceImpl(studentRepository);
+        studentService = new StudentServiceImpl(studentRepository, favoriteLecturerRepository);
 
         studentRequestModel = new StudentRequestModel();
         studentRequestModel.setId(1);
@@ -81,6 +85,6 @@ class StudentServiceTest {
         ids.add(2);
 
         studentService.deleteStudents(ids);
-        verify(studentRepository).deleteAllById(ids);
+        verify(studentRepository).findAllById(ids);
     }
 }
