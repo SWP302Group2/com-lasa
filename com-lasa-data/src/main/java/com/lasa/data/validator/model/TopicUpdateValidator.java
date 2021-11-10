@@ -2,6 +2,7 @@ package com.lasa.data.validator.model;
 
 import com.lasa.data.model.request.SlotRequestModel;
 import com.lasa.data.repo.repository.SlotTopicDetailRepository;
+import com.lasa.data.repo.repository.TopicRepository;
 import com.lasa.data.validator.ValidTopicUpdate;
 
 import javax.validation.ConstraintValidator;
@@ -9,14 +10,14 @@ import javax.validation.ConstraintValidatorContext;
 
 public class TopicUpdateValidator implements ConstraintValidator<ValidTopicUpdate, SlotRequestModel> {
 
-    private final SlotTopicDetailRepository slotTopicDetailRepository;
+    private final TopicRepository topicRepository;
 
-    public TopicUpdateValidator(SlotTopicDetailRepository slotTopicDetailRepository) {
-        this.slotTopicDetailRepository = slotTopicDetailRepository;
+    public TopicUpdateValidator(TopicRepository topicRepository) {
+        this.topicRepository = topicRepository;
     }
 
     @Override
     public boolean isValid(SlotRequestModel slotRequestModel, ConstraintValidatorContext constraintValidatorContext) {
-        return slotTopicDetailRepository.countByTopicIdInAndSlotId(slotRequestModel.getTopics(), slotRequestModel.getId()) == 0;
+        return topicRepository.countAvailableTopics(slotRequestModel.getTopics()) == slotRequestModel.getTopics().size();
     }
 }

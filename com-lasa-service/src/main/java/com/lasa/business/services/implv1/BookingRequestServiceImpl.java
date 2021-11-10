@@ -202,10 +202,12 @@ public class BookingRequestServiceImpl implements BookingRequestService {
 
 
     @Override
+    @Transactional
     public void deleteBookingRequests(List<Integer> ids) {
-        bookingRepository.findAllById(ids)
-                .stream()
+        List<BookingRequest> bookingRequests = bookingRepository.findAllById(ids);
+        bookingRequests.stream()
                 .forEach(t -> t.setStatus(BookingRequestStatus.DELETED.getCode()));
+        bookingRepository.saveAll(bookingRequests);
     }
 
 }
