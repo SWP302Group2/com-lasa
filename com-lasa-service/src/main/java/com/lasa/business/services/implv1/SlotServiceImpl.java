@@ -65,17 +65,20 @@ public class SlotServiceImpl implements SlotService {
     private final LecturerService lecturerService;
     private EmailSenderService emailSenderService;
     private final BookingRequestRepository bookingRequestRepository;
+    private final SlotTopicDetailRepository slotTopicDetailRepository;
 
     @Autowired
     public SlotServiceImpl(
             SlotRepository slotRepository,
             @Qualifier("LecturerServiceImplV1") LecturerService lecturerService,
             @Qualifier("SlotTopicDetailServiceImplV1") SlotTopicDetailService slotTopicDetailService,
-            BookingRequestRepository bookingRequestRepository) {
+            BookingRequestRepository bookingRequestRepository,
+            SlotTopicDetailRepository slotTopicDetailRepository) {
         this.slotRepository = slotRepository;
         this.lecturerService = lecturerService;
         this.slotTopicDetailService = slotTopicDetailService;
         this.bookingRequestRepository = bookingRequestRepository;
+        this.slotTopicDetailRepository = slotTopicDetailRepository;
     }
 
     @Autowired
@@ -228,7 +231,8 @@ public class SlotServiceImpl implements SlotService {
         Slot slot = slotRepository.findById(slotRequestModel.getId()).get();
 
         if(Objects.nonNull(slotRequestModel.getTopics())) {
-            slot.getTopics().clear();
+            slotTopicDetailRepository.deleteAllBySlotId(slot.getId());
+
             List<SlotTopicDetailRequestModel> slotTopicDetailRequestModels = slotRequestModel.getTopics()
                                     .stream()
                                     .map(t -> {

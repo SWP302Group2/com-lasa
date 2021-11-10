@@ -35,6 +35,8 @@ class SlotServiceTest {
     private LecturerServiceImpl lecturerService;
     @Mock
     private BookingRequestRepository bookingRequestRepository;
+    @Mock
+    private SlotTopicDetailRepository slotTopicDetailRepository;
 
     @InjectMocks
     private SlotServiceImpl slotService;
@@ -44,7 +46,7 @@ class SlotServiceTest {
     @BeforeEach
     void setup(){
     slotService = new SlotServiceImpl(slotRepository,lecturerService, slotTopicDetailService,
-            bookingRequestRepository);
+            bookingRequestRepository, slotTopicDetailRepository);
 
         slotRequestModel = new SlotRequestModel();
         slotRequestModel.setId(1);

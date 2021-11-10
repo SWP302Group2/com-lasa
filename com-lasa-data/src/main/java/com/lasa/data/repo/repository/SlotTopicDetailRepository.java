@@ -38,6 +38,8 @@ public interface SlotTopicDetailRepository extends JpaRepository<SlotTopicDetail
     @Query("FROM SlotTopicDetail as s JOIN FETCH s.topic JOIN FETCH s.slot")
     List<SlotTopicDetail> findAllSlotAndTopic();
 
+    void deleteAllBySlotId(Integer slotIds);
+
     @Query(
             value = "FROM SlotTopicDetail as s JOIN FETCH s.topic JOIN FETCH s.slot where s.slot.id in ?1",
             countQuery = "SELECT COUNT(s) FROM SlotTopicDetail as s  where s.slot.id in ?1"
