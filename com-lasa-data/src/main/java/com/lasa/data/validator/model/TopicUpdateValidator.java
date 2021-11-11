@@ -7,6 +7,7 @@ import com.lasa.data.validator.ValidTopicUpdate;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
+import java.util.Objects;
 
 public class TopicUpdateValidator implements ConstraintValidator<ValidTopicUpdate, SlotRequestModel> {
 
@@ -18,6 +19,9 @@ public class TopicUpdateValidator implements ConstraintValidator<ValidTopicUpdat
 
     @Override
     public boolean isValid(SlotRequestModel slotRequestModel, ConstraintValidatorContext constraintValidatorContext) {
+        if(Objects.isNull(slotRequestModel.getTopics()))
+            return true;
+
         return topicRepository.countAvailableTopics(slotRequestModel.getTopics()) == slotRequestModel.getTopics().size();
     }
 }
