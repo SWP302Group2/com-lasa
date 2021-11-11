@@ -28,6 +28,7 @@ import com.lasa.data.model.view.SlotTopicDetailViewModel;
 import com.lasa.data.model.view.SlotViewModel;
 import com.lasa.data.repo.repository.BookingRequestRepository;
 import com.lasa.data.repo.repository.SlotRepository;
+import com.lasa.data.repo.repository.SlotTopicDetailRepository;
 import com.lasa.security.utils.exception.ExceptionUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -64,17 +65,20 @@ public class SlotServiceImpl implements SlotService {
     private final LecturerService lecturerService;
     private EmailSenderService emailSenderService;
     private final BookingRequestRepository bookingRequestRepository;
+    private final SlotTopicDetailRepository slotTopicDetailRepository;
 
     @Autowired
     public SlotServiceImpl(
             SlotRepository slotRepository,
             @Qualifier("LecturerServiceImplV1") LecturerService lecturerService,
             @Qualifier("SlotTopicDetailServiceImplV1") SlotTopicDetailService slotTopicDetailService,
-            BookingRequestRepository bookingRequestRepository) {
+            BookingRequestRepository bookingRequestRepository,
+            SlotTopicDetailRepository slotTopicDetailRepository) {
         this.slotRepository = slotRepository;
         this.lecturerService = lecturerService;
         this.slotTopicDetailService = slotTopicDetailService;
         this.bookingRequestRepository = bookingRequestRepository;
+        this.slotTopicDetailRepository = slotTopicDetailRepository;
     }
 
     @Autowired
@@ -227,6 +231,8 @@ public class SlotServiceImpl implements SlotService {
         Slot slot = slotRepository.findById(slotRequestModel.getId()).get();
 
         if(Objects.nonNull(slotRequestModel.getTopics())) {
+            slotTopicDetailRepository.deleteAllBySlotId(slot.getId());
+
             List<SlotTopicDetailRequestModel> slotTopicDetailRequestModels = slotRequestModel.getTopics()
                                     .stream()
                                     .map(t -> {
@@ -283,8 +289,10 @@ public class SlotServiceImpl implements SlotService {
     @Override
     @Transactional
     public void deleteSlots(List<Integer> ids) {
-        slotRepository.findAllById(ids).stream()
+        List<Slot> slots = slotRepository.findAllById(ids);
+        slots.stream()
                 .forEach(t -> t.setStatus(SlotStatus.DELETED.getCode()));
+        slotRepository.saveAll(slots);
     }
 
     @Override

@@ -37,6 +37,7 @@ import java.util.HashMap;
 public class ExceptionTranslator {
 
     private final Logger LOGGER = LogManager.getLogger(ExceptionTranslator.class);
+
     @ExceptionHandler(value = {Exception.class})
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ResponseObject processUnknownException(Exception e, HttpServletRequest request) {

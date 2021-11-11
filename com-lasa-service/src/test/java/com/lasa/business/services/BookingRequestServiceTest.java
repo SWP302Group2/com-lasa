@@ -9,6 +9,7 @@ import com.lasa.data.model.utils.criteria.BookingRequestSearchCriteria;
 import com.lasa.data.model.utils.page.BookingRequestPage;
 import com.lasa.data.model.view.BookingRequestViewModel;
 import com.lasa.data.repo.repository.BookingRequestRepository;
+import com.lasa.data.repo.repository.QuestionRepository;
 import com.lasa.data.repo.repository.StudentRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,6 +24,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
 
 @ExtendWith(MockitoExtension.class)
 @ExtendWith(SpringExtension.class)
@@ -42,9 +44,12 @@ public class BookingRequestServiceTest {
     private BookingRequestRequestModel bookingRequestRequestModel;
     private List<BookingRequest> bookingRequests;
     private Specification<BookingRequest> searchSpecification;
+    private BookingRequest bookingRequest;
+    @Mock
+    private QuestionRepository questionRepository;
     @BeforeEach
     void setUp() {
-        bookingRequestService = new BookingRequestServiceImpl(bookingRequestRepository, studentService, studentRepository);
+        bookingRequestService = new BookingRequestServiceImpl(bookingRequestRepository, studentService, studentRepository, questionRepository);
 
         LocalDateTime now = LocalDateTime.now();
 

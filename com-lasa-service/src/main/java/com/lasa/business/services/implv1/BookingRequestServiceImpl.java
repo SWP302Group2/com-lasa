@@ -12,8 +12,8 @@ import com.lasa.data.model.utils.specification.BookingRequestSpecification;
 import com.lasa.data.model.view.BookingRequestViewModel;
 import com.lasa.data.model.view.StudentViewModel;
 import com.lasa.data.repo.repository.BookingRequestRepository;
+import com.lasa.data.repo.repository.QuestionRepository;
 import com.lasa.data.repo.repository.StudentRepository;
-import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
@@ -41,12 +41,14 @@ public class BookingRequestServiceImpl implements BookingRequestService {
     private final BookingRequestRepository bookingRepository;
     private final StudentService studentService;
     private final StudentRepository studentRepository;
+    private final QuestionRepository questionRepository;
 
     @Autowired
-    public BookingRequestServiceImpl(BookingRequestRepository bookingRepository, StudentService studentService, StudentRepository studentRepository) {
+    public BookingRequestServiceImpl(BookingRequestRepository bookingRepository, StudentService studentService, StudentRepository studentRepository, QuestionRepository questionRepository) {
         this.bookingRepository = bookingRepository;
         this.studentService = studentService;
         this.studentRepository = studentRepository;
+        this.questionRepository = questionRepository;
     }
 
     @Override
@@ -185,15 +187,15 @@ public class BookingRequestServiceImpl implements BookingRequestService {
             if(Objects.nonNull(bookingRequestModel.getRating())) {
                 updatedBookingRequest.setId(bookingRequestModel.getRating());
             }
-            if(Objects.nonNull(bookingRequestModel.getQuestions()))
-                updatedBookingRequest.getQuestions().stream()
-                        .forEach(t -> {
-                            bookingRequestModel.getQuestions().stream()
-                                    .forEach(x -> {
-                                        if(x.getId().equals(t.getId()) && !x.getContent().equals(""))
-                                            t.setContent(x.getContent());
-                                    });
-                        });
+            if(Objects.nonNull(bookingRequestModel.getQuestions())) {
+                questionRepository.deleteAllByBookingRequestId(bookingRequestModel.getId());
+                
+                questionRepository.saveAll(bookingRequestModel.getQuestions()
+                        .stream()
+                        .map(t -> t.toEntity())
+                        .collect(Collectors.toList()));
+            }
+
             return new BookingRequestViewModel(bookingRepository.save(updatedBookingRequest));
         }
         return null;
@@ -202,10 +204,12 @@ public class BookingRequestServiceImpl implements BookingRequestService {
 
 
     @Override
+    @Transactional
     public void deleteBookingRequests(List<Integer> ids) {
-        bookingRepository.findAllById(ids)
-                .stream()
+        List<BookingRequest> bookingRequests = bookingRepository.findAllById(ids);
+        bookingRequests.stream()
                 .forEach(t -> t.setStatus(BookingRequestStatus.DELETED.getCode()));
+        bookingRepository.saveAll(bookingRequests);
     }
 
 }

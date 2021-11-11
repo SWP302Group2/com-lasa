@@ -29,7 +29,7 @@ public interface BookingRequestRepository extends JpaRepository<BookingRequest, 
     @Query(value = "SELECT * FROM BookingRequest b WHERE b.status = 2", nativeQuery = true)
     List<BookingRequest> findAllBookingRequestByStatus();
 
-    @Query(value = "select count(b) from BookingRequest b where (b.status = 4 or b.status = 0 or b.status = -1) and b.id in ?1 and b.studentId in ?2")
+    @Query(value = "select count(b) from BookingRequest b where (b.status = 4 or b.status = 0 or b.status = -1) and b.id in ?2 and b.studentId = ?1")
     long countAvailableBookingForDelete(Integer studentId, List<Integer> bookingId);
 //
 //    @Query(value =
