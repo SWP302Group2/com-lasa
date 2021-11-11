@@ -2,7 +2,9 @@ package com.lasa.business.services;
 
 import com.lasa.business.services.implv1.LecturerServiceImpl;
 import com.lasa.business.services.implv1.SlotServiceImpl;
+import com.lasa.data.model.entity.BookingRequest;
 import com.lasa.data.model.entity.Slot;
+import com.lasa.data.model.request.SlotBookingRequestModel;
 import com.lasa.data.model.request.SlotRequestModel;
 import com.lasa.data.model.view.SlotViewModel;
 import com.lasa.data.repo.repository.BookingRequestRepository;
@@ -18,6 +20,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.verify;
@@ -40,7 +43,7 @@ class SlotServiceTest {
     private SlotServiceImpl slotService;
 
     private SlotRequestModel slotRequestModel;
-    private Slot slot;
+
     @BeforeEach
     void setup(){
     slotService = new SlotServiceImpl(slotRepository,lecturerService, slotTopicDetailService,
@@ -49,9 +52,8 @@ class SlotServiceTest {
         slotRequestModel = new SlotRequestModel();
         slotRequestModel.setId(1);
         slotRequestModel.setLecturerId(1);
+        slotRequestModel.setStatus(1);
 
-        slot = new Slot();
-        slot = slotRequestModel.toEntity();
     }
     @Test
     void findWithArguments() {
@@ -62,19 +64,33 @@ class SlotServiceTest {
     }
 
     @Test
-    void findById() {
+    void shouldReturnSlotIdWhenFindById() {
+        Optional<Slot> slotOptional = Optional.of(slotRequestModel.toEntity());
+        when(slotRepository.findById(1))
+                .thenReturn(slotOptional);
+        SlotViewModel result = slotService.findById(1);
+        assertEquals(1, result.getId());
     }
 
     @Test
-    void verifySlot() {
+    void shouldReturnTrueWhenVerifySlotForDelete() {
+        List<Integer> ids = new ArrayList<>();
+        ids.add(1);
+        ids.add(2);
+        Long list = Long.valueOf(ids.size());
+
+        when(slotRepository.countAvailableDeleteSlot(ids, slotRequestModel.toEntity().getLecturerId()))
+                .thenReturn(list);
+        boolean result = slotService.verifySlotForDelete(ids,slotRequestModel.toEntity().getLecturerId());
+        assertTrue(result);
     }
 
     @Test
     void shouldCreateSlot() {
         when(slotRepository.save(slotRequestModel.toEntity()))
-                .thenReturn(slot);
-        SlotViewModel viewModel = slotService.createSlot(slotRequestModel);
-        assertEquals(1, viewModel.getId());
+                .thenReturn(slotRequestModel.toEntity());
+        SlotViewModel result = slotService.createSlot(slotRequestModel);
+        assertEquals(1, result.getId());
     }
 
     @Test
@@ -83,6 +99,13 @@ class SlotServiceTest {
 
     @Test
     void acceptDenyBooking() {
+//        Optional<Slot> slotOptional = Optional.of(slotRequestModel.toEntity());
+//        when(slotRepository.findById(1))
+//                .thenReturn(slotOptional);
+//
+//        SlotBookingRequestModel requestModel = slotOptional.map(t -> new SlotBookingRequestModel()).get();
+//        System.out.println(requestModel.getLecturerId());
+//        SlotViewModel view = slotService.acceptDenyBooking(requestModel);
     }
 
     @Test

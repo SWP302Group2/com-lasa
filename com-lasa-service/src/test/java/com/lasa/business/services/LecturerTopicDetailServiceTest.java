@@ -31,6 +31,7 @@ class LecturerTopicDetailServiceTest {
     private LecturerTopicDetailServiceImpl lecturerTopicDetailService;
 
     private LecturerTopicDetail lecturerTopicDetail;
+
     @BeforeEach
     void setUp() {
         lecturerTopicDetailService = new LecturerTopicDetailServiceImpl(lecturerTopicDetailRepository);
@@ -66,21 +67,11 @@ class LecturerTopicDetailServiceTest {
     }
 
     @Test
-    void findById() {
-        // Null
-    }
-
-    @Test
     void shouldCreateLecturerTopicDetails() {
         List<LecturerTopicDetail> list = new ArrayList<>();
         list.add(lecturerTopicDetail);
         lecturerTopicDetailService.createLecturerTopicDetails(list);
         Mockito.verify(lecturerTopicDetailRepository).saveAll(list);
-    }
-
-    @Test
-    void updateLecturerTopicDetails() {
-        // Null
     }
 
     @Test

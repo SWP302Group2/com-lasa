@@ -56,7 +56,7 @@ public class EmailSenderServiceTest {
     private BookingRequest bookingRequest;
 
     @BeforeEach
-    public void setup(){
+    void setUp(){
         studentService = new StudentServiceImpl(studentRepository, favoriteLecturerRepository);
         lecturerService = new LecturerServiceImpl(lecturerRepository, favoriteLecturerRepository, lecturerTopicDetailRepository);
         emailSenderService = new EmailSenderServiceImpl(mailSender, environment, studentRepository, lecturerRepository);
@@ -72,7 +72,7 @@ public class EmailSenderServiceTest {
                 .build();
     }
     @Test
-    public void sendEmailAfterBookingAccepted() throws MessagingException {
+    void sendEmailAfterBookingAccepted() throws MessagingException {
         Optional<Student> student = Optional.of(Student.builder().id(1).build());
         when(studentRepository.findById(bookingRequest.getStudentId()))
                 .thenReturn(student);

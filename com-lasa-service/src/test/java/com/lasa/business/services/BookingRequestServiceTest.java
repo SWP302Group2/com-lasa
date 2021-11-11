@@ -3,12 +3,10 @@ package com.lasa.business.services;
 import com.lasa.business.services.implv1.BookingRequestServiceImpl;
 import com.lasa.business.services.implv1.StudentServiceImpl;
 import com.lasa.data.model.entity.BookingRequest;
-import com.lasa.data.model.entity.Question;
 import com.lasa.data.model.request.BookingRequestRequestModel;
 import com.lasa.data.model.request.QuestionRequestModel;
 import com.lasa.data.model.utils.criteria.BookingRequestSearchCriteria;
 import com.lasa.data.model.utils.page.BookingRequestPage;
-import com.lasa.data.model.utils.specification.BookingRequestSpecification;
 import com.lasa.data.model.view.BookingRequestViewModel;
 import com.lasa.data.repo.repository.BookingRequestRepository;
 import com.lasa.data.repo.repository.StudentRepository;
@@ -17,6 +15,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -24,8 +23,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
-
 
 @ExtendWith(MockitoExtension.class)
 @ExtendWith(SpringExtension.class)
@@ -37,38 +34,23 @@ public class BookingRequestServiceTest {
     private BookingRequestServiceImpl bookingRequestService;
     @Mock
     private BookingRequestPage page;
-
-    private BookingRequestSearchCriteria bookingRequestSearchCriteria;
-    private BookingRequestRequestModel bookingRequestRequestModel;
     @Mock
     private StudentRepository studentRepository;
     private StudentServiceImpl studentService;
-    private BookingRequest bookingRequest;
+
+    private BookingRequestSearchCriteria bookingRequestSearchCriteria;
+    private BookingRequestRequestModel bookingRequestRequestModel;
+    private List<BookingRequest> bookingRequests;
+    private Specification<BookingRequest> searchSpecification;
     @BeforeEach
     void setUp() {
         bookingRequestService = new BookingRequestServiceImpl(bookingRequestRepository, studentService, studentRepository);
 
         LocalDateTime now = LocalDateTime.now();
-        bookingRequest = new BookingRequestRequestModel().toEntity();
-        bookingRequest.setId(1);
-        bookingRequest.setStatus(1);
-        bookingRequest.setCreateTime(now);
-        bookingRequest.setQuestions(null);
-        bookingRequest.setRating(1);
-        bookingRequest.setSlotId(1);
-        bookingRequest.setTitle("HELP");
-        bookingRequest.setStudentId(1);
-        bookingRequest.setTopicId(1);
 
-        List <Integer> id = new  ArrayList();
-        id.add(1);
-
-        bookingRequestSearchCriteria = new BookingRequestSearchCriteria();
-        bookingRequestSearchCriteria.setStatus(1);
-        bookingRequestSearchCriteria.setSlotId(id);
-        bookingRequestSearchCriteria.setStudentId(id);
-        bookingRequestSearchCriteria.setTopicId(id);
-        bookingRequestSearchCriteria.setGetStudent(false);
+        List <Integer> ids = new  ArrayList();
+        ids.add(1);
+        ids.add(2);
 
         page = new BookingRequestPage();
         page.setPage(1);
@@ -78,6 +60,7 @@ public class BookingRequestServiceTest {
         question.setId(1);
         List<QuestionRequestModel> questions = new ArrayList<>();
         questions.add(question);
+
         bookingRequestRequestModel = new BookingRequestRequestModel();
         bookingRequestRequestModel.setId(1);
         bookingRequestRequestModel.setStatus(1);
@@ -88,31 +71,36 @@ public class BookingRequestServiceTest {
         bookingRequestRequestModel.setTitle("HELP");
         bookingRequestRequestModel.setStudentId(1);
         bookingRequestRequestModel.setTopicId(1);
+
+        bookingRequests = new ArrayList<>();
+        bookingRequests.add(bookingRequestRequestModel.toEntity());
+
+        bookingRequestSearchCriteria = new BookingRequestSearchCriteria();
+        bookingRequestSearchCriteria.setStatus(1);
+        bookingRequestSearchCriteria.setSlotId(ids);
+        bookingRequestSearchCriteria.setStudentId(ids);
+        bookingRequestSearchCriteria.setTopicId(ids);
+        bookingRequestSearchCriteria.setGetStudent(true);
     }
 
     @Test
-    public void returnAllListInFindAll(){
-//        List<BookingRequest> list = new ArrayList<>();
-//        list.add(bookingRequest);
-//        when(bookingRequestRepository
-//                .findAll(BookingRequestSpecification.searchSpecification(bookingRequestSearchCriteria)))
-//                .thenReturn(list);
-//        List<BookingRequestViewModel> bookingRequestViewModels =
-//                bookingRequestService.findAll(bookingRequestSearchCriteria)
-//                        .stream()
-//                        .map(t -> new BookingRequestViewModel())
-//                        .collect(Collectors.toList());;
+    void returnAllListInFindAll(){
 //
-//        System.out.println("THIS IS: " + bookingRequestViewModels.get(0).getTitle());
-//        assertEquals(1,bookingRequestViewModels.get(0).getRating());
+//        when(bookingRequestRepository.findAll
+//                (BookingRequestSpecification.searchSpecification(bookingRequestSearchCriteria)))
+//                .thenReturn(bookingRequests);
+//
+//        List<BookingRequestViewModel> results = bookingRequestService.findAll(bookingRequestSearchCriteria);
+//
+//        assertEquals(0, results.size());
 
     }
     @Test
-    public void givenBookingIdShouldReturnBookingRequest(){
+    void givenBookingIdShouldReturnBookingRequest(){
         bookingRequestService.findByBookingRequestId(2);
         Mockito.verify(bookingRequestRepository).findById(2);
 
-        Optional<BookingRequest> bookingRequestOptional = Optional.of(bookingRequest);
+        Optional<BookingRequest> bookingRequestOptional = Optional.of(bookingRequestRequestModel.toEntity());
         when(bookingRequestRepository.findById(1))
                 .thenReturn(bookingRequestOptional);
         BookingRequestViewModel result = bookingRequestService.findByBookingRequestId(1);
@@ -120,24 +108,27 @@ public class BookingRequestServiceTest {
     }
 
     @Test
-    public void shouldReturnListBookingRequest(){
+    void shouldReturnListBookingRequest(){
 
     }
 
-//    @Test
-//    public void returnVerifyBookingRequestWithFalse(){
-//        bookingRequestService.verifyBookingRequest(1,1);
-//        Mockito.verify(bookingRequestRepository).findBookingRequestByStudentIdAndSlotId(1,1);
-//
-//        Optional<BookingRequest> bookingRequestOptional = Optional.of(bookingRequest);
-//        when(bookingRequestRepository.findBookingRequestByStudentIdAndSlotId(1,1))
-//                .thenReturn(bookingRequestOptional);
-//        Boolean result = bookingRequestService.verifyBookingRequest(1,1);
-//        assertFalse(result);
-//    }
+    @Test
+    public void returnVerifyBookingRequestWithTrue(){
+
+        List<Integer> ids = new ArrayList<>();
+        ids.add(1);
+        ids.add(2);
+        Long list = Long.valueOf(ids.size());
+
+        when(bookingRequestRepository.countAvailableBookingForDelete(bookingRequestRequestModel.getStudentId(), ids))
+                .thenReturn(list);
+        boolean result = bookingRequestService
+                .verifyBookingRequestForDelete(bookingRequestRequestModel.getStudentId(), ids);
+        assertTrue(result);
+    }
 
     @Test
-    public void shouldCreateBooking(){
+    void shouldCreateBooking(){
         when(bookingRequestRepository.save(bookingRequestRequestModel.toEntity()))
                 .thenReturn(bookingRequestRequestModel.toEntity());
         BookingRequestViewModel result = bookingRequestService.createBookingRequest(bookingRequestRequestModel);
@@ -145,16 +136,39 @@ public class BookingRequestServiceTest {
     }
 
     @Test
-    public void shouldDeleteBooking(){
-        List<Integer> ids = new ArrayList<>();
-        ids.add(bookingRequest.getId());
-        bookingRequestService.deleteBookingRequests(ids);
+    void shouldDeleteBooking(){
+        List<Integer> deleteIds = new ArrayList<>();
+        deleteIds.add(bookingRequestRequestModel.toEntity().getId());
+        bookingRequestService.deleteBookingRequests(deleteIds);
         Mockito.verify(bookingRequestRepository)
-                .findAllById(ids);
+                .findAllById(deleteIds);
     }
 
     @Test
-    public void shouldUpdateBooking(){
+    void shouldUpdateBooking(){
+//        Optional<BookingRequest> bookingRequestOptional = Optional.of(bookingRequestRequestModel.toEntity());
+//        when(bookingRequestRepository.findById(bookingRequestRequestModel.toEntity().getId()))
+//                .thenReturn(bookingRequestOptional);
+//                .thenReturn(bookingRequestOptional.map(t-> new BookingRequestRequestModel().toEntity()));
+
+//        BookingRequestViewModel bookingWithIdLooking = bookingRequestService
+//                .findByBookingRequestId(bookingRequestRequestModel.toEntity().getId());
+//
+//        if (bookingWithIdLooking.getTitle() != null) {
+//            bookingRequestRequestModel.toEntity().setTitle("HAPPY");
+//        }
+//
+//        when(bookingRequestRepository.save(bookingRequestRequestModel.toEntity()))
+//                .thenReturn(bookingRequestRequestModel.toEntity());
+//
+//        BookingRequestRequestModel view = new BookingRequestRequestModel();
+//        view.setId(bookingWithIdLooking.getId());
+//        view.setStatus(bookingWithIdLooking.getStatus());
+//        view.setTitle(bookingRequestRequestModel.toEntity().getTitle());
+//        System.out.println(view.toEntity().toString());
+//        System.out.println(bookingWithIdLooking.getId());
+//        BookingRequestViewModel result = bookingRequestService.updateBookingRequest(bookingRequestRequestModel);
+//        assertEquals("HAPPY", result.getTitle());
 
     }
 
