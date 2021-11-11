@@ -11,29 +11,17 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class QuestionUpdateValidator implements ConstraintValidator<ValidQuestionUpdate, BookingRequestRequestModel> {
-    private final QuestionRepository repository;
-
-    @Autowired
-    public QuestionUpdateValidator(QuestionRepository repository) {
-        this.repository = repository;
-    }
 
     @Override
     public boolean isValid(BookingRequestRequestModel bookingRequestRequestModel, ConstraintValidatorContext constraintValidatorContext) {
-        if(Objects.isNull(bookingRequestRequestModel.getQuestions()))
-            return true;
-        else {
-            if(bookingRequestRequestModel.getQuestions().isEmpty())
-                return false;
+        if(Objects.isNull(bookingRequestRequestModel.getQuestions())) {
 
-            long count = repository. countByIdAndBookingRequestIdIn(
-                    bookingRequestRequestModel.getId(),
-                    bookingRequestRequestModel.getQuestions()
-                            .stream()
-                            .map(t -> t.getId())
-                            .collect(Collectors.toList())
-            );
-            return count == bookingRequestRequestModel.getQuestions().size();
         }
+        else {
+            if(bookingRequestRequestModel.getQuestions().isEmpty() || bookingRequestRequestModel.getQuestions().size() > 5 || bookingRequestRequestModel.getQuestions().size() < 1)
+                return false;
+        }
+
+        return true;
     }
 }

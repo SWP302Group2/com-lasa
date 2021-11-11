@@ -3,14 +3,13 @@ package com.lasa.business.services;
 import com.lasa.business.services.implv1.BookingRequestServiceImpl;
 import com.lasa.business.services.implv1.StudentServiceImpl;
 import com.lasa.data.model.entity.BookingRequest;
-import com.lasa.data.model.entity.Question;
 import com.lasa.data.model.request.BookingRequestRequestModel;
 import com.lasa.data.model.request.QuestionRequestModel;
 import com.lasa.data.model.utils.criteria.BookingRequestSearchCriteria;
 import com.lasa.data.model.utils.page.BookingRequestPage;
-import com.lasa.data.model.utils.specification.BookingRequestSpecification;
 import com.lasa.data.model.view.BookingRequestViewModel;
 import com.lasa.data.repo.repository.BookingRequestRepository;
+import com.lasa.data.repo.repository.QuestionRepository;
 import com.lasa.data.repo.repository.StudentRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -24,7 +23,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 
 @ExtendWith(MockitoExtension.class)
@@ -44,9 +42,11 @@ public class BookingRequestServiceTest {
     private StudentRepository studentRepository;
     private StudentServiceImpl studentService;
     private BookingRequest bookingRequest;
+    @Mock
+    private QuestionRepository questionRepository;
     @BeforeEach
     void setUp() {
-        bookingRequestService = new BookingRequestServiceImpl(bookingRequestRepository, studentService, studentRepository);
+        bookingRequestService = new BookingRequestServiceImpl(bookingRequestRepository, studentService, studentRepository, questionRepository);
 
         LocalDateTime now = LocalDateTime.now();
         bookingRequest = new BookingRequestRequestModel().toEntity();
