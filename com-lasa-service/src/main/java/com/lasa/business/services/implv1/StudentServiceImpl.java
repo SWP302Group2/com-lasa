@@ -85,48 +85,51 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     @Transactional
-    public StudentViewModel updateStudent(StudentRequestModel updateStudent) {
+    public StudentViewModel updateStudent(StudentRequestModel model) {
         
-        Student student = studentRepository.findById(updateStudent.getId()).get();
+        Student student = studentRepository.findById(model.getId()).get();
         
-        if(updateStudent.getMssv() != null) 
-            student.setMssv(updateStudent.getMssv());
+        if(model.getMssv() != null)
+            student.setMssv(model.getMssv());
         
-        if(updateStudent.getMajorId() != null) 
-            student.setMajorId(updateStudent.getMajorId());
+        if(model.getMajorId() != null)
+            student.setMajorId(model.getMajorId());
         
-        if(updateStudent.getName() != null)
-            student.setName(updateStudent.getName());
+        if(model.getName() != null)
+            student.setName(model.getName());
         
-        if(updateStudent.getPhone() != null)
-            student.setPhone(updateStudent.getPhone());
+        if(model.getPhone() != null)
+            student.setPhone(model.getPhone());
         
-        if(updateStudent.getBirthday() != null)
-            student.setBirthday(updateStudent.getBirthday());
+        if(model.getBirthday() != null)
+            student.setBirthday(model.getBirthday());
         
-        if(updateStudent.getGender() != null)
-            student.setGender(updateStudent.getGender());
+        if(model.getGender() != null)
+            student.setGender(model.getGender());
         
-        if(updateStudent.getAddress() != null)
-            student.setAddress(updateStudent.getAddress());
+        if(model.getAddress() != null)
+            student.setAddress(model.getAddress());
 
-        if(Objects.nonNull(updateStudent.getStatus()))
-            student.setStatus(updateStudent.getStatus());
+        if(Objects.nonNull(model.getStatus()))
+            student.setStatus(model.getStatus());
 
-        if(Objects.nonNull(updateStudent.getLecturers())) {
-            List<FavoriteLecturer> favoriteLecturers = updateStudent.getLecturers()
+        if(Objects.nonNull(model.getAvatarUrl()))
+            student.setAvatarUrl(model.getAvatarUrl());
+
+        if(Objects.nonNull(model.getLecturers())) {
+            List<FavoriteLecturer> favoriteLecturers = model.getLecturers()
                     .stream()
                     .map(t -> FavoriteLecturer.builder()
                             .lecturer(Lecturer.builder()
                                     .id(t)
                                     .build())
                             .student(Student.builder()
-                                    .id(updateStudent.getId())
+                                    .id(model.getId())
                                     .build())
                             .build())
                     .collect(Collectors.toList());
 
-            favoriteLecturerRepository.deleteAllByStudentId(updateStudent.getId());
+            favoriteLecturerRepository.deleteAllByStudentId(model.getId());
             favoriteLecturerRepository.saveAll(favoriteLecturers);
         }
 

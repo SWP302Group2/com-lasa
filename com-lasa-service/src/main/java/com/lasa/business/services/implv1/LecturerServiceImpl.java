@@ -126,9 +126,11 @@ public class LecturerServiceImpl implements LecturerService {
             lecturerTopicDetailRepository.saveAll(lecturerTopicDetails);
         }
 
-        if(Objects.nonNull(model.getStatus())) {
+        if(Objects.nonNull(model.getStatus()))
             lecturer.setStatus(model.getStatus());
-        }
+
+        if(Objects.nonNull(model.getAvatarUrl()))
+            lecturer.setAvatarUrl(model.getAvatarUrl());
         
         return new LecturerViewModel(lecturerRepository.save(lecturer));
 
