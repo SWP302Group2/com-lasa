@@ -10,7 +10,7 @@ import com.lasa.data.model.request.SlotRequestModel;
 import com.lasa.data.model.utils.criteria.SlotSearchCriteria;
 import com.lasa.data.model.utils.page.SlotPage;
 import com.lasa.data.validator.group.PostValidator;
-import com.lasa.data.validator.group.PutValidator;
+import com.lasa.data.validator.group.PatchValidator;
 import com.lasa.security.utils.exception.ExceptionUtils;
 import io.swagger.annotations.ApiParam;
 import org.springframework.http.ResponseEntity;
@@ -49,13 +49,13 @@ public interface SlotOperations {
     ResponseEntity<?> createSlot(@ApiParam(name = "slots", type = "body", value = "Add a new slot")
                                            @Validated(value = PostValidator.class) @RequestBody SlotRequestModel model);
 
-    @PutMapping
+    @PatchMapping
     ResponseEntity<?> updateSlots(@ApiParam(name = "slots", type = "body", value = "Update a slot by id", required = true)
-                                  @Validated(PutValidator.class) @RequestBody SlotRequestModel slots);
+                                  @Validated(PatchValidator.class) @RequestBody SlotRequestModel slots);
 
-    @PutMapping(value = "/{id}/booking-requests")
+    @PatchMapping(value = "/{id}/booking-requests")
     ResponseEntity<?> updateBookingRequests(@Min(value = 1) @PathVariable("id") Integer id,
-                                            @Validated(value = PutValidator.class) @RequestBody SlotBookingRequestModel model) throws MessagingException;
+                                            @Validated(value = PatchValidator.class) @RequestBody SlotBookingRequestModel model) throws MessagingException;
 
     @DeleteMapping
     ResponseEntity<?> deleteSlots(@RequestParam List<Integer> id) throws ExceptionUtils.DeleteException;

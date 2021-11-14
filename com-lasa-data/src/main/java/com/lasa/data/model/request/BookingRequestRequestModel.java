@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.lasa.data.model.entity.BookingRequest;
 import com.lasa.data.validator.*;
 import com.lasa.data.validator.group.PostValidator;
-import com.lasa.data.validator.group.PutValidator;
+import com.lasa.data.validator.group.PatchValidator;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,20 +21,20 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@ValidBookingTopicId(groups = {PostValidator.class, PutValidator.class}, message = "TOPIC_NOT_VALID")
+@ValidBookingTopicId(groups = {PostValidator.class, PatchValidator.class}, message = "TOPIC_NOT_VALID")
 @ValidBookingRequest(groups = PostValidator.class, message = "BOOKING_REQUEST_DUPLICATED")
-@ValidQuestionUpdate(groups = PutValidator.class, message = "QUESTION_NOT_FOUND_OR_NOT_AVAILABLE")
-@ValidBookingRequestRate(groups = PutValidator.class, message = "BOOKING_REQUEST_NOT_AVAILABLE_FOR_RATE")
+@ValidQuestionUpdate(groups = PatchValidator.class, message = "QUESTION_NOT_FOUND_OR_NOT_AVAILABLE")
+@ValidBookingRequestRate(groups = PatchValidator.class, message = "BOOKING_REQUEST_NOT_AVAILABLE_FOR_RATE")
 public class BookingRequestRequestModel {
 
-    @NotNull(groups = PutValidator.class, message = "ID_IS_NULL")
-    @ValidBookingRequestUpdate(groups = PutValidator.class, message = "BOOKING_REQUEST_NOT_FOUND")
+    @NotNull(groups = PatchValidator.class, message = "ID_IS_NULL")
+    @ValidBookingRequestUpdate(groups = PatchValidator.class, message = "BOOKING_REQUEST_NOT_FOUND")
     private Integer id;
 
     @NotNull(groups = PostValidator.class, message = "STUDENT_ID_IS_NULL")
     private Integer studentId;
 
-    @ValidOneOf(value = 0, groups = PutValidator.class)
+    @ValidOneOf(value = 0, groups = PatchValidator.class)
     private Integer status;
 
     @NotEmpty(groups = PostValidator.class, message = "QUESTIONS_IS_EMPTY")

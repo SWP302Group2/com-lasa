@@ -34,7 +34,7 @@ public interface QuestionOperations {
             @ApiParam(name = "questions", type = "body", value = "Add a new question", required = true)
             @RequestBody List<QuestionRequestModel> questions);
 
-    @PutMapping
+    @PatchMapping
     ResponseEntity<?> updateQuestions(
             @ApiParam(name = "questions", type = "body", value = "Update a question", required = true)
             @RequestBody List<QuestionRequestModel> questions);

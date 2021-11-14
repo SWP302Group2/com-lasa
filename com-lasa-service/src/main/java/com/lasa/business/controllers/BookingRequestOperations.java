@@ -10,7 +10,7 @@ import com.lasa.data.model.request.BookingRequestRequestModel;
 import com.lasa.data.model.utils.criteria.BookingRequestSearchCriteria;
 import com.lasa.data.model.utils.page.BookingRequestPage;
 import com.lasa.data.validator.group.PostValidator;
-import com.lasa.data.validator.group.PutValidator;
+import com.lasa.data.validator.group.PatchValidator;
 import com.lasa.security.utils.exception.ExceptionUtils;
 import io.swagger.annotations.ApiParam;
 import org.springframework.http.ResponseEntity;
@@ -50,13 +50,13 @@ public interface BookingRequestOperations {
     ResponseEntity<?> addBookingQuestions(@PathVariable(value = "id") Integer id,
                                           @Validated(PostValidator.class) @RequestBody BookingQuestionRequestModel model);
     
-    @PutMapping
+    @PatchMapping
     ResponseEntity<?> updateBookingRequest(@ApiParam(name = "bookingRequest", type = "body", value = "Update a booking request by id")
-                                           @Validated(PutValidator.class) @RequestBody BookingRequestRequestModel BookingRequest);
+                                           @Validated(PatchValidator.class) @RequestBody BookingRequestRequestModel BookingRequest);
 
-    @PutMapping(value = "/{id}/questions")
+    @PatchMapping(value = "/{id}/questions")
     ResponseEntity<?> updateBookingQuestions(@PathVariable(value = "id") Integer id,
-                                             @Validated(PutValidator.class) @RequestBody BookingQuestionRequestModel model);
+                                             @Validated(PatchValidator.class) @RequestBody BookingQuestionRequestModel model);
     
     @DeleteMapping
     ResponseEntity<?> deleteBookingRequests(@ApiParam(name = "id", type = "param", value = "By id, you may remove booking request")

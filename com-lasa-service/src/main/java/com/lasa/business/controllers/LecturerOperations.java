@@ -38,7 +38,7 @@ public interface LecturerOperations {
             @ApiParam(name = "lecturer", type = "body", value = "Create a new lecturer", required = true)
             @RequestBody LecturerRequestModel lecturer);
     
-    @PutMapping
+    @PatchMapping
     ResponseEntity<?> updateLecturer(@ApiParam(name = "lecturer", type = "body", value = "Update a lecturer", required = true)
                                      @Validated @RequestBody LecturerRequestModel model) throws ExceptionUtils.UpdateException;
     

@@ -33,7 +33,7 @@ public interface TopicOperations {
             @ApiParam(name = "id", type = "body", value = "Add a new topic", required = true)
             @RequestBody List<TopicRequestModel> topics);
 
-    @PutMapping
+    @PatchMapping
     ResponseEntity<?> updateTopics(
             @ApiParam(name = "topics", type = "body", value = "Update a topic", required = true)
             @RequestBody List<TopicRequestModel> topics);

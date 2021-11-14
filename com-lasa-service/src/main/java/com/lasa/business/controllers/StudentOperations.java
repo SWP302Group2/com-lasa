@@ -34,7 +34,7 @@ public interface StudentOperations {
     ResponseEntity<?> createStudent(@ApiParam(name = "student", type = "body", value = "Create a new student", required = true)
                                     @RequestBody StudentRequestModel student);
 
-    @PutMapping
+    @PatchMapping
     ResponseEntity<?> updateStudent(@ApiParam(name = "student", type = "body", value = "Update a student", required = true)
                                     @RequestBody StudentRequestModel student) throws ExceptionUtils.UpdateException;
 

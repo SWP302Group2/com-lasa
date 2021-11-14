@@ -65,7 +65,7 @@ public class ApplicationController implements ApplicationOperations {
                     .build());
         }else {
             return ResponseEntity.ok(InformationResponse.builder()
-                    .information(new AdminViewModel(adminService.findByAdminId(id)))
+                    .information(adminService.findByAdminId(id))
                     .role("ROLE_" + ADMIN.name())
                     .build());
         }

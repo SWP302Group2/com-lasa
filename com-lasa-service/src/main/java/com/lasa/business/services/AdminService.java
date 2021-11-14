@@ -5,10 +5,11 @@
  */
 package com.lasa.business.services;
 
-import com.lasa.data.model.entity.Admin;
 import com.lasa.data.model.entity.Lecturer;
 import com.lasa.data.model.entity.Student;
+import com.lasa.data.model.request.AdminRequestModel;
 import com.lasa.data.model.utils.projection.SimpleAdmin;
+import com.lasa.data.model.view.AdminViewModel;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,19 +22,8 @@ import java.util.List;
 @Service
 public interface AdminService {
 
-    Admin findByAdminId(Integer id);
+    AdminViewModel findByAdminId(Integer id);
 
-    SimpleAdmin findAdminWithoutPasswordById(Integer id);
+    AdminViewModel updateAdmin(AdminRequestModel model);
 
-    List<Student> listAllStudent();
-
-    List<Lecturer> listAllLecturer();
-
-    Student findStudentById(Integer id);
-
-    Lecturer findLecturerById(Integer id);
-
-    void deleteStudents(List<Integer> ids);
-
-    void deleteLecturers(List<Integer> ids);
 }

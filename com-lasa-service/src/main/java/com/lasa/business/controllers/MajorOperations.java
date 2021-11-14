@@ -37,7 +37,7 @@ public interface MajorOperations {
     ResponseEntity<?> createMajors(@ApiParam(name = "majors", type = "body", value = "Add a major")
                                    @RequestBody List<MajorRequestModel> majors);
 
-    @PutMapping
+    @PatchMapping
     ResponseEntity<?> updateMajors(@ApiParam(name = "majors", type = "body", value = "Update a major")
                              @RequestBody List<MajorRequestModel> majors);
 

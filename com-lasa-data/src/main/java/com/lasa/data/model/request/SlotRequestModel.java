@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.lasa.data.model.entity.Slot;
 import com.lasa.data.validator.*;
 import com.lasa.data.validator.group.PostValidator;
-import com.lasa.data.validator.group.PutValidator;
+import com.lasa.data.validator.group.PatchValidator;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,8 +20,8 @@ import java.util.List;
 @ValidTimeStartAndTimeEnd(groups = PostValidator.class, message = "TIME_START_AND_TIME_END_NOT_VALID")
 @ValidSlotCreate(groups = PostValidator.class, message = "SLOT_DUPLICATE_OR_NOT_VALID")
 @ValidSlotTopicForCreateSlot(groups = PostValidator.class, message = "TOPICS_EMPTY_OR_NOT_VALID")
-@ValidSlotUpdate(groups = PutValidator.class, message = "SLOT_NOT_AVAILABLE_FOR_UPDATE")
-@ValidTopicUpdate(groups = PutValidator.class, message = "TOPIC_DUPLICATE_OR_NOT_VALID")
+@ValidSlotUpdate(groups = PatchValidator.class, message = "SLOT_NOT_AVAILABLE_FOR_UPDATE")
+@ValidTopicUpdate(groups = PatchValidator.class, message = "TOPIC_DUPLICATE_OR_NOT_VALID")
 public class SlotRequestModel {
     private Integer id;
     private Integer lecturerId;
@@ -31,7 +31,7 @@ public class SlotRequestModel {
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss[.SSS][.SS][.S]")
     private LocalDateTime timeEnd;
 
-    @ValidOneOf(value = 0, message = "STATUS_NOT_VALID", groups = PutValidator.class)
+    @ValidOneOf(value = 0, message = "STATUS_NOT_VALID", groups = PatchValidator.class)
     private Integer status;
 
     public Slot toEntity() {

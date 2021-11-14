@@ -3,7 +3,7 @@ package com.lasa.data.model.request;
 import com.lasa.data.model.entity.BookingRequest;
 import com.lasa.data.model.entity.Question;
 import com.lasa.data.validator.group.PostValidator;
-import com.lasa.data.validator.group.PutValidator;
+import com.lasa.data.validator.group.PatchValidator;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,7 +18,7 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 public class QuestionRequestModel {
 
-    @NotNull(groups = PutValidator.class)
+    @NotNull(groups = PatchValidator.class)
     private Integer id;
 
     private Integer bookingId;

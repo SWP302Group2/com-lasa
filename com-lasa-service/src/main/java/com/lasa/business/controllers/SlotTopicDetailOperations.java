@@ -34,7 +34,7 @@ public interface SlotTopicDetailOperations {
             @ApiParam(name = "details", type = "body", value = "Add topic of slot", required = true)
             @RequestBody List<SlotTopicDetailRequestModel> details);
 
-    @PutMapping
+    @PatchMapping
     ResponseEntity<?> updateSlotTopicDetails(
             @ApiParam(name = "details", type = "body", value = "Update a slot topic by id", required = true)
             @RequestBody List<SlotTopicDetailRequestModel> details);
