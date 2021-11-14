@@ -145,6 +145,7 @@ public class LecturerServiceImpl implements LecturerService {
         List<Lecturer> lecturers = lecturerRepository.findAllById(id);
         lecturers.stream()
                 .forEach(t -> t.setStatus(LecturerStatus.DELETED.getCode()));
+        lecturerRepository.saveAll(lecturers);
     }
 
 }

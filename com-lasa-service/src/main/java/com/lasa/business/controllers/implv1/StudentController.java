@@ -65,7 +65,7 @@ public class StudentController implements StudentOperations {
 
     @Override
     @IsAdminOrStudent
-    @PreAuthorize("(hasAuthority(ROLE_ADMIN)) or (#student.id.equals(authentication.principle.id))")
+    @PreAuthorize("#student.id.equals(authentication.principal.id) or hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<StudentViewModel> updateStudent(StudentRequestModel student) throws ExceptionUtils.UpdateException {
         if(Objects.nonNull(student.getStatus())) {
             if(student.getStatus() != StudentStatus.ACTIVATED.getCode()
@@ -78,7 +78,7 @@ public class StudentController implements StudentOperations {
 
     @Override
     @IsAdminOrStudent
-    @PreAuthorize("(hasAuthority(ROLE_ADMIN)) or ((#id.size() == 1) and (#id.get(0).equals(authentication.principal.id)))")
+    @PreAuthorize("(hasAuthority('ROLE_ADMIN')) or ((#id.size() == 1) and (#id.get(0).equals(authentication.principal.id)))")
     public ResponseEntity<?> deleteStudents(List<Integer> id) throws ExceptionUtils.DeleteException {
         if(!service.verifyStudent(id))
             throw new ExceptionUtils.DeleteException("STUDENT_NOT_AVAILABLE_FOR_DELETE");

@@ -134,9 +134,12 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
+    @Transactional
     public void deleteStudents(List<Integer> ids) {
-        studentRepository.findAllById(ids).stream()
+        List<Student> students = studentRepository.findAllById(ids);
+        students.stream()
                 .forEach(t -> t.setStatus(StudentStatus.DELETED.getCode()));
+        studentRepository.saveAll(students);
     }
     
 }

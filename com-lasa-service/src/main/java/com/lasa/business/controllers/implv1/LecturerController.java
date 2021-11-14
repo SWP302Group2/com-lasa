@@ -67,7 +67,7 @@ public class LecturerController implements LecturerOperations {
 
     @Override
     @IsAdminOrLecturer
-    @PreAuthorize("(hasAuthority(ROLE_ADMIN)) or (#lecturer.id.equals(authentication.principal.id)) ")
+    @PreAuthorize("#lecturer.id.equals(authentication.principal.id) or hasAuthority('ROLE_ADMIN') ")
     public ResponseEntity<LecturerViewModel>  updateLecturer(LecturerRequestModel lecturer) throws ExceptionUtils.UpdateException {
         if(Objects.nonNull(lecturer.getStatus())) {
             if(lecturer.getStatus() != LecturerStatus.ACTIVATED.getCode()
