@@ -15,7 +15,7 @@ public interface AdminOperations {
     ResponseEntity<?> createAdmin(AdminRequestModel adminRequestModel);
 
     @PatchMapping
-    ResponseEntity<?> updateAdmin(AdminRequestModel adminRequestModel);
+    ResponseEntity<?> updateAdmin(@RequestBody AdminRequestModel admin);
 
     @DeleteMapping
     ResponseEntity<?> deleteAdmin(@RequestParam List<Integer> id);
