@@ -55,6 +55,9 @@ public class AdminServiceImpl implements AdminService {
         if(Objects.nonNull(model.getAvatarUrl()))
             admin.setAvatarUrl(model.getAvatarUrl());
 
+        if(Objects.nonNull(model.getEmail()))
+            admin.setEmail(model.getEmail());
+
         if(Objects.nonNull(model.getBirthday()))
             admin.setBirthday(model.getBirthday());
 
