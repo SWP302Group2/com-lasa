@@ -24,7 +24,8 @@ public class LecturerRequestModel {
     private String meetingUrl;
     @ValidOneOf(value = {-1,0,1})
     private Integer status;
-    private Boolean gender;
+    @ValidOneOf(value = {-1,0,1})
+    private Integer  gender;
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss[.SSS][.SS][.S]")
     private LocalDate birthday;
     private String address;

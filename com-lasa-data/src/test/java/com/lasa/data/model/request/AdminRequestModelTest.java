@@ -18,7 +18,7 @@ public class AdminRequestModelTest {
         LocalDateTime birthDay = LocalDateTime.now();
         String password = "123333";
         String phone = "0934756722";
-        Boolean gender = true;
+        Integer gender = 1;
         Integer status = 1;
         String avatarUrl = "https://avatar.com";
         Integer id = 1;

@@ -26,7 +26,7 @@ public class LecturerRequestModelTest {
         String phone = "0915215326";
         String meetingUrl = "https://meet.google.com/ryu-stnz-rww";
         Integer status = 1;
-        Boolean gender = true;
+        Integer gender = 1;
         LocalDate birthDay = LocalDate.now();
         String address = "Binh Thuan";
         String avatarUrl = "https://avatar.com";

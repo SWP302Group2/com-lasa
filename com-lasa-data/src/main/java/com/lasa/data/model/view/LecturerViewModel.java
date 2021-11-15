@@ -20,7 +20,7 @@ public class LecturerViewModel implements Serializable {
     private String phone;
     private String meetingUrl;
     private Integer status;
-    private Boolean gender;
+    private Integer gender;
     private LocalDate birthday;
     private String address;
     private String avatarUrl;

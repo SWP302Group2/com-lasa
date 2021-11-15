@@ -63,7 +63,7 @@ public class Lecturer implements Serializable {
     private Integer status;
     
     @Column(name = "gender")
-    private Boolean gender;
+    private Integer gender;
     
     @Column(name = "birthday")
     private LocalDate birthday;
@@ -75,7 +75,7 @@ public class Lecturer implements Serializable {
     private String avatarUrl;
 
     @Builder
-    public Lecturer(Integer id, String email, String name, String phone, String meetingUrl, Collection<FavoriteLecturer> students, Collection<LecturerTopicDetail> topics, Collection<Slot> slots, Integer status, Boolean gender, LocalDate birthday, String address, String avatarUrl) {
+    public Lecturer(Integer id, String email, String name, String phone, String meetingUrl, Collection<FavoriteLecturer> students, Collection<LecturerTopicDetail> topics, Collection<Slot> slots, Integer status, Integer gender, LocalDate birthday, String address, String avatarUrl) {
         this.id = id;
         this.email = email;
         this.name = name;

@@ -27,7 +27,7 @@ public class StudentRequestModelTest {
         String name = "Châu";
         String phone = "0915241265";
         Integer status = 1;
-        Boolean gender = true;
+        Integer gender = 1;
         LocalDateTime birthDay = LocalDateTime.now();
 
         model.setId(id);

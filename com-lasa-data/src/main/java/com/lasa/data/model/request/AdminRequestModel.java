@@ -2,6 +2,7 @@ package com.lasa.data.model.request;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.lasa.data.model.entity.Admin;
+import com.lasa.data.validator.ValidOneOf;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,7 +21,8 @@ public class AdminRequestModel {
     private String password;
     private String email;
     private String phone;
-    private Boolean gender;
+    @ValidOneOf(value = {-1,0,1})
+    private Integer gender;
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss[.SSS][.SS][.S]")
     private LocalDateTime birthday;
     private String avatarUrl;

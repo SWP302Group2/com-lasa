@@ -21,7 +21,7 @@ public class StudentViewModel implements Serializable {
     private String name;
     private String phone;
     private Integer status;
-    private Boolean gender;
+    private Integer gender;
     private LocalDateTime birthday;
     private String address;
     private String avatarUrl;

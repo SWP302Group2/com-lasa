@@ -6,6 +6,7 @@ import com.lasa.data.validator.ValidTopicIds;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import java.util.List;
+import java.util.Objects;
 
 public class TopicIdsValidator implements ConstraintValidator<ValidTopicIds, List<Integer>> {
 
@@ -17,6 +18,9 @@ public class TopicIdsValidator implements ConstraintValidator<ValidTopicIds, Lis
 
     @Override
     public boolean isValid(List<Integer> ids, ConstraintValidatorContext constraintValidatorContext) {
-        return topicRepository.countAvailableTopics(ids) == ids.size();
+        if(Objects.nonNull(ids))
+            return topicRepository.countAvailableTopics(ids) == ids.size();
+        else
+            return true;
     }
 }

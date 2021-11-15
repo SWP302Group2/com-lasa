@@ -49,7 +49,7 @@ public class Admin implements Serializable {
     private String phone;
 
     @Column(name = "gender")
-    private Boolean gender;
+    private Integer gender;
 
     @Column(name = "birthday")
     private LocalDateTime birthday;
@@ -58,7 +58,7 @@ public class Admin implements Serializable {
     private String avatarUrl;
 
     @Builder
-    public Admin(Integer id, String name, String username, String password, String email, String phone, Boolean gender, LocalDateTime birthday, String avatarUrl) {
+    public Admin(Integer id, String name, String username, String password, String email, String phone, Integer gender, LocalDateTime birthday, String avatarUrl) {
         this.id = id;
         this.name = name;
         this.username = username;

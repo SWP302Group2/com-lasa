@@ -39,7 +39,7 @@ public class FavoriteLecturerCustomRepositoryImpl implements FavoriteLecturerCus
                             .name((String) tuple.get("name"))
                             .avatarUrl((String) tuple.get("avatar"))
                             .email((String) tuple.get("email"))
-                            .gender((Boolean) tuple.get("gender"))
+                            .gender((Integer) tuple.get("gender"))
                             .phone((String) tuple.get("phone"))
                             .build();
                     return lecturer;

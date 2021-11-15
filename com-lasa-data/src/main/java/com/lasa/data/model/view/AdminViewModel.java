@@ -20,7 +20,7 @@ public class AdminViewModel implements Serializable {
     private String password;
     private String email;
     private String phone;
-    private Boolean gender;
+    private Integer gender;
     private LocalDateTime birthday;
     private String avatarUrl;
 
