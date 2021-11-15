@@ -57,7 +57,7 @@ class LecturerServiceTest {
         LocalDate now = LocalDate.now();
         lecturerRequestModel = new LecturerRequestModel
                 (1,"abc","0909123456",
-                        "xyz",1,true, now,
+                        "xyz",1,1, now,
                         "dia chi", "avatar", topics);
     }
 
