@@ -70,8 +70,7 @@ public class LecturerController implements LecturerOperations {
     @PreAuthorize("#lecturer.id.equals(authentication.principal.id) or hasAuthority('ROLE_ADMIN') ")
     public ResponseEntity<LecturerViewModel>  updateLecturer(LecturerRequestModel lecturer) throws ExceptionUtils.UpdateException {
         if(Objects.nonNull(lecturer.getStatus())) {
-            if(lecturer.getStatus() != LecturerStatus.ACTIVATED.getCode()
-            && !SecurityContextHolder.getContext().getAuthentication().getAuthorities().contains("ROLE_ADMIN"))
+            if(SecurityContextHolder.getContext().getAuthentication().getAuthorities().contains("ROLE_ADMIN"))
                 throw new ExceptionUtils.UpdateException("LECTURER_STATUS_NOT_AVAILABLE_FOR_UPDATE");
         }
 

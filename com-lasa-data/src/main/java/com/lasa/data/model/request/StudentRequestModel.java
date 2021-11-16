@@ -26,7 +26,7 @@ public class StudentRequestModel {
     private String phone;
     @ValidOneOf(value = {-1,0,1})
     private Integer status;
-    @ValidOneOf(value = {-1,0,1})
+    @ValidOneOf(value = {-2,-1,0,1})
     private Integer gender;
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss[.SSS][.SS][.S]")
     private LocalDateTime birthday;
