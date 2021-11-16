@@ -12,6 +12,7 @@ import com.lasa.data.model.view.LecturerViewModel;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
+import javax.mail.MessagingException;
 import java.util.List;
 
 /**
@@ -29,7 +30,7 @@ public interface LecturerService {
 
     LecturerViewModel findLecturerById(Integer id);
 
-    LecturerViewModel updateLecturer(LecturerRequestModel lecturer);
+    LecturerViewModel updateLecturer(LecturerRequestModel lecturer) throws MessagingException;
 
     boolean verifyLecturer(List<Integer> id);
 

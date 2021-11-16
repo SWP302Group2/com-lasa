@@ -6,6 +6,7 @@
 package com.lasa.business.services.implv1;
 
 import com.lasa.business.config.utils.LecturerStatus;
+import com.lasa.business.services.EmailSenderService;
 import com.lasa.business.services.LecturerService;
 import com.lasa.data.model.entity.Lecturer;
 import com.lasa.data.model.entity.LecturerTopicDetail;
@@ -27,6 +28,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.mail.MessagingException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -44,13 +46,15 @@ public class LecturerServiceImpl implements LecturerService {
     private final LecturerRepository lecturerRepository;
     private final FavoriteLecturerRepository favoriteLecturerRepository;
     private final LecturerTopicDetailRepository lecturerTopicDetailRepository;
+    private final EmailSenderService emailSenderService;
 
     @Autowired
     public LecturerServiceImpl(LecturerRepository lecturerRepository,
-                               FavoriteLecturerRepository favoriteLecturerRepository, LecturerTopicDetailRepository lecturerTopicDetailRepository) {
+                               FavoriteLecturerRepository favoriteLecturerRepository, LecturerTopicDetailRepository lecturerTopicDetailRepository, EmailSenderService emailSenderService) {
         this.lecturerRepository = lecturerRepository;
         this.favoriteLecturerRepository = favoriteLecturerRepository;
         this.lecturerTopicDetailRepository = lecturerTopicDetailRepository;
+        this.emailSenderService = emailSenderService;
     }
 
     @Override
@@ -87,7 +91,7 @@ public class LecturerServiceImpl implements LecturerService {
 
     @Override
     @Transactional
-    public LecturerViewModel updateLecturer(LecturerRequestModel model) {
+    public LecturerViewModel updateLecturer(LecturerRequestModel model) throws MessagingException {
         
         Lecturer lecturer = lecturerRepository.findById(model.getId()).get();
         
@@ -126,9 +130,22 @@ public class LecturerServiceImpl implements LecturerService {
             lecturerTopicDetailRepository.saveAll(lecturerTopicDetails);
         }
 
-        if(Objects.nonNull(model.getStatus()))
+        if(Objects.nonNull(model.getStatus())) {
             lecturer.setStatus(model.getStatus());
-
+            if(lecturer.getStatus() == 1) {
+                emailSenderService.sendEmailWithAttachment(
+                        lecturer.getEmail(),
+                        "Dear Mr/Ms " + lecturer.getName()  +
+                                "\n" +
+                                "\n Your account has been activated." +
+                                "\n" +
+                                "\n" +
+                                "\n Best regards, " +
+                                "\n Lasa customer service team.",
+                        "Notification Email for Lecturer Signup."
+                );
+            }
+        }
         if(Objects.nonNull(model.getAvatarUrl()))
             lecturer.setAvatarUrl(model.getAvatarUrl());
         

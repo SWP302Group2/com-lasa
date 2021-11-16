@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.mail.MessagingException;
 import java.util.List;
 
 /**
@@ -40,7 +41,7 @@ public interface LecturerOperations {
     
     @PatchMapping
     ResponseEntity<?> updateLecturer(@ApiParam(name = "lecturer", type = "body", value = "Update a lecturer", required = true)
-                                     @Validated @RequestBody LecturerRequestModel model) throws ExceptionUtils.UpdateException;
+                                     @Validated @RequestBody LecturerRequestModel model) throws ExceptionUtils.UpdateException, MessagingException;
     
     @DeleteMapping
     ResponseEntity<?> deleteLecturers(@ApiParam(name = "ids", type = "array", value = "Delete lecturer by id", required = true)

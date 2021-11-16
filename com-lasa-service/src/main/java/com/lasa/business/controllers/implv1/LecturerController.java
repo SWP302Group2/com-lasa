@@ -25,6 +25,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.mail.MessagingException;
 import java.util.List;
 import java.util.Objects;
 
@@ -68,7 +69,7 @@ public class LecturerController implements LecturerOperations {
     @Override
     @IsAdminOrLecturer
     @PreAuthorize("#lecturer.id.equals(authentication.principal.id) or hasAuthority('ROLE_ADMIN') ")
-    public ResponseEntity<LecturerViewModel>  updateLecturer(LecturerRequestModel lecturer) throws ExceptionUtils.UpdateException {
+    public ResponseEntity<LecturerViewModel>  updateLecturer(LecturerRequestModel lecturer) throws ExceptionUtils.UpdateException, MessagingException {
         if(Objects.nonNull(lecturer.getStatus())) {
             if(SecurityContextHolder.getContext().getAuthentication().getAuthorities().contains("ROLE_ADMIN"))
                 throw new ExceptionUtils.UpdateException("LECTURER_STATUS_NOT_AVAILABLE_FOR_UPDATE");
