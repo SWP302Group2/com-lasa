@@ -100,7 +100,7 @@ public class LecturerServiceImpl implements LecturerService {
         
         Lecturer lecturer = lecturerRepository.findById(model.getId()).get();
         
-        if(Objects.nonNull(model.getPhone()))
+        if(Objects.nonNull(model.getName()))
             lecturer.setName(model.getName());
         
         if(Objects.nonNull(model.getPhone()))
