@@ -46,14 +46,19 @@ public class LecturerServiceImpl implements LecturerService {
     private final LecturerRepository lecturerRepository;
     private final FavoriteLecturerRepository favoriteLecturerRepository;
     private final LecturerTopicDetailRepository lecturerTopicDetailRepository;
-    private final EmailSenderService emailSenderService;
+    private EmailSenderService emailSenderService;
 
     @Autowired
     public LecturerServiceImpl(LecturerRepository lecturerRepository,
-                               FavoriteLecturerRepository favoriteLecturerRepository, LecturerTopicDetailRepository lecturerTopicDetailRepository, EmailSenderService emailSenderService) {
+                               FavoriteLecturerRepository favoriteLecturerRepository,
+                               LecturerTopicDetailRepository lecturerTopicDetailRepository) {
         this.lecturerRepository = lecturerRepository;
         this.favoriteLecturerRepository = favoriteLecturerRepository;
         this.lecturerTopicDetailRepository = lecturerTopicDetailRepository;
+    }
+
+    @Autowired
+    public void setEmailSenderService(EmailSenderService emailSenderService) {
         this.emailSenderService = emailSenderService;
     }
 

@@ -46,7 +46,7 @@ class LecturerServiceTest {
     private LecturerRequestModel lecturerRequestModel;
     @BeforeEach
     void setUp() {
-        lecturerService = new LecturerServiceImpl(lecturerRepository, favoriteLecturerRepository, lecturerTopicDetailRepository, emailSenderService);
+        lecturerService = new LecturerServiceImpl(lecturerRepository, favoriteLecturerRepository, lecturerTopicDetailRepository);
 
         topics = new ArrayList<>();
         topics.add(1);

@@ -54,7 +54,7 @@ public class EmailSenderServiceTest {
     @BeforeEach
     public void setup(){
         studentService = new StudentServiceImpl(studentRepository, favoriteLecturerRepository);
-        lecturerService = new LecturerServiceImpl(lecturerRepository, favoriteLecturerRepository, lecturerTopicDetailRepository, emailSenderService);
+        lecturerService = new LecturerServiceImpl(lecturerRepository, favoriteLecturerRepository, lecturerTopicDetailRepository);
         emailSenderService = new EmailSenderServiceImpl(mailSender, environment, studentRepository, lecturerRepository);
 
         slot = new Slot();
