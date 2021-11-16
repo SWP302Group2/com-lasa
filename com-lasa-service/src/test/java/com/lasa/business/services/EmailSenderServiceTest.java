@@ -1,6 +1,5 @@
 package com.lasa.business.services;
 
-import com.lasa.business.services.EmailSenderService;
 import com.lasa.business.services.implv1.EmailSenderServiceImpl;
 import com.lasa.business.services.implv1.LecturerServiceImpl;
 import com.lasa.business.services.implv1.StudentServiceImpl;
@@ -21,9 +20,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.core.env.Environment;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.core.env.Environment;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.test.context.junit.jupiter.SpringExtension;

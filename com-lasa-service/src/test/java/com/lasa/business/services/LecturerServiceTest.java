@@ -1,12 +1,9 @@
 package com.lasa.business.services;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.lasa.business.services.implv1.EmailSenderServiceImpl;
 import com.lasa.business.services.implv1.LecturerServiceImpl;
 import com.lasa.data.model.entity.Lecturer;
 import com.lasa.data.model.request.LecturerRequestModel;
-import com.lasa.data.model.utils.criteria.LecturerSearchCriteria;
-import com.lasa.data.model.utils.page.LecturerPage;
-import com.lasa.data.model.utils.specification.LecturerSpecification;
 import com.lasa.data.model.view.LecturerViewModel;
 import com.lasa.data.repo.repository.FavoriteLecturerRepository;
 import com.lasa.data.repo.repository.LecturerRepository;
@@ -17,17 +14,14 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.data.domain.Sort;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @ExtendWith(MockitoExtension.class)
 @ExtendWith(SpringExtension.class)
@@ -42,6 +36,9 @@ class LecturerServiceTest {
 
     @InjectMocks
     private LecturerServiceImpl lecturerService;
+
+    @InjectMocks
+    private EmailSenderServiceImpl emailSenderService;
 
 
     private List<Integer> topics;
