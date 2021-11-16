@@ -68,8 +68,7 @@ public class StudentController implements StudentOperations {
     @PreAuthorize("#student.id.equals(authentication.principal.id) or hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<StudentViewModel> updateStudent(StudentRequestModel student) throws ExceptionUtils.UpdateException {
         if(Objects.nonNull(student.getStatus())) {
-            if(student.getStatus() != StudentStatus.ACTIVATED.getCode()
-                    && !SecurityContextHolder.getContext().getAuthentication().getAuthorities().contains("ROLE_ADMIN"))
+            if(SecurityContextHolder.getContext().getAuthentication().getAuthorities().contains("ROLE_ADMIN"))
                 throw new ExceptionUtils.UpdateException("STUDENT_STATUS_NOT_AVAILABLE_FOR_UPDATE");
         }
 

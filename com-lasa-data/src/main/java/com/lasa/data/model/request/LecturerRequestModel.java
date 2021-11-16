@@ -22,7 +22,7 @@ public class LecturerRequestModel {
     private String name;
     private String phone;
     private String meetingUrl;
-    @ValidOneOf(value = {-1,0,1})
+    @ValidOneOf(value = {-2,-1,0,1})
     private Integer status;
     @ValidOneOf(value = {-1,0,1})
     private Integer  gender;
