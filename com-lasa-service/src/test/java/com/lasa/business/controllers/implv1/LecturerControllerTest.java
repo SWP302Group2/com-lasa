@@ -82,13 +82,11 @@ public class LecturerControllerTest {
         LecturerRequestModel lecturer = new LecturerRequestModel();
         lecturer.setId(1);
         lecturer.setMeetingUrl("https://meet.google.com/ryu-stnz-rww");
-        lecturer.setStatus(1);
         lecturer.setName("Khiem");
         
         LecturerViewModel expected = new LecturerViewModel();
         expected.setId(11);
         expected.setMeetingUrl("https://meet.google.com/ryu-stnz-rww");
-        expected.setStatus(1);
         expected.setName("Hoa");
         when(lecturerService.updateLecturer(lecturer)).thenReturn(expected);
         ResponseEntity<LecturerViewModel> result = lecturerController.updateLecturer(lecturer);
