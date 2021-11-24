@@ -18,7 +18,6 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 public class QuestionRequestModel {
 
-    @NotNull(groups = PatchValidator.class)
     private Integer id;
 
     private Integer bookingId;
