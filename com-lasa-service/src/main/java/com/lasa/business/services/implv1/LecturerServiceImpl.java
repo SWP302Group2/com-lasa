@@ -140,7 +140,7 @@ public class LecturerServiceImpl implements LecturerService {
             if(lecturer.getStatus() == 1) {
                 emailSenderService.sendEmailWithAttachment(
                         lecturer.getEmail(),
-                        "Dear Mr/Ms " + lecturer.getName()  +
+                        " Dear Mr/Ms " + lecturer.getName()  +
                                 "\n" +
                                 "\n Your account has been activated." +
                                 "\n" +
